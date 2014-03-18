@@ -23,11 +23,22 @@
     <p class="form__help nowrap">Format: lowercase a-z, 0-9 and regular dashes</p>
   </div>
 
-  <div class="form__field">
+  <div class="form__field" ng-show="templates.length > 1">
     <label class="form__label">Select a template</label>
     <div class="form__input">
       <select ng-model="page.template" required ng-options="template.name as template.title for template in templates"></select>
     </div>
+  </div>
+
+  <div class="form__field" ng-show="templates.length == 1">
+    <label class="form__label">Template</label>  
+    <div class="form__inputWrapper">
+      <div class="form__input form__input--readonly">{{templates[0].title}}</div>
+      <div class="form__inputIcon form__inputIcon--readonly">
+        <i class="fa fa-lock"></i>
+      </div>
+    </div>
+    <input type="hidden" ng-model="page.template" ng-value="templates[0].title">
   </div>
 
   <div class="form__buttons">
