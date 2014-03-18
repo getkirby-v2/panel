@@ -35,14 +35,6 @@ $router = new Router();
 // register all available routes
 $router->register(array(
 
-  // Index
-  array(
-    'pattern' => '/',
-    'action'  => function() {
-      require(__DIR__ . DS . 'views' . DS . 'index.html');
-    }
-  ),
-
   // Authentication
   array(
     'pattern' => 'api/auth/login',
@@ -135,7 +127,15 @@ $router->register(array(
   array(
     'pattern' => 'api/slug',
     'action'  => $helpersController['slug']
-  )
+  ),
+
+  // Index
+  array(
+    'pattern' => '(:all)',
+    'action'  => function() {
+      require(__DIR__ . DS . 'views' . DS . 'index.html');
+    }
+  ),
 
 ));
 
