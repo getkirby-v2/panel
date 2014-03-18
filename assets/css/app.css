@@ -744,16 +744,48 @@ p {
   border-bottom: 2px solid #ddd;
 }
 
-
-
 .files {
   padding: 0 .75em;
 }
 .file {
-  width: 25%;
   display: inline-block;
   padding: 0 .75em 1.5em;
+  width: 100%;
 }
+
+@media (min-width: 500px) {
+  .file {
+    width: 50%;
+  }
+}
+@media (min-width: 700px) {
+  .file {
+    width: 33.33%;
+  }
+}
+@media (min-width: 1024px) {
+  .file {
+    width: 25%;
+  }
+}
+@media (min-width: 1300px) {
+  .file {
+    width: 20%;
+  }
+}
+@media (min-width: 1500px) {
+  .file {
+    width: 16.66%;
+  }
+}
+@media (min-width: 1900px) {
+  .file {
+    width: 12.5%;
+  }
+}
+
+
+
 .file__preview {
   position: relative;
   background: #000; 
