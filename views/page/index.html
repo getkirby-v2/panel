@@ -4,7 +4,7 @@
 
   <aside class="sidebar">
     
-    <div ng-show="page.parent">
+    <div ng-hide="page.parent == null || page.error || page.home">
       <h2><a>Page settings</a></h2>
       <ul class="sidebar__items">
         <li ng-show="page.settings.subpages">
