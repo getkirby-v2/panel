@@ -117,20 +117,47 @@ return array(
 
     $page       = get('uri') ? $site->find(get('uri')) : $site;
     $blueprint  = blueprint($page);
-    $blueprints = array_values(array_map(function($item) {
-      if(f::extension($item) == 'php') {
-        $blueprint = blueprint(c::get('root.blueprints') . DS . $item);
 
-        return array(
+    if(is_string($blueprint->subpages)) {
+
+      $blueprint  = blueprint(c::get('root.blueprints') . DS . $blueprint->subpages . '.php');
+      $blueprints = array(
+        array(
+          'title' => $blueprint->title(),
+          'name'  => $blueprint->name(),
+        )
+      );
+
+    } else if(is_array($blueprint->subpages)) {
+
+      $blueprints = array();
+
+      foreach($blueprint->subpages as $subpageBlueprint) {
+        $blueprint    = blueprint(c::get('root.blueprints') . DS . $subpageBlueprint . '.php');
+        $blueprints[] = array(
           'title' => $blueprint->title(),
           'name'  => $blueprint->name(),
         );
-
-      } else {
-        return false;        
       }
 
-    }, dir::read(c::get('root.blueprints'))));
+    } else {
+
+      $blueprints = array_values(array_map(function($item) {
+        if(f::extension($item) == 'php') {
+          $blueprint = blueprint(c::get('root.blueprints') . DS . $item);
+
+          return array(
+            'title' => $blueprint->title(),
+            'name'  => $blueprint->name(),
+          );
+
+        } else {
+          return false;        
+        }
+
+      }, dir::read(c::get('root.blueprints'))));
+
+    }
 
     return response::json($blueprints);
 

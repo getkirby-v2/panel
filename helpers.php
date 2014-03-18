@@ -63,6 +63,11 @@ function pageResponse($page, $child = false) {
     'template' => $page->template()
   );
 
+  // if there's a blueprint for the intended page template, use that!
+  if(c::get('root.blueprints') . DS . $page->intendedTemplate() . '.php') {
+    $result['template'] = $page->intendedTemplate();
+  }
+
   if(!$page->isSite() and !$child) {
     $result['parent']  = pageResponse($page->parent(), true);    
     $result['parents'] = $page->parents()->toArray(function($item) {
