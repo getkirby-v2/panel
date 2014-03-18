@@ -22,7 +22,7 @@
   position: relative;
   background: #000;
   color: #fff;
-  margin: 0 .25em .25em 0;
+  margin: 0 4px 4px 0;
   cursor: pointer;
   line-height: 1em;
   border-radius: 2px;
@@ -59,5 +59,5 @@
   font-size: .9em;
   margin-bottom: .2em;
   margin-left: .2em;
-  padding: .45em 0;
+  padding: .2em 0;
 }
