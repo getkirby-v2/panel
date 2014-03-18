@@ -1,0 +1,78 @@
+.dz {
+  position: relative;
+  font-family: Helvetica;
+  border: 2px dashed #ddd;
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -o-transition: all .3s;
+  -ms-transition: all .3s;
+  transition: all .3s;  
+}
+.dz:hover {
+  border-color: #aaa;  
+}
+.dz.dz-drag-hover {
+  border-color: #aaa;
+  background: rgba(0,0,0,0.02);
+}
+
+.dz-message {
+  padding: 1.5em; 
+  text-align: center;
+  line-height: 1.5em;
+  cursor: pointer;
+  -webkit-transition: opacity .3s;
+  -moz-transition: opacity .3s;
+  -o-transition: opacity .3s;
+  -ms-transition: opacity .3s;
+  transition: opacity .3s;
+}
+.dz.loading .dz-message {
+  opacity: 0;
+}
+
+.dz-message strong {
+  display: block;
+  font-weight: bold;
+}
+.dz-message small {
+  color: #777;
+  font-size: .9em;
+  font-style: italic;
+}
+
+.dz-previews {
+  display: none;  
+}
+.dz-progress {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  height: 10px;
+  margin-top: -5px;
+  background: #ddd;
+  border-radius: 5em;
+  opacity: 0;
+  -webkit-transition: opacity .3s;
+  -moz-transition: opacity .3s;
+  -o-transition: opacity .3s;
+  -ms-transition: opacity .3s;
+  transition: opacity .3s;
+  z-index: -1;
+  pointer-events: none;
+}
+.dz.loading .dz-progress {
+  opacity: 1;
+}
+.dz-progressbar {
+  height: 10px;
+  width: 0;
+  background: #8dae28;
+  border-radius: 5em;
+  -webkit-transition: width .3s;
+  -moz-transition: width .3s;
+  -o-transition: width .3s;
+  -ms-transition: width .3s;
+  transition: width .3s;
+}

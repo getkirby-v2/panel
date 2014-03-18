@@ -1,0 +1,113 @@
+<header class="topbar cf" ng-include="'views/page/header.html'"></header>
+
+<div class="content">
+
+  <aside class="sidebar">
+    
+    <div ng-show="page.parent">
+      <h2><a>Page settings</a></h2>
+      <ul class="sidebar__items">
+        <li ng-show="page.settings.subpages">
+          <a ui-sref="page.modal.add({uri: page.uri})">
+            <i class="fa fa-plus-circle"></i> Add a new subpage…
+          </a>
+        </li>  
+        <li ng-show="page.changeableURL.status">
+          <a ui-sref="page.modal.url({uri: page.uri})">
+            <i class="fa fa-chain"></i> Change URL…
+          </a>
+        </li>  
+        <li ng-show="page.deletable.status">
+          <a ui-sref="page.modal.delete({uri: page.uri})">
+            <i class="fa fa-trash-o"></i> Delete page…
+          </a>
+        </li>  
+      </ul>
+    </div>
+
+    <div ng-show="!page.parent">
+      <h2><a>Site settings</a></h2>
+      <ul class="sidebar__items">
+        <li>
+          <a ui-sref="page.modal.add({uri: page.uri})">
+            <i class="fa fa-plus-circle"></i> Add a new subpage…
+          </a>
+        </li>  
+        <li>
+          <a ng-show="!metatags" ui-sref="metatags" href="">
+            <i class="fa fa-pencil"></i> Edit metatags…
+          </a>
+          <a ng-show="metatags" ui-sref="page" href="">
+            <i class="fa fa-dashboard"></i> Go to dashboard…
+          </a>
+        </li>  
+      </ul>
+    </div>
+
+    <div ng-show="page.settings.subpages">
+      <h2><a ui-sref="children({uri: page.uri})">Subpages <small>manage <i class="fa fa-arrow-circle-right"></i></small></a></h2>
+        
+      <form ng-show="page.children.length > limit" class="sidebar__form">
+        <input class="sidebar__search" type="search" placeholder="Search for a subpage…" ng-model="childSearch">
+      </form>
+
+      <ul class="sidebar__items">
+        <li ng-repeat="child in page.children | filter: childSearch | limitTo: limit">
+          <a ui-sref="page({uri: child.uri})">
+            <i class="fa" ng-class="pageIconClass(child)"></i> {{child.title}}
+
+            <small ng-show="child.num" class="num">{{child.num}}</small>
+            <small ng-show="!child.num" class="num">—</small>
+          </a>
+        </li>  
+        <li ng-show="page.children.length > limit">
+          <a ui-sref="children({uri: page.uri})" class="more">
+            <i class="fa fa-arrow-circle-right"></i> Show all ({{page.children.length}})…
+          </a>          
+        </li>
+        <li ng-show="page.children.length == 0"><span>This page has no subpages</span></li>
+      </ul>
+
+    </div>
+  
+    <div ng-show="page.parent && page.settings.files">
+      <h2><a ui-sref="files({uri: page.uri})">Files <small>manage <i class="fa fa-arrow-circle-right"></i></small></a></h2>
+      <ul class="sidebar__items">
+        <li ng-repeat="file in page.files">
+          <a ui-sref="page.modal.file({filename: file.filename})">
+            <i class="fa fa-picture-o"></i> {{file.filename}}
+          </a>
+        </li>  
+        <li>
+          <form class="dz" action="api/files/upload" dropzone done="upload()">
+            <i class="fa fa-cloud-upload fa-lg"></i>
+            <input type="hidden" name="uri" ng-value="page.uri">
+          </form>
+        </li>
+      </ul>
+
+    </div>
+
+    <div ng-show="page.error">
+      <h2><a>Error Page</a></h2>
+      <p class="sidebar__text">
+        This is your site's error page.
+        Your visitors will see this whenever they 
+        enter a URL, which is not available. 
+      </p>
+    </div>
+    
+    <div ng-show="page.home">
+      <h2><a>Home Page</a></h2>
+      <p class="sidebar__text">
+        This is your site's home page.
+        It's the first page your visitors will see.
+        Make it pretty :)
+      </p>
+    </div>
+
+  </aside>
+
+  <main class="main" ng-include="main"></main>
+
+</div>

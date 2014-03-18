@@ -1,0 +1,18 @@
+<div ng-include="'views/menu.html'"></div>
+
+<ul class="breadcrumb">
+  <li>      
+    <a ui-sref="page({uri: null})"><span>Your site</span></a>
+  </li>
+  <li ng-repeat="parent in page.parents">
+    <a ui-sref="page({uri: parent.uri})"><span>{{parent.title}}</span></a>
+  </li>  
+  <li ng-show="page.parent">      
+    <a ui-sref="page({uri: page.uri})"><span>{{page.content.title}}</span></a>
+  </li>
+  <li ng-show="metatags">
+    <a ui-sref="metatags"><span>Edit metatags</span></a>
+  </li>
+</ul>
+
+<a target="_blank" href="{{page.url}}" class="previewToggle"><i class="fa fa-desktop fa-lg"></i></a>
