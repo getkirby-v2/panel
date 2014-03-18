@@ -5,15 +5,7 @@ define('DS', DIRECTORY_SEPARATOR);
 // load the bootstrapper
 include(dirname(__DIR__) . DS . 'kirby' . DS . 'bootstrap.php');
 
-// dummy setup to fetch the correct url
-$dummy = kirby::setup();
-
-// setup the site object
-$site = kirby::setup(array(
-  'url' => dirname($dummy->url())
-));
-
-$site->visit('/');
+$site = kirby::panelsetup();
 
 // some config stuff
 c::set('root.panel', __DIR__);
