@@ -1,8 +1,10 @@
 <?php 
 
-return array(
+class FormController extends Controller {
 
-  'fields' => function() use($site) {
+  public function fields() {
+
+    $site = app::$site;
 
     $page = get('uri') ? $site->find(get('uri')) : $site;
 
@@ -11,9 +13,10 @@ return array(
     $blueprint = blueprint($page);
 
     $root = c::get('root.panel') . DS . 'fields';
+    $html = array();
 
     foreach($blueprint->fields as $name => $field) {
-      
+
       if(get('field') and $name !== get('field')) continue;
 
       $field['name'] = 'page.content.' . $name;
@@ -22,10 +25,12 @@ return array(
 
       if(!file_exists($file)) continue;
 
-      f::load($file, $field);
+      $html[] = f::load($file, $field);
 
     }
 
+    return implode($html);
+
   }
 
-);
+}

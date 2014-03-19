@@ -1,9 +1,10 @@
 <?php 
 
-return array(
+class SiteController extends Controller {
 
-  'metatags' => function() use($site) {
+  public function metatags() {
 
+    $site      = app::$site;
     $blueprint = blueprint($site);
     $content   = array();
 
@@ -14,8 +15,8 @@ return array(
       );
     }
 
-    echo response::json($content);
+    return response::json($content);
 
   }
 
-);
+}

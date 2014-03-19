@@ -25,8 +25,6 @@ app.controller('PageController', function($rootScope, $scope, $state, $statePara
 
   $scope.submit = function() {
 
-    console.log($scope.page.content);
-
     $http.post('api/pages/update/?uri=' + $scope.page.uri, $.param($scope.page.content))
       .success(function() {
         $rootScope.status.success();

@@ -1,12 +1,12 @@
 <?php 
 
-return array(
+class UsersController extends Controller {
+  
+  public function index() {  
+    return response::json(user::all());        
+  }
 
-  'index' => function() use($site) {
-    echo response::json(user::all());
-  },
-
-  'create' => function() {
+  public function create() {
 
     try {
       $user = user::create(get());
@@ -15,9 +15,9 @@ return array(
       return response::error($e->getMessage());      
     }
 
-  },
+  }
 
-  'show' => function($username) {
+  public function show($username) {
 
     $user = user::find($username);
 
@@ -27,10 +27,10 @@ return array(
       return response::json((array)$user);      
     }
 
-  },
+  }
 
-  'delete' => function($username) {
-    
+  public function delete($username) {
+
     $user = user::find($username);
 
     if(!$user) {
@@ -45,4 +45,4 @@ return array(
 
   }
 
-);
+}

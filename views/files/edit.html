@@ -1,17 +1,60 @@
-<form class="form" ng-class="{loading: loading}" ng-submit="submit()">
+<header class="topbar cf" ng-include="'views/page/header.html'"></header>
 
-  <div class="form__alert" ng-show="message" ng-click="alert('')">
-    {{message}}
-  </div>
+<div class="content filedetails">
 
-  <div class="form__field">
-    <label class="form__label">Filename</label>
-    <input class="form__input" type="text" placeholder="Filename" ng-model="file.name" required autofocus>
-    <p class="form__help"><strong>{{file.name}}</strong>.{{file.extension}}</p>
-  </div>
+  <div class="filedetails__preview">
+    <figure class="filedetails__thumb" ng-show="file.type == 'image'" style="background-image: url({{file.url}})">
+      <a href="{{file.url}}"></a>
+    </figure>
+    <figure class="filedetails__icon" ng-show="file.type != 'image'">
+      <a href="{{file.url}}"><i class="fa fa-file"></i> {{file.extension}}</a>
+    </figure>
 
-  <div class="form__buttons">
-    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="cancel">
-    <input type="submit" class="form__button form__button--submit" value="delete">
-  </div>
-</form>
+    <a ng-show="file.prev" class="filedetails__prevnext filedetails__prevnext--prev" ui-sref="file({filename: file.prev.filename, uri: page.uri})"><i class="fa fa-chevron-left fa-lg"></i></a>
+    <a ng-show="file.next" class="filedetails__prevnext filedetails__prevnext--next" ui-sref="file({filename: file.next.filename, uri: page.uri})"><i class="fa fa-chevron-right fa-lg"></i></a>
+
+  </div><!--
+
+--><form class="filedetails__form form" ng-class="{loading: loading}" ng-submit="submit()">
+
+    <div class="form__alert" ng-show="message" ng-click="alert('')">
+      {{message}}
+    </div>
+
+    <div class="form__field">
+      <label class="form__label">Filename</label>
+      <div class="form__inputWrapper">
+        <input class="form__input" type="text" placeholder="Filename" ng-model="file.name" required autofocus>
+        <span class="form__inputAppendix"><i>.{{file.extension}}</i></span>
+      </div>
+    </div>
+
+    <div class="form__field">
+      <label class="form__label">Type / Size</label>
+      <div class="form__input form__input--readonly">{{file.type}} / {{file.size}}</div>
+    </div>
+
+    <div class="form__field">
+      <label class="form__label">Public link</label>
+      <div class="form__inputWrapper">
+        <input class="form__input form__input--readonly" type="text" readonly ng-model="file.url">
+        <span class="form__inputIcon form__inputIcon--readonly">
+          <i class="fa fa-chain"></i>
+        </span>
+      </div>
+    </div>
+
+    <div ng-include="'api/files/fields/?uri=' + page.uri"></div>
+
+    <div class="form__buttons form__buttons--centered">
+      <input type="submit" class="form__button" value="save">
+    </div>
+
+    <ul class="filedetails__navigation">
+      <li><a class="gamma" ui-sref="page({uri: page.uri})"><i class="fa fa-arrow-circle-left"></i> Back to page</a></li><!--
+   --><li><a class="gamma" ui-sref="files({uri: page.uri})"><i class="fa fa-arrow-circle-right"></i> Manage files</a></li>
+    </ul>
+
+  </form>
+
+</div>

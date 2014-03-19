@@ -20,13 +20,26 @@ app.controller('UploadFileController', function($rootScope, $scope, $state, page
 
 });
 
-app.controller('EditFileController', function($rootScope, $scope, $state, page, file) {
+app.controller('EditFileController', function($rootScope, $scope, $state, $http, page, file) {
 
   $scope.page = page;
   $scope.file = file;
 
   $scope.submit = function() {
-    $scope.close();
+
+    $http.post('api/files/update/?uri=' + $scope.page.uri + '&filename=' + $scope.file.filename, $.param($scope.file))
+      .success(function() {
+        $rootScope.status.success();
+        $state.reload();
+      })
+      .error(function() {
+        $rootScope.status.error();
+      })
+
+  };
+
+  $scope.back = function() {
+    window.history.back();
   };
 
 });

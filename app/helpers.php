@@ -1,5 +1,13 @@
 <?php 
 
+function layout($file, $data = array()) {
+  return new Layout($file, $data);
+}
+
+function view($file, $data = array()) {
+  return new View($file, $data);
+}
+
 function blueprint($page) {
 
   if(is_string($page) and is_file($page)) {
@@ -35,9 +43,9 @@ function blueprint($page) {
 
 }
 
-function fileResponse($file) {
+function fileResponse($file, $child = false) {
 
-  return array(
+  $result = array(
     'filename'  => $file->filename(),
     'name'      => $file->name(),
     'extension' => $file->extension(),
@@ -45,6 +53,20 @@ function fileResponse($file) {
     'type'      => $file->type(),
     'url'       => $file->url()
   );
+
+  if(!$child) {
+
+    $result['prev'] = $file->prev() ? fileResponse($file->prev(), true) : false;
+    $result['next'] = $file->next() ? fileResponse($file->next(), true) : false;
+    $result['meta'] = array_map(function($field) {
+      return (string)$field;
+    }, $file->meta()->data());
+
+    if(empty($result['meta'])) $result['meta'] = null;
+
+  }
+
+  return $result;
 
 }
 

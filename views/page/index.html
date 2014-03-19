@@ -74,7 +74,7 @@
       <h2><a ui-sref="files({uri: page.uri})">Files <small>manage <i class="fa fa-arrow-circle-right"></i></small></a></h2>
       <ul class="sidebar__items">
         <li ng-repeat="file in page.files">
-          <a ui-sref="page.modal.file({filename: file.filename})">
+          <a ui-sref="file({filename: file.filename, uri: page.uri})">
             <i class="fa fa-picture-o"></i> {{file.filename}}
           </a>
         </li>  

@@ -79,11 +79,15 @@ p {
   font-weight: 600;
   padding-bottom: .25em;
 }
-
 .beta {
   font-size: 1em;
   font-weight: 600;
   padding-bottom: .25em;
+}
+.gamma {
+  font-size: .9em;
+  color: #777;
+  font-weight: 400;  
 }
 
 /** Dropdown **/
@@ -523,15 +527,18 @@ p {
 .form__inputWrapper {
   position: relative;
 }
-.form__inputIcon {
+.form__inputIcon,
+.form__inputAppendix {
   position: absolute;
   right: 2px;
   top: 2px;
   bottom: 2px;
-  width: 3em;
   border-left: 1px dashed #ddd;
   background: #fff;
   pointer-events: none;
+}
+.form__inputIcon {  
+  width: 3em;
 }
 .form__inputIcon--readonly {
   background: #f5f5f5;
@@ -544,7 +551,12 @@ p {
   margin-top: -7px;
   color: #777;
 }
-
+.form__inputAppendix i {
+  display: block;
+  padding: .5em 1em;
+  font-style: normal;
+  color: #999;
+}
 .form__input:focus {
   outline: 0;
   border-color: #8dae28;
@@ -562,6 +574,7 @@ p {
   width: 100%;
 }
 .form__field {
+  position: relative;
   margin-bottom: 1em;
 }
 .form__field--centered {
@@ -579,6 +592,23 @@ p {
   font-weight: 600;
   color: #000;
 }
+
+.form__toolbar {
+  z-index: 1;
+}
+.form__toolbar button {
+  border: 0;
+  background: #ddd;
+  color: #000;
+  margin-left: 1px;
+  font-size: .9em;
+  padding: .3em 1em .15em;
+  cursor: pointer;
+}
+.form__toolbar button:focus {
+  outline: 0;
+}
+
 .form__buttons {
   overflow: hidden;
   padding: .75em 0 .25em;
@@ -655,6 +685,128 @@ p {
   margin-bottom: 1.5em;
 }
 
+.filedetails {
+  position: absolute;
+  background: #fff;
+  top: 3em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.filedetails__form {
+  padding: 1.5em;
+}
+.filedetails__preview {
+  position: relative;
+  background: #fff url(../images/pattern.png);
+  padding-bottom: 50%;
+}
+.filedetails__thumb {
+  position: absolute;
+  top: 3em;
+  left: 1.5em;
+  bottom: 3em;
+  right: 1.5em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.filedetails__thumb a {
+  display: block;
+  height: 100%;  
+}
+
+@media (min-width: 900px) {
+  .filedetails__preview {
+    position: absolute;  
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    padding-bottom: 0;
+  }  
+  .filedetails__form {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+  }
+  .filedetails__thumb {
+    top: 4.5em;
+    left: 4.5em;
+    bottom: 4.5em;
+    right: 4.5em;
+  }
+}
+
+@media (min-width: 1100px) {
+  .filedetails__preview {
+    width: 66.66%;
+  }
+  .filedetails__form {
+    left: 66.66%;
+  }
+}
+
+
+.filedetails__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -3em;
+  margin-top: -1.75em;
+  color: #fff;
+}
+.filedetails__icon a {
+  display: block;
+  width: 6em;
+  height: 3em;
+  line-height: 3em;
+  text-align: center;
+  text-transform: uppercase;
+  background: #000;
+  color: #fff;
+  border-radius: 2px;
+}
+.filedetails__icon i {
+  position: relative;
+  margin-right: .75em;
+  top: -1px;
+}
+.filedetails__prevnext {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  margin-top: -1em;
+  color: #000;
+}
+.filedetails__prevnext--prev {
+  left: 1.5em;
+}
+.filedetails__prevnext--next {
+  right: 1.5em;
+}
+
+.filedetails__navigation {
+  padding: 1em 0;
+  border-top: 2px solid #ddd;
+  margin-top: 1.5em;  
+}
+.filedetails__navigation li {
+  list-style: none;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+.filedetails__navigation li i {
+  margin-right: .75em;
+  color: #000;
+}
+.filedetails__navigation li a:hover {
+  color: #000;
+}
 
 /** Filemanager **/
 

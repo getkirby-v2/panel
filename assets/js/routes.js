@@ -102,34 +102,6 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     }
   });
 
-  $stateProvider.state('page.modal.upload', {
-    url: 'upload',
-    views: {
-      'modal@' : {
-        resolve: {
-          page: fetchPage
-        },
-        templateUrl: 'views/files/upload.html',
-        controller: 'UploadFileController'
-      }
-    }
-  });
-
-  $stateProvider.state('page.modal.file', {
-    url: 'file/:filename',
-    views: {
-      'modal@' : {
-        resolve: {
-          page: fetchPage,
-          file: fetchFile
-        },
-        templateUrl: 'views/files/edit.html',
-        controller: 'EditFileController'
-      }
-    }
-  });
-
-
   /**
    * Children
    **/
@@ -179,6 +151,16 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     controller : 'FilesController'
   });
 
+  $stateProvider.state('file', {
+    url: '/files/edit/:filename?uri',
+    resolve: {
+      page: fetchPage,
+      file: fetchFile
+    },
+    templateUrl: 'views/files/edit.html',
+    controller: 'EditFileController'
+  });
+
   $stateProvider.state('files.modal', {
     abstract : true,
     onEnter : function($rootScope) {
@@ -198,20 +180,6 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         },
         templateUrl: 'views/files/upload.html',
         controller: 'UploadFileController'
-      }
-    }
-  });
-
-  $stateProvider.state('files.modal.edit', {
-    url: '/edit/:filename',
-    views: {
-      'modal@' : {
-        resolve: {
-          page: fetchPage,
-          file: fetchFile
-        },
-        templateUrl: 'views/files/edit.html',
-        controller: 'EditFileController'
       }
     }
   });

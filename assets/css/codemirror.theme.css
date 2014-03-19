@@ -13,7 +13,6 @@
 .CodeMirror-scroll {
   overflow-y: hidden;
   overflow-x: auto;
-  min-height: 10em;
 }
 
 /* Kirby Theme */

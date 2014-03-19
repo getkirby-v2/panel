@@ -1,8 +1,8 @@
 <?php 
 
-return array(
+class AuthController extends Controller {
 
-  'login' => function() {
+  public function login() {
 
     $user    = user::find(get('username'));
     $message = 'Invalid username or password';
@@ -17,10 +17,10 @@ return array(
 
     return response::success('The user has been logged in');
 
-  },
-
-  'logout' => function() {
-    return 'logout';
   }
 
-);
+  public function logout() {
+    return 'logout';    
+  }
+
+}

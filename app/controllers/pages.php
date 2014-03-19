@@ -1,9 +1,10 @@
 <?php 
 
-return array(
+class PagesController extends Controller {
 
-  'show' => function() use($site) {
+  public function show() {
 
+    $site = app::$site;
     $page = get('uri') ? $site->find(get('uri')) : $site;
 
     if(!$page) {
@@ -12,10 +13,11 @@ return array(
 
     return response::json(pageResponse($page));
 
-  },
+  }
 
-  'create' => function() use($site) {
+  public function create() {
 
+    $site     = app::$site;
     $parent   = get('parent') ? $site->find(get('parent')) : $site;
     $title    = get('title');
     $template = get('template');
@@ -48,10 +50,11 @@ return array(
       'uri' => $parent->uri() . '/' . $slug
     ));
 
-  },
+  }
 
-  'update' => function() use($site) {
+  public function update() {
 
+    $site = app::$site;
     $page = fetchPage($site, get('uri'));
 
     if(!$page) {
@@ -83,10 +86,11 @@ return array(
       'data' => $data
     ));
 
-  },
+  }
 
-  'delete' => function() use($site) {
+  public function delete() {
 
+    $site = app::$site;
     $page = fetchPage($site, get('uri'));
 
     if(!$page) {
@@ -111,10 +115,11 @@ return array(
 
     return response::success('The page has been removed');
 
-  },
+  }
 
-  'templates' => function() use($site) {
+  public function templates() {
 
+    $site       = app::$site;
     $page       = get('uri') ? $site->find(get('uri')) : $site;
     $blueprint  = blueprint($page);
 
@@ -161,10 +166,11 @@ return array(
 
     return response::json($blueprints);
 
-  },
+  }
 
-  'change-url' => function() use($site) {
+  public function changeURL() {
 
+    $site = app::$site;
     $page = fetchPage($site, get('uri'));
     $uid  = str::slug(get('uid'));
 
@@ -200,7 +206,7 @@ return array(
       'uri' => $page->parent()->uri() . '/' . $uid
     ));
 
+
   }
 
-);
-
+}
