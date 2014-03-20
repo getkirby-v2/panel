@@ -9,38 +9,7 @@ function view($file, $data = array()) {
 }
 
 function blueprint($page) {
-
-  if(is_string($page) and is_file($page)) {
-    $file = $page;
-  } else {
-
-    $file = c::get('root.blueprints') . DS . $page->intendedTemplate() . '.php';
-
-    if(!file_exists($file)) {
-      $file = c::get('root.blueprints') . DS . $page->template() . '.php';
-    } 
-
-    if(!file_exists($file)) {
-      $file = c::get('root.blueprints') . DS . 'default.php';      
-    }
-
-  }
-
-  $yaml = yaml(f::read($file));
-  array_shift($yaml);
-
-  $fields = $yaml['fields'];
-
-  $blueprint = new Obj();
-  $blueprint->file     = $file;
-  $blueprint->title    = $yaml['title'];
-  $blueprint->subpages = !isset($yaml['subpages']) ? true : $yaml['subpages'];
-  $blueprint->files    = !isset($yaml['files'])    ? true : $yaml['files'];
-  $blueprint->name     = f::name($file); 
-  $blueprint->fields   = $fields;
-
-  return $blueprint;
-
+  return $page->blueprint();
 }
 
 function fileResponse($file, $child = false) {
@@ -78,7 +47,7 @@ function pageResponse($page, $child = false) {
     'uri'      => $page->uri(),
     'uid'      => $page->uid(),
     'slug'     => $page->slug(),
-    'num'      => $page->num(), 
+    'num'      => intval($page->num()), 
     'home'     => $page->isHomePage(),
     'error'    => $page->isErrorPage(),
     'visible'  => $page->isVisible(),
@@ -150,11 +119,12 @@ function pageResponse($page, $child = false) {
   }
 
   if(!$child) {
-    $blueprint = blueprint($page);
+
+    $blueprint = $page->blueprint();
 
     $result['settings'] = array(
-      'subpages' => $blueprint->subpages,
-      'files'    => $blueprint->files
+      'pages' => $blueprint->pages(),
+      'files' => $blueprint->files()
     );
 
   }

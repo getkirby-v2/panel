@@ -34,11 +34,11 @@
 
 /* Medium Grey */
 .cm-s-kirby span.cm-meta       { color:#000; }
-.cm-s-kirby span.cm-hr         { color:#aaa;}
+.cm-s-kirby span.cm-hr         { color:#777;}
 
 /* Lighter Grey */
-.cm-s-kirby span.cm-comment    { color:#aaa; }
-.cm-s-kirby span.cm-qualifier  { color:#aaa; }
+.cm-s-kirby span.cm-comment    { color:#777; }
+.cm-s-kirby span.cm-qualifier  { color:#777; }
 
 /* Dark Blue/Green */
 .cm-s-kirby span.cm-number     { color: #000; }

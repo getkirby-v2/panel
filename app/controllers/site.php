@@ -4,11 +4,10 @@ class SiteController extends Controller {
 
   public function metatags() {
 
-    $site      = app::$site;
-    $blueprint = blueprint($site);
-    $content   = array();
+    $site    = app::$site;
+    $content = array();
 
-    foreach($blueprint->fields() as $key => $field) {
+    foreach($site->blueprint()->fields() as $key => $field) {
       $content[] = array(
         'key'   => $field['label'], 
         'value' => (string)$site->content()->get($key)

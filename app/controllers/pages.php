@@ -141,16 +141,16 @@ class PagesController extends Controller {
 
   public function templates() {
 
-    $site       = app::$site;
-    $page       = get('uri') ? $site->find(get('uri')) : $site;
-    $subpages   = $page->blueprint()->subpages();
+    $site  = app::$site;
+    $page  = get('uri') ? $site->find(get('uri')) : $site;
+    $pages = $page->blueprint()->pages();
 
     return response::json(array_map(function($item) {
       return array(
         'title' => $item->title(),
         'name'  => $item->name()
       );
-    }, $subpages['template']));
+    }, $pages['template']));
 
   }
 
@@ -192,6 +192,34 @@ class PagesController extends Controller {
       'uri' => $page->parent()->uri() . '/' . $uid
     ));
 
+
+  }
+
+  public function fields() {
+
+    $site = app::$site;
+    $page = get('uri') ? $site->find(get('uri')) : $site;
+
+    if(!$page) return '';
+
+    $root = c::get('root.panel') . DS . 'fields';
+    $html = array();
+
+    foreach($page->blueprint()->fields() as $name => $field) {
+
+      if(get('field') and $name !== get('field')) continue;
+
+      $field['name'] = 'page.content.' . $name;
+
+      $file = $root . DS . $field['type'] . DS . 'html.php';
+
+      if(!file_exists($file)) continue;
+
+      $html[] = f::load($file, $field);
+
+    }
+
+    return implode($html);
 
   }
 

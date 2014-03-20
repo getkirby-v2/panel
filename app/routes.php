@@ -76,7 +76,7 @@ return array(
   ),
   array(
     'pattern' => 'api/pages/form',
-    'action'  => 'FormController::fields',
+    'action'  => 'PagesController::fields',
     'filter'  => 'auth',
   ),
 
