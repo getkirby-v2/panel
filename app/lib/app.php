@@ -2,19 +2,19 @@
 
 class App {
 
-  static $site;
-  static $path;
-  static $routes;
-  static $router;
-  static $route;
+  static public $site;
+  static public $path;
+  static public $routes;
+  static public $router;
+  static public $route;
 
-  static public function configure($root) {
+  static public function configure() {
 
     // load the site object
     static::$site = kirby::panelsetup();
 
     // some config stuff
-    c::set('root.panel',      $root);
+    c::set('root.panel',      dirname(path('app')));
     c::set('root.blueprints', c::get('root.site') . DS . 'blueprints');
     c::set('root.accounts',   c::get('root.site') . DS . 'accounts');
 
