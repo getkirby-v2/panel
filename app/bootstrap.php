@@ -18,9 +18,6 @@ load(array(
   'controller' => __DIR__ . DS . 'lib' . DS . 'controller.php',
   'layout'     => __DIR__ . DS . 'lib' . DS . 'layout.php',
 
-  // load models
-  'user'       => __DIR__ . DS . 'models' . DS . 'user.php',
-
 ));
 
 require(__DIR__ . DS . 'helpers.php');

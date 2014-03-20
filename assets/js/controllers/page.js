@@ -42,7 +42,7 @@ app.controller('PageController', function($rootScope, $scope, $state, $statePara
 
 });
 
-app.controller('MetatagsController', function($rootScope, $scope, $state, $stateParams, $timeout, page) {
+app.controller('MetatagsController', function($rootScope, $scope, $state, $stateParams, $http, page) {
 
   $scope.page     = page;
   $scope.limit    = 15;
@@ -60,8 +60,16 @@ app.controller('MetatagsController', function($rootScope, $scope, $state, $state
   };
 
   $scope.submit = function() {
-    $rootScope.status.success();
-    $state.reload();
+
+    $http.post('api/pages/update/', $.param($scope.page.content))
+      .success(function() {
+        $rootScope.status.success();
+        $state.reload();
+      })
+      .error(function() {
+        $rootScope.status.error();
+      })
+
   };
 
 });

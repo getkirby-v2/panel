@@ -11,8 +11,8 @@
     <article class="user" ng-repeat="user in users">
       <figure class="user__avatar">
         <a href="">
-          <img ng-show="user.avatar.exists" ng-src="{{user.avatar.url}}">
-          <i ng-show="!user.avatar.exists" class="fa fa-user fa-lg"></i>
+          <img ng-show="user.avatar" ng-src="{{user.avatar}}">
+          <i ng-show="!user.avatar" class="fa fa-user fa-lg"></i>
         </a>
       </figure>
 

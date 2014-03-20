@@ -4,9 +4,8 @@ class FilesController extends Controller {
 
   public function show() {
 
-    $site = app::$site;
-    $page = get('uri') ? $site->find(get('uri')) : $site;    
-    $file = $page->files()->find(get('filename'));
+    $page = $this->page(get('uri'));
+    $file = $page->file(get('filename'));
 
     if(!$file) {
       return response::error('No such file');
@@ -18,9 +17,7 @@ class FilesController extends Controller {
 
   public function upload() {
 
-    $site = app::$site;
-    $page = get('uri') ? $site->find(get('uri')) : $site;    
-   
+    $page   = $this->page(get('uri'));
     $upload = new Upload;
     $upload->to($page->root() . DS . '{safeFilename}');
     $upload->success(function($file) {      
@@ -34,81 +31,66 @@ class FilesController extends Controller {
 
   public function update() {
 
-    $site      = app::$site;
-    $page      = get('uri') ? $site->find(get('uri')) : $site;    
-    $file      = $page->files()->find(get('filename'));
-    $blueprint = blueprint($page);
-    $store     = $page->root() . DS . $file->filename() . '.' . c::get('content.file.extension', 'txt');
+    $page = $this->page(get('uri'));
+    $file = $page->file(get('filename'));
 
     if(!$file) {
-      return response::error('No such file');
-    } else {
+      return response::error('The file could not be found');
+    }
 
-      $meta   = get('meta'); 
-      $fields = array_keys((array)@$blueprint->files['fields']);
-      $data   = array();
+    $meta   = get('meta'); 
+    $fields = array_keys($page->blueprint()->filefields());
+    $data   = array();
 
-      foreach($fields as $key) {
-
-        $value = a::get($meta, $key);
-
-        if(is_array($value)) {
-          $data[$key] = implode(', ', $value);
-        } else {
-          $data[$key] = $value;
-        }
-
+    foreach($fields as $key) {
+      $value = a::get($meta, $key);
+      if(is_array($value)) {
+        $data[$key] = implode(', ', $value);
+      } else {
+        $data[$key] = $value;
       }
+    }
 
-      if(!data::write($store, $data, 'kd')) {
-        return response::error('The data could not be safed');
-      }
-
+    try {
+      $file->update($data);
       return response::success('The file has been updated', array(
         'file' => $store,
         'data' => $data
       ));
-
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
     }
 
   }
 
   public function delete() {
 
-    $site = app::$site;
-    $page = get('uri') ? $site->find(get('uri')) : $site;    
-    $file = $page->files()->find(get('filename'));
+    $page = $this->page(get('uri'));
+    $file = $page->file(get('filename'));
 
     if(!$file) {
       return response::error('No such file');
-    } else if(!f::remove($file->root())) {
-      return response::error('The file could not be removed');
-    } else {
-      return response::success('The file has been removed');
     }
 
+    try {
+      $file->delete();
+      return response::success('The file has been removed');
+    } catch(Exception $e) {
+      return response::error('The file could not be removed');
+    }
+      
   }
-
 
   public function fields() {
 
-    $site = app::$site;
-    $page = get('uri') ? $site->find(get('uri')) : $site;
+    $page = $this->page(get('uri'));
 
     if(!$page) return '';
-
-    $blueprint = blueprint($page);
 
     $root = c::get('root.panel') . DS . 'fields';
     $html = array();
 
-    if(
-      !isset($blueprint->files) || 
-      !isset($blueprint->files['fields']) || 
-      !is_array($blueprint->files['fields'])
-    ) return '';
-
-    foreach($blueprint->files['fields'] as $name => $field) {
+    foreach($page->blueprint()->filefields() as $name => $field) {
 
       $field['name'] = 'file.meta.' . $name;
 
@@ -122,6 +104,10 @@ class FilesController extends Controller {
 
     return implode($html);
 
+  }
+
+  protected function page($uri) {
+    return !empty($uri) ? app::$site->find($uri) : app::$site;
   }
 
 }

@@ -11,6 +11,26 @@ app.controller('ChildrenController', function($rootScope, $scope, $state, $state
         $rootScope.$apply();
       },
       update: function() {
+        if($(this).attr('id') == 'visible-children') {
+          $http.post('api/pages/sort/?uri=' + page.uri, $.param({uids : $(this).sortable('toArray')}))
+            .success(function(response) {
+              $state.go($state.$current, $stateParams, {reload: true});
+            })
+            .error(function(response) {
+
+            });
+        } 
+      },
+      receive : function(event, ui) {
+        if($(this).attr('id') == 'invisible-children') {
+          $http.post('api/pages/hide/?uri=' + page.uri + '/' + ui.item.attr('id'))
+            .success(function(response) {
+              $state.go($state.$current, $stateParams, {reload: true});
+            })
+            .error(function(response) {
+
+            });
+        }
       }
     }).disableSelection();
 

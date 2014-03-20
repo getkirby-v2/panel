@@ -4,10 +4,8 @@
 
     <meta charset="utf-8" />  
     
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="noindex, nofollow" />
 
     <base href="<?php echo url('panel') ?>/"></base>
     <title>Kirby Panel</title>
@@ -58,7 +56,6 @@
     <script src="assets/js/app.js"></script>
 
     <!-- controllers -->
-    <script src="assets/js/controllers/auth.js"></script>
     <script src="assets/js/controllers/page.js"></script>
     <script src="assets/js/controllers/files.js"></script>
     <script src="assets/js/controllers/children.js"></script>

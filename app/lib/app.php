@@ -15,8 +15,8 @@ class App {
 
     // some config stuff
     c::set('root.panel',      $root);
-    c::set('root.blueprints', c::get('root.site') . DS . 'panel' . DS . 'blueprints');
-    c::set('root.accounts',   c::get('root.site') . DS . 'panel' . DS . 'accounts');
+    c::set('root.blueprints', c::get('root.site') . DS . 'blueprints');
+    c::set('root.accounts',   c::get('root.site') . DS . 'accounts');
 
     // load all available routes
     static::$routes = require(path('app')   . DS . 'routes.php');
@@ -24,6 +24,13 @@ class App {
     // start the router
     static::$router = new Router();
     static::$router->register(static::$routes);
+
+    // register router filters
+    static::$router->filter('auth', function() {
+      if(!static::$site->user()) {
+        go('panel/login');
+      }
+    });
 
     // only use the fragments of the path without params
     static::$path = implode('/', (array)url::fragments(detect::path()));

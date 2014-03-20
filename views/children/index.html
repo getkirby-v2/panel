@@ -17,8 +17,8 @@
     
         <h2 class="beta">Visible subpages</h2>
         
-        <ul class="sortable">
-          <li ng-dblclick="$state.go('page', {uri: child.uri})" class="subpage" ng-class="{deletable: dropdown.isOpen('subpage-' + child.uid)}" ng-repeat="child in visible = (page.children | filter: {visible: true})">
+        <ul id="visible-children" class="sortable">
+          <li id="{{child.uid}}" ng-dblclick="$state.go('page', {uri: child.uri})" class="subpage" ng-class="{deletable: dropdown.isOpen('subpage-' + child.uid)}" ng-repeat="child in visible = (page.children | filter: {visible: true})">
             <strong>{{child.title}}</strong>
             <small class="num">{{child.num}}</small>
 
@@ -39,8 +39,8 @@
 
         <h2 class="beta">Invisible subpages</h2>
     
-        <ul class="sortable">
-          <li ng-dblclick="$state.go('page', {uri: child.uri})" class="subpage" ng-class="{deletable: dropdown.isOpen('subpage-' + child.uid)}" ng-repeat="child in invisible = (page.children | filter: {visible: false})">
+        <ul id="invisible-children" class="sortable">
+          <li id="{{child.uid}}" ng-dblclick="$state.go('page', {uri: child.uri})" class="subpage" ng-class="{deletable: dropdown.isOpen('subpage-' + child.uid)}" ng-repeat="child in invisible = (page.children | filter: {visible: false})">
             <strong>{{child.title}}</strong>
             <small class="num">—</small>
 

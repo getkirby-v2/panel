@@ -260,24 +260,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     }
   });
 
-
-  /** 
-   * Authentication
-   **/
-  $stateProvider.state('login', {
-    url: '/login', 
-    templateUrl: 'views/auth/login.html',        
-    controller: 'LoginController'
-  });
-
-  $stateProvider.state('logout', {
-    url: '/logout',
-    controller: 'LogoutController'
-  });
-
   /** 
    * Fallback for invalid routes 
    **/
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/');
 
 });

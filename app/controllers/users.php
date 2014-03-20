@@ -3,14 +3,21 @@
 class UsersController extends Controller {
   
   public function index() {  
-    return response::json(user::all());        
+
+    $ctrl  = $this;    
+    $users = $this->users()->map(function($user) use($ctrl) {
+      return $ctrl->userToArray($user);
+    });
+
+    return response::json($users->toArray());        
+
   }
 
   public function create() {
 
     try {
-      $user = user::create(get());
-      return response::json((array)$user);      
+      $user = $this->users()->create(get());    
+      return response::json($this->userToArray($user));      
     } catch(Exception $e) {
       return response::error($e->getMessage());      
     }
@@ -19,29 +26,48 @@ class UsersController extends Controller {
 
   public function show($username) {
 
-    $user = user::find($username);
+    $user = $this->user($username);
 
     if(!$user) {
       return response::error('The user could not be found');
     } else {
-      return response::json((array)$user);      
+      return response::json($this->userToArray($user));      
     }
 
   }
 
   public function delete($username) {
 
-    $user = user::find($username);
+    $user = $this->user($username);
 
     if(!$user) {
       return response::error('The user could not be found');
     } 
 
-    if(!$user->delete()) {
-      return response::error('The user could not be deleted');
-    } else {
+    try {
+      $user->delete();
       return response::success('The user has been deleted');
+    } catch(Exception $e) {
+      return response::error($e->getMessage());      
     }
+
+  }
+
+  protected function users() {
+    return app::$site->users();
+  }
+
+  protected function user($username) {
+    return app::$site->users()->find($username);
+  }
+
+  protected function userToArray($user) {
+
+    return array(
+      'username' => $user->username,
+      'email'    => $user->email,
+      'avatar'   => $user->avatar() ? $user->avatar()->url() : false
+    );
 
   }
 
