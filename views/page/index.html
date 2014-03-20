@@ -52,7 +52,7 @@
       </form>
 
       <ul class="sidebar__items">
-        <li ng-repeat="child in page.children | filter: childSearch | limitTo: limit">
+        <li ng-repeat="child in page.children | filter: {title: childSearch} | limitTo: limit">
           <a ui-sref="page({uri: child.uri})">
             <i class="fa" ng-class="pageIconClass(child)"></i> {{child.title}}
 
