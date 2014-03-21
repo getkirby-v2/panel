@@ -26,6 +26,25 @@ class FilesController extends Controller {
 
   }
 
+  public function rename() {
+
+    $file = $this->file(get('uri'), get('filename'));
+
+    if(!$file) {
+      return response::error('The file could not be found');
+    }
+
+    try {
+      $filename = $file->rename(get('name'));      
+      return response::success('The file has been renamed', array(
+        'filename' => $filename
+      ));
+    } catch(Exception $e) {
+      return response::error('The file could not be renamed');
+    }
+
+  }
+
   public function update() {
 
     $page = $this->page(get('uri'));

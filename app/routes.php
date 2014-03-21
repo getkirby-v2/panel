@@ -106,6 +106,12 @@ return array(
     'filter'  => 'auth',
   ),
   array(
+    'pattern' => 'api/files/rename',
+    'action'  => 'FilesController::rename',
+    'method'  => 'POST',
+    'filter'  => 'auth',
+  ),
+  array(
     'pattern' => 'api/files/delete',
     'action'  => 'FilesController::delete',
     'method'  => 'DELETE',
