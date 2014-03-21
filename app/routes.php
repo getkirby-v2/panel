@@ -7,13 +7,14 @@ return array(
   array(
     'pattern' => '/',
     'action'  => 'AppController::index',
-    'filter'  => 'auth',
+    'filter'  => 'auth|isInstalled',
   ),
 
   // Authentication
   array(
     'pattern' => 'login',
     'action'  => 'AuthController::login',
+    'filter'  => 'isInstalled',
   ),
   array(
     'pattern' => 'api/auth/login',
@@ -26,6 +27,18 @@ return array(
     'method'  => 'GET',
     'filter'  => 'auth',
   ),
+
+  // Installation
+  array(
+    'pattern' => 'install',
+    'action'  => 'InstallationController::index'
+  ),
+  array(
+    'pattern' => 'api/install',
+    'action'  => 'InstallationController::run',
+    'method'  => 'POST'
+  ),
+
  
   // Pages
   array(

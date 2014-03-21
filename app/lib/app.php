@@ -11,8 +11,9 @@ class App {
 
   static public function configure() {
 
-    // load the site object
-    static::$site = kirby::panelsetup();
+    if(is_null(static::$site)) {
+      static::$site = kirby::panelsetup();      
+    }
 
     // some config stuff
     c::set('root.panel',      dirname(path('app')));
@@ -34,6 +35,13 @@ class App {
     static::$router->filter('auth', function() {
       if(!static::$site->user()) {
         go('panel/login');
+      }
+    });
+
+    // check for a completed installation
+    static::$router->filter('isInstalled', function() {
+      if(static::$site->users()->count() == 0) {
+        go('panel/install');        
       }
     });
 
