@@ -26,6 +26,10 @@ class App {
     static::$router = new Router();
     static::$router->register(static::$routes);
 
+    if($language = server::get('http_language')) {
+      static::$language = $language;
+    }
+
     // register router filters
     static::$router->filter('auth', function() {
       if(!static::$site->user()) {
