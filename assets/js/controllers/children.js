@@ -2,6 +2,9 @@ app.controller('ChildrenController', function($rootScope, $scope, $state, $state
 
   $scope.page = page;
 
+  // fix the uri for the api
+  if($scope.page.uri == null) $scope.page.uri = '';
+
   $timeout(function() {
 
     $('.sortable').sortable({
@@ -12,7 +15,7 @@ app.controller('ChildrenController', function($rootScope, $scope, $state, $state
       },
       update: function() {
         if($(this).attr('id') == 'visible-children') {
-          $http.post('api/pages/sort/?uri=' + page.uri, $.param({uids : $(this).sortable('toArray')}))
+          $http.post('api/pages/sort/?uri=' + $scope.page.uri, $.param({uids : $(this).sortable('toArray')}))
             .success(function(response) {
               $state.go($state.$current, $stateParams, {reload: true});
             })
@@ -23,7 +26,7 @@ app.controller('ChildrenController', function($rootScope, $scope, $state, $state
       },
       receive : function(event, ui) {
         if($(this).attr('id') == 'invisible-children') {
-          $http.post('api/pages/hide/?uri=' + page.uri + '/' + ui.item.attr('id'))
+          $http.post('api/pages/hide/?uri=' + $scope.page.uri + '/' + ui.item.attr('id'))
             .success(function(response) {
               $state.go($state.$current, $stateParams, {reload: true});
             })

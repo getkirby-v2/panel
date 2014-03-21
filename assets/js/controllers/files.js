@@ -55,8 +55,8 @@ app.controller('DeleteFileController', function($rootScope, $scope, $state, $htt
       .success(function() {
         $state.transitionTo('files', {uri: page.uri}, {reload: true});
       })
-      .error(function() {
-        $scope.alert('The file could not be removed');
+      .error(function(response) {
+        $scope.alert(response.message);
       });
 
   };

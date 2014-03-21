@@ -15,4 +15,8 @@
   </li>
 </ul>
 
+<div class="languagesToggle" ng-show="languages.length != 0">
+  <select ng-model="language" ng-change="setLanguage(this)" ng-options="l.code as l.label for l in languages"></select>
+</div>
+
 <a target="_blank" href="{{page.url}}" class="previewToggle"><i class="fa fa-desktop fa-lg"></i></a>

@@ -23,7 +23,7 @@
     <![endif]-->
 
   </head>
-  <body ng-controller="AppController">
+  <body ng-controller="AppController" ng-class="{'has-dropdown': dropdown.current}">
 
     <div ui-view></div>
 

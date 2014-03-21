@@ -7,6 +7,7 @@ class App {
   static public $routes;
   static public $router;
   static public $route;
+  static public $language;
 
   static public function configure() {
 

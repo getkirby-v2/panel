@@ -9,25 +9,32 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   var fetchPage = function($http, $stateParams) {
     return $http.get('api/pages/show?' + $.param({uri: $stateParams.uri})).then(function(response) {
       return response.data
+    }, function() {
+      window.location.href = './'
     });
-
   };
 
   var fetchFile = function($http, $stateParams) {
     return $http.get('api/files/show?' + $.param({uri: $stateParams.uri, filename: $stateParams.filename})).then(function(response) {
       return response.data;
+    }, function() {
+      window.location.href = './'          
     });
   };
 
   var fetchUser = function($http, $stateParams) {
     return $http.get('api/users/show/' + $stateParams.username).then(function(response) {
       return response.data;
+    }, function() {
+      window.location.href = './'          
     });
   };
 
   var fetchTemplates = function($http, $stateParams) {
     return $http.get('api/pages/templates?' + $.param({uri: $stateParams.uri})).then(function(response) {
       return response.data;
+    }, function() {
+      window.location.href = './'          
     });
   };
 

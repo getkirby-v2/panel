@@ -5,8 +5,9 @@
   </div>
 
   <div class="form__field">
-    Do you really want to delete this user?<br />
-    <strong>{{user.username}}</strong>
+    <label class="form__label">Do you really want to delete this user?</label>
+    <div class="form__input form__input--readonly">{{user.username}}</div>
+    <p class="form__help">{{user.email}}</p>
   </div>
 
   <div class="form__buttons">

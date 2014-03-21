@@ -78,12 +78,15 @@
             <i class="fa fa-picture-o"></i> {{file.filename}}
           </a>
         </li>  
+        <li ng-show="page.files.length == 0"><span>This page has no files</span></li>
+        <!--
         <li>
           <form class="dz" action="api/files/upload" dropzone done="upload()">
             <i class="fa fa-cloud-upload fa-lg"></i>
             <input type="hidden" name="uri" ng-value="page.uri">
           </form>
         </li>
+        -->
       </ul>
 
     </div>
@@ -97,15 +100,6 @@
       </p>
     </div>
     
-    <div ng-show="page.home">
-      <h2><a>Home Page</a></h2>
-      <p class="sidebar__text">
-        This is your site's home page.
-        It's the first page your visitors will see.
-        Make it pretty :)
-      </p>
-    </div>
-
   </aside>
 
   <main class="main" ng-include="main"></main>

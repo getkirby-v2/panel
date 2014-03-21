@@ -4,10 +4,10 @@
 
   <div class="filedetails__preview">
     <figure class="filedetails__thumb" ng-show="file.type == 'image'" style="background-image: url({{file.url}})">
-      <a href="{{file.url}}"></a>
+      <a target="_blank" href="{{file.url}}"></a>
     </figure>
     <figure class="filedetails__icon" ng-show="file.type != 'image'">
-      <a href="{{file.url}}"><i class="fa fa-file"></i> {{file.extension}}</a>
+      <a target="_blank" href="{{file.url}}"><i class="fa fa-file"></i> {{file.extension}}</a>
     </figure>
 
     <a ng-show="file.prev" class="filedetails__prevnext filedetails__prevnext--prev" ui-sref="file({filename: file.prev.filename, uri: page.uri})"><i class="fa fa-chevron-left fa-lg"></i></a>

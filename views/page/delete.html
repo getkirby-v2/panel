@@ -7,8 +7,9 @@
   <div ng-show="page.deletable.status">
 
     <div class="form__field">
-      Do you really want to delete this page?<br />
-      <strong>{{page.title}}</strong>
+      <label class="form__label">Do you really want to delete this page?</label>
+      <div class="form__input form__input--readonly">{{page.title}}</div>
+      <p class="form__help">URL: {{page.uri}}</p>
     </div>
 
     <div class="form__buttons">

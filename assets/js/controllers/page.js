@@ -1,18 +1,16 @@
 app.controller('PageController', function($rootScope, $scope, $state, $stateParams, $timeout, $http, page) {
 
   $scope.page  = page;
-  $scope.limit = 15;
+  $scope.limit = $scope.page.settings.pages ? $scope.page.settings.pages.limit : 20;  
 
   // hacky way to connect the form with the breadcrumb
   $scope.page.content.title = page.title;
 
   if(!page.parent) {
-
     $http.get('api/site/metatags').then(function(response) {
       $scope.sections = response.data;
+      $scope.main     = 'views/page/metatags.html';        
     });
-
-    $scope.main = 'views/page/metatags.html';        
   } else {
     $scope.main = 'views/page/form.html';        
   }
@@ -94,7 +92,7 @@ app.controller('AddPageController', function($rootScope, $scope, $state, $http, 
         if($state.current.name == 'children.modal.add') {
           $state.transitionTo('children', {uri: page.uri}, {reload: true});
         } else {
-          $state.go('page', {uri: response.data.uri});
+          $state.transitionTo('page', {uri: page.uri}, {reload: true});
         }
       })
       .error(function(response) {

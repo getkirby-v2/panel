@@ -14,6 +14,8 @@ function blueprint($page) {
 
 function fileResponse($file, $child = false) {
 
+  $meta = $file->meta(app::$language);
+
   $result = array(
     'filename'  => $file->filename(),
     'name'      => $file->name(),
@@ -29,7 +31,7 @@ function fileResponse($file, $child = false) {
     $result['next'] = $file->next() ? fileResponse($file->next(), true) : false;
     $result['meta'] = array_map(function($field) {
       return (string)$field;
-    }, $file->meta()->data());
+    }, $meta->data());
 
     if(empty($result['meta'])) $result['meta'] = null;
 
@@ -41,9 +43,11 @@ function fileResponse($file, $child = false) {
 
 function pageResponse($page, $child = false) {
 
+  $content = $page->content(app::$language);
+
   $result = array(
-    'title'    => (string)$page->title(),
-    'url'      => $page->url(),
+    'title'    => (string)$content->title(),
+    'url'      => $page->url(app::$language),
     'uri'      => $page->uri(),
     'uid'      => $page->uid(),
     'slug'     => $page->slug(),
@@ -66,17 +70,35 @@ function pageResponse($page, $child = false) {
     });
   }
 
-  if(!$child) $result['children'] = array_values($page->children()->toArray(function($item) {
+  if(!$child) {
+
+    $blueprint = $page->blueprint();
+    $children  = $page->children();
+
+    if($pages = $blueprint->pages()) {
+      if($pages->sort() == 'flip') {
+        $children = $children->flip();
+      }
+    }
+
+    $result['children'] = array_values($children->toArray(function($item) {
       return pageResponse($item, true);
-  }));
+    }));    
+  
+    $result['content'] = array_map(function($field) {
+      return (string)$field;
+    }, $content->data());
 
-  if(!$child) $result['content'] = array_map(function($field) {
-    return (string)$field;
-  }, $page->content()->data());
+    $result['files'] = array_values($page->files()->toArray(function($file) {
+      return fileResponse($file);
+    }));
 
-  if(!$child) $result['files'] = array_values($page->files()->toArray(function($file) {
-    return fileResponse($file);
-  }));
+    $result['settings'] = array(
+      'pages' => $blueprint->pages(),
+      'files' => $blueprint->files()
+    );
+
+  }
 
   $result['deletable'] = array(
     'status'  => true,
@@ -118,23 +140,6 @@ function pageResponse($page, $child = false) {
     );
   }
 
-  if(!$child) {
-
-    $blueprint = $page->blueprint();
-
-    $result['settings'] = array(
-      'pages' => $blueprint->pages(),
-      'files' => $blueprint->files()
-    );
-
-  }
-
   return $result;
 
-}
-
-
-function fetchPage($site, $uri) {
-  if(empty($uri)) return false;
-  return $site->find($uri);
 }

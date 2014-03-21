@@ -1,5 +1,18 @@
 var app = angular.module('app', ['ui.router', 'kirby.editor', 'kirby.tagbox', 'kirby.date', 'dropzone']);
 
+app.config(function($httpProvider) {
+  $httpProvider.interceptors.push('httpRequestInterceptor');
+});
+
+app.factory('httpRequestInterceptor', ['$rootScope', function($rootScope) {
+  return {
+    request: function($config) {
+      $config.headers['language'] = $rootScope.language;
+      return $config;
+    }
+  };
+}]);
+
 // disable scrolling on state changes
 app.value('$anchorScroll', angular.noop);
 
@@ -12,7 +25,8 @@ app.reposition = function(element) {
     var left = Math.round($box.outerWidth() / 2);    
     var top  = Math.round($box.outerHeight() / 2);    
 
-    $box.css({'margin-left' : -left, 'margin-top' : -top});    
+    $box.css({'opacity' : 0, 'margin-left' : -left, 'margin-top' : -top});    
+    $box.animate({'opacity' : 1}, 300);  
   });
 
 };
@@ -36,15 +50,21 @@ app.factory('focus', function($rootScope, $timeout) {
 });
 
 // the main app controller
-app.controller('AppController', function($rootScope, $scope, $state, $stateParams, $window, $http, $timeout) {
+app.controller('AppController', function($rootScope, $scope, $state, $stateParams, $window, $http, $timeout, $location) {
 
-  $rootScope.$state       = $state;
-  $rootScope.$stateParams = $stateParams;
+  $rootScope.modal     = false;
+  $rootScope.loading   = false;
+  $rootScope.language  = localStorage.language || 'de';
+  $rootScope.languages = [
+    {code: 'de', label: 'Deutsch'},
+    {code: 'en', label: 'English'}
+  ];
 
-  $rootScope.config  = $window.config;
-  $rootScope.lang    = $window.lang;
-  $rootScope.modal   = false;
-  $rootScope.loading = false;
+  $rootScope.setLanguage = function(element) {
+    $rootScope.language = element.language;
+    localStorage.setItem('language', element.language);
+    $state.transitionTo($state.current, $stateParams, {reload: true});
+  };
 
   $rootScope.status = {
     type : 'idle',

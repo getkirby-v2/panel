@@ -4,8 +4,7 @@ class PagesController extends Controller {
 
   public function show() {
 
-    $site = app::$site;
-    $page = get('uri') ? $site->find(get('uri')) : $site;
+    $page = $this->page(get('uri'));
 
     if(!$page) {
       return response::error('The page could not be found');
@@ -17,8 +16,7 @@ class PagesController extends Controller {
 
   public function create() {
 
-    $site     = app::$site;
-    $parent   = get('parent') ? $site->find(get('parent')) : $site;
+    $parent   = $this->page(get('parent'));
     $title    = get('title');
     $template = get('template');
     $slug     = str::slug($title);
@@ -50,7 +48,7 @@ class PagesController extends Controller {
 
   public function update() {
 
-    $page = get('uri') ? app::$site->find(get('uri')) : app::$site;
+    $page = $this->page(get('uri'));
 
     if(!$page) {
       return response::error('The page does not exist');
@@ -73,7 +71,7 @@ class PagesController extends Controller {
 
     try {
 
-      $page->update($data);
+      $page->update($data, app::$language);
   
       return response::success('The page has been updated', array(
         'file' => $page->content()->root(),
@@ -88,8 +86,7 @@ class PagesController extends Controller {
 
   public function delete() {
 
-    $site = app::$site;
-    $page = fetchPage($site, get('uri'));
+    $page = $this->page(get('uri'));
 
     if(!$page) {
       return response::error('The page does not exist');
@@ -106,7 +103,7 @@ class PagesController extends Controller {
 
   public function sort() {
 
-    $page = get('uri') ? app::$site->find(get('uri')) : app::$site;
+    $page = $this->page(get('uri'));
     $uids = get('uids');
     $num  = 1;
 
@@ -126,9 +123,11 @@ class PagesController extends Controller {
 
   public function hide() {
 
-    $page = fetchPage(app::$site, get('uri'));
+    $page = $this->page(get('uri'));
 
-    if(!$page) return response::error('The page could not be found');
+    if(!$page) {
+      return response::error('The page could not be found');
+    }
 
     try {
       $page->hide();
@@ -141,23 +140,30 @@ class PagesController extends Controller {
 
   public function templates() {
 
-    $site  = app::$site;
-    $page  = get('uri') ? $site->find(get('uri')) : $site;
+    $page = $this->page(get('uri'));
+
+    if(!$page) {
+      return response::error('The page could not be found');
+    }
+
     $pages = $page->blueprint()->pages();
+
+    if(!$page->blueprint()->pages()) {
+      return response::error('This page is not allowed to have subpages');
+    }
 
     return response::json(array_map(function($item) {
       return array(
         'title' => $item->title(),
         'name'  => $item->name()
       );
-    }, $pages['template']));
+    }, $pages->template()));
 
   }
 
   public function changeURL() {
 
-    $site = app::$site;
-    $page = fetchPage($site, get('uri'));
+    $page = $this->page(get('uri'));
     $uid  = str::slug(get('uid'));
 
     if(!$page) {
@@ -197,8 +203,7 @@ class PagesController extends Controller {
 
   public function fields() {
 
-    $site = app::$site;
-    $page = get('uri') ? $site->find(get('uri')) : $site;
+    $page = $this->page(get('uri'));
 
     if(!$page) return '';
 
@@ -221,6 +226,10 @@ class PagesController extends Controller {
 
     return implode($html);
 
+  }
+
+  protected function page($uri) {
+    return empty($uri) ? app::$site : app::$site->children()->find($uri);
   }
 
 }
