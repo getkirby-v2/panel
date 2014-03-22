@@ -54,10 +54,10 @@ app.controller('AppController', function($rootScope, $scope, $state, $stateParam
 
   $rootScope.modal     = false;
   $rootScope.loading   = false;
-  $rootScope.language  = localStorage.language || 'de';
+  $rootScope.language  = localStorage.language || $window.defaultLanguage;
   $rootScope.languages = [];
 
-  $http.get('api/site/languages').success(function(response) {
+  $http.get('api/site/languages').success(function(response) {    
     $rootScope.languages = response;
   });
 

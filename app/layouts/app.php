@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="assets/css/codemirror.css">
     <link rel="stylesheet" href="assets/css/codemirror.theme.css">
 
+    <script>
+      var defaultLanguage = '<?php echo $defaultLanguage ?>';
+    </script>
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
