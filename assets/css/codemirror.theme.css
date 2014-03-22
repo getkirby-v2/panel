@@ -37,8 +37,8 @@
 .cm-s-kirby span.cm-hr         { color:#777;}
 
 /* Lighter Grey */
-.cm-s-kirby span.cm-comment    { color:#777; }
-.cm-s-kirby span.cm-qualifier  { color:#777; }
+.cm-s-kirby span.cm-comment    { color:#000; font-family: 'Courier'; font-size: .95em; }
+.cm-s-kirby span.cm-qualifier  { color:#777; font-family: 'Courier'; font-size: .95em; }
 
 /* Dark Blue/Green */
 .cm-s-kirby span.cm-number     { color: #000; }
@@ -63,7 +63,7 @@
 /* Brick */
 .cm-s-kirby span.cm-keyword    { color: #000; }
 .cm-s-kirby span.cm-bracket    { color: #000; }
-.cm-s-kirby span.cm-link       { color: #8dae28; text-decoration:underline;}
+.cm-s-kirby span.cm-link       { color: #8dae28; text-decoration: none; border-bottom: 1px solid #ddd;}
 .cm-s-kirby span.cm-tag        { color: #000; }
 
 /* Darker Brick */

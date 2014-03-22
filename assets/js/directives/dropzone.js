@@ -1,4 +1,4 @@
-angular.module('dropzone', []).directive('dropzone', function () {
+app.directive('dropzone', function () {
   return {
     scope : {
       done: '&'

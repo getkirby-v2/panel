@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="login">
+<html lang="en" ng-app="app">
   <head>
 
     <meta charset="utf-8" />  
@@ -10,12 +10,16 @@
     <base href="<?php echo url('panel') ?>/"></base>
     <title>Kirby Panel</title>
 
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.css">
+    <?php 
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    echo css(array(
+      'panel/assets/css/app.css',
+      'panel/assets/css/font-awesome.css'
+    )); 
+
+    echo html::shiv();
+
+    ?>
 
   </head>
   <body ng-controller="LoginController">
@@ -45,11 +49,17 @@
       </div>
     </div>
 
-    <script src="assets/js/jquery.js"></script>
-        
-    <!-- angular -->
-    <script src="assets/js/angular.js"></script>
-    <script src="assets/js/login.js"></script>
-    
+    <?php 
+
+    echo js(array(
+      'panel/assets/js/lib/jquery.js',
+      'panel/assets/js/lib/angular.js',
+      'panel/assets/js/apps/login.js',
+      'panel/assets/js/factories/reposition.js',
+      'panel/assets/js/controllers/login/index.js',
+    ));
+
+    ?>    
+
   </body>
 </html>

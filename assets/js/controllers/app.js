@@ -1,54 +1,3 @@
-var app = angular.module('app', ['ui.router', 'kirby.editor', 'kirby.tagbox', 'kirby.date', 'dropzone']);
-
-app.config(function($httpProvider) {
-  $httpProvider.interceptors.push('httpRequestInterceptor');
-});
-
-app.factory('httpRequestInterceptor', ['$rootScope', function($rootScope) {
-  return {
-    request: function($config) {
-      $config.headers['language'] = $rootScope.language;
-      return $config;
-    }
-  };
-}]);
-
-// disable scrolling on state changes
-app.value('$anchorScroll', angular.noop);
-
-// global reposition method for modal boxes
-app.reposition = function(element) {
-
-  setTimeout(function() {
-    var $box = $(element);
-
-    var left = Math.round($box.outerWidth() / 2);    
-    var top  = Math.round($box.outerHeight() / 2);    
-
-    $box.css({'opacity' : 0, 'margin-left' : -left, 'margin-top' : -top});    
-    $box.animate({'opacity' : 1}, 300);  
-  });
-
-};
-
-app.directive('focusOn', function() {
-   return function(scope, elem, attr) {
-      scope.$on('focusOn', function(e, name) {
-        if(name === attr.focusOn) {
-          elem[0].focus();
-        }
-      });
-   };
-});
-
-app.factory('focus', function($rootScope, $timeout) {
-  return function(name) {
-    $timeout(function (){
-      $rootScope.$broadcast('focusOn', name);
-    });
-  }
-});
-
 // the main app controller
 app.controller('AppController', function($rootScope, $scope, $state, $stateParams, $window, $http, $timeout, $location) {
 
@@ -151,34 +100,5 @@ app.controller('AppController', function($rootScope, $scope, $state, $stateParam
     }
 
   };
-
-});
-
-// the global modal controller
-app.controller('ModalController', function($rootScope, $scope, $state, $element) {
-              
-  $scope.message = null;
-  $scope.loading = false;
-
-  $scope.close = function() {
-    $scope.message = null;
-    $scope.loading = false;
-    $state.go('^.^');
-  };
-
-  $scope.reposition = function() {
-    app.reposition('.modal__box');
-  };
-
-  $scope.alert = function(message) {
-    $scope.message = message;    
-    $scope.reposition();
-  };
-
-  $rootScope.$on('key:esc', $scope.close);
-
-  $scope.$on('$viewContentLoaded', function(event) { 
-    $scope.reposition();    
-  });
 
 });

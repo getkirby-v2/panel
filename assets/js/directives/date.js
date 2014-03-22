@@ -1,6 +1,4 @@
-angular.module('kirby.date', [])
-  .directive('date', function() {
-
+app.directive('date', function() {
   return {
     restrict: 'E',
     scope : {
@@ -26,6 +24,5 @@ angular.module('kirby.date', [])
       return '<input type="text" ng-model="date">';
     },
     replace: true
-  }
-
+  };
 });

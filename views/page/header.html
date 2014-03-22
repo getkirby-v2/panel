@@ -10,6 +10,9 @@
   <li ng-show="page.parent">      
     <a ui-sref="page({uri: page.uri})"><span>{{page.content.title}}</span></a>
   </li>
+  <li ng-show="file">      
+    <a ui-sref="page({uri: page.uri})"><span>{{file.name}}.{{file.extension}}</span></a>
+  </li>
   <li ng-show="metatags">
     <a ui-sref="metatags"><span>Edit metatags</span></a>
   </li>

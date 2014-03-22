@@ -1,6 +1,4 @@
-angular.module('kirby.editor', [])
-  .directive('editor', function() {
-
+app.directive('editor', function() {
   return {
     restrict: 'E',
     scope: {
