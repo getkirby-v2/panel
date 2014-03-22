@@ -25,9 +25,9 @@
   </head>
   <body ng-controller="AppController" ng-class="{'has-dropdown': dropdown.current}">
 
-    <div ui-view></div>
+    <div ui-view autoscroll="false"></div>
 
-    <section class="modal" ng-show="modal" ng-controller="ModalController">
+    <section class="modal" ng-show="modal" autoscroll="false" ng-controller="ModalController">
       <div class="modal__shim" ng-click="close()"></div>
       <div class="modal__box" ui-view="modal"></div>
     </section>
