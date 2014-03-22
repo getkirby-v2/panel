@@ -18,4 +18,22 @@ class SiteController extends Controller {
 
   }
 
+  public function languages() {
+
+    $site = app::$site;
+
+    if(!$site->multilang()) return response::error('This is a single-language site');
+
+    $languages = $site->languages()->map(function($lang) {
+      return array(
+        'code'    => $lang->code(),
+        'label'   => $lang->name(),
+        'default' => $lang->isDefault(),
+      );
+    });
+
+    return response::json($languages);
+
+  }
+
 }

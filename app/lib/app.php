@@ -39,7 +39,7 @@ class App {
     });
 
     // check for a completed installation
-    static::$router->filter('isInstalled', function() {
+    static::$router->filter('isInstalled', function() {        
       if(static::$site->users()->count() == 0) {
         go('panel/install');        
       }

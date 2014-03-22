@@ -55,10 +55,11 @@ app.controller('AppController', function($rootScope, $scope, $state, $stateParam
   $rootScope.modal     = false;
   $rootScope.loading   = false;
   $rootScope.language  = localStorage.language || 'de';
-  $rootScope.languages = [
-    {code: 'de', label: 'Deutsch'},
-    {code: 'en', label: 'English'}
-  ];
+  $rootScope.languages = [];
+
+  $http.get('api/site/languages').success(function(response) {
+    $rootScope.languages = response;
+  });
 
   $rootScope.setLanguage = function(element) {
     $rootScope.language = element.language;

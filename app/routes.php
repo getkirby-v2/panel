@@ -7,7 +7,7 @@ return array(
   array(
     'pattern' => '/',
     'action'  => 'AppController::index',
-    'filter'  => 'auth|isInstalled',
+    'filter'  => array('auth', 'isInstalled'),
   ),
 
   // Authentication
@@ -97,6 +97,11 @@ return array(
   array(
     'pattern' => 'api/site/metatags',
     'action'  => 'SiteController::metatags',
+    'filter'  => 'auth',
+  ),
+  array(
+    'pattern' => 'api/site/languages',
+    'action'  => 'SiteController::languages',
     'filter'  => 'auth',
   ),
 
