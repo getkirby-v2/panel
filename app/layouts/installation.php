@@ -25,41 +25,7 @@
   <body ng-controller="InstallationController">
 
     <div class="modal">
-      <div class="modal__box login">
-        <form class="form" ng-class="{loading: loading}" ng-submit="submit()">
-
-          <div class="form__alert" ng-show="message" ng-click="alert('')">
-            {{message}}
-          </div>
-
-          <div class="form__field">
-            <label class="form__label">Installation</label>
-            <p>
-              Welcome to the Kirby Panel<br />
-              Please create your first user…
-            </p>
-          </div>
-
-          <div class="form__field">
-            <label class="form__label">Username</label>
-            <input class="form__input" autofocus type="text" ng-model="user.username">
-          </div>
-          
-          <div class="form__field">
-            <label class="form__label">Email</label>
-            <input class="form__input" type="email" ng-model="user.email">
-          </div>
-
-          <div class="form__field">
-            <label class="form__label">Password</label>
-            <input class="form__input" type="password" ng-model="user.password">
-          </div>
-
-          <div class="form__buttons">
-            <input type="submit" class="form__button form__button--submit" value="Create your account">
-          </div>
-        </form>
-      </div>
+      <div class="modal__box login" ng-include="view" onload="reposition()"></div>
     </div>
 
     <?php 

@@ -36,4 +36,25 @@ class SiteController extends Controller {
 
   }
 
+  public function health() {
+
+    $problems = array();
+
+    if(!is_writable(c::get('root.accounts'))) {
+      $problems[] = 'site/accounts is not writable';
+    }
+
+    if(!is_dir(c::get('root.blueprints'))) {
+      $problems[] = 'Please add a site/blueprints folder';
+    }
+
+    if(!empty($problems)) {
+      return response::error('There are some issues!', 400, $problems);      
+    } else {
+      return response::success('Everything is fine!');      
+    }
+
+
+  }
+
 }

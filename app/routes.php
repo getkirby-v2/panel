@@ -104,6 +104,10 @@ return array(
     'action'  => 'SiteController::languages',
     'filter'  => 'auth',
   ),
+  array(
+    'pattern' => 'api/site/health',
+    'action'  => 'SiteController::health'
+  ),
 
   // Files
   array(
