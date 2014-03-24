@@ -90,6 +90,7 @@
       'panel/assets/js/controllers/page/delete.js',
       'panel/assets/js/controllers/page/index.js',
       'panel/assets/js/controllers/page/metatags.js',
+      'panel/assets/js/controllers/page/blueprint.js',
 
       'panel/assets/js/controllers/users/add.js',
       'panel/assets/js/controllers/users/delete.js',
