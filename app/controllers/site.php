@@ -28,11 +28,11 @@ class SiteController extends Controller {
       return array(
         'code'    => $lang->code(),
         'label'   => $lang->name(),
-        'default' => $lang->isDefault(),
+        'default' => $lang->default(),
       );
     });
 
-    return response::json($languages);
+    return response::json(array_values($languages->toArray()));
 
   }
 
