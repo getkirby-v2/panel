@@ -945,6 +945,16 @@ body.has-dropdown:after {
   display: inline-block;
   border-bottom: 2px solid #ddd;
 }
+.manager__empty small {
+  font-weight: 400;
+  font-size: 1em;
+  padding-top: .25em;
+  display: block;
+}
+.manager__empty--error i, 
+.manager__empty--error span {
+  color: #b3000a;  
+}
 
 .files {
   padding: 0 .75em;

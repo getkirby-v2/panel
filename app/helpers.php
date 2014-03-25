@@ -44,9 +44,10 @@ function fileResponse($file, $child = false) {
 function pageResponse($page, $child = false) {
 
   $content = $page->content(app::$language);
+  $title   = (string)$content->title();
 
   $result = array(
-    'title'    => (string)$content->title(),
+    'title'    => !empty($title) ? $title : $page->uid(),
     'url'      => $page->url(app::$language),
     'uri'      => $page->uri(),
     'uid'      => $page->uid(),
@@ -89,6 +90,8 @@ function pageResponse($page, $child = false) {
       return (string)$field;
     }, $content->data());
 
+    if(empty($result['content'])) $result['content'] = null;
+
     $result['files'] = array_values($page->files()->toArray(function($file) {
       return fileResponse($file);
     }));
@@ -96,6 +99,25 @@ function pageResponse($page, $child = false) {
     $result['settings'] = array(
       'pages' => $blueprint->pages(),
       'files' => $blueprint->files()
+    );
+
+    $folder   = new Folder($page->root());
+    $writable = true;
+
+    if($folder->isWritable()) {
+      foreach($folder->files() as $f) {
+        if(!$f->isWritable()) {
+          $writable = false;
+          break;
+        }
+      }
+    } else {
+      $writable = false;
+    }
+
+    $result['writable'] = array(
+      'status'  => $writable,
+      'message' => 'The page is not writable'
     );
 
   }
