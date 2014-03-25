@@ -1,6 +1,6 @@
 <header class="topbar cf" ng-include="'views/page/header.html'"></header>
 
-<div class="content">
+<div class="content" ng-show="page.writable.status">
 
   <aside class="sidebar">
     
@@ -104,4 +104,13 @@
 
   <main class="main" ng-include="main"></main>
 
+</div>
+
+<div ng-hide="page.writable.status" class="content manager">
+  <div class="manager__empty manager__empty--error">
+    <a href="" ng-click="reload()">
+      <i class="fa fa-exclamation-triangle fa-lg"></i> <span>The page is not writable</span><br />
+      <small>Please check the permissions for the content folder and all files.</small>
+    </a>
+  </div>
 </div>

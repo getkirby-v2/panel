@@ -38,4 +38,8 @@ app.controller('PageController', function($rootScope, $scope, $state, $statePara
     $state.transitionTo($state.current, {uri: page.uri}, {reload: true});
   };
 
+  $scope.reload = function() {
+    window.location.reload();
+  }
+
 });
