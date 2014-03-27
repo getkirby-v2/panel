@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // register all available routes
 return array(
@@ -8,6 +8,12 @@ return array(
     'pattern' => '/',
     'action'  => 'AppController::index',
     'filter'  => array('auth', 'isInstalled'),
+  ),
+
+  // Error page
+  array(
+    'pattern' => 'error',
+    'action'  => 'AppController::error'
   ),
 
   // Authentication
@@ -39,7 +45,7 @@ return array(
     'method'  => 'POST'
   ),
 
- 
+
   // Pages
   array(
     'pattern' => 'api/pages/show',
@@ -83,7 +89,7 @@ return array(
   ),
   array(
     'pattern' => 'api/pages/change-url',
-    'action'  => 'PagesController::changeURL', 
+    'action'  => 'PagesController::changeURL',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),

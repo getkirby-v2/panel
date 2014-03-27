@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function layout($file, $data = array()) {
   return new Layout($file, $data);
@@ -21,7 +21,7 @@ function fileResponse($file, $child = false) {
     'name'      => $file->name(),
     'extension' => $file->extension(),
     'size'      => $file->niceSize(),
-    'type'      => $file->type(),
+    'type'      => $file->type() ? $file->type() : 'unknown',
     'url'       => $file->url()
   );
 
@@ -52,7 +52,7 @@ function pageResponse($page, $child = false) {
     'uri'      => $page->uri(),
     'uid'      => $page->uid(),
     'slug'     => $page->slug(),
-    'num'      => intval($page->num()), 
+    'num'      => intval($page->num()),
     'home'     => $page->isHomePage(),
     'error'    => $page->isErrorPage(),
     'visible'  => $page->isVisible(),
@@ -65,7 +65,7 @@ function pageResponse($page, $child = false) {
   }
 
   if(!$page->isSite() and !$child) {
-    $result['parent']  = pageResponse($page->parent(), true);    
+    $result['parent']  = pageResponse($page->parent(), true);
     $result['parents'] = $page->parents()->toArray(function($item) {
       return pageResponse($item, true);
     });
@@ -84,8 +84,8 @@ function pageResponse($page, $child = false) {
 
     $result['children'] = array_values($children->toArray(function($item) {
       return pageResponse($item, true);
-    }));    
-  
+    }));
+
     $result['content'] = array_map(function($field) {
       return (string)$field;
     }, $content->data());
@@ -133,6 +133,17 @@ function pageResponse($page, $child = false) {
   );
 
   // deletable status
+  if($page->isSite()) {
+    $result['deletable'] = array(
+      'status'  => false,
+      'message' => 'The site cannot be deleted'
+    );
+    $result['changeableURL'] = array(
+      'status'  => false,
+      'message' => 'The URL for the site cannot be changed'
+    );
+  }
+
   if($page->isErrorPage()) {
     $result['deletable'] = array(
       'status'  => false,
