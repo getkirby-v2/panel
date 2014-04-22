@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 class FilesController extends Controller {
 
   public function show() {
 
     if($file = $this->file(get('uri'), get('filename'))) {
-      return response::json(fileResponse($file));      
+      return response::json(fileResponse($file));
     } else {
       return response::error('No such file');
     }
@@ -15,14 +15,13 @@ class FilesController extends Controller {
   public function upload() {
 
     $page   = $this->page(get('uri'));
-    $upload = new Upload;
-    $upload->to($page->root() . DS . '{safeFilename}');
-    $upload->success(function($file) {      
+    $upload = new Upload($page->root() . DS . '{safeFilename}');
+
+    if($file = $upload->file()) {
       return response::success('The file has been uploaded');
-    });      
-    $upload->error(function($exception) {
+    } else {
       return response::error($exception->getMessage());
-    });
+    }
 
   }
 
@@ -35,7 +34,7 @@ class FilesController extends Controller {
     }
 
     try {
-      $filename = $file->rename(get('name'));      
+      $filename = $file->rename(get('name'));
       return response::success('The file has been renamed', array(
         'filename' => $filename
       ));
@@ -59,7 +58,7 @@ class FilesController extends Controller {
       return response::error('The file could not be found');
     }
 
-    $meta   = get('meta'); 
+    $meta   = get('meta');
     $fields = array_keys($page->blueprint()->files()->fields());
     $data   = array();
 
@@ -97,7 +96,7 @@ class FilesController extends Controller {
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
-      
+
   }
 
   public function fields() {
@@ -133,7 +132,7 @@ class FilesController extends Controller {
     if($page = $this->page($uri)) {
       return $page->file($filename);
     } else {
-      return false;      
+      return false;
     }
   }
 
