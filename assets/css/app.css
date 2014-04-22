@@ -68,9 +68,9 @@ input:invalid {
   box-shadow:none;
 }
 
-button::-moz-focus-inner, 
-input[type="button"]::-moz-focus-inner, 
-input[type="submit"]::-moz-focus-inner, 
+button::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner {
   margin-top: -3px !important;
   margin-bottom: -3px !important;
@@ -102,7 +102,7 @@ input[type="reset"]::-moz-focus-inner {
 .gamma {
   font-size: .9em;
   color: #777;
-  font-weight: 400;  
+  font-weight: 400;
 }
 
 /** Dropdown **/
@@ -183,20 +183,20 @@ body.has-dropdown:after {
 .topbar__loader {
   background: #000 url(../images/loader.white.gif) no-repeat center center;
 }
-.topbar__status i {  
+.topbar__status i {
   margin-top: -4px;
 }
 .topbar__status--success {
   color: #8dae28;
 }
 .topbar__status--error {
-  color: #b3000a;  
+  color: #b3000a;
 }
 
-.menuToggle, 
+.menuToggle,
 .previewToggle {
   width: 4em;
-  height: 100%;  
+  height: 100%;
   text-align: center;
 }
 
@@ -232,16 +232,16 @@ body.has-dropdown:after {
 }
 
 .menuToggle i {
-  margin-top: -8px;  
+  margin-top: -8px;
 }
 
 .previewToggle i {
-  margin-top: -6px;  
+  margin-top: -6px;
 }
 
 
 /** main menu **/
-.dropdown.menu {  
+.dropdown.menu {
   top: 3em;
   left: 0;
   width: 250px;
@@ -268,7 +268,7 @@ body.has-dropdown:after {
   display: block;
   padding: 1em 1.5em;
   white-space: nowrap;
-  overflow: hidden; 
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 .breadcrumb li:last-child a {
@@ -436,7 +436,7 @@ body.has-dropdown:after {
 .sidebar__items .dz {
   margin: 1.5em;
 }
-.sidebar__items .dz-message {  
+.sidebar__items .dz-message {
   padding: 1em 0;
 }
 .sidebar__items .dz .fa {
@@ -570,7 +570,7 @@ body.has-dropdown:after {
   background: #fff;
   pointer-events: none;
 }
-.form__inputIcon {  
+.form__inputIcon {
   width: 3em;
 }
 .form__inputIcon--readonly {
@@ -600,7 +600,7 @@ body.has-dropdown:after {
   background: #f5f5f5;
   border-color: #f5f5f5;
 }
-.form__input--readonly:focus {  
+.form__input--readonly:focus {
   border: 2px solid #ddd;
 }
 .form__input select {
@@ -694,7 +694,7 @@ body.has-dropdown:after {
 }
 .page__template strong {
   color: #777;
-}  
+}
 
 /** login **/
 .login {
@@ -726,7 +726,7 @@ body.has-dropdown:after {
   right: 0;
   bottom: 0;
 }
-.filedetails__form {
+.filedetails__sidebar {
   padding: 1.5em;
 }
 .filedetails__preview {
@@ -746,19 +746,19 @@ body.has-dropdown:after {
 }
 .filedetails__thumb a {
   display: block;
-  height: 100%;  
+  height: 100%;
 }
 
 @media (min-width: 900px) {
   .filedetails__preview {
-    position: absolute;  
+    position: absolute;
     top: 0;
     left: 0;
     width: 50%;
     height: 100%;
     padding-bottom: 0;
-  }  
-  .filedetails__form {
+  }
+  .filedetails__sidebar {
     position: absolute;
     left: 50%;
     top: 0;
@@ -778,12 +778,14 @@ body.has-dropdown:after {
   .filedetails__preview {
     width: 66.66%;
   }
-  .filedetails__form {
+  .filedetails__sidebar {
     left: 66.66%;
   }
 }
 
-
+.filedetails__dz {
+  margin: 1em 0;
+}
 .filedetails__icon {
   position: absolute;
   top: 50%;
@@ -825,7 +827,7 @@ body.has-dropdown:after {
 .filedetails__navigation {
   padding: 1em 0;
   border-top: 2px solid #ddd;
-  margin-top: 1.5em;  
+  margin-top: 1.5em;
 }
 .filedetails__navigation li {
   list-style: none;
@@ -844,7 +846,7 @@ body.has-dropdown:after {
 /** Filemanager **/
 
 .manager {
-  padding: 1.5em 0; 
+  padding: 1.5em 0;
   min-height: 100%;
 }
 
@@ -951,9 +953,9 @@ body.has-dropdown:after {
   padding-top: .25em;
   display: block;
 }
-.manager__empty--error i, 
+.manager__empty--error i,
 .manager__empty--error span {
-  color: #b3000a;  
+  color: #b3000a;
 }
 
 .files {
@@ -1000,9 +1002,9 @@ body.has-dropdown:after {
 
 .file__preview {
   position: relative;
-  background: #000; 
+  background: #000;
   display: block;
-  padding-bottom: 66.66%;  
+  padding-bottom: 66.66%;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -1213,13 +1215,13 @@ body.has-dropdown:after {
   color: #444;
 }
 .user__username {
-  padding: 1em .5em 1em 4em;  
+  padding: 1em .5em 1em 4em;
   line-height: 1em;
   display: inline-block;
 }
 .user__email {
-  color: #777;  
-  padding: 1em 1.5em 1em .5em;  
+  color: #777;
+  padding: 1em 1.5em 1em .5em;
   line-height: 1em;
   font-size: .9em;
 }

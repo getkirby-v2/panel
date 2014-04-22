@@ -2,6 +2,11 @@ app.controller('EditFileController', function($rootScope, $scope, $state, $http,
 
   $scope.page = page;
   $scope.file = angular.copy(file);
+  $scope.view = 'form';
+
+  $scope.show = function(view) {
+    $scope.view = view;
+  };
 
   $scope.submit = function() {
 
@@ -10,7 +15,7 @@ app.controller('EditFileController', function($rootScope, $scope, $state, $http,
 
         if($scope.file.name !== file.name) {
 
-          // rename the file 
+          // rename the file
           $http.post('api/files/rename/?uri=' + $scope.page.uri + '&filename=' + file.filename, $.param({name: $scope.file.name}))
             .success(function(response) {
               $rootScope.status.success();

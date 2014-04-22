@@ -15,46 +15,69 @@
 
   </div><!--
 
---><form class="filedetails__form form" ng-class="{loading: loading}" ng-submit="submit()">
+--><div class="filedetails__sidebar">
 
-    <div class="form__alert" ng-show="message" ng-click="alert('')">
-      {{message}}
-    </div>
+    <form ng-show="view == 'form'" class="filedetails__form form" ng-class="{loading: loading}" ng-submit="submit()">
 
-    <div class="form__field">
-      <label class="form__label">Filename</label>
-      <div class="form__inputWrapper">
-        <input class="form__input" type="text" placeholder="Filename" ng-model="file.name" required autofocus>
-        <span class="form__inputAppendix"><i>.{{file.extension}}</i></span>
+      <div class="form__alert" ng-show="message" ng-click="alert('')">
+        {{message}}
       </div>
-    </div>
 
-    <div class="form__field">
-      <label class="form__label">Type / Size</label>
-      <div class="form__input form__input--readonly">{{file.type}} / {{file.size}}</div>
-    </div>
-
-    <div class="form__field">
-      <label class="form__label">Public link</label>
-      <div class="form__inputWrapper">
-        <input class="form__input form__input--readonly" type="text" readonly ng-model="file.url">
-        <span class="form__inputIcon form__inputIcon--readonly">
-          <i class="fa fa-chain"></i>
-        </span>
+      <div class="form__field">
+        <label class="form__label">
+          Filename
+          <a class="form__labelOption" ng-click="show('replace')" href=""><i class="fa fa-cloud-upload"></i> Replace file</a>
+        </label>
+        <div class="form__inputWrapper">
+          <input class="form__input" type="text" placeholder="Filename" ng-model="file.name" required autofocus>
+          <span class="form__inputAppendix"><i>.{{file.extension}}</i></span>
+        </div>
       </div>
+
+      <div class="form__field">
+        <label class="form__label">Type / Size</label>
+        <div class="form__input form__input--readonly">{{file.type}} / {{file.size}}</div>
+      </div>
+
+      <div class="form__field">
+        <label class="form__label">Public link</label>
+        <div class="form__inputWrapper">
+          <input class="form__input form__input--readonly" type="text" readonly ng-model="file.url">
+          <span class="form__inputIcon form__inputIcon--readonly">
+            <i class="fa fa-chain"></i>
+          </span>
+        </div>
+      </div>
+
+      <div ng-include="'api/files/fields/?uri=' + page.uri"></div>
+
+      <div class="form__buttons form__buttons--centered">
+        <input type="submit" class="form__button" value="save">
+      </div>
+
+      <ul class="filedetails__navigation">
+        <li><a class="gamma" ui-sref="page({uri: page.uri})"><i class="fa fa-arrow-circle-left"></i> Back to page</a></li><!--
+     --><li><a class="gamma" ui-sref="files({uri: page.uri})"><i class="fa fa-arrow-circle-right"></i> Manage files</a></li>
+      </ul>
+
+    </form>
+
+    <div ng-show="view == 'replace'">
+
+      <h1 class="beta">Replace {{file.filename}}</h1>
+
+      <form class="filedetails__dz dz" action="api/files/upload" dropzone done="replace()">
+        <strong>Drop a file here…</strong>
+        <small>or click to replace this file</small>
+        <input type="hidden" name="uri" ng-value="page.uri">
+      </form>
+
+      <div class="form__buttons form__buttons--centered">
+        <input type="button" ng-click="show('form')" class="form__button" value="cancel">
+      </div>
+
     </div>
 
-    <div ng-include="'api/files/fields/?uri=' + page.uri"></div>
-
-    <div class="form__buttons form__buttons--centered">
-      <input type="submit" class="form__button" value="save">
-    </div>
-
-    <ul class="filedetails__navigation">
-      <li><a class="gamma" ui-sref="page({uri: page.uri})"><i class="fa fa-arrow-circle-left"></i> Back to page</a></li><!--
-   --><li><a class="gamma" ui-sref="files({uri: page.uri})"><i class="fa fa-arrow-circle-right"></i> Manage files</a></li>
-    </ul>
-
-  </form>
+  </div>
 
 </div>

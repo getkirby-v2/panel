@@ -8,7 +8,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/files/index.html',       
+    templateUrl: 'views/files/index.html',
     controller : 'FilesController'
   });
 
@@ -58,5 +58,6 @@ app.config(function($stateProvider) {
       }
     }
   });
+
 
 });
