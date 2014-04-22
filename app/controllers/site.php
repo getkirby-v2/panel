@@ -48,6 +48,11 @@ class SiteController extends Controller {
       $problems[] = 'Please add a site/blueprints folder';
     }
 
+    $folder = new Folder(c::get('root.content'));
+    if(!$folder->isWritable(true)) {
+      $problems[] = 'The content folder and all contained files and folders must be writable.';
+    }
+
     if(!empty($problems)) {
       return response::error('There are some issues!', 400, $problems);      
     } else {

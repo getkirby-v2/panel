@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class PagesController extends Controller {
 
@@ -22,7 +22,7 @@ class PagesController extends Controller {
     $slug     = str::slug($title);
 
     if(empty($title)) {
-      return response::error('The title is missing');      
+      return response::error('The title is missing');
     }
 
     if(empty($template)) {
@@ -30,7 +30,7 @@ class PagesController extends Controller {
     }
 
     try {
-    
+
       $parent->children()->create($slug, $template, array(
         'title' => $title
       ));
@@ -39,7 +39,7 @@ class PagesController extends Controller {
         'uid' => $slug,
         'uri' => $parent->uri() . '/' . $slug
       ));
-    
+
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
@@ -72,14 +72,14 @@ class PagesController extends Controller {
     try {
 
       $page->update($data, app::$language);
-  
+
       return response::success('The page has been updated', array(
         'file' => $page->content()->root(),
         'data' => $data
       ));
 
     } catch(Exception $e) {
-      return response::error($e->getMessage());      
+      return response::error($e->getMessage());
     }
 
   }
@@ -96,7 +96,7 @@ class PagesController extends Controller {
       $page->delete();
       return response::success('The page has been removed');
     } catch(Exception $e) {
-      return response::error($e->getMessage());      
+      return response::error($e->getMessage());
     }
 
   }
@@ -107,11 +107,11 @@ class PagesController extends Controller {
     $uids = get('uids');
     $num  = 1;
 
-    foreach($uids as $uid) {        
+    foreach($uids as $uid) {
       try {
         $child = $page->children()->find($uid);
         $child->sort($num);
-        $num++;   
+        $num++;
       } catch(Exception $e) {
 
       }

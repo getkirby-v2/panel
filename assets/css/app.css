@@ -262,11 +262,11 @@ body.has-dropdown:after {
   font-size: 1em;
   font-weight: 400;
   color: #fff;
-  max-width: 15em;
+  max-width: 12.5em;
 }
 .breadcrumb a span {
   display: block;
-  padding: 1em 1.5em;
+  padding: 1em 1.25em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -277,7 +277,7 @@ body.has-dropdown:after {
 .breadcrumb li:after {
   position: absolute;
   content: "";
-  right: -.75em;
+  right: -.5em;
   top: 0;
   bottom: 0;
   width: 1.25em;
@@ -528,6 +528,10 @@ body.has-dropdown:after {
   font-size: .9em;
   color: #999 !important;
   float: right;
+}
+.form__labelOption a {
+  color: #999;
+  padding-left: 1.5em;
 }
 .form__labelOption i {
   color: #000;

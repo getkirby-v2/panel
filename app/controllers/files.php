@@ -15,14 +15,33 @@ class FilesController extends Controller {
   public function upload() {
 
     $page   = $this->page(get('uri'));
-    $upload = new Upload;
-    $upload->to($page->root() . DS . '{safeFilename}');
-    $upload->success(function($file) {
+    $upload = new Upload($page->root() . DS . '{safeFilename}');
+
+    if($upload->file()) {
       return response::success('The file has been uploaded');
-    });
-    $upload->error(function($exception) {
+    } else {
       return response::error($exception->getMessage());
-    });
+    }
+
+  }
+
+  public function replace() {
+
+    $file   = $this->file(get('uri'), get('filename'));
+    $upload = new Upload($file->root(), array(
+      'overwrite' => true,
+      'accept' => function($upload) use($file) {
+        if($upload->mime() != $file->mime()) {
+          throw new Error('The uploaded file must have the same file type');
+        }
+      }
+    ));
+
+    if($upload->file()) {
+      return response::success('The file has been replaced');
+    } else {
+      return response::error($exception->getMessage());
+    }
 
   }
 

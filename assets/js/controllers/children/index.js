@@ -5,6 +5,13 @@ app.controller('ChildrenController', function($rootScope, $scope, $state, $state
   // fix the uri for the api
   if($scope.page.uri == null) $scope.page.uri = '';
 
+  $scope.breadcrumb = [
+    {
+      label: 'Subpages',
+      url: $state.href('children', {uri: page.uri})
+    }
+  ];
+
   $timeout(function() {
 
     $('.sortable').sortable({
@@ -22,7 +29,7 @@ app.controller('ChildrenController', function($rootScope, $scope, $state, $state
             .error(function(response) {
 
             });
-        } 
+        }
       },
       receive : function(event, ui) {
         if($(this).attr('id') == 'invisible-children') {

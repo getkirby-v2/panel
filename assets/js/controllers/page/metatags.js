@@ -2,13 +2,20 @@ app.controller('MetatagsController', function($rootScope, $scope, $state, $state
 
   $scope.page     = page;
   $scope.limit    = 15;
-  $scope.main     = 'views/page/form.html';        
+  $scope.main     = 'views/page/form.html';
   $scope.metatags = true;
   $scope.page.uri = '';
 
+  $scope.breadcrumb = [
+    {
+      label: 'Metatags',
+      url: $state.href('metatags')
+    }
+  ];
+
   // hacky way to connect the form with the breadcrumb
   $scope.page.content.title = page.title;
-  
+
   $scope.pageIconClass = function(page) {
     if(page.home)  return 'fa-home';
     if(page.error) return 'fa-exclamation-circle';
