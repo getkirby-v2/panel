@@ -2,7 +2,7 @@
 
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-// app setup 
+// app setup
 path('app',             __DIR__);
 path('app.controllers', __DIR__ . DS . 'controllers');
 path('app.models',      __DIR__ . DS . 'models');
@@ -12,11 +12,14 @@ path('app.views',       __DIR__ . DS . 'views');
 // autoloader
 load(array(
 
-  // load library classes
+  // mvc
   'app'        => __DIR__ . DS . 'lib' . DS . 'app.php',
   'view'       => __DIR__ . DS . 'lib' . DS . 'view.php',
   'controller' => __DIR__ . DS . 'lib' . DS . 'controller.php',
   'layout'     => __DIR__ . DS . 'lib' . DS . 'layout.php',
+
+  // panel stuff
+  'pagedata'   => __DIR__ . DS . 'lib' . DS . 'pagedata.php',
 
 ));
 

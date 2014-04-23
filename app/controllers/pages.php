@@ -31,9 +31,11 @@ class PagesController extends Controller {
 
     try {
 
-      $parent->children()->create($slug, $template, array(
+      $data = pagedata::createByBlueprint($template, array(
         'title' => $title
       ));
+
+      $parent->children()->create($slug, $template, $data);
 
       return response::success('The page has been created', array(
         'uid' => $slug,
