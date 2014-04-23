@@ -1118,7 +1118,7 @@ body.has-dropdown:after {
 }
 .subpage .num {
   position: absolute;
-  right: 3em;
+  right: 6em;
   display: inline-block;
   font-size: 1em;
   color: #999;
@@ -1137,6 +1137,7 @@ body.has-dropdown:after {
   background: -ms-linear-gradient(left, rgba(255,255,255, 0), rgba(255,255,255, 1));
   background: linear-gradient(left, rgba(255,255,255, 0), rgba(255,255,255, 1));
 }
+.subpage__editToggle,
 .subpage__deleteToggle {
   position: absolute;
   right: 0;
@@ -1148,11 +1149,16 @@ body.has-dropdown:after {
   background: #fff;
   cursor: pointer;
 }
+.subpage__editToggle {
+  right: 3em;
+}
+.subpage__editToggle i,
 .subpage__deleteToggle i {
   position: relative;
   color: #999;
   top: 7px;
 }
+.subpage__editToggle:hover i,
 .subpage__deleteToggle:hover i {
   color: #000;
 }

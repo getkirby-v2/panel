@@ -1,7 +1,7 @@
 // configure the application
 app.config(function($stateProvider) {
 
-  /** 
+  /**
    * Pages
    **/
   $stateProvider.state('page', {
@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/page/index.html',       
+    templateUrl: 'views/page/index.html',
     controller : 'PageController'
   });
 
@@ -18,7 +18,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/page/index.html',       
+    templateUrl: 'views/page/index.html',
     controller : 'MetatagsController'
   });
 
@@ -37,11 +37,24 @@ app.config(function($stateProvider) {
     views: {
       'modal@' : {
         resolve: {
-          page: app.fetchPage, 
+          page: app.fetchPage,
           templates: app.fetchTemplates
         },
         templateUrl: 'views/page/add.html',
         controller: 'AddPageController'
+      }
+    }
+  });
+
+  $stateProvider.state('page.modal.upload', {
+    url: 'upload',
+    views: {
+      'modal@' : {
+        resolve: {
+          page: app.fetchPage
+        },
+        templateUrl: 'views/files/upload.html',
+        controller: 'UploadFileController'
       }
     }
   });

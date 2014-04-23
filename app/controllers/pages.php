@@ -105,13 +105,29 @@ class PagesController extends Controller {
 
     $page = $this->page(get('uri'));
     $uids = get('uids');
-    $num  = 1;
+    $n    = 1;
+
+    // check for the numbering mode for subpages
+    $num = $page->blueprint()->num();
 
     foreach($uids as $uid) {
       try {
+
         $child = $page->children()->find($uid);
-        $child->sort($num);
-        $num++;
+
+        switch($num->mode()) {
+          case 'zero':
+            $n = 0;
+            break;
+          case 'date':
+            $field  = $num->field() ? $num->field() : 'date';
+            $format = $num->format() ? $num->format() : 'Ymd';
+            $n      = date($format, strtotime($child->$field()));
+            break;
+        }
+
+        $child->sort($n);
+        $n++;
       } catch(Exception $e) {
 
       }

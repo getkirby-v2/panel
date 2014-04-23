@@ -28,6 +28,10 @@
             <strong>{{child.title}}</strong>
             <small class="num">{{child.num}}</small>
 
+            <a class="subpage__editToggle" ui-sref="page({uri: child.uri})">
+              <i class="fa fa-pencil"></i>
+            </a>
+
             <a class="subpage__deleteToggle" ng-click="dropdown.toggle('subpage-' + child.uid, $event)">
               <i ng-show="!dropdown.isOpen('subpage-' + child.uid)" class="fa fa-trash-o"></i>
               <i ng-show="dropdown.isOpen('subpage-' + child.uid)" class="fa fa-times"></i>
@@ -49,6 +53,10 @@
           <li id="{{child.uid}}" ng-dblclick="$state.go('page', {uri: child.uri})" class="subpage" ng-class="{deletable: dropdown.isOpen('subpage-' + child.uid)}" ng-repeat="child in invisible = (page.children | filter: {visible: false, title: search})">
             <strong>{{child.title}}</strong>
             <small class="num">—</small>
+
+            <a class="subpage__editToggle" ui-sref="page({uri: child.uri})">
+              <i class="fa fa-pencil"></i>
+            </a>
 
             <a class="subpage__deleteToggle" ng-click="dropdown.toggle('subpage-' + child.uid, $event)">
               <i ng-show="!dropdown.isOpen('subpage-' + child.uid)" class="fa fa-trash-o"></i>
