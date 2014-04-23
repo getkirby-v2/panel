@@ -22,8 +22,7 @@ function fileResponse($file, $child = false) {
     'extension' => $file->extension(),
     'size'      => $file->niceSize(),
     'type'      => $file->type() ? $file->type() : 'unknown',
-    'url'       => $file->url(),
-    'thumb'     => thumb($file, array('width' => 300, 'height' => 200, 'crop' => true))->url()
+    'url'       => $file->url()
   );
 
   if(!$child) {
@@ -35,6 +34,12 @@ function fileResponse($file, $child = false) {
     }, $meta->data());
 
     if(empty($result['meta'])) $result['meta'] = null;
+
+    try {
+      $result['thumb'] = thumb($file, array('width' => 300, 'height' => 200, 'crop' => true))->url();
+    } catch(Exception $e) {
+      $result['thumb'] = $result['url'];
+    }
 
   }
 
@@ -53,23 +58,41 @@ function pageResponse($page, $child = false) {
     'uri'      => $page->uri(),
     'uid'      => $page->uid(),
     'slug'     => $page->slug(),
-    'num'      => intval($page->num()),
     'home'     => $page->isHomePage(),
     'error'    => $page->isErrorPage(),
     'visible'  => $page->isVisible(),
     'template' => $page->template()
   );
 
+
   // if there's a blueprint for the intended page template, use that!
   if(c::get('root.blueprints') . DS . $page->intendedTemplate() . '.php') {
     $result['template'] = $page->intendedTemplate();
   }
 
-  if(!$page->isSite() and !$child) {
-    $result['parent']  = pageResponse($page->parent(), true);
-    $result['parents'] = $page->parents()->toArray(function($item) {
-      return pageResponse($item, true);
-    });
+  if(!$page->isSite()) {
+
+    if(!$child) {
+      $result['parent']  = pageResponse($page->parent(), true);
+      $result['parents'] = $page->parents()->toArray(function($item) {
+        return pageResponse($item, true);
+      });
+    }
+
+    $parentBlueprint = $page->parent()->blueprint();
+
+    switch($parentBlueprint->num()->mode()) {
+      case 'zero':
+        $result['num'] = '';
+        break;
+      case 'date':
+        $result['num'] = date('Y/m/d', strtotime($page->num()));
+        break;
+      default:
+        $result['num'] = intval($page->num());
+        break;
+    }
+
   }
 
   if(!$child) {

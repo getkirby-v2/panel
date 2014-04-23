@@ -1,7 +1,7 @@
 app.controller('PageController', function($rootScope, $scope, $state, $stateParams, $timeout, $http, page) {
 
   $scope.page  = page;
-  $scope.limit = $scope.page.settings.pages ? $scope.page.settings.pages.limit : 20;  
+  $scope.limit = $scope.page.settings.pages ? $scope.page.settings.pages.limit : 20;
 
   // hacky way to connect the form with the breadcrumb
   $scope.page.content.title = page.title;
@@ -9,10 +9,10 @@ app.controller('PageController', function($rootScope, $scope, $state, $statePara
   if(!page.parent) {
     $http.get('api/site/metatags').then(function(response) {
       $scope.sections = response.data;
-      $scope.main     = 'views/page/metatags.html';        
+      $scope.main     = 'views/page/metatags.html';
     });
   } else {
-    $scope.main = 'views/page/form.html';        
+    $scope.main = 'views/page/form.html';
   }
 
   $scope.pageIconClass = function(page) {
