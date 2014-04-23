@@ -2,24 +2,23 @@ app.directive('tagbox', function() {
   return {
     restrict: 'E',
     scope : {
-      tags : '=', 
+      tags : '=',
       suggestions : '=',
     },
     controller : function($scope, $element, $attrs, $timeout) {
 
       if(!angular.isArray($scope.tags)) {
         if($scope.tags == undefined || $scope.tags == null) {
-          $scope.tags = [];            
-          console.log($scope.tags);
+          $scope.tags = [];
         } else {
           var raw = $scope.tags.split(',');
-          $scope.tags = [] 
+          $scope.tags = []
           angular.forEach(raw, function(tag) {
             var tag = $.trim(tag);
             if(tag.length !== 0) $scope.tags.push(tag);
           });
         }
-      } 
+      }
 
       if(!angular.isArray($scope.suggestions)) {
         $scope.suggestions = [];
@@ -54,18 +53,18 @@ app.directive('tagbox', function() {
       };
 
       $scope.add = function() {
-        
+
         // clean the tag
-        $scope.tag = $.trim($scope.tag);        
+        $scope.tag = $.trim($scope.tag);
         $scope.selected = '';
 
         // validate the new tag
         if($scope.tags.indexOf($scope.tag) == -1 && $scope.tag.length > 0) {
           $scope.tags.push($scope.tag);
-        } 
-          
+        }
+
         // reset the input field
-        $scope.tag = '';              
+        $scope.tag = '';
 
       };
 
@@ -98,7 +97,7 @@ app.directive('tagbox', function() {
       }
 
       $scope.navigate = function($event) {
-        
+
         var len  = $scope.tags.length;
         var curr = $scope.tags.indexOf($scope.selected);
 
@@ -116,13 +115,13 @@ app.directive('tagbox', function() {
         }
 
         if(index < 0) index = 0;
-        
+
         if(index >= len) {
           $timeout(function() {
             $element.find('.tagbox__input').focus();
           }, 0);
         } else {
-          $scope.selected = $scope.tags[index];            
+          $scope.selected = $scope.tags[index];
         }
 
       };
@@ -135,9 +134,9 @@ app.directive('tagbox', function() {
         } else {
           $scope.remove($scope.tags[$scope.tags.length - 1]);
         }
-        
+
         $scope.tag = '';
-      
+
       };
 
     },

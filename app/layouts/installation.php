@@ -2,20 +2,21 @@
 <html lang="en" ng-app="app">
   <head>
 
-    <meta charset="utf-8" />  
-    
+    <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow" />
 
     <base href="<?php echo url('panel') ?>/"></base>
     <title>Kirby Panel</title>
 
-    <?php 
+    <?php
 
     echo css(array(
       'panel/assets/css/app.css',
+      'panel/assets/css/form.css',
       'panel/assets/css/font-awesome.css'
-    )); 
+    ));
 
     echo html::shiv();
 
@@ -28,7 +29,7 @@
       <div class="modal__box login" ng-include="view" onload="reposition()"></div>
     </div>
 
-    <?php 
+    <?php
 
     echo js(array(
       'panel/assets/js/lib/jquery.js',
@@ -38,7 +39,7 @@
       'panel/assets/js/controllers/installation/index.js',
     ));
 
-    ?>    
-    
+    ?>
+
   </body>
 </html>

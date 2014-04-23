@@ -2,9 +2,13 @@ app.controller('MetatagsController', function($rootScope, $scope, $state, $state
 
   $scope.page     = page;
   $scope.limit    = 15;
-  $scope.main     = 'views/page/form.html';
   $scope.metatags = true;
   $scope.page.uri = '';
+
+  $http.get('api/pages/fields').then(function(response) {
+    $scope.fields = response.data;
+    $scope.main   = 'api/pages/form';
+  });
 
   $scope.breadcrumb = [
     {

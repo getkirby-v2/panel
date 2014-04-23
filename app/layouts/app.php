@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="assets/css/grid.css">
     <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/form.css">
     <link rel="stylesheet" href="assets/css/font-awesome.css">
     <link rel="stylesheet" href="assets/css/tagbox.css">
     <link rel="stylesheet" href="assets/css/dropzone.css">
@@ -71,12 +72,14 @@
       'panel/assets/js/factories/focus.js',
       'panel/assets/js/factories/http.js',
       'panel/assets/js/factories/reposition.js',
+      'panel/assets/js/factories/field.js',
 
       // directives
       'panel/assets/js/directives/date.js',
       'panel/assets/js/directives/dropzone.js',
       'panel/assets/js/directives/editor.js',
       'panel/assets/js/directives/focus.js',
+      'panel/assets/js/directives/field.js',
       'panel/assets/js/directives/tagbox.js',
 
       // controllers
@@ -103,6 +106,12 @@
       'panel/assets/js/controllers/users/avatar.js',
 
     ));
+
+    $fields = new Folder(c::get('root.panel') . DS . 'fields');
+
+    foreach($fields->children() as $dir) {
+      echo js('panel/fields/' . $dir->name() . '/directive.js');
+    }
 
     ?>
 

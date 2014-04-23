@@ -17,7 +17,7 @@ class View {
   }
 
   public function render() {
-    $file = $this->root . DS . str_replace('.', DS, $this->file) . '.php';    
+    $file = $this->root . DS . str_replace('.', DS, $this->file) . '.php';
     if(!file_exists($file)) throw new Exception('Invalid view: ' . $this->file);
     return f::load($file, $this->data);
   }

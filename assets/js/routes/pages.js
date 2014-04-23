@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/page/index.html',
+    templateUrl: 'views/pages/index.html',
     controller : 'PageController'
   });
 
@@ -18,7 +18,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/page/index.html',
+    templateUrl: 'views/pages/index.html',
     controller : 'MetatagsController'
   });
 
@@ -40,7 +40,7 @@ app.config(function($stateProvider) {
           page: app.fetchPage,
           templates: app.fetchTemplates
         },
-        templateUrl: 'views/page/add.html',
+        templateUrl: 'views/pages/add.html',
         controller: 'AddPageController'
       }
     }
@@ -66,7 +66,7 @@ app.config(function($stateProvider) {
         resolve: {
           page: app.fetchPage
         },
-        templateUrl: 'views/page/delete.html',
+        templateUrl: 'views/pages/delete.html',
         controller: 'DeletePageController'
       }
     }
@@ -79,7 +79,7 @@ app.config(function($stateProvider) {
         resolve: {
           page: app.fetchPage
         },
-        templateUrl: 'views/page/url.html',
+        templateUrl: 'views/pages/url.html',
         controller: 'ChangeUrlController'
       }
     }

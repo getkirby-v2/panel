@@ -1,0 +1,260 @@
+/** Form **/
+.form.loading:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,.9) url(../images/loader.black.gif) no-repeat center center;
+}
+.form__alert {
+  margin-bottom: 1em;
+  background: #a01428;
+  color: #fff;
+  padding: .5em 1em;
+  border: 1px solid #a01428;
+  font-weight: 400;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.form__label {
+  display: block;
+  padding-bottom: .5em;
+  font-weight: 600;
+  font-size: 1em;
+}
+.form__labelOption {
+  font-size: .9em;
+  color: #999 !important;
+  float: right;
+}
+.form__labelOption a {
+  color: #999;
+  padding-left: 1.5em;
+}
+.form__labelOption i {
+  color: #000;
+  margin-right: .5em;
+}
+.form__label--centered {
+  text-align: center;
+}
+.form__labelOption {
+  font-size: .9em;
+  color: #999 !important;
+  float: right;
+}
+.form__avatar {
+  text-align: center;
+  padding: .5em 0;
+}
+.form__avatar span {
+  position: relative;
+  display: block;
+}
+.form__avatar a {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1em;
+  height: 1em;
+  background: #fff;
+  border-radius: 50%;
+  line-height: 1.1em;
+  font-weight: 600;
+  margin-top: -.6em;
+  font-size: 24px;
+  margin-left: -.5em;
+  opacity: 0;
+  background: #a01428;
+  color: #fff;
+}
+.form__avatar:hover a {
+  opacity: 1;
+}
+.form__avatar img {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+}
+
+
+.form__header {
+  margin: -1.5em -1.5em 1em;
+}
+.form__header a {
+  display: block;
+  padding-bottom: 66.66%;
+  background: #222;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.form__input {
+  padding: .5em;
+  font-size: 1em;
+  line-height: 1.5em;
+  font-weight: 400;
+  border: 2px solid #ddd;
+  background: #fff;
+  width: 100%;
+  display: block;
+}
+.form__input--with-icon {
+  padding-right: 3.5em;
+}
+.form__inputWrapper {
+  position: relative;
+}
+.form__inputIcon,
+.form__inputAppendix {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  border-left: 1px dashed #ddd;
+  background: #fff;
+  pointer-events: none;
+}
+.form__inputIcon {
+  width: 3em;
+}
+.form__inputIcon--readonly {
+  background: #f5f5f5;
+}
+.form__inputIcon i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -6px;
+  margin-top: -7px;
+  color: #777;
+}
+.form__inputAppendix i {
+  display: block;
+  padding: .5em 1em;
+  font-style: normal;
+  color: #999;
+}
+.form__input:focus {
+  outline: 0;
+  border-color: #8dae28;
+}
+.form__input--readonly {
+  color: #999;
+  pointer-events: none;
+  background: #f5f5f5;
+  border-color: #f5f5f5;
+}
+.form__input--readonly:focus {
+  border: 2px solid #ddd;
+}
+.form__input select {
+  width: 100%;
+}
+.form__field {
+  position: relative;
+  margin-bottom: 1em;
+}
+.form__field--centered {
+  text-align: center;
+}
+.form__help {
+  font-size: .9em;
+  font-style: italic;
+  line-height: 1.5em;
+  color: #777;
+  font-weight: 400;
+  padding-top: .5em;
+  margin: 0;
+}
+.form__help strong {
+  font-weight: 600;
+  color: #000;
+}
+
+.form__toolbar {
+  z-index: 1;
+}
+.form__toolbar button {
+  border: 0;
+  background: #ddd;
+  color: #000;
+  margin-left: 1px;
+  font-size: .9em;
+  padding: .3em 1em .15em;
+  cursor: pointer;
+}
+.form__toolbar button:focus {
+  outline: 0;
+}
+
+.form__separator {
+  margin: 2.5em -3em 3em;
+  background: #ddd;
+  height: 1px;
+  border: 0;
+}
+.form__options {
+  margin-left: -.75em;
+  margin-right: -.75em;
+}
+.form__options .grid__item {
+  padding-bottom: 1.5em;
+  list-style: none;
+}
+.form__options label {
+  padding: .5em;
+  font-size: 1em;
+  line-height: 1.5em;
+  font-weight: 400;
+  border: 2px solid #ddd;
+  background: #fff;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+}
+.form__options li input {
+  float: left;
+  margin: .4em 1.5em .4em .4em;
+}
+
+.form__buttons {
+  overflow: hidden;
+  padding: .75em 0 .25em;
+}
+.form__buttons--centered {
+  text-align: center;
+}
+.form__button {
+  display: inline-block;
+  background: none;
+  border: 0;
+  font-weight: 600;
+  font-size: .9em;
+  border-radius: 5em;
+  padding: .4em 1.5em;
+  line-height: 1em;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid #000;
+}
+.form__button:focus {
+  background: #000;
+  color: #fff;
+}
+.form__button--cancel {
+  float: left;
+}
+.form__button--submit {
+  float: right;
+}
+.form__button--negative {
+  border-color: #b3000a;
+  color: #b3000a;
+}
+.form__button--negative:focus {
+  background: #b3000a;
+}

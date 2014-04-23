@@ -1,12 +1,17 @@
 app.controller('EditFileController', function($rootScope, $scope, $state, $http, page, file) {
 
-  $scope.page = page;
-  $scope.file = angular.copy(file);
-  $scope.view = 'form';
+  $scope.page   = page;
+  $scope.file   = angular.copy(file);
+  $scope.view   = 'form';
+  $scope.fields = null;
 
   $scope.dropOptions = {
     maxFiles : 1
   };
+
+  $http.get('api/files/fields?uri=' + page.uri).then(function(response) {
+    $scope.fields = response.data;
+  });
 
   $scope.breadcrumb = [
     {

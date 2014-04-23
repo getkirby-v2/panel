@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/children/index.html',       
+    templateUrl: 'views/children/index.html',
     controller : 'ChildrenController'
   });
 
@@ -31,7 +31,7 @@ app.config(function($stateProvider) {
           page: app.fetchPage,
           templates: app.fetchTemplates
         },
-        templateUrl: 'views/page/add.html',
+        templateUrl: 'views/pages/add.html',
         controller: 'AddPageController'
       }
     }

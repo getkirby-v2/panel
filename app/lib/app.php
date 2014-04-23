@@ -4,7 +4,7 @@ class App {
 
   static public $site;
   static public $path;
-  static public $routes;
+  static public $routes = array();
   static public $router;
   static public $route;
   static public $language;
@@ -12,7 +12,7 @@ class App {
   static public function configure() {
 
     if(is_null(static::$site)) {
-      static::$site = kirby::panelsetup();      
+      static::$site = kirby::panelsetup();
     }
 
     // some config stuff
@@ -21,7 +21,8 @@ class App {
     c::set('root.accounts',   c::get('root.site') . DS . 'accounts');
 
     // load all available routes
-    static::$routes = require(path('app')   . DS . 'routes.php');
+    static::$routes = array_merge(static::$routes, require(path('app')   . DS . 'routes' . DS . 'api.php'));
+    static::$routes = array_merge(static::$routes, require(path('app')   . DS . 'routes' . DS . 'views.php'));
 
     // start the router
     static::$router = new Router();
@@ -39,9 +40,9 @@ class App {
     });
 
     // check for a completed installation
-    static::$router->filter('isInstalled', function() {        
+    static::$router->filter('isInstalled', function() {
       if(static::$site->users()->count() == 0) {
-        go('panel/install');        
+        go('panel/install');
       }
     });
 
@@ -49,11 +50,11 @@ class App {
     static::$path = implode('/', (array)url::fragments(detect::path()));
 
   }
-  
+
   static public function launch() {
 
     static::$route = static::$router->run(static::$path);
-    
+
     // react on invalid routes
     if(!static::$route) {
       throw new Exception('Invalid route');
@@ -61,10 +62,11 @@ class App {
 
     // let's find the controller and controller action
     $controllerParts  = str::split(static::$route->action(), '::');
-    $controllerName   = $controllerParts[0];
+    $controllerUri    = $controllerParts[0];
     $controllerAction = $controllerParts[1];
-    $controllerFile   = path('app.controllers') . DS . strtolower(str_replace('Controller', '', $controllerName)) . '.php';
-  
+    $controllerFile   = path('app.controllers') . DS . strtolower(str_replace('Controller', '', $controllerUri)) . '.php';
+    $controllerName   = basename($controllerUri);
+
     // react on missing controllers
     if(!file_exists($controllerFile)) {
       throw new Exception('Invalid controller');
@@ -78,7 +80,7 @@ class App {
       throw new Exception('Invalid action');
     }
 
-    // run the controller 
+    // run the controller
     $controller = new $controllerName;
 
     // call the action and pass all arguments from the router
