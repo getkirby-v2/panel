@@ -10,6 +10,7 @@
     <base href="<?php echo url('panel') ?>/"></base>
     <title>Kirby Panel</title>
 
+    <link rel="stylesheet" href="assets/css/grid.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="stylesheet" href="assets/css/font-awesome.css">
     <link rel="stylesheet" href="assets/css/tagbox.css">

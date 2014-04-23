@@ -22,7 +22,8 @@ function fileResponse($file, $child = false) {
     'extension' => $file->extension(),
     'size'      => $file->niceSize(),
     'type'      => $file->type() ? $file->type() : 'unknown',
-    'url'       => $file->url()
+    'url'       => $file->url(),
+    'thumb'     => thumb($file, array('width' => 300, 'height' => 200, 'crop' => true))->url()
   );
 
   if(!$child) {

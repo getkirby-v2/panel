@@ -291,20 +291,6 @@ body.has-dropdown:after {
   position: relative;
 }
 
-
-/** super simple grid **/
-.grid__item {
-  display: inline-block;
-  padding: .75em;
-  vertical-align: top
-}
-.one-half {
-  width: 50%;
-}
-.one-quarter {
-  width: 25%;
-}
-
 /** Sidebar **/
 .sidebar {
   position: absolute;
@@ -1084,12 +1070,44 @@ body.has-dropdown:after {
 /** Subpage manager **/
 .subpages {
   position: relative;
-  padding: 1.5em .75em 6em;
+  padding: 1.5em 1.5em 6em;
 }
 .subpages .grid__item {
   padding-bottom: 3em;
 }
+.subpages__hint {
+  position: relative;
+  margin-top: 1.5em;
+  font-size: .9em;
+  line-height: 1.5em;
+  color: #777;
+  font-style: italic;
+}
+.subpages__hint:after {
+  position: absolute;
+  content: "";
+  top: -27px;
+  width: 30px;
+  height: 63px;
+  pointer-events: none;
+}
+.subpages__hint--right {
+  padding-right: 3em;
+}
+.subpages__hint--right:after {
+  right: -5px;
+  background: url(../images/hint.arrows.png) no-repeat right center;
+}
+.subpages__hint--left {
+  text-align: right;
+  padding-left: 3em;
+}
+.subpages__hint--left:after {
+  left: -5px;
+  background: url(../images/hint.arrows.png) no-repeat left center;
+}
 .sortable {
+  position: relative;
   background: none;
   border: 1px dashed #bbb;
   padding: .25em;

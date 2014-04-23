@@ -1,4 +1,4 @@
-app.controller('ChildrenController', function($rootScope, $scope, $state, $stateParams, $http, $timeout, page) {
+app.controller('ChildrenController', function($rootScope, $scope, $state, $stateParams, $http, $timeout, $filter, page) {
 
   $scope.page = page;
 
@@ -11,6 +11,22 @@ app.controller('ChildrenController', function($rootScope, $scope, $state, $state
       url: $state.href('children', {uri: page.uri})
     }
   ];
+
+  $scope.visibleChildren   = $filter('filter')($scope.page.children, {visible: true});
+  $scope.invisibleChildren = $filter('filter')($scope.page.children, {visible: false});
+
+  // both columns are equal
+  if($scope.visibleChildren.length == $scope.invisibleChildren.length) {
+    $scope.visibleClass = $scope.invisibleClass = 'one-half';
+  } else if($scope.visibleChildren.length == 0) {
+    $scope.visibleClass   = 'one-third';
+    $scope.invisibleClass = 'two-thirds';
+  } else if($scope.invisibleChildren.length == 0) {
+    $scope.visibleClass   = 'two-thirds';
+    $scope.invisibleClass = 'one-third';
+  } else {
+    $scope.visibleClass = $scope.invisibleClass = 'one-half';
+  }
 
   $timeout(function() {
 
