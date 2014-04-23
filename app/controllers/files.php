@@ -20,7 +20,7 @@ class FilesController extends Controller {
     if($upload->file()) {
       return response::success('The file has been uploaded');
     } else {
-      return response::error($exception->getMessage());
+      return response::error($upload->error()->getMessage());
     }
 
   }
@@ -40,7 +40,7 @@ class FilesController extends Controller {
     if($upload->file()) {
       return response::success('The file has been replaced');
     } else {
-      return response::error($exception->getMessage());
+      return response::error($upload->error()->getMessage());
     }
 
   }

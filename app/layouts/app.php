@@ -2,8 +2,8 @@
 <html lang="en" ng-app="app" ng-click="clicks()" ng-keydown="keys($event)">
   <head>
 
-    <meta charset="utf-8" />  
-    
+    <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow" />
 
@@ -36,7 +36,7 @@
       <div class="modal__box" ui-view="modal"></div>
     </section>
 
-    <?php 
+    <?php
 
     echo js(array(
 
@@ -99,10 +99,11 @@
       'panel/assets/js/controllers/users/delete.js',
       'panel/assets/js/controllers/users/edit.js',
       'panel/assets/js/controllers/users/index.js',
+      'panel/assets/js/controllers/users/avatar.js',
 
     ));
 
-    ?>    
-        
+    ?>
+
   </body>
 </html>

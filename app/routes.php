@@ -181,6 +181,18 @@ return array(
     'method'  => 'DELETE',
     'filter'  => 'auth',
   ),
+  array(
+    'pattern' => 'api/users/avatar',
+    'action'  => 'UsersController::avatar',
+    'method'  => 'POST',
+    'filter'  => 'auth',
+  ),
+  array(
+    'pattern' => 'api/users/avatar',
+    'action'  => 'UsersController::deleteAvatar',
+    'method'  => 'DELETE',
+    'filter'  => 'auth',
+  ),
 
   // helpers
   array(

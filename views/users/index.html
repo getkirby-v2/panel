@@ -10,7 +10,7 @@
   <div class="users">
     <article class="user" ng-repeat="user in users">
       <figure class="user__avatar">
-        <a href="">
+        <a ui-sref="users.modal.avatar({username: user.username})">
           <img ng-show="user.avatar" ng-src="{{user.avatar}}">
           <i ng-show="!user.avatar" class="fa fa-user fa-lg"></i>
         </a>

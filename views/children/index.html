@@ -10,17 +10,19 @@
     </a>
   </header>
 
+  <!--
   <div ng-show="page.children.length != 0" class="manager__search">
     <input class="manager__searchinput" type="search" ng-model="search" placeholder="Search for a subpage…">
   </div>
-  
+  -->
+
   <div class="subpages" ng-show="page.children.length != 0">
-  
+
     <div class="grid">
       <div class="grid__item one-half">
-    
+
         <h2 class="beta">Visible subpages</h2>
-        
+
         <ul id="visible-children" class="sortable">
           <li id="{{child.uid}}" ng-dblclick="$state.go('page', {uri: child.uri})" class="subpage" ng-class="{deletable: dropdown.isOpen('subpage-' + child.uid)}" ng-repeat="child in visible = (page.children | filter: {visible: true, title: search})">
             <strong>{{child.title}}</strong>
@@ -42,7 +44,7 @@
    --><div class="grid__item one-half">
 
         <h2 class="beta">Invisible subpages</h2>
-    
+
         <ul id="invisible-children" class="sortable">
           <li id="{{child.uid}}" ng-dblclick="$state.go('page', {uri: child.uri})" class="subpage" ng-class="{deletable: dropdown.isOpen('subpage-' + child.uid)}" ng-repeat="child in invisible = (page.children | filter: {visible: false, title: search})">
             <strong>{{child.title}}</strong>

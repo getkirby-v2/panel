@@ -5,7 +5,7 @@ app.config(function($stateProvider) {
    * Users
    */
   $stateProvider.state('users', {
-    url: '/users', 
+    url: '/users',
     resolve: {
       users: function($http) {
         return $http.get('api/users').then(function(response) {
@@ -13,7 +13,7 @@ app.config(function($stateProvider) {
         });
       }
     },
-    templateUrl: 'views/users/index.html',        
+    templateUrl: 'views/users/index.html',
     controller: 'UsersController'
   });
 
@@ -62,5 +62,19 @@ app.config(function($stateProvider) {
       }
     }
   });
+
+  $stateProvider.state('users.modal.avatar', {
+    url: '/avatar/:username',
+    views: {
+      'modal@' : {
+        resolve: {
+          user: app.fetchUser
+        },
+        templateUrl: 'views/users/avatar.html',
+        controller: 'AvatarController'
+      }
+    }
+  });
+
 
 });

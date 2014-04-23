@@ -524,6 +524,9 @@ body.has-dropdown:after {
   font-weight: 600;
   font-size: 1em;
 }
+.form__label--centered {
+  text-align: center;
+}
 .form__labelOption {
   font-size: .9em;
   color: #999 !important;
@@ -536,6 +539,39 @@ body.has-dropdown:after {
 .form__labelOption i {
   color: #000;
   margin-right: .5em;
+}
+.form__avatar {
+  text-align: center;
+  padding: .5em 0;
+}
+.form__avatar span {
+  position: relative;
+  display: block;
+}
+.form__avatar a {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1em;
+  height: 1em;
+  background: #fff;
+  border-radius: 50%;
+  line-height: 1.1em;
+  font-weight: 600;
+  margin-top: -.6em;
+  font-size: 24px;
+  margin-left: -.5em;
+  opacity: 0;
+  background: #a01428;
+  color: #fff;
+}
+.form__avatar:hover a {
+  opacity: 1;
+}
+.form__avatar img {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
 }
 .form__header {
   margin: -1.5em -1.5em 1em;
