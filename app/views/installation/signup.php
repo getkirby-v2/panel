@@ -5,21 +5,21 @@
   </div>
 
   <div class="form__field">
-    <label class="form__label">Create your first account…</label>
-    <input class="form__input" autofocus type="text" required placeholder="Username" ng-model="user.username">
-  </div>
-  
-  <div class="form__field">
-    <label class="form__label">Email</label>
-    <input class="form__input" type="email" required placeholder="mail@yourdomain.com" ng-model="user.email">
+    <label class="form__label"><?php echo l('installation.signup.headline') ?></label>
+    <input class="form__input" autofocus type="text" required placeholder="<?php echo l('installation.signup.username') ?>" ng-model="user.username">
   </div>
 
   <div class="form__field">
-    <label class="form__label">Password</label>
+    <label class="form__label"><?php echo l('installation.signup.email') ?></label>
+    <input class="form__input" type="email" required placeholder="<?php echo l('installation.signup.email.placeholder') ?>" ng-model="user.email">
+  </div>
+
+  <div class="form__field">
+    <label class="form__label"><?php echo l('installation.signup.password') ?></label>
     <input class="form__input" type="password" required ng-model="user.password">
   </div>
 
   <div class="form__buttons">
-    <input type="submit" class="form__button form__button--submit" value="Create your account">
+    <input type="submit" class="form__button form__button--submit" value="<?php echo l('installation.signup.create') ?>">
   </div>
 </form>

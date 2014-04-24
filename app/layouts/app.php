@@ -2,34 +2,32 @@
 <html lang="en" ng-app="app" ng-click="clicks()" ng-keydown="keys($event)">
   <head>
 
-    <meta charset="utf-8" />
+    <?php echo $meta ?>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow" />
-
-    <base href="<?php echo url('panel') ?>/"></base>
     <title>Kirby Panel</title>
 
-    <link rel="stylesheet" href="assets/css/grid.css">
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="assets/css/form.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.css">
-    <link rel="stylesheet" href="assets/css/tagbox.css">
-    <link rel="stylesheet" href="assets/css/dropzone.css">
-    <link rel="stylesheet" href="assets/css/pickaday.css">
-    <link rel="stylesheet" href="assets/css/codemirror.css">
-    <link rel="stylesheet" href="assets/css/codemirror.theme.css">
+    <?php
+
+    echo css(array(
+      'panel/assets/css/grid.css',
+      'panel/assets/css/app.css',
+      'panel/assets/css/form.css',
+      'panel/assets/css/font-awesome.css',
+      'panel/assets/css/tagbox.css',
+      'panel/assets/css/dropzone.css',
+      'panel/assets/css/pickaday.css',
+      'panel/assets/css/codemirror.css',
+      'panel/assets/css/codemirror.theme.css',
+    ));
+
+    echo html::shiv();
+
+    ?>
 
     <script>
-
       var defaultLanguage = <?php echo $defaultLanguage ?>;
       var publishHook     = <?php echo $publishHook ?>;
-
     </script>
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 
   </head>
   <body ng-controller="AppController" ng-class="{'has-dropdown': dropdown.current}">

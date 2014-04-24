@@ -10,6 +10,10 @@ path('app.layouts',     __DIR__ . DS . 'layouts');
 path('app.views',       __DIR__ . DS . 'views');
 path('app.snippets',    __DIR__ . DS . 'snippets');
 
+// panel roots
+path('panel',           dirname(__DIR__));
+path('panel.languages', dirname(__DIR__) . DS . 'languages');
+
 // autoloader
 load(array(
 

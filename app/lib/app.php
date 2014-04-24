@@ -16,7 +16,7 @@ class App {
     }
 
     // some config stuff
-    c::set('root.panel',      dirname(path('app')));
+    c::set('root.panel',      path('panel'));
     c::set('root.blueprints', c::get('root.site') . DS . 'blueprints');
     c::set('root.accounts',   c::get('root.site') . DS . 'accounts');
 
@@ -28,9 +28,13 @@ class App {
     static::$router = new Router();
     static::$router->register(static::$routes);
 
+    // content language switcher variable
     if($language = server::get('http_language')) {
       static::$language = $language;
     }
+
+    // load the interface language file
+    l::$data = require(path('panel.languages') . DS . 'en.php');
 
     // register router filters
     static::$router->filter('auth', function() {

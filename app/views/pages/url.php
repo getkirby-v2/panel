@@ -8,8 +8,8 @@
 
     <div class="form__field">
       <label class="form__label">
-        URL-appendix
-        <a class="form__labelOption" ng-click="convertTitle()" href=""><i class="fa fa-plus-circle"></i> Create from title</a>
+        <?php echo l('pages.url.headline') ?>
+        <a class="form__labelOption" ng-click="convertTitle()" href=""><i class="fa fa-plus-circle"></i> <?php echo l('pages.url.createFromTitle') ?></a>
       </label>
       <div class="form__inputWrapper">
         <input class="form__input form__input--with-icon" type="text" autofocus required ng-model="page.slug" focus-on="ChangeUrlController.page.slug" />
@@ -21,8 +21,8 @@
     </div>
 
     <div class="form__buttons">
-      <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="cancel">
-      <input type="submit" class="form__button form__button--submit" value="change">
+      <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="<?php echo l('cancel') ?>">
+      <input type="submit" class="form__button form__button--submit" value="<?php echo l('save') ?>">
     </div>
 
   </div>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="form__buttons form__buttons--centered">
-      <input type="reset" class="form__button" ng-click="close()" value="ok">
+      <input type="reset" class="form__button" ng-click="close()" value="<?php echo l('ok') ?>">
     </div>
 
   </div>

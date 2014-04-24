@@ -5,31 +5,31 @@
   </div>
 
   <div class="form__field">
-    <label class="form__label">Add a new subpage…</label>
-    <input class="form__input" type="text" placeholder="Title" ng-model="page.title" required autofocus ng-keyup="convertTitle()">
+    <label class="form__label"><?php echo l('pages.add.headline') ?></label>
+    <input class="form__input" type="text" placeholder="<?php echo l('pages.add.title.placeholder') ?>" ng-model="page.title" required autofocus ng-keyup="convertTitle()">
     <p ng-hide="appendix.visible" style="cursor: pointer" ng-click="appendix.edit()" class="form__help nowrap">
-      <span ng-show="page.slug == ''">(enter your title)</span>{{page.slug}}
+      <span ng-show="page.slug == ''"><?php echo l('pages.add.url.enter') ?></span>{{page.slug}}
     </p>
   </div>
 
   <div ng-show="appendix.visible" class="form__field">
     <label class="form__label">
-      URL-appendix
-      <a class="form__labelOption" ng-click="appendix.close()" href=""><i class="fa fa-times-circle"></i> Close</a>
+      <?php echo l('pages.add.url') ?>
+      <a class="form__labelOption" ng-click="appendix.close()" href=""><i class="fa fa-times-circle"></i> <?php echo l('pages.add.url.close') ?></a>
     </label>
     <input class="form__input" type="text" ng-model="page.slug" focus-on="AddPageController.page.slug">
-    <p class="form__help nowrap">Format: lowercase a-z, 0-9 and regular dashes</p>
+    <p class="form__help nowrap"><?php echo l('pages.add.url.help') ?></p>
   </div>
 
   <div class="form__field" ng-show="templates.length > 1">
-    <label class="form__label">Select a template</label>
+    <label class="form__label"><?php echo l('pages.add.template.select') ?></label>
     <div class="form__input">
       <select ng-model="page.template" required ng-options="template.name as template.title for template in templates"></select>
     </div>
   </div>
 
   <div class="form__field" ng-show="templates.length == 1">
-    <label class="form__label">Template</label>
+    <label class="form__label"><?php echo l('pages.add.template') ?></label>
     <div class="form__inputWrapper">
       <div class="form__input form__input--readonly">{{templates[0].title}}</div>
       <div class="form__inputIcon form__inputIcon--readonly">
@@ -40,7 +40,8 @@
   </div>
 
   <div class="form__buttons">
-    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="cancel">
-    <input type="submit" class="form__button form__button--submit" value="add">
+    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="<?php echo l('cancel') ?>">
+    <input type="submit" class="form__button form__button--submit" value="<?php echo l('add') ?>">
   </div>
+
 </form>

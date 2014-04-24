@@ -10,13 +10,13 @@
   </div>
 
   <form class="form__field dz" action="api/users/avatar" dropzone done="submit()">
-    <strong>Drop a profile picture here…</strong>
-    <small>or click to upload</small>
+    <strong><?php echo l('users.avatar.drop') ?></strong>
+    <small><?php echo l('users.avatar.click') ?></small>
     <input type="hidden" name="username" ng-value="user.username">
   </form>
 
   <div class="form__buttons form__buttons--centered">
-    <input type="reset" class="form__button" ng-click="close()" value="cancel">
+    <input type="reset" class="form__button" ng-click="close()" value="<?php echo l('cancel') ?>">
   </div>
 
 </div>

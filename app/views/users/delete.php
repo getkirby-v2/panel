@@ -11,7 +11,7 @@
   </div>
 
   <div class="form__buttons">
-    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="cancel">
-    <input type="submit" class="form__button form__button--submit form__button--negative" autofocus="autofocus" value="delete">
+    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="<?php echo l('cancel') ?>">
+    <input type="submit" class="form__button form__button--submit form__button--negative" autofocus="autofocus" value="<?php echo l('delete') ?>">
   </div>
 </form>

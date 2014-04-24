@@ -5,23 +5,23 @@
   </div>
 
   <div class="form__field">
-    <label class="form__label">Username</label>
-    <input class="form__input" type="text" placeholder="Username" ng-model="user.username" required autofocus>
-    <p class="form__help">Allowed characters: lowercase a-z, 0-9 and dashes</p>
+    <label class="form__label"><?php echo l('users.add.username') ?></label>
+    <input class="form__input" type="text" placeholder="<?php echo l('users.add.username.placeholder') ?>" ng-model="user.username" required autofocus>
+    <p class="form__help"><?php echo l('users.add.username.help') ?></p>
   </div>
 
   <div class="form__field">
-    <label class="form__label">Email</label>
-    <input class="form__input" type="email" placeholder="mail@example.com" ng-model="user.email" required>
+    <label class="form__label"><?php echo l('users.add.email') ?></label>
+    <input class="form__input" type="email" placeholder="<?php echo l('users.add.email.placeholder') ?>" ng-model="user.email" required>
   </div>
 
   <div class="form__field">
-    <label class="form__label">Password</label>
+    <label class="form__label"><?php echo l('users.add.password') ?></label>
     <input class="form__input" type="password" ng-model="user.password" required>
   </div>
 
   <div class="form__buttons">
-    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="cancel">
-    <input type="submit" class="form__button form__button--submit" value="add">
+    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="<?php echo l('cancel') ?>">
+    <input type="submit" class="form__button form__button--submit" value="<?php echo l('add') ?>">
   </div>
 </form>

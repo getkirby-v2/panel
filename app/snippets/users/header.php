@@ -3,7 +3,7 @@
 
   <ul class="breadcrumb">
     <li>
-      <a ui-sref="users"><span>Users</span></a>
+      <a ui-sref="users"><span><?php echo l('users.title') ?></span></a>
     </li>
   </ul>
 </header>

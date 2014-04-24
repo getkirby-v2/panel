@@ -3,48 +3,19 @@
 // register all available routes
 return array(
 
-  // Index
-  array(
-    'pattern' => '/',
-    'action'  => 'api/AppController::index',
-    'filter'  => array('auth', 'isInstalled'),
-  ),
-
-  // Error page
-  array(
-    'pattern' => 'error',
-    'action'  => 'api/AppController::error'
-  ),
-
   // Authentication
   array(
-    'pattern' => 'login',
-    'action'  => 'api/AuthController::login',
-    'filter'  => 'isInstalled',
-  ),
-  array(
     'pattern' => 'api/auth/login',
-    'action'  => 'api/AuthController::auth',
+    'action'  => 'api/AuthController::login',
     'method'  => 'POST',
-  ),
-  array(
-    'pattern' => 'logout',
-    'action'  => 'api/AuthController::logout',
-    'method'  => 'GET',
-    'filter'  => 'auth',
   ),
 
   // Installation
-  array(
-    'pattern' => 'install',
-    'action'  => 'api/InstallationController::index'
-  ),
   array(
     'pattern' => 'api/install',
     'action'  => 'api/InstallationController::run',
     'method'  => 'POST'
   ),
-
 
   // Pages
   array(

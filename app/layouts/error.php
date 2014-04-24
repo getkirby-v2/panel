@@ -2,20 +2,20 @@
 <html lang="en">
   <head>
 
-    <meta charset="utf-8" />
+    <?php echo $meta ?>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow" />
-
-    <base href="<?php echo url('panel') ?>/"></base>
     <title>Kirby Panel</title>
 
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.css">
+    <?php
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    echo css(array(
+      'assets/css/app.css',
+      'assets/css/font-awesome.css'
+    ));
+
+    echo html::shiv();
+
+    ?>
 
   </head>
   <body>

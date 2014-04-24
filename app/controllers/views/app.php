@@ -9,13 +9,15 @@ class AppController extends Controller {
 
     return layout('app', array(
       'defaultLanguage' => app::$site->multilang() ? '"' . app::$site->defaultLanguage->code . '"' : 'false',
-      'publishHook'     => $publish ? '"' . url($publish) . '"' : 'false'
+      'publishHook'     => $publish ? '"' . url($publish) . '"' : 'false',
+      'meta'            => new Snippet('meta')
     ));
   }
 
   public function error() {
     return layout('error', array(
-      'defaultLanguage' => app::$site->multilang() ? app::$site->defaultLanguage->code : ''
+      'defaultLanguage' => app::$site->multilang() ? app::$site->defaultLanguage->code : '',
+      'meta'            => new Snippet('meta')
     ));
   }
 

@@ -3,9 +3,9 @@
 <div class="content manager">
 
   <header class="manager__header">
-    <h1 class="alpha">Manage Files for <a ui-sref="page({uri: page.uri})">{{page.title}}</a></h1>
-    <a class="manager__back" ui-sref="page({uri: page.uri})"><i class="fa fa-arrow-circle-left"></i> Back to page</a>
-    <a ng-show="page.files.length > 0" class="manager__toggle" ui-sref="files.modal.upload"><i class="fa fa-cloud-upload"></i> <span>Upload a new file</span></a>
+    <h1 class="alpha"><?php echo l('files.manager.headline') ?> <a ui-sref="page({uri: page.uri})">{{page.title}}</a></h1>
+    <a class="manager__back" ui-sref="page({uri: page.uri})"><i class="fa fa-arrow-circle-left"></i> <?php echo l('files.manager.back') ?></a>
+    <a ng-show="page.files.length > 0" class="manager__toggle" ui-sref="files.modal.upload"><i class="fa fa-cloud-upload"></i> <span><?php echo l('files.manager.upload') ?></span></a>
   </header>
 
   <div class="files">
@@ -24,10 +24,10 @@
         </figcaption>
         <nav class="manager__options">
           <a ui-sref="file({filename : file.filename, uri: page.uri})">
-            <i class="fa fa-pencil"></i> edit
+            <i class="fa fa-pencil"></i> <?php echo l('files.manager.edit') ?>
           </a><!--
        --><a ui-sref="files.modal.delete({filename : file.filename})">
-            <i class="fa fa-trash-o"></i> delete
+            <i class="fa fa-trash-o"></i> <?php echo l('files.manager.delete') ?>
           </a>
         </nav>
       </figure>
@@ -36,7 +36,7 @@
   </div>
 
   <div class="manager__empty" ng-show="page.files.length == 0">
-    <a ui-sref="files.modal.upload" href=""><i class="fa fa-cloud-upload fa-lg"></i> <span>Upload your first file</span></a>
+    <a ui-sref="files.modal.upload" href=""><i class="fa fa-cloud-upload fa-lg"></i> <span><?php echo l('files.manager.upload.first') ?></span></a>
   </div>
 
 </div>

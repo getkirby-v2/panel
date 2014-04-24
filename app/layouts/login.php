@@ -2,13 +2,9 @@
 <html lang="en" ng-app="app">
   <head>
 
-    <meta charset="utf-8" />
+    <?php echo $meta ?>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow" />
-
-    <base href="<?php echo url('panel') ?>/"></base>
-    <title>Kirby Panel</title>
+    <title><?php echo l('login.title') ?></title>
 
     <?php
 
@@ -34,17 +30,17 @@
           </div>
 
           <div class="form__field">
-            <label class="form__label">Username</label>
+            <label class="form__label"><?php echo l('login.username') ?></label>
             <input class="form__input" autofocus type="text" ng-model="user.username">
           </div>
 
           <div class="form__field">
-            <label class="form__label">Password</label>
+            <label class="form__label"><?php echo l('login.password') ?></label>
             <input class="form__input" type="password" ng-model="user.password">
           </div>
 
           <div class="form__buttons">
-            <input type="submit" class="form__button form__button--submit" value="login">
+            <input type="submit" class="form__button form__button--submit" value="<?php echo l('login.button') ?>">
           </div>
         </form>
       </div>
