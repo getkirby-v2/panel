@@ -187,6 +187,12 @@ return array(
     'filter'  => 'auth',
   ),
   array(
+    'pattern' => 'api/users/update/(:any)',
+    'action'  => 'api/UsersController::update',
+    'filter'  => 'auth',
+    'method'  => 'POST'
+  ),
+  array(
     'pattern' => 'api/users/delete/(:any)',
     'action'  => 'api/UsersController::delete',
     'method'  => 'DELETE',

@@ -85,7 +85,7 @@ return array(
 
   array(
     'pattern' => 'views/users/add.html',
-    'action'  => 'views/UsersController::index',
+    'action'  => 'views/UsersController::add',
     'filter'  => 'auth'
   ),
 

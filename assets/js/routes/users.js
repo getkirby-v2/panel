@@ -28,7 +28,7 @@ app.config(function($stateProvider) {
   });
 
   $stateProvider.state('users.modal.add', {
-    url: 'add',
+    url: '/add',
     views: {
       'modal@' : {
         templateUrl: 'views/users/add.html',

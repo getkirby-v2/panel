@@ -36,6 +36,32 @@ class UsersController extends Controller {
 
   }
 
+  public function update($username) {
+
+    $user = $this->user($username);
+
+    if(!$user) {
+      return response::error('The user could not be found');
+    } else {
+
+      $data = array(
+        'email' => get('email'),
+      );
+
+      if(str::length(get('password')) > 0) {
+        $data['password'] = get('password');
+      }
+
+      if($user->update($data)) {
+        return response::success('The user has been updated');
+      } else {
+        return response::error('The update failed');
+      }
+
+    }
+
+  }
+
   public function delete($username) {
 
     $user = $this->user($username);
