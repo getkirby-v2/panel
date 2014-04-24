@@ -21,7 +21,10 @@
     <link rel="stylesheet" href="assets/css/codemirror.theme.css">
 
     <script>
-      var defaultLanguage = '<?php echo $defaultLanguage ?>';
+
+      var defaultLanguage = <?php echo $defaultLanguage ?>;
+      var publishHook     = <?php echo $publishHook ?>;
+
     </script>
 
     <!--[if lt IE 9]>
@@ -97,6 +100,7 @@
       'panel/assets/js/controllers/page/changeUrl.js',
       'panel/assets/js/controllers/page/delete.js',
       'panel/assets/js/controllers/page/index.js',
+      'panel/assets/js/controllers/page/publish.js',
       'panel/assets/js/controllers/page/metatags.js',
 
       'panel/assets/js/controllers/users/add.js',

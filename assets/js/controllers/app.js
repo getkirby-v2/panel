@@ -1,12 +1,13 @@
 // the main app controller
 app.controller('AppController', function($rootScope, $scope, $state, $stateParams, $window, $http, $timeout, $location) {
 
-  $rootScope.modal     = false;
-  $rootScope.loading   = false;
-  $rootScope.language  = localStorage.language || $window.defaultLanguage;
-  $rootScope.languages = [];
+  $rootScope.modal       = false;
+  $rootScope.loading     = false;
+  $rootScope.language    = localStorage.language || $window.defaultLanguage;
+  $rootScope.languages   = [];
+  $rootScope.publishHook = $window.publishHook;
 
-  $http.get('api/site/languages').success(function(response) {    
+  $http.get('api/site/languages').success(function(response) {
     $rootScope.languages = response;
   });
 
@@ -40,7 +41,7 @@ app.controller('AppController', function($rootScope, $scope, $state, $stateParam
   };
 
   $rootScope.dropdown = {
-    current : null, 
+    current : null,
     toggle: function(id, $event) {
       $event.stopPropagation();
       if($rootScope.dropdown.isOpen(id)) {
@@ -52,7 +53,7 @@ app.controller('AppController', function($rootScope, $scope, $state, $stateParam
     open: function(id, $event) {
       $event.stopPropagation();
       $rootScope.dropdown.current = id;
-    }, 
+    },
     close: function() {
       $rootScope.dropdown.current = null;
     },
@@ -60,9 +61,9 @@ app.controller('AppController', function($rootScope, $scope, $state, $stateParam
       return $rootScope.dropdown.current == id;
     }
   };
- 
+
   $rootScope.alert = function(message) {
-    $rootScope.message = message;    
+    $rootScope.message = message;
   };
 
   $rootScope.clicks = function() {
@@ -70,10 +71,10 @@ app.controller('AppController', function($rootScope, $scope, $state, $stateParam
   };
 
   $rootScope.keys = function($event) {
-    
+
     switch($event.keyCode) {
       case 27: // escape
-        $rootScope.$emit('key:esc', $event);        
+        $rootScope.$emit('key:esc', $event);
         $rootScope.dropdown.close();
         break;
       case 32: // space
@@ -81,22 +82,22 @@ app.controller('AppController', function($rootScope, $scope, $state, $stateParam
         break;
       case 13: // enter
         $rootScope.$emit('key:enter', $event);
-        break;     
+        break;
       case 37:
         $rootScope.$emit('key:left', $event);
-        break;      
+        break;
       case 39:
         $rootScope.$emit('key:right', $event);
-        break;      
+        break;
       case 40:
         $rootScope.$emit('key:down', $event);
-        break;      
+        break;
       case 38:
         $rootScope.$emit('key:up', $event);
-        break;      
+        break;
       case 8:
         $rootScope.$emit('key:backspace', $event);
-        break;      
+        break;
     }
 
   };

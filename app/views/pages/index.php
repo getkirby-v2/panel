@@ -46,6 +46,11 @@
             <i class="fa fa-dashboard"></i> Go to dashboard…
           </a>
         </li>
+        <li ng-show="publishHook">
+          <a ui-sref="page.modal.publish()">
+            <i class="fa fa-refresh"></i> Publish changes…
+          </a>
+        </li>
       </ul>
     </div>
 

@@ -12,6 +12,10 @@ class PagesController extends Controller {
     return view('pages/add');
   }
 
+  public function publish() {
+    return view('pages/publish');
+  }
+
   public function delete() {
     return view('pages/delete');
   }

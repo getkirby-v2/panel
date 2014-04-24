@@ -4,8 +4,6 @@
     {{message}}
   </div>
 
-  {{go}}
-
   <div class="form__field">
     <label class="form__label">Add a new subpage…</label>
     <input class="form__input" type="text" placeholder="Title" ng-model="page.title" required autofocus ng-keyup="convertTitle()">
@@ -31,7 +29,7 @@
   </div>
 
   <div class="form__field" ng-show="templates.length == 1">
-    <label class="form__label">Template</label>  
+    <label class="form__label">Template</label>
     <div class="form__inputWrapper">
       <div class="form__input form__input--readonly">{{templates[0].title}}</div>
       <div class="form__inputIcon form__inputIcon--readonly">

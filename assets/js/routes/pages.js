@@ -46,6 +46,16 @@ app.config(function($stateProvider) {
     }
   });
 
+  $stateProvider.state('page.modal.publish', {
+    url: 'publish',
+    views: {
+      'modal@' : {
+        templateUrl: 'views/pages/publish.html',
+        controller: 'PublishController'
+      }
+    }
+  });
+
   $stateProvider.state('page.modal.upload', {
     url: 'upload',
     views: {

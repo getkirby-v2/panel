@@ -27,6 +27,12 @@ return array(
   ),
 
   array(
+    'pattern' => 'views/pages/publish.html',
+    'action'  => 'views/PagesController::publish',
+    'filter'  => 'auth'
+  ),
+
+  array(
     'pattern' => 'views/pages/delete.html',
     'action'  => 'views/PagesController::delete',
     'filter'  => 'auth'

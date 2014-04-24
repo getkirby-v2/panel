@@ -3,8 +3,13 @@
 class AppController extends Controller {
 
   public function index() {
+
+    // check for a publish hook setup
+    $publish = a::get(c::get('panel.hooks'), 'publish');
+
     return layout('app', array(
-      'defaultLanguage' => app::$site->multilang() ? app::$site->defaultLanguage->code : ''
+      'defaultLanguage' => app::$site->multilang() ? '"' . app::$site->defaultLanguage->code . '"' : 'false',
+      'publishHook'     => $publish ? '"' . url($publish) . '"' : 'false'
     ));
   }
 

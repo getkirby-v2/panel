@@ -27,7 +27,7 @@ class SiteController extends Controller {
     $languages = $site->languages()->map(function($lang) {
       return array(
         'code'    => $lang->code(),
-        'label'   => $lang->name(),
+        'label'   => strtoupper($lang->code()),
         'default' => $lang->default(),
       );
     });
