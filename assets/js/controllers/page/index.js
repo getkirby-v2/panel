@@ -1,8 +1,9 @@
 app.controller('PageController', function($rootScope, $scope, $state, $stateParams, $timeout, $http, page) {
 
-  $scope.page   = page;
-  $scope.limit  = $scope.page.settings.pages ? $scope.page.settings.pages.limit : 20;
-  $scope.fields = null;
+  $scope.page     = page;
+  $scope.limit    = $scope.page.settings.pages ? $scope.page.settings.pages.limit : 20;
+  $scope.fields   = null;
+  $scope.sections = null;
 
   // hacky way to connect the form with the breadcrumb
   $scope.page.content.title = page.title;

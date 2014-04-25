@@ -4,7 +4,7 @@ var app = angular.module('app', ['ui.router']);
 app.value('$anchorScroll', angular.noop);
 
 app.fail = function() {
-  window.location.href = './error';
+  //window.location.href = './error';
 };
 
 // TODO: understand services/factories and convert this into one

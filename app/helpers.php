@@ -79,31 +79,46 @@ function pageResponse($page, $child = false) {
       });
     }
 
-    $parentBlueprint = $page->parent()->blueprint();
-
-    switch($parentBlueprint->num()->mode()) {
-      case 'zero':
-        $result['num'] = '';
-        break;
-      case 'date':
-        $result['num'] = date('Y/m/d', strtotime($page->num()));
-        break;
-      default:
-        $result['num'] = intval($page->num());
-        break;
+    if($parentBlueprint = $page->parent()->blueprint()) {
+      switch($parentBlueprint->num()->mode()) {
+        case 'zero':
+          $result['num'] = '';
+          break;
+        case 'date':
+          $result['num'] = date('Y/m/d', strtotime($page->num()));
+          break;
+        default:
+          $result['num'] = intval($page->num());
+          break;
+      }
     }
 
   }
 
   if(!$child) {
 
-    $blueprint = $page->blueprint();
-    $children  = $page->children();
+    $children = $page->children();
 
-    if($pages = $blueprint->pages()) {
-      if($pages->sort() == 'flip') {
-        $children = $children->flip();
+    if($blueprint = $page->blueprint()) {
+
+      if($pages = $blueprint->pages()) {
+        if($pages->sort() == 'flip') {
+          $children = $children->flip();
+        }
       }
+
+      $result['settings'] = array(
+        'pages' => $blueprint->pages(),
+        'files' => $blueprint->files()
+      );
+
+    } else {
+      $result['settings'] = array(
+        'pages' => array(
+          'limit' => 20
+        ),
+        'files' => true
+      );
     }
 
     $result['children'] = array_values($children->toArray(function($item) {
@@ -114,16 +129,11 @@ function pageResponse($page, $child = false) {
       return (string)$field;
     }, $content->data());
 
-    if(empty($result['content'])) $result['content'] = null;
+    if(empty($result['content'])) $result['content'] = array();
 
     $result['files'] = array_values($page->files()->toArray(function($file) {
       return fileResponse($file);
     }));
-
-    $result['settings'] = array(
-      'pages' => $blueprint->pages(),
-      'files' => $blueprint->files()
-    );
 
     $folder   = new Folder($page->root());
     $writable = true;

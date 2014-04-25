@@ -102,6 +102,8 @@ return array(
   'pages.changeUrl' => 'URL ändern',
   'pages.settings' => 'Seiteneinstellungen',
   'pages.show.error' => 'Die Seite wurde nicht gefunden',
+  'pages.form.error.nocontent.headline' => 'Diese Seite hat keinen Inhalt',
+  'pages.form.error.nocontent.text' => 'Bitte füge manuell auf dem Server eine Content Text Datei ein.',
   'pages.delete' => 'Seite löschen',
   'pages.delete.headline' => 'Willst du diese Seite wirklich löschen?',
   'pages.delete.error.missing' => 'Die Seite wurde nicht gefunden',

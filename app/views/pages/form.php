@@ -1,4 +1,4 @@
-<form class="form main__form grid" ng-submit="submit()">
+<form class="form main__form grid" ng-submit="submit()" ng-show="page.content">
 
   <div class="form__alert" ng-show="message" ng-click="alert('')">
     {{message}}
@@ -17,3 +17,8 @@
   </div>
 
 </form>
+
+<div class="form main__form" ng-show="!page.content">
+  <strong><?php echo l('pages.form.error.nocontent.headline') ?></strong><br />
+  <?php echo l('pages.form.error.nocontent.text') ?>
+</div>

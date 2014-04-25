@@ -9,8 +9,9 @@
     <?php
 
     echo css(array(
-      'assets/css/app.css',
-      'assets/css/font-awesome.css'
+      'panel/assets/css/app.css',
+      'panel/assets/css/font-awesome.css',
+      'panel/assets/css/error.css'
     ));
 
     echo html::shiv();
@@ -19,6 +20,7 @@
 
   </head>
   <body>
-    Something went terribly wrong
+    An unexpected error occured.<br />
+    <a href="./">Back home…</a>
   </body>
 </html>

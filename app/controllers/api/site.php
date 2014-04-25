@@ -7,11 +7,13 @@ class SiteController extends Controller {
     $site    = app::$site;
     $content = array();
 
-    foreach($site->blueprint()->fields() as $key => $field) {
-      $content[] = array(
-        'key'   => $field['label'],
-        'value' => (string)$site->content(app::$language)->get($key)
-      );
+    if($blueprint = $site->blueprint()) {
+      foreach($blueprint->fields() as $key => $field) {
+        $content[] = array(
+          'key'   => $field['label'],
+          'value' => (string)$site->content(app::$language)->get($key)
+        );
+      }
     }
 
     return response::json($content);

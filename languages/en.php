@@ -101,6 +101,8 @@ return array(
   // pages
   'pages.changeUrl' => 'Change URL',
   'pages.settings' => 'Page settings',
+  'pages.form.error.nocontent.headline' => 'This page has no content',
+  'pages.form.error.nocontent.text' => 'Please create a content text file on the server manually',
   'pages.show.error' => 'The page could not be found',
   'pages.delete' => 'Delete page',
   'pages.delete.headline' => 'Do you really want to delete this page?',

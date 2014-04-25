@@ -225,7 +225,20 @@ class PagesController extends Controller {
 
     if(!$page) return '';
 
-    foreach($page->blueprint()->fields() as $name => $field) {
+    if($blueprint = $page->blueprint()) {
+      $fields = $blueprint->fields();
+    } else {
+      $fields = array();
+
+      foreach($page->content()->fields() as $field) {
+        $fields[$field] = array(
+          'type' => 'textarea'
+        );
+      }
+
+    }
+
+    foreach($fields as $name => $field) {
 
       if(get('field') and $name !== get('field')) continue;
 
@@ -252,7 +265,19 @@ class PagesController extends Controller {
 
     if(!$page) return '';
 
-    die(response::json($page->blueprint()->fields()));
+    if($blueprint = $page->blueprint()) {
+      $fields = $blueprint->fields();
+    } else {
+      $fields = array();
+      foreach($page->content()->fields() as $field) {
+        $fields[$field] = array(
+          'label' => ucfirst($field),
+          'type'  => 'text'
+        );
+      }
+    }
+
+    die(response::json($fields));
 
   }
 
