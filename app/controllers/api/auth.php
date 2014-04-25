@@ -15,7 +15,7 @@ class AuthController extends Controller {
       return response::error($message);
     }
 
-    return response::success('The user has been logged in');
+    return response::success(l('login.success'));
 
   }
 

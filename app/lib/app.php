@@ -34,7 +34,7 @@ class App {
     }
 
     // load the interface language file
-    l::$data = require(path('panel.languages') . DS . 'en.php');
+    l::$data = require(path('panel.languages') . DS . c::get('panel.language', 'en') . '.php');
 
     // register router filters
     static::$router->filter('auth', function() {

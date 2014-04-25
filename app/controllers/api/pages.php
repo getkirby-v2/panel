@@ -7,7 +7,7 @@ class PagesController extends Controller {
     $page = $this->page(get('uri'));
 
     if(!$page) {
-      return response::error('The page could not be found');
+      return response::error(l('pages.show.error'));
     }
 
     return response::json(pageResponse($page));
@@ -22,11 +22,11 @@ class PagesController extends Controller {
     $slug     = str::slug($title);
 
     if(empty($title)) {
-      return response::error('The title is missing');
+      return response::error(l('pages.add.error.title'));
     }
 
     if(empty($template)) {
-      return response::error('The template is missing');
+      return response::error(l('pages.add.error.template'));
     }
 
     try {
@@ -37,7 +37,7 @@ class PagesController extends Controller {
 
       $parent->children()->create($slug, $template, $data);
 
-      return response::success('The page has been created', array(
+      return response::success(l('pages.add.success'), array(
         'uid' => $slug,
         'uri' => $parent->uri() . '/' . $slug
       ));
@@ -53,7 +53,7 @@ class PagesController extends Controller {
     $page = $this->page(get('uri'));
 
     if(!$page) {
-      return response::error('The page does not exist');
+      return response::error(l('pages.update.error.missing'));
     }
 
     $fields = array_keys($page->blueprint()->fields());
@@ -75,7 +75,7 @@ class PagesController extends Controller {
 
       $page->update($data, app::$language);
 
-      return response::success('The page has been updated', array(
+      return response::success(l('pages.update.success'), array(
         'file' => $page->content()->root(),
         'data' => $data
       ));
@@ -91,12 +91,12 @@ class PagesController extends Controller {
     $page = $this->page(get('uri'));
 
     if(!$page) {
-      return response::error('The page does not exist');
+      return response::error(l('pages.delete.error.missing'));
     }
 
     try {
       $page->delete();
-      return response::success('The page has been removed');
+      return response::success(l('pages.delete.success'));
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
@@ -135,7 +135,7 @@ class PagesController extends Controller {
       }
     }
 
-    return response::success('The pages have been sorted');
+    return response::success(l('pages.sort.success'));
 
   }
 
@@ -144,12 +144,12 @@ class PagesController extends Controller {
     $page = $this->page(get('uri'));
 
     if(!$page) {
-      return response::error('The page could not be found');
+      return response::error(l('pages.hide.error.missing'));
     }
 
     try {
       $page->hide();
-      return response::success('The pages has been hidden');
+      return response::success(l('pages.hide.success'));
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
@@ -161,13 +161,13 @@ class PagesController extends Controller {
     $page = $this->page(get('uri'));
 
     if(!$page) {
-      return response::error('The page could not be found');
+      return response::error(l('pages.templates.error.missing'));
     }
 
     $pages = $page->blueprint()->pages();
 
     if(!$page->blueprint()->pages()) {
-      return response::error('This page is not allowed to have subpages');
+      return response::error(l('pages.templates.error.nosubpages'));
     }
 
     return response::json(array_map(function($item) {
@@ -185,11 +185,11 @@ class PagesController extends Controller {
     $uid  = str::slug(get('uid'));
 
     if(!$page) {
-      return response::error('The page does not exist');
+      return response::error(l('pages.url.error.missing'));
     }
 
     if($page->uid() === $uid) {
-      return response::success('Nothing to change', array(
+      return response::success(l('pages.url.idle'), array(
         'uid' => $page->uid(),
         'uri' => $page->uri()
       ));
@@ -204,18 +204,17 @@ class PagesController extends Controller {
     $root = dirname($page->root()) . DS . $dir;
 
     if(is_dir($root)) {
-      return response::error('A page with the same appendix already exists');
+      return response::error(l('pages.url.error.exists'));
     }
 
     if(!dir::move($page->root(), $root)) {
-      return response::error('The appendix could not be changed');
+      return response::error(l('pages.url.error.move'));
     }
 
-    return response::success('The appendix has been changed', array(
+    return response::success(l('pages.url.success'), array(
       'uid' => $uid,
       'uri' => $page->parent()->uri() . '/' . $uid
     ));
-
 
   }
 
@@ -227,13 +226,18 @@ class PagesController extends Controller {
     if(!$page) return '';
 
     foreach($page->blueprint()->fields() as $name => $field) {
+
       if(get('field') and $name !== get('field')) continue;
 
       if($name == 'title') {
         $field['type'] = 'title';
       }
 
-      $html[] = html::tag($field['type'] . 'field', '', array('model' => 'page.content.' . $name, 'options' => 'fields.' . $name));
+      $html[] = html::tag($field['type'] . 'field', '', array(
+        'model'   => 'page.content.' . $name,
+        'options' => 'fields.' . $name
+      ));
+
     }
 
     return view('pages/form', array(

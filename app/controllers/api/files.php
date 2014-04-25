@@ -7,7 +7,7 @@ class FilesController extends Controller {
     if($file = $this->file(get('uri'), get('filename'))) {
       return response::json(fileResponse($file));
     } else {
-      return response::error('No such file');
+      return response::error(l('files.show.error'));
     }
 
   }
@@ -18,7 +18,7 @@ class FilesController extends Controller {
     $upload = new Upload($page->root() . DS . '{safeFilename}');
 
     if($upload->file()) {
-      return response::success('The file has been uploaded');
+      return response::success(l('files.upload.success'));
     } else {
       return response::error($upload->error()->getMessage());
     }
@@ -32,13 +32,13 @@ class FilesController extends Controller {
       'overwrite' => true,
       'accept' => function($upload) use($file) {
         if($upload->mime() != $file->mime()) {
-          throw new Error('The uploaded file must have the same file type');
+          throw new Error(l('files.replace.error.type'));
         }
       }
     ));
 
     if($upload->file()) {
-      return response::success('The file has been replaced');
+      return response::success(l('files.replace.success'));
     } else {
       return response::error($upload->error()->getMessage());
     }
@@ -50,16 +50,16 @@ class FilesController extends Controller {
     $file = $this->file(get('uri'), get('filename'));
 
     if(!$file) {
-      return response::error('The file could not be found');
+      return response::error(l('files.rename.error.missing'));
     }
 
     try {
       $filename = $file->rename(get('name'));
-      return response::success('The file has been renamed', array(
+      return response::success(l('files.rename.error'), array(
         'filename' => $filename
       ));
     } catch(Exception $e) {
-      return response::error('The file could not be renamed');
+      return response::error(l('files.rename.success'));
     }
 
   }
@@ -69,13 +69,13 @@ class FilesController extends Controller {
     $page = $this->page(get('uri'));
 
     if(!$page) {
-      return response::error('The page could not be found');
+      return response::error(l('files.update.error.page'));
     }
 
     $file = $page->file(get('filename'));
 
     if(!$file) {
-      return response::error('The file could not be found');
+      return response::error(l('files.update.error.missing'));
     }
 
     $meta   = get('meta');
@@ -93,7 +93,7 @@ class FilesController extends Controller {
 
     try {
       $file->update($data, app::$language);
-      return response::success('The file has been updated', array(
+      return response::success(l('files.update.success'), array(
         'data' => $data
       ));
     } catch(Exception $e) {
@@ -107,12 +107,12 @@ class FilesController extends Controller {
     $file = $this->file(get('uri'), get('filename'));
 
     if(!$file) {
-      return response::error('No such file');
+      return response::error(l('files.delete.error.missing'));
     }
 
     try {
       $file->delete();
-      return response::success('The file has been removed');
+      return response::success(l('files.delete.success'));
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
@@ -128,7 +128,10 @@ class FilesController extends Controller {
 
     foreach($page->blueprint()->files()->fields() as $name => $field) {
       if(get('field') and $name !== get('field')) continue;
-      $html[] = html::tag($field['type'] . 'field', '', array('model' => 'file.meta.' . $name, 'options' => 'fields.' . $name));
+      $html[] = html::tag($field['type'] . 'field', '', array(
+        'model'   => 'file.meta.' . $name,
+        'options' => 'fields.' . $name
+      ));
     }
 
     return implode($html);

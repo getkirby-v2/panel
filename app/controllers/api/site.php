@@ -22,7 +22,7 @@ class SiteController extends Controller {
 
     $site = app::$site;
 
-    if(!$site->multilang()) return response::error('This is a single-language site');
+    if(!$site->multilang()) return response::error(l('site.languages.error'));
 
     $languages = $site->languages()->map(function($lang) {
       return array(
@@ -41,22 +41,22 @@ class SiteController extends Controller {
     $problems = array();
 
     if(!is_writable(c::get('root.accounts'))) {
-      $problems[] = 'site/accounts is not writable';
+      $problems[] = l('site.health.error.accounts');
     }
 
     if(!is_dir(c::get('root.blueprints'))) {
-      $problems[] = 'Please add a site/blueprints folder';
+      $problems[] = l('site.health.error.blueprints');
     }
 
     $folder = new Folder(c::get('root.content'));
     if(!$folder->isWritable(true)) {
-      $problems[] = 'The content folder and all contained files and folders must be writable.';
+      $problems[] = l('site.health.error.content');
     }
 
     if(!empty($problems)) {
-      return response::error('There are some issues!', 400, $problems);
+      return response::error(l('site.health.error'), 400, $problems);
     } else {
-      return response::success('Everything is fine!');
+      return response::success(l('site.health.success'));
     }
 
 

@@ -3,7 +3,7 @@
 
   <ul class="breadcrumb">
     <li>
-      <a ui-sref="page({uri: null})"><span>Site</span></a>
+      <a ui-sref="page({uri: null})"><span><?php echo l('site.title') ?></span></a>
     </li>
     <li ng-repeat="parent in page.parents">
       <a ui-sref="page({uri: parent.uri})"><span>{{parent.title}}</span></a>

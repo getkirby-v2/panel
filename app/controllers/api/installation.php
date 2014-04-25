@@ -6,7 +6,7 @@ class InstallationController extends Controller {
     $this->lock();
     try {
       app::$site->users()->create(get());
-      return response::success('The first user has been created');
+      return response::success(l('installation.signup.success'));
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }

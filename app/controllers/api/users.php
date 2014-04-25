@@ -29,7 +29,7 @@ class UsersController extends Controller {
     $user = $this->user($username);
 
     if(!$user) {
-      return response::error('The user could not be found');
+      return response::error(l('users.show.error.missing'));
     } else {
       return response::json($this->userToArray($user));
     }
@@ -41,7 +41,7 @@ class UsersController extends Controller {
     $user = $this->user($username);
 
     if(!$user) {
-      return response::error('The user could not be found');
+      return response::error(l('users.edit.error.missing'));
     } else {
 
       $data = array(
@@ -53,9 +53,9 @@ class UsersController extends Controller {
       }
 
       if($user->update($data)) {
-        return response::success('The user has been updated');
+        return response::success(l('users.edit.success'));
       } else {
-        return response::error('The update failed');
+        return response::error(l('users.edit.error'));
       }
 
     }
@@ -67,12 +67,12 @@ class UsersController extends Controller {
     $user = $this->user($username);
 
     if(!$user) {
-      return response::error('The user could not be found');
+      return response::error(l('users.delete.error.missing'));
     }
 
     try {
       $user->delete();
-      return response::success('The user has been deleted');
+      return response::success(l('users.delete.success'));
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
@@ -84,7 +84,7 @@ class UsersController extends Controller {
     $user = $this->user(get('username'));
 
     if(!$user) {
-      return response::error('The user could not be found');
+      return response::error(l('users.avatar.error.missing'));
     }
 
     $root = $user->avatar() ? $user->avatar()->root() : $user->avatarRoot('{extension}');
@@ -92,7 +92,7 @@ class UsersController extends Controller {
     $upload = new Upload($root, array(
       'accept' => function($upload) {
         if($upload->type() != 'image') {
-          throw new Error('Only images can be uploaded');
+          throw new Error(l('users.avatar.error.type'));
         }
       }
     ));
@@ -110,7 +110,7 @@ class UsersController extends Controller {
         'crop'      => true
       ));
 
-      return response::success('The file has been uploaded');
+      return response::success(l('users.avatar.success'));
     } else {
       return response::error($upload->error()->getMessage());
     }
@@ -122,16 +122,16 @@ class UsersController extends Controller {
     $user = $this->user(get('username'));
 
     if(!$user) {
-      return response::error('The user could not be found');
+      return response::error(l('users.avatar.delete.error.missing'));
     }
 
     if($avatar = $user->avatar()) {
       if(f::remove($avatar->root())) {
-        return response::success('The avatar has been removed');
+        return response::success(l('users.avatar.delete.success'));
       }
     }
 
-    return response::error('The avatar could not be removed');
+    return response::error(l('users.avatar.delete.error'));
 
   }
 
