@@ -199,6 +199,7 @@
 .form__options {
   margin-left: -.75em;
   margin-right: -.75em;
+  margin-bottom: -1.5em;
 }
 .form__options .grid__item {
   padding-bottom: 1.5em;
