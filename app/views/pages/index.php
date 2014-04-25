@@ -62,7 +62,7 @@
       </h2>
 
       <form ng-show="page.children.length > limit" class="sidebar__form">
-        <input class="sidebar__search" type="search" placeholder="<?php echo l('subpages.search.placehoder') ?>" ng-model="childSearch">
+        <input class="sidebar__search" type="search" placeholder="<?php echo l('subpages.search.placeholder') ?>" ng-model="childSearch">
       </form>
 
       <ul class="sidebar__items">
