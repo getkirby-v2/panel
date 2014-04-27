@@ -46,6 +46,10 @@ class SiteController extends Controller {
       $problems[] = l('site.health.error.accounts');
     }
 
+    if(!is_writable(thumb::$defaults['root'])) {
+      $problems[] = l('site.health.error.thumbs');
+    }
+
     if(!is_dir(c::get('root.blueprints'))) {
       $problems[] = l('site.health.error.blueprints');
     }
