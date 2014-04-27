@@ -20,6 +20,17 @@
     <input class="form__input" type="password" ng-model="user.password" required>
   </div>
 
+  <div class="form__field">
+    <label class="form__label"><?php echo l('users.edit.language') ?></label>
+    <div class="form__input">
+      <select ng-model="user.language" required>
+        <?php foreach($languages as $language): ?>
+        <option value="<?php echo $language->code() ?>"><?php echo html($language->title()) ?></option>
+        <?php endforeach ?>
+      </select>
+    </div>
+  </div>
+
   <div class="form__buttons">
     <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="<?php echo l('cancel') ?>">
     <input type="submit" class="form__button form__button--submit" value="<?php echo l('add') ?>">

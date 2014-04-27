@@ -3,7 +3,8 @@ app.controller('InstallationController', function($scope, $http, reposition) {
   $scope.user = {
     username: '',
     email:    '',
-    password: ''
+    password: '',
+    language: 'en'
   };
 
   $scope.problems = null;
@@ -23,9 +24,9 @@ app.controller('InstallationController', function($scope, $http, reposition) {
 
   $scope.alert = function(message) {
     $scope.message = message;
-    app.reposition('.login');        
+    app.reposition('.login');
   };
-  
+
   $scope.retry = function() {
     window.location.reload();
   };

@@ -16,7 +16,9 @@ class InstallationController extends Controller {
 
   public function signup() {
     $this->lock();
-    return view('installation/signup');
+    return view('installation/signup', array(
+      'languages' => app::languages()
+    ));
   }
 
   protected function lock() {

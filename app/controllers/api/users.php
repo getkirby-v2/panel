@@ -46,6 +46,7 @@ class UsersController extends Controller {
 
       $data = array(
         'email' => get('email'),
+        'language' => get('language', c::get('panel.language', 'en')),
       );
 
       if(str::length(get('password')) > 0) {
@@ -148,7 +149,9 @@ class UsersController extends Controller {
     return array(
       'username' => $user->username,
       'email'    => $user->email,
-      'avatar'   => $user->avatar() ? $user->avatar()->url() : false
+      'language' => $user->language,
+      'avatar'   => $user->avatar() ? $user->avatar()->url() : false,
+      'current'  => $user->isCurrent()
     );
 
   }

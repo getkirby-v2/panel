@@ -9,11 +9,15 @@ class UsersController extends Controller {
   }
 
   public function add() {
-    return view('users/add');
+    return view('users/add', array(
+      'languages' => app::languages()
+    ));
   }
 
   public function edit() {
-    return view('users/edit');
+    return view('users/edit', array(
+      'languages' => app::languages()
+    ));
   }
 
   public function delete() {

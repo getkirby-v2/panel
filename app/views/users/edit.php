@@ -21,7 +21,18 @@
 
   <div class="form__field">
     <label class="form__label"><?php echo l('users.edit.password') ?></label>
-    <input class="form__input" type="password" ng-model="user.password" required>
+    <input class="form__input" type="password" ng-model="user.password">
+  </div>
+
+  <div class="form__field">
+    <label class="form__label"><?php echo l('users.edit.language') ?></label>
+    <div class="form__input">
+      <select ng-model="user.language" required>
+        <?php foreach($languages as $language): ?>
+        <option value="<?php echo $language->code() ?>"><?php echo html($language->title()) ?></option>
+        <?php endforeach ?>
+      </select>
+    </div>
   </div>
 
   <div class="form__buttons">
