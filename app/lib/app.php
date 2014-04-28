@@ -40,6 +40,11 @@ class App {
       $languageCode = c::get('panel.language', 'en');
     }
 
+    // validate the language code
+    if(!in_array($languageCode, static::languages()->keys())) {
+      $languageCode = 'en';
+    }
+
     $language = require(path('panel.languages') . DS . $languageCode . '.php');
 
     // set all language variables
