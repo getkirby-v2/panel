@@ -1,6 +1,3 @@
-.grid {
-  margin: 0 -.75em;
-}
 .grid__item {
   display: inline-block;
   width: 100%;
