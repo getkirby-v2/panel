@@ -34,7 +34,21 @@ class App {
     }
 
     // load the interface language file
-    l::$data = require(path('panel.languages') . DS . c::get('panel.language', 'en') . '.php');
+    if(static::$site->user()) {
+      $languageCode = static::$site->user()->language();
+    } else {
+      $languageCode = c::get('panel.language', 'en');
+    }
+
+    // validate the language code
+    if(!in_array($languageCode, static::languages()->keys())) {
+      $languageCode = 'en';
+    }
+
+    $language = require(path('panel.languages') . DS . $languageCode . '.php');
+
+    // set all language variables
+    l::$data = $language['data'];
 
     // register router filters
     static::$router->filter('auth', function() {
@@ -96,6 +110,20 @@ class App {
     } else {
       echo new Response($response);
     }
+
+  }
+
+  static public function languages() {
+
+    $languages = new Collection;
+
+    foreach(dir::read(path('panel.languages')) as $file) {
+      $language = new Obj(require(path('panel.languages') . DS . $file));
+      $language->code = str_replace('.php', '', $file);
+      $languages->set($language->code, $language);
+    }
+
+    return $languages;
 
   }
 

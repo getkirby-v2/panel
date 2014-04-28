@@ -22,7 +22,7 @@ function fileResponse($file, $child = false) {
     'extension' => $file->extension(),
     'size'      => $file->niceSize(),
     'type'      => $file->type() ? $file->type() : 'unknown',
-    'url'       => $file->url()
+    'url'       => $file->url(),
   );
 
   if(!$child) {
@@ -54,21 +54,12 @@ function pageResponse($page, $child = false) {
 
   $result = array(
     'title'    => !empty($title) ? $title : $page->uid(),
-    'url'      => $page->url(app::$language),
     'uri'      => $page->uri(),
-    'uid'      => $page->uid(),
-    'slug'     => $page->slug(),
     'home'     => $page->isHomePage(),
     'error'    => $page->isErrorPage(),
     'visible'  => $page->isVisible(),
-    'template' => $page->template()
+    'uid'      => $page->uid()
   );
-
-
-  // if there's a blueprint for the intended page template, use that!
-  if(c::get('root.blueprints') . DS . $page->intendedTemplate() . '.php') {
-    $result['template'] = $page->intendedTemplate();
-  }
 
   if(!$page->isSite()) {
 
@@ -96,6 +87,15 @@ function pageResponse($page, $child = false) {
   }
 
   if(!$child) {
+
+    $result['url']      = $page->url(app::$language);
+    $result['template'] = $page->template();
+    $result['slug']     = $page->slug();
+
+    // if there's a blueprint for the intended page template, use that!
+    if(file_exists(c::get('root.blueprints') . DS . $page->intendedTemplate() . '.php')) {
+      $result['template'] = $page->intendedTemplate();
+    }
 
     $children = $page->children();
 
@@ -154,57 +154,58 @@ function pageResponse($page, $child = false) {
       'message' => 'The page is not writable'
     );
 
-  }
-
-  $result['deletable'] = array(
-    'status'  => true,
-    'message' => 'This page can be deleted'
-  );
-
-  $result['changeableURL'] = array(
-    'status'  => true,
-    'message' => 'The URL for this page can be changed'
-  );
-
-  // deletable status
-  if($page->isSite()) {
     $result['deletable'] = array(
-      'status'  => false,
-      'message' => 'The site cannot be deleted'
+      'status'  => true,
+      'message' => 'This page can be deleted'
     );
+
     $result['changeableURL'] = array(
-      'status'  => false,
-      'message' => 'The URL for the site cannot be changed'
+      'status'  => true,
+      'message' => 'The URL for this page can be changed'
     );
-  }
 
-  if($page->isErrorPage()) {
-    $result['deletable'] = array(
-      'status'  => false,
-      'message' => 'The error page cannot be deleted'
-    );
-    $result['changeableURL'] = array(
-      'status'  => false,
-      'message' => 'The URL for the error page cannot be changed'
-    );
-  }
+    // deletable status
+    if($page->isSite()) {
+      $result['deletable'] = array(
+        'status'  => false,
+        'message' => 'The site cannot be deleted'
+      );
+      $result['changeableURL'] = array(
+        'status'  => false,
+        'message' => 'The URL for the site cannot be changed'
+      );
+    }
 
-  if($page->isHomePage()) {
-    $result['deletable'] = array(
-      'status'  => false,
-      'message' => 'The home page cannot be deleted'
-    );
-    $result['changeableURL'] = array(
-      'status'  => false,
-      'message' => 'The URL for the home page cannot be changed'
-    );
-  }
+    if($page->isErrorPage()) {
+      $result['deletable'] = array(
+        'status'  => false,
+        'message' => 'The error page cannot be deleted'
+      );
+      $result['changeableURL'] = array(
+        'status'  => false,
+        'message' => 'The URL for the error page cannot be changed'
+      );
+    }
 
-  if($page->hasChildren()) {
-    $result['deletable'] = array(
-      'status'  => false,
-      'message' => 'This page has subpages. Please delete them first'
-    );
+    if($page->isHomePage()) {
+      $result['deletable'] = array(
+        'status'  => false,
+        'message' => 'The home page cannot be deleted'
+      );
+      $result['changeableURL'] = array(
+        'status'  => false,
+        'message' => 'The URL for the home page cannot be changed'
+      );
+    }
+
+    if($page->hasChildren()) {
+      $result['deletable'] = array(
+        'status'  => false,
+        'message' => 'This page has subpages. Please delete them first'
+      );
+    }
+
+
   }
 
   return $result;

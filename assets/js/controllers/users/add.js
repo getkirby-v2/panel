@@ -1,6 +1,8 @@
 app.controller('AddUserController', function($rootScope, $scope, $state, $stateParams, $http) {
 
-  $scope.user = {};
+  $scope.user = {
+    language : 'en'
+  };
 
   $scope.submit = function() {
 

@@ -10,6 +10,17 @@ return array(
     'method'  => 'POST',
   ),
 
+  // App
+  array(
+    'pattern' => 'api/app/health',
+    'action'  => 'api/AppController::health'
+  ),
+  array(
+    'pattern' => 'api/app/health/(:all?)',
+    'action'  => 'api/AppController::health',
+    'filter'  => 'auth'
+  ),
+
   // Installation
   array(
     'pattern' => 'api/install',
@@ -85,10 +96,6 @@ return array(
     'pattern' => 'api/site/languages',
     'action'  => 'api/SiteController::languages',
     'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/site/health',
-    'action'  => 'api/SiteController::health'
   ),
 
   // Files

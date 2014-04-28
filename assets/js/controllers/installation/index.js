@@ -3,12 +3,13 @@ app.controller('InstallationController', function($scope, $http, reposition) {
   $scope.user = {
     username: '',
     email:    '',
-    password: ''
+    password: '',
+    language: 'en'
   };
 
   $scope.problems = null;
 
-  $http.get('api/site/health')
+  $http.get('api/app/health')
     .success(function() {
       $scope.view = 'views/installation/signup.html';
     })
@@ -23,9 +24,9 @@ app.controller('InstallationController', function($scope, $http, reposition) {
 
   $scope.alert = function(message) {
     $scope.message = message;
-    app.reposition('.login');        
+    app.reposition('.login');
   };
-  
+
   $scope.retry = function() {
     window.location.reload();
   };
