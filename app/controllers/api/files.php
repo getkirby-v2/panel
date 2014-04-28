@@ -15,7 +15,9 @@ class FilesController extends Controller {
   public function upload() {
 
     $page   = $this->page(get('uri'));
-    $upload = new Upload($page->root() . DS . '{safeFilename}');
+    $upload = new Upload($page->root() . DS . '{safeFilename}', array(
+      'overwrite' => true
+    ));
 
     if($upload->file()) {
       return response::success(l('files.upload.success'));

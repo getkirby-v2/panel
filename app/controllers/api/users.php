@@ -88,7 +88,7 @@ class UsersController extends Controller {
       return response::error(l('users.avatar.error.missing'));
     }
 
-    $root = $user->avatar() ? $user->avatar()->root() : $user->avatarRoot('{extension}');
+    $root = $user->avatar() ? $user->avatar()->root() : $user->avatarRoot('{safeExtension}');
 
     $upload = new Upload($root, array(
       'accept' => function($upload) {
@@ -150,7 +150,7 @@ class UsersController extends Controller {
       'username' => $user->username,
       'email'    => $user->email,
       'language' => $user->language,
-      'avatar'   => $user->avatar() ? $user->avatar()->url() : false,
+      'avatar'   => $user->avatar() ? $user->avatar()->url() . '?' . $user->avatar()->modified() : false,
       'current'  => $user->isCurrent()
     );
 
