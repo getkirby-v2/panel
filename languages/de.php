@@ -49,7 +49,7 @@ return array(
 
   // files
   'files.title' => 'Dateien',
-  'files.manage' => 'editieren',
+  'files.manage' => 'bearbeiten',
   'files.upload' => 'Neue Datei hochladen',
   'files.empty' => 'Diese Seite hat keine Dateien',
   'files.show.error' => 'Die Datei konnte nicht gefunden werden',
