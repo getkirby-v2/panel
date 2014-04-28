@@ -25,7 +25,9 @@ class UsersController extends Controller {
   }
 
   public function avatar() {
-    return view('users/avatar');
+    return view('users/avatar', array(
+      'uploadable' => is_writable(c::get('root') . DS . 'assets' . DS . 'avatars')
+    ));
   }
 
   public function header() {

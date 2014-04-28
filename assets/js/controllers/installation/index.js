@@ -9,7 +9,7 @@ app.controller('InstallationController', function($scope, $http, reposition) {
 
   $scope.problems = null;
 
-  $http.get('api/site/health')
+  $http.get('api/app/health')
     .success(function() {
       $scope.view = 'views/installation/signup.html';
     })

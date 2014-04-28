@@ -25,6 +25,15 @@ return array(
     'installation.signup.create' => 'Account erstellen',
     'installation.signup.success' => 'Dein Account wurde erstellt',
 
+    // app
+    'app.health.error' => 'Es wurden Probleme entdeckt',
+    'app.health.error.accounts' => '/site/accounts ist nicht beschreibbar',
+    'app.health.error.avatars' => '/assets/avatars ist nicht beschreibbar',
+    'app.health.error.blueprints' => 'Bitte lege einen site/blueprints Ordner an',
+    'app.health.error.content' => 'Der content Ordner und alle Inhalte müssen beschreibbar sein.',
+    'app.health.error.thumbs' => 'Der thumbs Ordner muss beschreibbar sein.',
+    'app.health.success' => 'Alles ist super',
+
     // login
     'login.title' => 'Login',
     'login.username' => 'Benutzername',
@@ -37,6 +46,7 @@ return array(
     'site.title' => 'Seite',
     'site.settings' => 'Seiteneinstellungen',
     'site.publish' => 'Änderungen veröffentlichen',
+    'site.languages.error' => 'Die Seite ist einsprachig',
 
     // subpages
     'subpages.title' => 'Unterseiten',
@@ -93,15 +103,6 @@ return array(
     // unwritable
     'unwritable.title' => 'Die Seite ist nicht editierbar',
     'unwritable.text'  => 'Bitte prüfe die Zugriffsrechte, um diese Seite editieren zu können.',
-
-    // site
-    'site.languages.error' => 'Die Seite ist einsprachig',
-    'site.health.error' => 'Es wurden Probleme entdeckt',
-    'site.health.error.accounts' => 'site/accounts ist nicht beschreibbar',
-    'site.health.error.blueprints' => 'Bitte lege einen site/blueprints Ordner an',
-    'site.health.error.content' => 'Der content Ordner und alle Inhalte müssen beschreibbar sein.',
-    'site.health.error.thumbs' => 'Der thumbs Ordner muss beschreibbar sein.',
-    'site.health.success' => 'Alles ist super',
 
     // pages
     'pages.changeUrl' => 'URL ändern',
@@ -180,6 +181,8 @@ return array(
     'users.avatar.click' => '…oder klicke um ein Bild hochzuladen',
     'users.avatar.error.missing' => 'Der Benutzer wurde nicht gefunden',
     'users.avatar.error.type' => 'Es können nur JPG, PNG und GIF Dateien hochgeladen werden',
+    'users.avatar.error.folder.headline' => 'Der avatar Ordner ist nicht beschreibbar',
+    'users.avatar.error.folder.text' => 'Bitte erstelle den Ordner <strong>/assets/avatars</strong> und mache ihn für PHP beschreibbar.',
     'users.avatar.success' => 'Das Profilbild wurde hochgeladen',
     'users.avatar.delete.error' => 'Das Profilbild konnte nicht gelöscht werden',
     'users.avatar.delete.error.missing' => 'Der Benutzer wurde nicht gefunden',

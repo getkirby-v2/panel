@@ -25,6 +25,15 @@ return array(
     'installation.signup.create' => 'Create your account',
     'installation.signup.success' => 'Your account has been created',
 
+    // app
+    'app.health.error' => 'There are some issues!',
+    'app.health.error.accounts' => 'site/accounts is not writable',
+    'app.health.error.avatars' => '/assets/avatars is not writable',
+    'app.health.error.blueprints' => 'Please add a site/blueprints folder',
+    'app.health.error.content' => 'The content folder and all contained files and folders must be writable.',
+    'app.health.error.thumbs' => 'The thumbs folder must be writable.',
+    'app.health.success' => 'Everything is fine',
+
     // login
     'login.title' => 'Login',
     'login.username' => 'Username',
@@ -37,6 +46,7 @@ return array(
     'site.title' => 'Site',
     'site.settings' => 'Site settings',
     'site.publish' => 'Publish changes',
+    'site.languages.error' => 'This is a single-language site',
 
     // subpages
     'subpages.title' => 'Subpages',
@@ -93,15 +103,6 @@ return array(
     // unwritable
     'unwritable.title' => 'The page is not writable',
     'unwritable.text'  => 'Please check the permissions for the content folder and all files.',
-
-    // site
-    'site.languages.error' => 'This is a single-language site',
-    'site.health.error' => 'There are some issues!',
-    'site.health.error.accounts' => 'site/accounts is not writable',
-    'site.health.error.blueprints' => 'Please add a site/blueprints folder',
-    'site.health.error.content' => 'The content folder and all contained files and folders must be writable.',
-    'site.health.error.thumbs' => 'The thumbs folder must be writable.',
-    'site.health.success' => 'Everything is fine',
 
     // pages
     'pages.changeUrl' => 'Change URL',
@@ -180,6 +181,8 @@ return array(
     'users.avatar.click' => '…or click to upload',
     'users.avatar.error.missing' => 'The user could not be found',
     'users.avatar.error.type' => 'You can only upload JPG, PNG and GIF files',
+    'users.avatar.error.folder.headline' => 'The avatar folder is not writable',
+    'users.avatar.error.folder.text' => 'Please create the folder <strong>/assets/avatars</strong> and make it writable to upload profile pictures.',
     'users.avatar.success' => 'The profile picture has been uploaded',
     'users.avatar.delete.error' => 'The profile picture could not be deleted',
     'users.avatar.delete.error.missing' => 'The user could not be found',

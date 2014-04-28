@@ -1,6 +1,16 @@
 app.controller('AvatarController', function($rootScope, $scope, $state, $stateParams, $http, user) {
 
-  $scope.user   = user;
+  $scope.user = user;
+  $scope.uploadable = true;
+
+  $http.get('api/app/health/avatars')
+    .success(function() {
+      $scope.uploadable = true;
+    })
+    .error(function() {
+      $scope.uploadable = false;
+    });
+
   $scope.submit = function() {
     $state.transitionTo('users', {}, {reload: true});
   };
