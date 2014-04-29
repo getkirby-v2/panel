@@ -39,7 +39,7 @@
 
       <div class="form__field grid__item">
         <label class="form__label"><?php echo l('files.edit.typeAndSize') ?></label>
-        <div class="form__input form__input--readonly">{{file.type}} / {{file.size}}</div>
+        <div class="form__input form__input--readonly">{{file.type}} / {{file.size}} <span ng-show="file.type == 'image'"> / {{file.width}} &times; {{file.height}} px</span></div>
       </div>
 
       <div class="form__field grid__item">
