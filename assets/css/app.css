@@ -16,6 +16,10 @@
   white-space: nowrap;
 }
 
+strong {
+  font-weight: 600;
+}
+
 a.disabled {
   cursor: default;
   text-decoration: line-through;
@@ -174,6 +178,7 @@ body.has-dropdown:after {
   width: 4em;
   height: 100%;
   text-align: center;
+  background: #000;
 }
 
 .menuToggle {
@@ -196,6 +201,7 @@ body.has-dropdown:after {
   height: 3em;
   padding: .7em 1.5em;
   border-left: 1px solid #555;
+  background: #000;
 }
 
 
@@ -231,7 +237,7 @@ body.has-dropdown:after {
 }
 .breadcrumb li {
   position: relative;
-  display: inline-block;
+  float: left;
 }
 .breadcrumb a {
   display: block;
@@ -243,7 +249,7 @@ body.has-dropdown:after {
 }
 .breadcrumb a span {
   display: block;
-  padding: 1em 1.25em;
+  padding: .7em 1.25em .75em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -395,15 +401,6 @@ body.has-dropdown:after {
 }
 .sidebar__items .more i {
   color: #000;
-}
-.sidebar__items .dz {
-  margin: 1.5em;
-}
-.sidebar__items .dz-message {
-  padding: 1em 0;
-}
-.sidebar__items .dz .fa {
-  color: #999;
 }
 
 .sidebar__dropdownToggle {
@@ -741,10 +738,12 @@ body.has-dropdown:after {
 }
 
 .files {
+  position: relative;
   padding: 0 .75em;
 }
 .file {
-  display: inline-block;
+  position: relative;
+  float: left;
   padding: 0 .75em 1.5em;
   width: 100%;
 }
