@@ -6,10 +6,10 @@
   -moz-transition: all .3s;
   -o-transition: all .3s;
   -ms-transition: all .3s;
-  transition: all .3s;  
+  transition: all .3s;
 }
 .dz:hover {
-  border-color: #aaa;  
+  border-color: #aaa;
 }
 .dz.dz-drag-hover {
   border-color: #aaa;
@@ -17,7 +17,7 @@
 }
 
 .dz-message {
-  padding: 1.5em; 
+  padding: 1.5em;
   text-align: center;
   line-height: 1.5em;
   cursor: pointer;
@@ -33,7 +33,6 @@
 
 .dz-message strong {
   display: block;
-  font-weight: bold;
 }
 .dz-message small {
   color: #777;
@@ -42,7 +41,7 @@
 }
 
 .dz-previews {
-  display: none;  
+  display: none;
 }
 .dz-progress {
   position: absolute;

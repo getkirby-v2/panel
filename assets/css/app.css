@@ -16,6 +16,10 @@
   white-space: nowrap;
 }
 
+strong {
+  font-weight: 600;
+}
+
 a.disabled {
   cursor: default;
   text-decoration: line-through;
@@ -397,15 +401,6 @@ body.has-dropdown:after {
 }
 .sidebar__items .more i {
   color: #000;
-}
-.sidebar__items .dz {
-  margin: 1.5em;
-}
-.sidebar__items .dz-message {
-  padding: 1em 0;
-}
-.sidebar__items .dz .fa {
-  color: #999;
 }
 
 .sidebar__dropdownToggle {
