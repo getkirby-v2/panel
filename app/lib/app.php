@@ -15,14 +15,9 @@ class App {
       static::$site = kirby::panelsetup();
     }
 
-    // some config stuff
-    c::set('root.panel',      path('panel'));
-    c::set('root.blueprints', c::get('root.site') . DS . 'blueprints');
-    c::set('root.accounts',   c::get('root.site') . DS . 'accounts');
-
     // load all available routes
-    static::$routes = array_merge(static::$routes, require(path('app')   . DS . 'routes' . DS . 'api.php'));
-    static::$routes = array_merge(static::$routes, require(path('app')   . DS . 'routes' . DS . 'views.php'));
+    static::$routes = array_merge(static::$routes, require(root('panel.app.routes') . DS . 'api.php'));
+    static::$routes = array_merge(static::$routes, require(root('panel.app.routes') . DS . 'views.php'));
 
     // start the router
     static::$router = new Router();
@@ -45,7 +40,7 @@ class App {
       $languageCode = 'en';
     }
 
-    $language = require(path('panel.languages') . DS . $languageCode . '.php');
+    $language = require(root('panel.languages') . DS . $languageCode . '.php');
 
     // set all language variables
     l::$data = $language['data'];
@@ -82,7 +77,7 @@ class App {
     $controllerParts  = str::split(static::$route->action(), '::');
     $controllerUri    = $controllerParts[0];
     $controllerAction = $controllerParts[1];
-    $controllerFile   = path('app.controllers') . DS . strtolower(str_replace('Controller', '', $controllerUri)) . '.php';
+    $controllerFile   = root('panel.app.controllers') . DS . strtolower(str_replace('Controller', '', $controllerUri)) . '.php';
     $controllerName   = basename($controllerUri);
 
     // react on missing controllers
@@ -117,8 +112,8 @@ class App {
 
     $languages = new Collection;
 
-    foreach(dir::read(path('panel.languages')) as $file) {
-      $language = new Obj(require(path('panel.languages') . DS . $file));
+    foreach(dir::read(root('panel.languages')) as $file) {
+      $language = new Obj(require(root('panel.languages') . DS . $file));
       $language->code = str_replace('.php', '', $file);
       $languages->set($language->code, $language);
     }

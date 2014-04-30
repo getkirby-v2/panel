@@ -109,7 +109,7 @@
 
     ));
 
-    $fields = new Folder(c::get('root.panel') . DS . 'fields');
+    $fields = new Folder(root('panel.fields'));
 
     foreach($fields->children() as $dir) {
       echo js('panel/fields/' . $dir->name() . '/directive.js');

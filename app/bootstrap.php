@@ -2,31 +2,36 @@
 
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-// app setup
-path('app',             __DIR__);
-path('app.controllers', __DIR__ . DS . 'controllers');
-path('app.models',      __DIR__ . DS . 'models');
-path('app.layouts',     __DIR__ . DS . 'layouts');
-path('app.views',       __DIR__ . DS . 'views');
-path('app.snippets',    __DIR__ . DS . 'snippets');
-
 // panel roots
-path('panel',           dirname(__DIR__));
-path('panel.languages', dirname(__DIR__) . DS . 'languages');
+root('panel',                 dirname(__DIR__));
+root('panel.languages',       root('panel') . DS . 'languages');
+root('panel.assets',          root('panel') . DS . 'assets');
+root('panel.fields',          root('panel') . DS . 'fields');
+
+// app setup
+root('panel.app',             root('panel') . DS . 'app');
+root('panel.app.lib',         root('panel.app') . DS . 'lib');
+root('panel.app.controllers', root('panel.app') . DS . 'controllers');
+root('panel.app.models',      root('panel.app') . DS . 'models');
+root('panel.app.layouts',     root('panel.app') . DS . 'layouts');
+root('panel.app.views',       root('panel.app') . DS . 'views');
+root('panel.app.routes',      root('panel.app') . DS . 'routes');
+root('panel.app.snippets',    root('panel.app') . DS . 'snippets');
 
 // autoloader
 load(array(
 
   // mvc
-  'app'        => __DIR__ . DS . 'lib' . DS . 'app.php',
-  'view'       => __DIR__ . DS . 'lib' . DS . 'view.php',
-  'controller' => __DIR__ . DS . 'lib' . DS . 'controller.php',
-  'layout'     => __DIR__ . DS . 'lib' . DS . 'layout.php',
-  'snippet'    => __DIR__ . DS . 'lib' . DS . 'snippet.php',
+  'app'        => root('panel.app.lib') . DS . 'app.php',
+  'view'       => root('panel.app.lib') . DS . 'view.php',
+  'controller' => root('panel.app.lib') . DS . 'controller.php',
+  'layout'     => root('panel.app.lib') . DS . 'layout.php',
+  'snippet'    => root('panel.app.lib') . DS . 'snippet.php',
 
   // panel stuff
-  'pagedata'   => __DIR__ . DS . 'lib' . DS . 'pagedata.php',
+  'pagedata'   => root('panel.app.lib') . DS . 'pagedata.php',
 
 ));
 
-require(__DIR__ . DS . 'helpers.php');
+// load all helper functions
+require(root('panel.app') . DS . 'helpers.php');
