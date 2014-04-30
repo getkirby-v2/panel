@@ -18,6 +18,7 @@ class App {
     // load all available routes
     static::$routes = array_merge(static::$routes, require(root('panel.app.routes') . DS . 'api.php'));
     static::$routes = array_merge(static::$routes, require(root('panel.app.routes') . DS . 'views.php'));
+    static::$routes = array_merge(static::$routes, require(root('panel.app.routes') . DS . 'assets.php'));
 
     // start the router
     static::$router = new Router();
