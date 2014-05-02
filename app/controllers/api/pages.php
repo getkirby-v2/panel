@@ -10,7 +10,7 @@ class PagesController extends Controller {
       return response::error(l('pages.show.error'));
     }
 
-    return response::json(pageResponse($page));
+    return response::json(api::page($page));
 
   }
 

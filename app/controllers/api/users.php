@@ -4,9 +4,8 @@ class UsersController extends Controller {
 
   public function index() {
 
-    $ctrl  = $this;
-    $users = $this->users()->map(function($user) use($ctrl) {
-      return $ctrl->userToArray($user);
+    $users = $this->users()->map(function($user) {
+      return api::user($user);
     });
 
     return response::json($users->toArray());
@@ -17,7 +16,7 @@ class UsersController extends Controller {
 
     try {
       $user = $this->users()->create(get());
-      return response::json($this->userToArray($user));
+      return response::json(api::user($user));
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
@@ -31,7 +30,7 @@ class UsersController extends Controller {
     if(!$user) {
       return response::error(l('users.show.error.missing'));
     } else {
-      return response::json($this->userToArray($user));
+      return response::json(api::user($user));
     }
 
   }
@@ -142,18 +141,6 @@ class UsersController extends Controller {
 
   protected function user($username) {
     return app::$site->users()->find($username);
-  }
-
-  protected function userToArray($user) {
-
-    return array(
-      'username' => $user->username,
-      'email'    => $user->email,
-      'language' => $user->language,
-      'avatar'   => $user->avatar() ? $user->avatar()->url() . '?' . $user->avatar()->modified() : false,
-      'current'  => $user->isCurrent()
-    );
-
   }
 
 }

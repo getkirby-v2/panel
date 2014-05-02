@@ -48,14 +48,14 @@ class App {
 
     // register router filters
     static::$router->filter('auth', function() {
-      if(!static::$site->user()) {
+      if(!app::$site->user()) {
         go('panel/login');
       }
     });
 
     // check for a completed installation
     static::$router->filter('isInstalled', function() {
-      if(static::$site->users()->count() == 0) {
+      if(app::$site->users()->count() == 0) {
         go('panel/install');
       }
     });

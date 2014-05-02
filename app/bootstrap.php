@@ -29,6 +29,7 @@ load(array(
   'snippet'    => root('panel.app.lib') . DS . 'snippet.php',
 
   // panel stuff
+  'api'        => root('panel.app.lib') . DS . 'api.php',
   'pagedata'   => root('panel.app.lib') . DS . 'pagedata.php',
 
 ));

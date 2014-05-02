@@ -5,7 +5,7 @@ class FilesController extends Controller {
   public function show() {
 
     if($file = $this->file(get('uri'), get('filename'))) {
-      return response::json(fileResponse($file));
+      return response::json(api::file($file));
     } else {
       return response::error(l('files.show.error'));
     }
