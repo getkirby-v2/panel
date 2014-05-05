@@ -5,17 +5,17 @@ return array(
 
   // App.js
   array(
-    'pattern' => 'assets/js/app.js',
+    'pattern' => 'combine/js/app',
     'action'  => 'assets/JsController::app'
   ),
   // Libs.js
   array(
-    'pattern' => 'assets/js/libs.js',
+    'pattern' => 'combine/js/libs',
     'action'  => 'assets/JsController::libs'
   ),
   // Fields.js
   array(
-    'pattern' => 'assets/js/fields.js',
+    'pattern' => 'combine/js/fields',
     'action'  => 'assets/JsController::fields'
   ),
 

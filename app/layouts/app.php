@@ -45,11 +45,11 @@
       // libs
       'panel/assets/js/lib/jquery.js',
       'panel/assets/js/lib/angular.js',
-      'panel/assets/js/libs.js',
+      'panel/combine/js/libs',
 
       // app
-      'panel/assets/js/app.js',
-      'panel/assets/js/fields.js'
+      'panel/combine/js/app',
+      'panel/combine/js/fields'
     ));
 
     ?>

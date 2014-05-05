@@ -8,7 +8,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/files/index.html',
+    templateUrl: 'views/files/index',
     controller : 'FilesController'
   });
 
@@ -18,7 +18,7 @@ app.config(function($stateProvider) {
       page: app.fetchPage,
       file: app.fetchFile
     },
-    templateUrl: 'views/files/edit.html',
+    templateUrl: 'views/files/edit',
     controller: 'EditFileController'
   });
 
@@ -39,7 +39,7 @@ app.config(function($stateProvider) {
         resolve: {
           page: app.fetchPage
         },
-        templateUrl: 'views/files/upload.html',
+        templateUrl: 'views/files/upload',
         controller: 'UploadFileController'
       }
     }
@@ -53,7 +53,7 @@ app.config(function($stateProvider) {
           page: app.fetchPage,
           file: app.fetchFile
         },
-        templateUrl: 'views/files/delete.html',
+        templateUrl: 'views/files/delete',
         controller: 'DeleteFileController'
       }
     }

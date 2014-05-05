@@ -11,11 +11,11 @@ app.controller('InstallationController', function($scope, $http, reposition) {
 
   $http.get('api/app/health')
     .success(function() {
-      $scope.view = 'views/installation/signup.html';
+      $scope.view = 'views/installation/signup';
     })
     .error(function(response) {
       $scope.problems = response.data;
-      $scope.view     = 'views/installation/check.html';
+      $scope.view     = 'views/installation/check';
     });
 
   $scope.reposition = function() {

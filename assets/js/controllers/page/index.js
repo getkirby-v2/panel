@@ -11,7 +11,7 @@ app.controller('PageController', function($rootScope, $scope, $state, $statePara
   if(!page.parent) {
     $http.get('api/site/metatags').then(function(response) {
       $scope.sections = response.data;
-      $scope.main     = 'views/pages/metatags.html';
+      $scope.main     = 'views/pages/metatags';
     });
   } else {
     $http.get('api/pages/fields?uri=' + page.uri).then(function(response) {

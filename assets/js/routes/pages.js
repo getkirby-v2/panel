@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/pages/index.html',
+    templateUrl: 'views/pages/index',
     controller : 'PageController'
   });
 
@@ -18,7 +18,7 @@ app.config(function($stateProvider) {
     resolve: {
       page: app.fetchPage
     },
-    templateUrl: 'views/pages/index.html',
+    templateUrl: 'views/pages/index',
     controller : 'MetatagsController'
   });
 
@@ -40,7 +40,7 @@ app.config(function($stateProvider) {
           page: app.fetchPage,
           templates: app.fetchTemplates
         },
-        templateUrl: 'views/pages/add.html',
+        templateUrl: 'views/pages/add',
         controller: 'AddPageController'
       }
     }
@@ -50,7 +50,7 @@ app.config(function($stateProvider) {
     url: 'publish',
     views: {
       'modal@' : {
-        templateUrl: 'views/pages/publish.html',
+        templateUrl: 'views/pages/publish',
         controller: 'PublishController'
       }
     }
@@ -63,7 +63,7 @@ app.config(function($stateProvider) {
         resolve: {
           page: app.fetchPage
         },
-        templateUrl: 'views/files/upload.html',
+        templateUrl: 'views/files/upload',
         controller: 'UploadFileController'
       }
     }
@@ -76,7 +76,7 @@ app.config(function($stateProvider) {
         resolve: {
           page: app.fetchPage
         },
-        templateUrl: 'views/pages/delete.html',
+        templateUrl: 'views/pages/delete',
         controller: 'DeletePageController'
       }
     }
@@ -89,7 +89,7 @@ app.config(function($stateProvider) {
         resolve: {
           page: app.fetchPage
         },
-        templateUrl: 'views/pages/url.html',
+        templateUrl: 'views/pages/url',
         controller: 'ChangeUrlController'
       }
     }

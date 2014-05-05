@@ -13,7 +13,7 @@ app.config(function($stateProvider) {
         });
       }
     },
-    templateUrl: 'views/users/index.html',
+    templateUrl: 'views/users/index',
     controller: 'UsersController'
   });
 
@@ -31,7 +31,7 @@ app.config(function($stateProvider) {
     url: '/add',
     views: {
       'modal@' : {
-        templateUrl: 'views/users/add.html',
+        templateUrl: 'views/users/add',
         controller: 'AddUserController'
       }
     }
@@ -44,7 +44,7 @@ app.config(function($stateProvider) {
         resolve: {
           user: app.fetchUser
         },
-        templateUrl: 'views/users/edit.html',
+        templateUrl: 'views/users/edit',
         controller: 'EditUserController'
       }
     }
@@ -57,7 +57,7 @@ app.config(function($stateProvider) {
         resolve: {
           user: app.fetchUser
         },
-        templateUrl: 'views/users/delete.html',
+        templateUrl: 'views/users/delete',
         controller: 'DeleteUserController'
       }
     }
@@ -70,7 +70,7 @@ app.config(function($stateProvider) {
         resolve: {
           user: app.fetchUser
         },
-        templateUrl: 'views/users/avatar.html',
+        templateUrl: 'views/users/avatar',
         controller: 'AvatarController'
       }
     }
