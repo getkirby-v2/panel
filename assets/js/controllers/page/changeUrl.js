@@ -6,6 +6,7 @@ app.controller('ChangeUrlController', function($rootScope, $scope, $state, $http
 
     $http.post('api/pages/change-url/?uri=' + page.uri + '&uid=' + page.slug)
       .success(function(response) {
+        $scope.alert('');
         $state.go('page', {uri: response.data.uri});
       })
       .error(function(response) {

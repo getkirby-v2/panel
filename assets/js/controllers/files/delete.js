@@ -7,6 +7,7 @@ app.controller('DeleteFileController', function($scope, $state, $http, page, fil
 
     $http.delete('api/files/delete?uri=' + page.uri + '&filename=' + file.filename)
       .success(function() {
+        $scope.alert('');
         $state.transitionTo('files', {uri: page.uri}, {reload: true});
       })
       .error(function(response) {

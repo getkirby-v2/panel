@@ -12,6 +12,7 @@ app.controller('AvatarController', function($rootScope, $scope, $state, $statePa
     });
 
   $scope.submit = function() {
+    $scope.alert('');
     $state.transitionTo('users', {}, {reload: true});
   };
 

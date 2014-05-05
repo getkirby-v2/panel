@@ -9,6 +9,7 @@ app.controller('UploadFileController', function($scope, $state, page) {
   }
 
   $scope.submit = function() {
+    $scope.alert('');
     $state.transitionTo(go, {uri: page.uri}, {reload: true});
   };
 

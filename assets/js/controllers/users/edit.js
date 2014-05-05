@@ -6,6 +6,8 @@ app.controller('EditUserController', function($rootScope, $scope, $state, $state
     $http.post('api/users/update/' + user.username, $.param($scope.user))
       .success(function() {
 
+        $scope.alert('');
+
         if(user.current && user.language != $scope.user.language) {
           window.location.href = $state.href('users');
           window.location.reload();

@@ -6,6 +6,7 @@ app.controller('DeletePageController', function($rootScope, $scope, $state, $htt
 
     $http.delete('api/pages/delete/?uri=' + page.uri)
       .success(function() {
+        $scope.alert('');
         $state.go('page', {uri: page.parent.uri});
       })
       .error(function(response) {

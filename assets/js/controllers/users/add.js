@@ -8,6 +8,7 @@ app.controller('AddUserController', function($rootScope, $scope, $state, $stateP
 
     $http.post('api/users/create', $.param($scope.user))
       .success(function() {
+        $scope.alert('');
         $state.go('users', null, {reload: true});
       })
       .error(function(response) {

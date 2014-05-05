@@ -3,7 +3,7 @@ app.controller('AddPageController', function($rootScope, $scope, $state, $http, 
   $scope.parent    = page;
   $scope.templates = templates;
 
-  // set the defaults  
+  // set the defaults
   $scope.page = {
     parent   : $scope.parent.uri,
     template : $scope.templates[0].name,
@@ -14,6 +14,7 @@ app.controller('AddPageController', function($rootScope, $scope, $state, $http, 
 
     $http.post('api/pages/create', $.param($scope.page))
       .success(function(response) {
+        $scope.alert('');
 
         if($state.current.name == 'children.modal.add') {
           $state.transitionTo('children', {uri: page.uri}, {reload: true});
@@ -30,7 +31,7 @@ app.controller('AddPageController', function($rootScope, $scope, $state, $http, 
   $scope.appendix = {
     visible : false,
     edit : function() {
-      $scope.appendix.visible = true;      
+      $scope.appendix.visible = true;
       focus('AddPageController.page.slug');
       app.reposition('.modal__box');
     },
