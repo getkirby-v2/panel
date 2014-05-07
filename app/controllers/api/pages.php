@@ -182,39 +182,23 @@ class PagesController extends Controller {
   public function changeURL() {
 
     $page = $this->page(get('uri'));
-    $uid  = str::slug(get('uid'));
 
     if(!$page) {
       return response::error(l('pages.url.error.missing'));
     }
 
-    if($page->uid() === $uid) {
-      return response::success(l('pages.url.idle'), array(
+    try {
+
+      $page->move(get('uid'));
+
+      return response::success(l('pages.url.success'), array(
         'uid' => $page->uid(),
         'uri' => $page->uri()
       ));
+
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
     }
-
-    if($page->visible()) {
-      $dir = $page->num() . '-' . $uid;
-    } else {
-      $dir = $uid;
-    }
-
-    $root = dirname($page->root()) . DS . $dir;
-
-    if(is_dir($root)) {
-      return response::error(l('pages.url.error.exists'));
-    }
-
-    if(!dir::move($page->root(), $root)) {
-      return response::error(l('pages.url.error.move'));
-    }
-
-    return response::success(l('pages.url.success'), array(
-      'uid' => $uid,
-      'uri' => $page->parent()->uri() . '/' . $uid
-    ));
 
   }
 
