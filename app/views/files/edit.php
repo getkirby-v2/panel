@@ -3,7 +3,7 @@
 <div class="content filedetails">
 
   <div class="filedetails__preview">
-    <figure class="filedetails__thumb" ng-show="file.type == 'image'" style="background-image: url({{file.url}})">
+    <figure class="filedetails__thumb" ng-show="file.type == 'image'" style="background-image: url({{file.url}}?{{file.modified}})">
       <a target="_blank" href="{{file.url}}"></a>
     </figure>
     <figure class="filedetails__icon" ng-show="file.type != 'image'">

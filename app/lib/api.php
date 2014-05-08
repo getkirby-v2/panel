@@ -182,11 +182,12 @@ class Api {
 
     if(!$child) {
 
-      $result['prev']   = $file->prev() ? static::file($file->prev(), true) : false;
-      $result['next']   = $file->next() ? static::file($file->next(), true) : false;
-      $result['width']  = $file->width();
-      $result['height'] = $file->height();
-      $result['meta']   = array_map(function($field) {
+      $result['prev']     = $file->prev() ? static::file($file->prev(), true) : false;
+      $result['next']     = $file->next() ? static::file($file->next(), true) : false;
+      $result['width']    = $file->width();
+      $result['height']   = $file->height();
+      $result['modified'] = $file->modified();
+      $result['meta']     = array_map(function($field) {
         return (string)$field;
       }, $meta->data());
 
