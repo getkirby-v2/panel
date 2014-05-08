@@ -21,7 +21,7 @@ class Api {
       if(!$child) {
         $result['parent']  = static::page($page->parent(), true);
         $result['parents'] = $page->parents()->toArray(function($item) {
-          return static::page($item, true);
+          return api::page($item, true);
         });
       }
 
