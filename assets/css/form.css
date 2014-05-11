@@ -189,9 +189,8 @@
 .form__toolbar button:focus {
   outline: 0;
 }
-
 .form__separator {
-  margin: 2.5em -3em 3em;
+  margin: 2.5em -2em 3em;
   background: #ddd;
   height: 1px;
   border: 0;
