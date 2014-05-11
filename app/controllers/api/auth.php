@@ -11,11 +11,14 @@ class AuthController extends Controller {
       return response::error($message);
     }
 
-    if(!$user->login(get('password'))) {
-      return response::error($message);
+    try {
+      if(!$user->login(get('password'))) {
+        throw new Exception($message);
+      }
+      return response::success(l('login.success'));
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
     }
-
-    return response::success(l('login.success'));
 
   }
 
