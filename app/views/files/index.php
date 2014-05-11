@@ -12,7 +12,7 @@
 
     <article class="file" ng-repeat="file in page.files">
       <figure>
-        <a ng-show="file.type == 'image'" class="file__preview" ui-sref="file({filename : file.filename, uri: page.uri})" style="background-image: url({{file.thumb}})"></a>
+        <a ng-show="file.type == 'image'" class="file__preview" ui-sref="file({filename : file.filename, uri: page.uri})" style="background-image: url({{file.thumb}}?{{file.modified}})"></a>
         <a ng-show="file.type != 'image'" class="file__preview" ui-sref="file({filename : file.filename, uri: page.uri})">
           <span>{{file.extension}}</span>
         </a>
