@@ -16,8 +16,7 @@ app.controller('LoginController', function($scope, $http, reposition) {
 
     $http.post('api/auth/login', $.param($scope.user))
       .success(function(response) {
-        console.log(response);
-        //window.location.href = './';
+        window.location.href = './';
       })
       .error(function(response) {
         $scope.alert(response.message);
