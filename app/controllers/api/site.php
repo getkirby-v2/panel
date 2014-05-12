@@ -9,6 +9,7 @@ class SiteController extends Controller {
 
     if($blueprint = $site->blueprint()) {
       foreach($blueprint->fields() as $key => $field) {
+        if(!isset($field['label'])) continue;
         $content[] = array(
           'key'   => $field['label'],
           'value' => (string)$site->content(app::$language)->get($key)
