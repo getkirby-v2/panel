@@ -8,7 +8,7 @@ class PageData {
 
     if(empty($default)) {
       return '';
-    } else if(is_string($default)) {
+    } else if(is_string($default) || is_numeric($default)) {
       return $default;
     } else {
       $type = a::get($default, 'type');
