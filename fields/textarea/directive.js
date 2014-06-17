@@ -57,7 +57,9 @@ app.directive('textareafield', function(field) {
 
     });
 
-    codeMirror.setValue(scope.model);
+    if(scope.model != undefined) {
+      codeMirror.setValue(scope.model);
+    }
 
     // Specialize change event
     codeMirror.on('change', function (instance) {
