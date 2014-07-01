@@ -54,7 +54,7 @@ return array(
     'subpages.manage' => 'Gérer',
     'subpages.search.placeholder' => 'Rechercher une sous-page',
     'subpages.show' => 'Tout afficher',
-    'subpages.empty' => 'Cette page n'a aucune sous-page',
+    'subpages.empty' => 'Cette page n\'a aucune sous-page',
 
     // metatags
     'metatags.title' => 'Méta-tags',
@@ -65,8 +65,8 @@ return array(
     'files.title' => 'Fichiers',
     'files.manage' => 'gérer',
     'files.upload' => 'Transférer un nouveau fichier',
-    'files.empty' => 'Cette page n'a aucun fichier',
-    'files.show.error' => 'Le fichier n'a pu être trouvé',
+    'files.empty' => 'Cette page n\'a aucun fichier',
+    'files.show.error' => 'Le fichier n\'a pu être trouvé',
     'files.manager.headline' => 'Gérer les fichiers pour',
     'files.manager.back' => 'Retour à la page',
     'files.manager.upload' => 'Transférer un nouveau fichier',
@@ -74,7 +74,7 @@ return array(
     'files.manager.edit' => 'Éditer',
     'files.manager.delete' => 'Supprimer',
     'files.delete.headline' => 'Vouslez-vous vraiment supprimer ce fichier ?',
-    'files.delete.error.missing' => 'Le fichier n'a pu être trouvé',
+    'files.delete.error.missing' => 'Le fichier n\'a pu être trouvé',
     'files.delete.success' => 'Le fichier a été supprimé',
     'files.edit.filename' => 'Nom du fichier',
     'files.edit.replace' => 'Remplacer',
@@ -86,33 +86,33 @@ return array(
     'files.replace.click' => '… ou cliquer pour remplacer ce fichier',
     'files.replace.error.type' => 'Le fichier transféré doit être du même type',
     'files.replace.success' => 'Le fichier a été remplacé',
-    'files.rename.error' => 'Le fichier n'a pu être renommé',
-    'files.rename.error.missing' => 'Le fichier n'a pu être trouvé',
+    'files.rename.error' => 'Le fichier n\'a pu être renommé',
+    'files.rename.error.missing' => 'Le fichier n\'a pu être trouvé',
     'files.rename.success' => 'Le fichier a été renommé',
-    'files.update.error.page' => 'La page n'a pu être trouvée',
-    'files.update.error.missing' => 'Le fichier n'a pu être trouvé',
+    'files.update.error.page' => 'La page n\'a pu être trouvée',
+    'files.update.error.missing' => 'Le fichier n\'a pu être trouvé',
     'files.update.success' => 'Le fichier a été mis à jour',
     'files.upload.drop' => 'Déposer un fichier ici…',
     'files.upload.click' => '… ou cliquer pour remplacer ce fichier',
     'files.upload.success' => 'Le transfert de fichier a été effectué',
 
     // error page
-    'errorpage.title' => 'Page d'erreur',
-    'errorpage.text'  => 'Ceci est la page d'erreur de votre site. Vos visiteurs verront cette page lorsqu'il entreront une URL qui n'est pas disponible.',
+    'errorpage.title' => 'Page d\'erreur',
+    'errorpage.text'  => 'Ceci est la page d\'erreur de votre site. Vos visiteurs verront cette page lorsqu\'ils entreront une URL qui n\'est pas disponible.',
 
     // unwritable
-    'unwritable.title' => 'Le fichier n'est pas inscriptible',
+    'unwritable.title' => 'Le fichier n\'est pas inscriptible',
     'unwritable.text'  => 'Veuillez vérifier les permissions du répertoire de contenu et de tous les fichiers.',
 
     // pages
-    'pages.changeUrl' => 'Modifier l'URL',
+    'pages.changeUrl' => 'Modifier l\'URL',
     'pages.settings' => 'Paramètres de la page',
     'pages.form.error.nocontent.headline' => 'Cette page ne comporte aucun contenu',
     'pages.form.error.nocontent.text' => 'Veuillez créer manuellement un fichier texte de contenu sur le serveur',
-    'pages.show.error' => 'La page n'a pu être trouvée',
+    'pages.show.error' => 'La page n\'a pu être trouvée',
     'pages.delete' => 'Supprimer la page',
     'pages.delete.headline' => 'Voulez-vous vraiment supprimer cette page ?',
-    'pages.delete.error.missing' => 'La page n'a pu être trouvée',
+    'pages.delete.error.missing' => 'La page n\'a pu être trouvée',
     'pages.delete.success' => 'La page a été supprimée',
     'pages.delete.url' => 'URL',
     'pages.template' => 'Modèle',
@@ -127,11 +127,11 @@ return array(
     'pages.add.error.title' => 'Le titre est manquant',
     'pages.add.error.template' => 'Ce modèle est manquant',
     'pages.add.success' => 'La page a été créée',
-    'pages.update.error.missing' => 'La page n'a pu être trouvée',
-    'pages.update.success' => 'The page has been updated',
-    'pages.sort.success' => 'The pages have been sorted',
-    'pages.hide.error.missing' => 'The page could not be found',
-    'pages.hide.success' => 'The page is now invisible',
+    'pages.update.error.missing' => 'La page n\'a pu être trouvée',
+    'pages.update.success' => 'La page a été mise à jour',
+    'pages.sort.success' => 'Les pages ont été ordonnées',
+    'pages.hide.error.missing' => 'La page n\'a pu être trouvée',
+    'pages.hide.success' => 'La page est maintenant invisible',
     'pages.templates.error.missing' => 'The page could not be found',
     'pages.templates.error.nosubpages' => 'The page is not allowed to have subpages',
     'pages.publish.headline' => 'Publishing changes',
@@ -189,7 +189,7 @@ return array(
     'users.avatar.delete.success' => 'The profile picture has been deleted',
 
     // logout
-    'logout' => 'Logout'
+    'logout' => 'Déconnexion'
 
   )
 );
