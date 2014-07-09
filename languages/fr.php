@@ -83,7 +83,7 @@ return array(
     'files.edit.link' => 'Lien public',
     'files.replace.headline' => 'Remplacer',
     'files.replace.drop' => 'Déposer un fichier ici…',
-    'files.replace.click' => '… ou cliquer pour remplacer ce fichier',
+    'files.replace.click' => '… ou cliquer pour remplacer le fichier actuel',
     'files.replace.error.type' => 'Le fichier transféré doit être du même type',
     'files.replace.success' => 'Le fichier a été remplacé',
     'files.rename.error' => 'Le fichier n\'a pu être renommé',
@@ -93,7 +93,7 @@ return array(
     'files.update.error.missing' => 'Le fichier n\'a pu être trouvé',
     'files.update.success' => 'Le fichier a été mis à jour',
     'files.upload.drop' => 'Déposer un fichier ici…',
-    'files.upload.click' => '… ou cliquer pour remplacer ce fichier',
+    'files.upload.click' => '… ou cliquer pour en transférer un',
     'files.upload.success' => 'Le transfert de fichier a été effectué',
 
     // error page
