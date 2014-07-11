@@ -1,7 +1,7 @@
 <?php
 
 return array(
-  'title' => 'French',
+  'title' => 'Français',
   'author' => 'Philippe Gervaise <getkirby@malvese.org>',
   'version' => '1.0.0',
   'data' => array(
@@ -26,7 +26,7 @@ return array(
     'installation.signup.success' => 'Votre compte a été créé',
 
     // app
-    'app.health.error' => 'Il y a quelques problèmes !',
+    'app.health.error' => 'Il y a des problèmes !',
     'app.health.error.accounts' => '<strong>site/accounts</strong> n\'est pas accessible en écriture',
     'app.health.error.avatars' => '<strong>/assets/avatars</strong> n\'est pas accessible en écriture',
     'app.health.error.blueprints' => 'Veuillez ajouter un répertoire <strong>site/blueprints</strong>',
@@ -73,7 +73,7 @@ return array(
     'files.manager.upload.first' => 'Transférer votre premier fichier',
     'files.manager.edit' => 'Éditer',
     'files.manager.delete' => 'Supprimer',
-    'files.delete.headline' => 'Vouslez-vous vraiment supprimer ce fichier ?',
+    'files.delete.headline' => 'Voulez-vous vraiment supprimer ce fichier ?',
     'files.delete.error.missing' => 'Le fichier n\'a pu être trouvé',
     'files.delete.success' => 'Le fichier a été supprimé',
     'files.edit.filename' => 'Nom du fichier',
