@@ -78,7 +78,12 @@
             <i class="fa fa-arrow-circle-right"></i> <?php echo l('subpages.show') ?> ({{page.children.length}})…
           </a>
         </li>
-        <li ng-show="page.children.length == 0"><span ui-sref="page.modal.add({uri: page.uri})"><?php echo l('subpages.empty') ?></span></li>
+        <li ng-show="page.children.length == 0">
+          <span><?php echo l('subpages.empty') ?></span>
+          <a ui-sref="page.modal.add({uri: page.uri})">
+            <i class="fa fa-plus-circle"></i> <?php echo l('subpages.add') ?>
+          </a>
+        </li>
       </ul>
 
     </div>
@@ -96,7 +101,12 @@
             <i class="fa fa-picture-o"></i> {{file.filename}}
           </a>
         </li>
-        <li ng-show="page.files.length == 0"><span ui-sref="page.modal.upload({uri: page.uri})"><?php echo l('files.empty') ?></span></li>
+        <li ng-show="page.files.length == 0">
+          <span><?php echo l('files.empty') ?></span>
+          <a ui-sref="page.modal.upload({uri: page.uri})">
+            <i class="fa fa-cloud-upload"></i> <?php echo l('files.upload') ?>
+          </a>
+        </li>
       </ul>
 
     </div>
