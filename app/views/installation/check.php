@@ -1,15 +1,24 @@
-<form class="form" ng-submit="retry()">
+<div class="message message-is-alert">
+  <span class="message-content"><?php _l('installation.check.text') ?></span>
+  <span class="message-toggle"><i>&times;</i></span>
+</div>
 
-  <div class="form__field">
-    <label class="form__label"><?php echo l('installation.check.headline') ?></label>
-    <p><?php echo l('installation.check.text') ?></p>
-    <ul>
-      <li class="form__alert" ng-repeat="problem in problems">{{problem}}</li>
-    </ul>
+<form class="form">
+
+  <div class="field">
+
+    <div class="text">
+      <ol>
+        <?php foreach($problems as $problem): ?>
+        <li><?php echo html($problem) ?></li>
+        <?php endforeach ?>
+      </ol>
+    </div>
+
   </div>
 
-  <div class="form__buttons form__buttons--centered">
-    <input type="submit" class="form__button" value="<?php echo l('installation.check.retry') ?>">
+  <div class="buttons buttons-centered cf">
+    <input type="submit" name="retry" class="btn btn-rounded btn-submit" value="<?php _l('installation.check.retry') ?>">
   </div>
 
 </form>

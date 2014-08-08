@@ -1,0 +1,33 @@
+.structure {
+  padding-bottom: .5em;
+}
+.structure-entry {
+  background: #fff;
+  border: 2px solid #ddd;
+  margin-bottom: .5em;
+}
+.structure-entry:last-child {
+  margin-bottom: 0;
+}
+.structure-entry-content {
+  padding: 1em 1.5em;
+  border-bottom: 1px solid #efefef;
+  cursor: move;
+}
+.structure-entry-options .btn {
+  padding: .75em 1.5em;
+  width: 50%;
+  float: left;
+  border-right: 1px solid #efefef;
+}
+.structure-empty {
+  padding: 1.5em;
+  background: #ddd;
+}
+.structure-empty a {
+  border-bottom: 2px solid #aaa;
+  margin-left: .5em;
+}
+.structure-empty a:hover {
+  border-color: #000;
+}

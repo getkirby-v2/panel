@@ -1,58 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app" ng-click="clicks()" ng-keydown="keys($event)">
-  <head>
+<html lang="en">
+<head>
 
-    <?php echo $meta ?>
+  <?php echo $meta ?>
 
-    <title>Kirby Panel</title>
+  <title><?php __(site()->title()) ?> | Panel</title>
 
-    <?php
+  <?php echo assets::css() ?>
 
-    echo css(array(
-      'panel/assets/css/grid.css',
-      'panel/assets/css/app.css',
-      'panel/assets/css/form.css',
-      'panel/assets/css/font-awesome.css',
-      'panel/assets/css/tagbox.css',
-      'panel/assets/css/dropzone.css',
-      'panel/assets/css/pickaday.css',
-      'panel/assets/css/codemirror.css',
-      'panel/assets/css/codemirror.theme.css',
-    ));
+  <style><?php echo form::css() ?></style>
 
-    echo html::shiv();
+</head>
+<body class="app">
 
-    ?>
+  <div class="progressbar"></div>
 
-    <script>
-      var defaultLanguage = <?php echo $defaultLanguage ?>;
-      var publishHook     = <?php echo $publishHook ?>;
-    </script>
+  <div data-view="modal" class="modal"></div>
+  <div data-view="main"  class="main"><i class="loader"></i></div>
 
-  </head>
-  <body ng-controller="AppController" ng-class="{'has-dropdown': dropdown.current}">
+  <?php echo assets::js() ?>
+  <script><?php echo form::js(false) ?></script>
 
-    <div ui-view autoscroll="false"></div>
-
-    <section class="modal" ng-show="modal" autoscroll="false" ng-controller="ModalController">
-      <div class="modal__shim" ng-click="close()"></div>
-      <div class="modal__box" ui-view="modal"></div>
-    </section>
-
-    <?php
-
-    echo js(array(
-      // libs
-      'panel/assets/js/lib/jquery.js',
-      'panel/assets/js/lib/angular.js',
-      'panel/combine/js/libs',
-
-      // app
-      'panel/combine/js/app',
-      'panel/combine/js/fields'
-    ));
-
-    ?>
-
-  </body>
+</body>
 </html>

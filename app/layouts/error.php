@@ -4,23 +4,22 @@
 
     <?php echo $meta ?>
 
-    <title>Kirby Panel</title>
+    <title><?php __(site()->title() . ' | ' . l('error')) ?></title>
 
-    <?php
-
-    echo css(array(
-      'panel/assets/css/app.css',
-      'panel/assets/css/font-awesome.css',
-      'panel/assets/css/error.css'
-    ));
-
-    echo html::shiv();
-
-    ?>
+    <?php echo assets::css() ?>
 
   </head>
-  <body>
-    An unexpected error occured.<br />
-    <a href="./">Back home…</a>
+  <body class="app">
+
+    <?php echo $content ?>
+    <?php echo assets::js() ?>
+
+    <script>
+
+      // init all global dropdowns
+      $(document).dropdown();
+
+    </script>
+
   </body>
 </html>

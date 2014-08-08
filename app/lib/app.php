@@ -8,6 +8,7 @@ class App {
   static public $router;
   static public $route;
   static public $language;
+  static public $interfaceLanguage;
 
   static public function configure() {
 
@@ -18,15 +19,21 @@ class App {
     // load all available routes
     static::$routes = array_merge(static::$routes, require(root('panel.app.routes') . DS . 'api.php'));
     static::$routes = array_merge(static::$routes, require(root('panel.app.routes') . DS . 'views.php'));
-    static::$routes = array_merge(static::$routes, require(root('panel.app.routes') . DS . 'assets.php'));
+
+    // setup the blueprint root
+    blueprint::$root = c::get('root.site') . DS . 'blueprints';
 
     // start the router
     static::$router = new Router();
     static::$router->register(static::$routes);
 
     // content language switcher variable
-    if($language = server::get('http_language')) {
-      static::$language = $language;
+    if(static::$site->multilang()) {
+      if($language = server::get('http_language') or $language = s::get('lang')) {
+        static::$site->visit('/', $language);
+      }
+      app::$language = static::$site->language()->code();
+      s::set('lang', app::$language);
     }
 
     // load the interface language file
@@ -41,7 +48,10 @@ class App {
       $languageCode = 'en';
     }
 
-    $language = require(root('panel.languages') . DS . $languageCode . '.php');
+    // store the interface language
+    app::$interfaceLanguage = $languageCode;
+
+    $language = require(root('panel.app.languages') . DS . $languageCode . '.php');
 
     // set all language variables
     l::$data = $language['data'];
@@ -97,8 +107,20 @@ class App {
     // run the controller
     $controller = new $controllerName;
 
-    // call the action and pass all arguments from the router
-    $response = call(array($controller, $controllerAction), static::$route->arguments());
+    try {
+      // call the action and pass all arguments from the router
+      $response = call(array($controller, $controllerAction), static::$route->arguments());
+    } catch(Exception $e) {
+
+      $file = root('panel.app.controllers') . DS . substr($controllerUri, 0, strpos($controllerUri, '/') + 1) . 'errors.php';
+
+      require_once($file);
+
+      $action     = (isset(static::$route->modal) and static::$route->modal()) ? 'modal' : 'index';
+      $controller = new ErrorsController;
+      $response   = call(array($controller, $action), array($e->getMessage()));
+
+    }
 
     // check for a valid response object
     if(is_a($response, 'Response')) {
@@ -113,8 +135,8 @@ class App {
 
     $languages = new Collection;
 
-    foreach(dir::read(root('panel.languages')) as $file) {
-      $language = new Obj(require(root('panel.languages') . DS . $file));
+    foreach(dir::read(root('panel.app.languages')) as $file) {
+      $language = new Obj(require(root('panel.app.languages') . DS . $file));
       $language->code = str_replace('.php', '', $file);
       $languages->set($language->code, $language);
     }

@@ -10,158 +10,87 @@ return array(
     'method'  => 'POST',
   ),
 
-  // App
-  array(
-    'pattern' => 'api/app/health',
-    'action'  => 'api/AppController::health'
-  ),
-  array(
-    'pattern' => 'api/app/health/(:all?)',
-    'action'  => 'api/AppController::health',
-    'filter'  => 'auth'
-  ),
-
-  // Installation
-  array(
-    'pattern' => 'api/install',
-    'action'  => 'api/InstallationController::run',
-    'method'  => 'POST'
-  ),
-
   // Pages
   array(
-    'pattern' => 'api/pages/show',
-    'action'  => 'api/PagesController::show',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/pages/create',
+    'pattern' => 'api/pages/create/(:all?)',
     'action'  => 'api/PagesController::create',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/pages/update',
+    'pattern' => 'api/pages/update/(:all?)',
     'action'  => 'api/PagesController::update',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/pages/delete',
+    'pattern' => 'api/pages/delete/(:all)',
     'action'  => 'api/PagesController::delete',
-    'method'  => 'DELETE',
+    'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/pages/sort',
+    'pattern' => 'api/pages/sort/(:all?)',
     'action'  => 'api/PagesController::sort',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/pages/hide',
+    'pattern' => 'api/pages/hide/(:all)',
     'action'  => 'api/PagesController::hide',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/pages/templates',
-    'action'  => 'api/PagesController::templates',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/pages/change-url',
-    'action'  => 'api/PagesController::changeURL',
+    'pattern' => 'api/pages/url/(:all)',
+    'action'  => 'api/PagesController::url',
     'method'  => 'POST',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/pages/form',
-    'action'  => 'api/PagesController::form',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/pages/fields',
-    'action'  => 'api/PagesController::fields',
-    'filter'  => 'auth',
-  ),
-
-  // Site
-  array(
-    'pattern' => 'api/site/metatags',
-    'action'  => 'api/SiteController::metatags',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/site/languages',
-    'action'  => 'api/SiteController::languages',
     'filter'  => 'auth',
   ),
 
   // Files
   array(
-    'pattern' => 'api/files/show',
-    'action'  => 'api/FilesController::show',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/files/upload',
+    'pattern' => 'api/files/upload/(:all)',
     'action'  => 'api/FilesController::upload',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/replace',
+    'pattern' => 'api/files/replace/(:all)',
     'action'  => 'api/FilesController::replace',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/update',
+    'pattern' => 'api/files/update/(:all)',
     'action'  => 'api/FilesController::update',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/rename',
+    'pattern' => 'api/files/rename/(:all)',
     'action'  => 'api/FilesController::rename',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/delete',
+    'pattern' => 'api/files/sort/(:all)',
+    'action'  => 'api/FilesController::sort',
+    'method'  => 'POST',
+    'filter'  => 'auth',
+  ),
+  array(
+    'pattern' => 'api/files/delete/(:all)',
     'action'  => 'api/FilesController::delete',
-    'method'  => 'DELETE',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/files/fields',
-    'action'  => 'api/FilesController::fields',
-    'method'  => 'GET',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/files/form',
-    'action'  => 'api/FilesController::form',
-    'method'  => 'GET',
+    'method'  => 'POST',
     'filter'  => 'auth',
   ),
 
   // Users
   array(
-    'pattern' => 'api/users',
-    'action'  => 'api/UsersController::index',
-    'filter'  => 'auth',
-  ),
-  array(
     'pattern' => 'api/users/create',
     'action'  => 'api/UsersController::create',
     'method'  => 'POST',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/users/show/(:any)',
-    'action'  => 'api/UsersController::show',
     'filter'  => 'auth',
   ),
   array(
@@ -173,19 +102,19 @@ return array(
   array(
     'pattern' => 'api/users/delete/(:any)',
     'action'  => 'api/UsersController::delete',
-    'method'  => 'DELETE',
-    'filter'  => 'auth',
-  ),
-  array(
-    'pattern' => 'api/users/avatar',
-    'action'  => 'api/UsersController::avatar',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/users/avatar',
-    'action'  => 'api/UsersController::deleteAvatar',
-    'method'  => 'DELETE',
+    'pattern' => 'api/avatars/upload/(:any)',
+    'action'  => 'api/AvatarsController::upload',
+    'method'  => 'POST',
+    'filter'  => 'auth',
+  ),
+  array(
+    'pattern' => 'api/avatars/delete/(:any)',
+    'action'  => 'api/AvatarsController::delete',
+    'method'  => 'POST',
     'filter'  => 'auth',
   ),
 
@@ -195,5 +124,15 @@ return array(
     'action'  => 'api/HelpersController::slug',
     'filter'  => 'auth',
   ),
+  array(
+    'pattern' => 'api/autocomplete/(:any)',
+    'action'  => 'api/HelpersController::autocomplete',
+    'filter'  => 'auth',
+  ),
+
+  array(
+    'pattern' => 'api/(:all)',
+    'action'  => 'api/ErrorsController::index',
+  )
 
 );

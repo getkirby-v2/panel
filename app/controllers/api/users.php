@@ -8,29 +8,26 @@ class UsersController extends Controller {
       return api::user($user);
     });
 
-    return response::json($users->toArray());
+    return response::json(array_values($users->toArray()));
 
   }
 
   public function create() {
 
-    try {
-      $user = $this->users()->create(get());
-      return response::json(api::user($user));
-    } catch(Exception $e) {
-      return response::error($e->getMessage());
+    $form = $this->form();
+    $data = $form->toArray();
+
+    if($data['password'] !== $data['passwordConfirmation']) {
+      return response::error(l('users.form.error.password.confirm'));
     }
 
-  }
+    unset($data['passwordConfirmation']);
 
-  public function show($username) {
-
-    $user = $this->user($username);
-
-    if(!$user) {
-      return response::error(l('users.show.error.missing'));
-    } else {
-      return response::json(api::user($user));
+    try {
+      $user = $this->users()->create($data);
+      return response::success('success');
+    } catch(Exception $e) {
+      return response::error(l('users.form.error.create'));
     }
 
   }
@@ -43,19 +40,23 @@ class UsersController extends Controller {
       return response::error(l('users.edit.error.missing'));
     } else {
 
-      $data = array(
-        'email' => get('email'),
-        'language' => get('language', c::get('panel.language', 'en')),
-      );
+      $form = $this->form($user);
+      $data = $form->toArray();
 
-      if(str::length(get('password')) > 0) {
-        $data['password'] = get('password');
+      if(str::length($data['password']) > 0) {
+        if($data['password'] !== $data['passwordConfirmation']) {
+          return response::error(l('users.form.error.password.confirm'));
+        }
+      } else {
+        unset($data['password']);
       }
 
+      unset($data['passwordConfirmation']);
+
       if($user->update($data)) {
-        return response::success(l('users.edit.success'));
+        return response::success('success');
       } else {
-        return response::error(l('users.edit.error'));
+        return response::error(l('users.form.error.update'));
       }
 
     }
@@ -67,71 +68,15 @@ class UsersController extends Controller {
     $user = $this->user($username);
 
     if(!$user) {
-      return response::error(l('users.delete.error.missing'));
+      return response::error(l('users.error.missing'));
     }
 
     try {
       $user->delete();
-      return response::success(l('users.delete.success'));
+      return response::success('success');
     } catch(Exception $e) {
-      return response::error($e->getMessage());
+      return response::error(l('users.delete.error'));
     }
-
-  }
-
-  public function avatar() {
-
-    $user = $this->user(get('username'));
-
-    if(!$user) {
-      return response::error(l('users.avatar.error.missing'));
-    }
-
-    $root = $user->avatar() ? $user->avatar()->root() : $user->avatarRoot('{safeExtension}');
-
-    $upload = new Upload($root, array(
-      'accept' => function($upload) {
-        if($upload->type() != 'image') {
-          throw new Error(l('users.avatar.error.type'));
-        }
-      }
-    ));
-
-    if($upload->file()) {
-
-      thumb::$defaults['root']   = dirname($upload->file()->root());
-      thumb::$defaults['driver'] = 'im';
-
-      $thumb = new Thumb($upload->file(), array(
-        'filename'  => $upload->file()->filename(),
-        'overwrite' => true,
-        'width'     => 256,
-        'height'    => 256,
-        'crop'      => true
-      ));
-
-      return response::success(l('users.avatar.success'));
-    } else {
-      return response::error($upload->error()->getMessage());
-    }
-
-  }
-
-  public function deleteAvatar() {
-
-    $user = $this->user(get('username'));
-
-    if(!$user) {
-      return response::error(l('users.avatar.delete.error.missing'));
-    }
-
-    if($avatar = $user->avatar()) {
-      if(f::remove($avatar->root())) {
-        return response::success(l('users.avatar.delete.success'));
-      }
-    }
-
-    return response::error(l('users.avatar.delete.error'));
 
   }
 
@@ -141,6 +86,16 @@ class UsersController extends Controller {
 
   protected function user($username) {
     return app::$site->users()->find($username);
+  }
+
+  protected function form($user = null) {
+
+    $mode    = $user ? 'edit' : 'add';
+    $fields  = data::read(root('panel.app') . DS . 'forms' . DS . 'user.' . $mode . '.php', 'yaml');
+    $form    = new Form($fields);
+
+    return $form;
+
   }
 
 }

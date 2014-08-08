@@ -10,15 +10,9 @@ return array(
     'filter'  => array('auth', 'isInstalled'),
   ),
 
-  // Error page
-  array(
-    'pattern' => 'error',
-    'action'  => 'views/AppController::error'
-  ),
-
   // Authentication
   array(
-    'pattern' => 'login',
+    'pattern' => 'login/(:any?)',
     'action'  => 'views/AuthController::login',
     'filter'  => 'isInstalled',
   ),
@@ -32,76 +26,127 @@ return array(
   // Installation
   array(
     'pattern' => 'install',
-    'action'  => 'views/InstallationController::index'
+    'action'  => 'views/InstallationController::index',
+    'method'  => 'GET|POST'
+  ),
+
+  // Dashboard
+  array(
+    'pattern' => 'views/dashboard/index',
+    'action'  => 'views/DashboardController::index',
+    'filter'  => 'auth'
   ),
   array(
-    'pattern' => 'views/installation/check',
-    'action'  => 'views/InstallationController::check'
-  ),
-  array(
-    'pattern' => 'views/installation/signup',
-    'action'  => 'views/InstallationController::signup'
+    'pattern' => 'views/dashboard/metatags',
+    'action'  => 'views/DashboardController::metatags',
+    'filter'  => 'auth'
   ),
 
   // Pages
   array(
-    'pattern' => 'views/pages/index',
-    'action'  => 'views/PagesController::index',
-    'filter'  => 'auth'
+    'pattern' => 'views/pages/show/(:all)',
+    'action'  => 'views/PagesController::show',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET'
   ),
   array(
-    'pattern' => 'views/pages/add',
+    'pattern' => 'views/pages/add/(:all?)',
     'action'  => 'views/PagesController::add',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
   ),
   array(
-    'pattern' => 'views/pages/publish',
-    'action'  => 'views/PagesController::publish',
-    'filter'  => 'auth'
-  ),
-  array(
-    'pattern' => 'views/pages/delete',
+    'pattern' => 'views/pages/delete/(:all)',
     'action'  => 'views/PagesController::delete',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
   ),
   array(
-    'pattern' => 'views/pages/metatags',
-    'action'  => 'views/PagesController::metatags',
-    'filter'  => 'auth'
-  ),
-  array(
-    'pattern' => 'views/pages/url',
+    'pattern' => 'views/pages/url/(:all)',
     'action'  => 'views/PagesController::url',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
+  ),
+  array(
+    'pattern' => 'views/pages/search/(:all?)',
+    'action'  => 'views/PagesController::search',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET'
   ),
 
-  // Children
+  // Editor
   array(
-    'pattern' => 'views/children/index',
-    'action'  => 'views/ChildrenController::index',
-    'filter'  => 'auth'
+    'pattern' => 'views/editor/link/(:all)',
+    'action'  => 'views/EditorController::link',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
+  ),
+  array(
+    'pattern' => 'views/editor/email/(:all)',
+    'action'  => 'views/EditorController::email',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
+  ),
+  array(
+    'pattern' => 'views/editor/image/(:all)',
+    'action'  => 'views/EditorController::image',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
+  ),
+  array(
+    'pattern' => 'views/editor/file/(:all)',
+    'action'  => 'views/EditorController::file',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
+  ),
+
+  // Subpages
+  array(
+    'pattern' => 'views/subpages/index/(:all?)',
+    'action'  => 'views/SubpagesController::index',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
   ),
 
   // Files
   array(
-    'pattern' => 'views/files/index',
+    'pattern' => 'views/files/index/(:all)',
     'action'  => 'views/FilesController::index',
     'filter'  => 'auth'
   ),
   array(
-    'pattern' => 'views/files/edit',
-    'action'  => 'views/FilesController::edit',
-    'filter'  => 'auth'
+    'pattern' => 'views/files/show/(:all)',
+    'action'  => 'views/FilesController::show',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
   ),
   array(
-    'pattern' => 'views/files/delete',
+    'pattern' => 'views/files/replace/(:all)',
+    'action'  => 'views/FilesController::replace',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
+  ),
+  array(
+    'pattern' => 'views/files/delete/(:all)',
     'action'  => 'views/FilesController::delete',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
   ),
   array(
-    'pattern' => 'views/files/upload',
+    'pattern' => 'views/files/upload/(:all)',
     'action'  => 'views/FilesController::upload',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
   ),
 
   // Users
@@ -113,22 +158,47 @@ return array(
   array(
     'pattern' => 'views/users/add',
     'action'  => 'views/UsersController::add',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true
   ),
   array(
-    'pattern' => 'views/users/edit',
+    'pattern' => 'views/users/edit/(:any)',
     'action'  => 'views/UsersController::edit',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET'
   ),
   array(
-    'pattern' => 'views/users/delete',
+    'pattern' => 'views/users/delete/(:any)',
     'action'  => 'views/UsersController::delete',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true
   ),
   array(
-    'pattern' => 'views/users/avatar',
+    'pattern' => 'views/users/avatar/(:any)',
     'action'  => 'views/UsersController::avatar',
-    'filter'  => 'auth'
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true
   ),
+  array(
+    'pattern' => 'views/users/delete-avatar/(:any)',
+    'action'  => 'views/UsersController::deleteAvatar',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true
+  ),
+
+  // Errors
+  array(
+    'pattern' => 'views/errors/index',
+    'action'  => 'views/ErrorsController::index',
+  ),
+
+  array(
+    'pattern' => '(:all)',
+    'action'  => 'views/ErrorsController::page',
+  )
 
 );

@@ -1,11 +1,23 @@
-<a ng-click="dropdown.toggle('menu', $event)" href="" class="menuToggle"><i class="fa fa-bars fa-lg"></i></a>
+<a id="menu-toggle" class="nav-icon nav-icon-left" data-dropdown="true" href="#menu">
+  <?php i('bars fa-lg') ?>
+</a>
 
-<ul ng-show="dropdown.isOpen('menu')" class="dropdown dropdown--white menu">
-  <li><a ui-sref="page({uri: null, file: null})"><i class="fa fa-file-o"></i> <?php echo l('site.title') ?></a></li>
-  <li><a ui-sref="users"><i class="fa fa-user"></i> <?php echo l('users.title') ?></a></li>
-  <li><a href="./logout"><i class="fa fa-power-off"></i> <?php echo l('logout') ?></a></li>
-</ul>
-
-<span ng-show="loading" class="topbar__loader"></span>
-<span ng-show="status.is('success')" class="topbar__status topbar__status--success"><i class="fa fa-check fa-lg"></i></span>
-<span ng-show="status.is('error')" class="topbar__status topbar__status--error"><i class="fa fa-exclamation-circle"></i></span>
+<nav id="menu" class="dropdown dropdown-left">
+  <ul class="nav nav-list dropdown-list">
+    <li>
+      <a href="<?php _u() ?>">
+        <?php i('file-o', 'left') . _l('dashboard') ?>
+      </a>
+    </li>
+    <li>
+      <a href="<?php _u('users') ?>">
+        <?php i('user', 'left') . _l('users') ?>
+      </a>
+    </li>
+    <li>
+      <a href="<?php echo url('panel/logout') ?>">
+        <?php i('power-off', 'left') . _l('logout') ?>
+      </a>
+    </li>
+  </ul>
+</nav>

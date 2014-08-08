@@ -2,44 +2,15 @@
 
 class PagesController extends Controller {
 
-  public function show() {
-
-    $page = $this->page(get('uri'));
-
-    if(!$page) {
-      return response::error(l('pages.show.error'));
-    }
-
-    return response::json(api::page($page));
-
-  }
-
-  public function create() {
-
-    $parent   = $this->page(get('parent'));
-    $title    = get('title');
-    $template = get('template');
-    $slug     = str::slug($title);
-
-    if(empty($title)) {
-      return response::error(l('pages.add.error.title'));
-    }
-
-    if(empty($template)) {
-      return response::error(l('pages.add.error.template'));
-    }
+  public function create($id = '') {
 
     try {
 
-      $data = pagedata::createByBlueprint($template, array(
-        'title' => $title
-      ));
+      $page = api::createPage($id, get('title'), get('template'), get('uid'));
 
-      $parent->children()->create($slug, $template, $data);
-
-      return response::success(l('pages.add.success'), array(
-        'uid' => $slug,
-        'uri' => $parent->uri() . '/' . $slug
+      return response::success('success', array(
+        'uid' => $page->uid(),
+        'uri' => $page->id()
       ));
 
     } catch(Exception $e) {
@@ -48,36 +19,64 @@ class PagesController extends Controller {
 
   }
 
-  public function update() {
+  public function update($id = '') {
 
-    $page = $this->page(get('uri'));
+    $page = $this->page($id);
 
     if(!$page) {
-      return response::error(l('pages.update.error.missing'));
+      return response::error(l('pages.error.missing'));
     }
 
-    $fields = array_keys($page->blueprint()->fields());
-    $data   = array();
+    $blueprint = blueprint::find($page);
+    $fields    = $blueprint->fields()->toArray();
+    $form      = new Form($fields);
+    $data      = $form->toArray();
+    $oldTitle  = (string)$page->title();
 
-    foreach($fields as $key) {
+    // trigger the validation
+    $form->validate();
 
-      $value = get($key);
-
-      if(is_array($value)) {
-        $data[$key] = implode(', ', $value);
-      } else {
-        $data[$key] = $value;
-      }
-
+    // stop at invalid fields
+    if(!$form->isValid()) {
+      return response::error(l('pages.show.error.form'), 400, array(
+        'fields' => $form->fields()->filterBy('error', true)->pluck('name')
+      ));
     }
 
     try {
 
       $page->update($data, app::$language);
 
-      return response::success(l('pages.update.success'), array(
+      // make sure that the sorting number is correct
+      if($page->isVisible()) {
+
+        $num = api::createPageNum($page);
+
+        if($num !== $page->num()) {
+
+          if($num > 0) {
+            $page->sort($num);
+          } else {
+
+            // update the slug
+            if($data['title'] != $oldTitle) {
+              $uid = str::slug($data['title']);
+              $page->move($uid);
+            }
+
+          }
+
+        }
+
+      }
+
+      history::visit($page->id());
+
+      return response::success('success', array(
         'file' => $page->content()->root(),
-        'data' => $data
+        'data' => $data,
+        'uid'  => $page->uid(),
+        'uri'  => $page->id()
       ));
 
     } catch(Exception $e) {
@@ -86,114 +85,103 @@ class PagesController extends Controller {
 
   }
 
-  public function delete() {
+  public function delete($id) {
 
-    $page = $this->page(get('uri'));
+    $page = $this->page($id);
 
     if(!$page) {
-      return response::error(l('pages.delete.error.missing'));
+      return response::error(l('pages.error.missing'));
     }
 
     try {
       $page->delete();
-      return response::success(l('pages.delete.success'));
+      return response::success('success');
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
 
   }
 
-  public function sort() {
+  public function sort($id = '') {
 
-    $page = $this->page(get('uri'));
-    $uids = get('uids');
-    $n    = 1;
+    $page      = $this->page($id);
+    $blueprint = blueprint::find($page);
+    $uids      = get('uids');
+    $flip      = $blueprint->pages()->sort() == 'flip';
+    $children  = $page->children();
 
-    // check for the numbering mode for subpages
-    $num = $page->blueprint()->num();
+    if($flip) {
+      $index = get('index', 1);
+      $uids  = array_reverse($uids);
+      $n     = $page->children()->visible()->count() - ($index * $blueprint->pages()->limit() - 1);
+    } else {
+      $index = (get('index', 1) - 1);
+      $n     = (($blueprint->pages()->limit() * $index) + 1);
+    }
 
     foreach($uids as $uid) {
+
       try {
 
-        $child = $page->children()->find($uid);
+        $child = $children->find($uid);
+        $x     = api::createPageNum($child, $blueprint);
 
-        switch($num->mode()) {
-          case 'zero':
-            $n = 0;
-            break;
-          case 'date':
-            $field  = $num->field() ? $num->field() : 'date';
-            $format = $num->format() ? $num->format() : 'Ymd';
-            $n      = date($format, strtotime($child->$field()));
-            break;
+        if($x !== false and $x >= 0) {
+          $child->sort($x);
+        } else {
+          $child->sort($n);
         }
 
-        $child->sort($n);
         $n++;
+
       } catch(Exception $e) {
 
       }
+
     }
 
-    return response::success(l('pages.sort.success'));
+    return response::success('success');
 
   }
 
-  public function hide() {
+  public function hide($id) {
 
-    $page = $this->page(get('uri'));
+    $page = $this->page($id);
 
     if(!$page) {
-      return response::error(l('pages.hide.error.missing'));
+      return response::error(l('pages.error.missing'));
     }
 
     try {
       $page->hide();
-      return response::success(l('pages.hide.success'));
+      return response::success('success');
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
 
   }
 
-  public function templates() {
+  public function url($id) {
 
-    $page = $this->page(get('uri'));
-
-    if(!$page) {
-      return response::error(l('pages.templates.error.missing'));
-    }
-
-    $pages = $page->blueprint()->pages();
-
-    if(!$page->blueprint()->pages()) {
-      return response::error(l('pages.templates.error.nosubpages'));
-    }
-
-    return response::json(array_map(function($item) {
-      return array(
-        'title' => $item->title(),
-        'name'  => $item->name()
-      );
-    }, $pages->template()));
-
-  }
-
-  public function changeURL() {
-
-    $page = $this->page(get('uri'));
+    $page = $this->page($id);
 
     if(!$page) {
-      return response::error(l('pages.url.error.missing'));
+      return response::error(l('pages.error.missing'));
     }
 
     try {
 
-      $page->move(get('uid'));
+      if(app::$language == site()->defaultLanguage()->code()) {
+        $page->move(get('uid'));
+      } else {
+        $page->update(array(
+          'URL-Key' => get('uid')
+        ));
+      }
 
-      return response::success(l('pages.url.success'), array(
+      return response::success('success', array(
         'uid' => $page->uid(),
-        'uri' => $page->uri()
+        'uri' => $page->id()
       ));
 
     } catch(Exception $e) {
@@ -202,71 +190,8 @@ class PagesController extends Controller {
 
   }
 
-  public function form() {
-
-    $page = $this->page(get('uri'));
-    $html = array();
-
-    if(!$page) return '';
-
-    if($blueprint = $page->blueprint()) {
-      $fields = $blueprint->fields();
-    } else {
-      $fields = array();
-
-      foreach($page->content()->fields() as $field) {
-        $fields[$field] = array(
-          'type' => 'textarea'
-        );
-      }
-
-    }
-
-    foreach($fields as $name => $field) {
-
-      if(get('field') and $name !== get('field')) continue;
-
-      if($name == 'title') {
-        $field['type'] = 'title';
-      }
-
-      $html[] = html::tag($field['type'] . 'field', '', array(
-        'model'   => 'page.content.' . $name,
-        'options' => 'fields.' . $name
-      ));
-
-    }
-
-    return view('pages/form', array(
-      'fields' => implode($html)
-    ));
-
-  }
-
-  public function fields() {
-
-    $page = $this->page(get('uri'));
-
-    if(!$page) return '';
-
-    if($blueprint = $page->blueprint()) {
-      $fields = $blueprint->fields();
-    } else {
-      $fields = array();
-      foreach($page->content()->fields() as $field) {
-        $fields[$field] = array(
-          'label' => ucfirst($field),
-          'type'  => 'text'
-        );
-      }
-    }
-
-    die(response::json($fields));
-
-  }
-
-  protected function page($uri) {
-    return empty($uri) ? app::$site : app::$site->children()->find($uri);
+  protected function page($id) {
+    return empty($id) ? site() : page($id);
   }
 
 }

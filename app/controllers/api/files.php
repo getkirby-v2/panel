@@ -2,35 +2,39 @@
 
 class FilesController extends Controller {
 
-  public function show() {
+  public function upload($id) {
 
-    if($file = $this->file(get('uri'), get('filename'))) {
-      return response::json(api::file($file));
-    } else {
-      return response::error(l('files.show.error'));
-    }
-
-  }
-
-  public function upload() {
-
-    $page   = $this->page(get('uri'));
+    $page   = $this->page($id);
     $upload = new Upload($page->root() . DS . '{safeFilename}', array(
-      'overwrite' => true
+      'overwrite' => true,
+      'accept'    => function($file) {
+
+        if($file->mime() == 'text/plain') return false;
+
+        $callback = c::get('panel.upload.accept');
+
+        if(is_callable($callback)) {
+          return call($callback, $file);
+        } else {
+          return true;
+        }
+
+      }
     ));
 
     if($upload->file()) {
-      return response::success(l('files.upload.success'));
+      return response::success('success');
     } else {
       return response::error($upload->error()->getMessage());
     }
 
   }
 
-  public function replace() {
+  public function replace($id) {
 
-    $file   = $this->file(get('uri'), get('filename'));
-    $upload = new Upload($file->root(), array(
+    $filename = get('filename');
+    $file     = $this->file($id, $filename);
+    $upload   = new Upload($file->root(), array(
       'overwrite' => true,
       'accept' => function($upload) use($file) {
         if($upload->mime() != $file->mime()) {
@@ -40,62 +44,66 @@ class FilesController extends Controller {
     ));
 
     if($upload->file()) {
-      return response::success(l('files.replace.success'));
+      return response::success('success');
     } else {
       return response::error($upload->error()->getMessage());
     }
 
   }
 
-  public function rename() {
+  public function rename($id) {
 
-    $file = $this->file(get('uri'), get('filename'));
+    $filename = get('filename');
+    $file     = $this->file($id, $filename);
 
     if(!$file) {
-      return response::error(l('files.rename.error.missing'));
+      return response::error(l('files.error.missing.file'));
     }
 
     try {
       $filename = $file->rename(get('name'));
-      return response::success(l('files.rename.error'), array(
+      return response::success('success', array(
         'filename' => $filename
       ));
     } catch(Exception $e) {
-      return response::error(l('files.rename.success'));
+      return response::error(l('files.show.error.rename'));
     }
 
   }
 
-  public function update() {
+  public function update($id) {
 
-    $page = $this->page(get('uri'));
+    $filename = get('filename');
+    $page     = $this->page($id);
 
     if(!$page) {
-      return response::error(l('files.update.error.page'));
+      return response::error(l('files.error.missing.page'));
     }
 
-    $file = $page->file(get('filename'));
+    $file = $page->file($filename);
 
     if(!$file) {
-      return response::error(l('files.update.error.missing'));
+      return response::error(l('files.error.missing.file'));
     }
 
-    $meta   = get('meta');
-    $fields = array_keys($page->blueprint()->files()->fields());
-    $data   = array();
+    $blueprint = blueprint::find($page);
+    $fields    = $blueprint->files()->fields()->toArray();
+    $form      = new Form($fields, get('meta'));
+    $data      = $form->toArray();
 
-    foreach($fields as $key) {
-      $value = a::get($meta, $key);
-      if(is_array($value)) {
-        $data[$key] = implode(', ', $value);
-      } else {
-        $data[$key] = $value;
-      }
+    // trigger the validation
+    $form->validate();
+
+    // stop at invalid fields
+    if(!$form->isValid()) {
+      return response::error(l('files.show.error.form'), 400, array(
+        'fields' => $form->fields()->filterBy('error', true)->pluck('name')
+      ));
     }
 
     try {
       $file->update($data, app::$language);
-      return response::success(l('files.update.success'), array(
+      return response::success('success', array(
         'data' => $data
       ));
     } catch(Exception $e) {
@@ -104,58 +112,61 @@ class FilesController extends Controller {
 
   }
 
-  public function delete() {
+  public function sort($id) {
 
-    $file = $this->file(get('uri'), get('filename'));
+    $page = $this->page($id);
+
+    if(!$page) {
+      return response::error(l('files.error.missing.page'));
+    }
+
+    $filenames = get('filenames');
+    $counter   = 0;
+
+    foreach($filenames as $filename) {
+
+      $file = $page->file($filename);
+
+      if(!$file) continue;
+
+      $counter++;
+
+      try {
+        $file->update(array('sort' => $counter), app::$language);
+      } catch(Exception $e) {
+
+      }
+
+    }
+
+    return response::success('success');
+
+  }
+
+  public function delete($id) {
+
+    $filename = get('filename');
+    $file     = $this->file($id, $filename);
 
     if(!$file) {
-      return response::error(l('files.delete.error.missing'));
+      return response::error(l('files.error.missing.file'));
     }
 
     try {
       $file->delete();
-      return response::success(l('files.delete.success'));
+      return response::success('success');
     } catch(Exception $e) {
       return response::error($e->getMessage());
     }
 
   }
 
-  public function form() {
-
-    $page = $this->page(get('uri'));
-    $html = array();
-
-    if(!$page) return '';
-
-    foreach($page->blueprint()->files()->fields() as $name => $field) {
-      if(get('field') and $name !== get('field')) continue;
-      $html[] = html::tag($field['type'] . 'field', '', array(
-        'model'   => 'file.meta.' . $name,
-        'options' => 'fields.' . $name
-      ));
-    }
-
-    return implode($html);
-
+  protected function page($id) {
+    return empty($id) ? site() : page($id);
   }
 
-  public function fields() {
-
-    $page = $this->page(get('uri'));
-
-    if(!$page) return '';
-
-    die(response::json($page->blueprint()->files()->fields()));
-
-  }
-
-  protected function page($uri) {
-    return empty($uri) ? app::$site : app::$site->children()->find($uri);
-  }
-
-  protected function file($uri, $filename) {
-    if($page = $this->page($uri)) {
+  protected function file($id, $filename) {
+    if($page = $this->page($id)) {
       return $page->file($filename);
     } else {
       return false;

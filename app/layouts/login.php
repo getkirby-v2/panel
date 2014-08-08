@@ -1,62 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en">
   <head>
 
     <?php echo $meta ?>
 
-    <title><?php echo l('login.title') ?></title>
+    <title><?php _l('login') ?></title>
 
     <?php
 
     echo css(array(
       'panel/assets/css/app.css',
-      'panel/assets/css/form.css',
       'panel/assets/css/font-awesome.css'
     ));
-
-    echo html::shiv();
 
     ?>
 
   </head>
-  <body ng-controller="LoginController">
+  <body class="app">
 
-    <div class="modal">
-      <div class="modal__box login">
-        <form class="form" ng-class="{loading: loading}" ng-submit="submit()">
+    <div class="modal-content">
 
-          <div class="form__alert" ng-show="message" ng-click="alert('')">
-            {{message}}
-          </div>
-
-          <div class="form__field">
-            <label class="form__label"><?php echo l('login.username') ?></label>
-            <input class="form__input" autofocus type="text" ng-model="user.username">
-          </div>
-
-          <div class="form__field">
-            <label class="form__label"><?php echo l('login.password') ?></label>
-            <input class="form__input" type="password" ng-model="user.password">
-          </div>
-
-          <div class="form__buttons">
-            <input type="submit" class="form__button form__button--submit" value="<?php echo l('login.button') ?>">
-          </div>
-        </form>
+      <div class="message <?php e(!empty($welcome), 'message-is-notice', 'message-is-alert hidden') ?>">
+        <span class="message-content"><?php __($welcome) ?></span>
+        <span class="message-toggle"><i>&times;</i></span>
       </div>
+
+      <form class="form" method="post">
+
+        <div class="field">
+          <label class="label"><?php _l('login.username.label') ?></label>
+          <input class="input" autofocus type="text" name="username" required>
+        </div>
+
+        <div class="field">
+          <label class="label"><?php _l('login.password.label') ?></label>
+          <input class="input" type="password" name="password" required>
+        </div>
+
+        <div class="buttons buttons-centered cf">
+          <input type="submit" class="btn btn-rounded btn-submit" value="<?php _l('login.button') ?>">
+        </div>
+      </form>
     </div>
 
-    <?php
+    <?php echo assets::js() ?>
 
-    echo js(array(
-      'panel/assets/js/lib/jquery.js',
-      'panel/assets/js/lib/angular.js',
-      'panel/assets/js/apps/login.js',
-      'panel/assets/js/factories/reposition.js',
-      'panel/assets/js/controllers/login/index.js',
-    ));
+    <script>
 
-    ?>
+    var $content = $('.modal-content');
+    var $form    = $content.find('.form');
+    var $message = $content.find('.message');
+
+    $message.on('click', function() {
+      $message.addClass('hidden');
+    });
+
+    $form.on('submit', function() {
+
+      $http.post('auth/login', $form.serializeObject(), function(r) {
+        window.location.href = '#/'
+      }, function(message) {
+        $message.removeClass('hidden')
+                .removeClass('message-is-notice')
+                .addClass('message-is-alert');
+        $message.find('.message-content')
+                .text(message);
+      });
+
+      return false;
+
+    });
+
+    </script>
 
   </body>
 </html>

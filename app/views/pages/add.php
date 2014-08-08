@@ -1,47 +1,55 @@
-<form class="form" ng-class="{loading: loading}" ng-submit="submit()">
+<div class="modal-content">
+  <form class="form" method="post">
 
-  <div class="form__alert" ng-show="message" ng-click="alert('')">
-    {{message}}
-  </div>
-
-  <div class="form__field">
-    <label class="form__label"><?php echo l('pages.add.headline') ?></label>
-    <input class="form__input" type="text" placeholder="<?php echo l('pages.add.title.placeholder') ?>" ng-model="page.title" required autofocus ng-keyup="convertTitle()">
-    <p ng-hide="appendix.visible" style="cursor: pointer" ng-click="appendix.edit()" class="form__help nowrap">
-      <span ng-show="page.slug == ''"><?php echo l('pages.add.url.enter') ?></span>{{page.slug}}
-    </p>
-  </div>
-
-  <div ng-show="appendix.visible" class="form__field">
-    <label class="form__label">
-      <?php echo l('pages.add.url') ?>
-      <a class="form__labelOption" ng-click="appendix.close()" href=""><i class="fa fa-times-circle"></i> <?php echo l('pages.add.url.close') ?></a>
-    </label>
-    <input class="form__input" type="text" ng-model="page.slug" focus-on="AddPageController.page.slug">
-    <p class="form__help nowrap"><?php echo l('pages.add.url.help') ?></p>
-  </div>
-
-  <div class="form__field" ng-show="templates.length > 1">
-    <label class="form__label"><?php echo l('pages.add.template.select') ?></label>
-    <div class="form__input">
-      <select ng-model="page.template" required ng-options="template.name as template.title for template in templates"></select>
-    </div>
-  </div>
-
-  <div class="form__field" ng-show="templates.length == 1">
-    <label class="form__label"><?php echo l('pages.add.template') ?></label>
-    <div class="form__inputWrapper">
-      <div class="form__input form__input--readonly">{{templates[0].title}}</div>
-      <div class="form__inputIcon form__inputIcon--readonly">
-        <i class="fa fa-lock"></i>
+    <fieldset class="fieldset field-grid cf">
+      <div class="field field-grid-item">
+        <label class="label"><?php _l('pages.add.title.label') ?><abbr title="<?php _l('fields.required') ?>">*</abbr></label>
+        <input class="input" type="text" name="title" placeholder="<?php _l('pages.add.title.placeholder') ?>…" autofocus autocomplete="off" required>
       </div>
-    </div>
-    <input type="hidden" ng-model="page.template" ng-value="templates[0].title">
-  </div>
 
-  <div class="form__buttons">
-    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="<?php echo l('cancel') ?>">
-    <input type="submit" class="form__button form__button--submit" value="<?php echo l('add') ?>">
-  </div>
+      <div class="field field-grid-item">
+        <label class="label"><?php _l('pages.add.url.label') ?><abbr title="<?php _l('fields.required') ?>">*</abbr></label>
+        <input class="input" type="text" name="uid" required>
+        <div class="field-help marginalia">
+          <?php _l('pages.add.url.help') ?>
+        </div>
+      </div>
 
-</form>
+      <?php if($templates->count() == 1 and $template = $templates->first()): ?>
+      <div class="field field-grid-item field-with-icon field-is-readonly">
+        <label class="label"><?php _l('pages.add.template.label') ?></label>
+        <div class="field-content">
+          <div class="input input-is-readonly"><?php __($template->title()) ?></div>
+          <input type="hidden" name="template" value="<?php __($template->name()) ?>">
+          <div class="field-icon">
+            <?php i('lock') ?>
+          </div>
+        </div>
+      </div>
+      <?php else: ?>
+      <?php
+
+      $options = array();
+      foreach($templates as $template) {
+        $options[$template->name()] = $template->title();
+      }
+
+      echo form::field('select', array(
+        'label'    => 'pages.add.template.label',
+        'name'     => 'template',
+        'required' => true,
+        'type'     => 'select',
+        'options'  => $options
+      ));
+
+      ?>
+      <?php endif ?>
+
+      <div class="buttons field-grid-item cf">
+        <a class="btn btn-rounded btn-cancel" href="<?php __($back) ?>"><?php _l('cancel') ?></a>
+        <input class="btn btn-rounded btn-submit" type="submit" value="<?php _l('add') ?>">
+      </div>
+
+    </fieldset>
+  </form>
+</div>

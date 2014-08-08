@@ -1,42 +1,74 @@
-<?php echo $header ?>
+<?php echo $topbar ?>
 
-<div class="content manager">
+<div class="section">
 
-  <header class="manager__header">
-    <h1 class="alpha"><?php echo l('files.manager.headline') ?> <a ui-sref="page({uri: page.uri})">{{page.title}}</a></h1>
-    <a class="manager__back" ui-sref="page({uri: page.uri})"><i class="fa fa-arrow-circle-left"></i> <?php echo l('files.manager.back') ?></a>
-    <a ng-show="page.files.length > 0" class="manager__toggle" ui-sref="files.modal.upload"><i class="fa fa-cloud-upload"></i> <span><?php echo l('files.manager.upload') ?></span></a>
-  </header>
+  <h2 class="hgroup cf">
+    <span class="hgroup-title">
+      <?php _l('files.index.headline') ?> <a href="<?php echo purl($page, 'show') ?>"><?php __($page->title()) ?></a>
+    </span>
+    <span class="hgroup-options shiv shiv-dark shiv-left cf">
 
+      <a class="hgroup-option-left" href="<?php echo purl($page, 'show') ?>">
+        <?php i('arrow-circle-left', 'left') . _l('files.index.back') ?>
+      </a>
+
+      <?php if($page->hasFiles()): ?>
+      <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php echo purl('files/upload/' . $page->id()) ?>">
+        <?php i('plus-circle', 'left') . _l('files.index.upload') ?>
+      </a>
+      <?php endif ?>
+    </span>
+  </h2>
+
+  <?php if($files->count()): ?>
   <div class="files">
 
-    <article class="file" ng-repeat="file in page.files">
-      <figure>
-        <a ng-show="file.type == 'image'" class="file__preview" ui-sref="file({filename : file.filename, uri: page.uri})" style="background-image: url({{file.thumb}}?{{file.modified}})"></a>
-        <a ng-show="file.type != 'image'" class="file__preview" ui-sref="file({filename : file.filename, uri: page.uri})">
-          <span>{{file.extension}}</span>
-        </a>
-        <figcaption class="file__info">
-          <a ui-sref="file({filename : file.filename, uri: page.uri})">
-            <strong>{{file.filename}}</strong>
-            <small>{{file.type}} / {{file.size}}</small>
+    <div class="grid<?php e($sortable, ' sortable') ?>">
+
+      <?php foreach($files as $file): ?><!--
+   --><div class="grid-item" id="<?php __($file->filename()) ?>">
+        <figure class="file">
+          <a class="file-preview file-preview-is-{{type}}" href="<?php echo purl($file, 'show') ?>">
+            <?php if(in_array($file->extension(), array('jpg', 'gif', 'png'))): ?>
+            <?php echo thumb($file, array('width' => 300, 'height' => '200', 'crop' => true)) ?>
+            <?php else: ?>
+            <span><?php __($file->extension()) ?></span>
+            <?php endif ?>
           </a>
-        </figcaption>
-        <nav class="manager__options">
-          <a ui-sref="file({filename : file.filename, uri: page.uri})">
-            <i class="fa fa-pencil"></i> <?php echo l('files.manager.edit') ?>
-          </a><!--
-       --><a ui-sref="files.modal.delete({filename : file.filename})">
-            <i class="fa fa-trash-o"></i> <?php echo l('files.manager.delete') ?>
-          </a>
-        </nav>
-      </figure>
-    </article>
+          <figcaption class="file-info">
+            <a class="file-name cut" href="<?php echo purl($file, 'show') ?>"><?php __($file->filename()) ?></a>
+            <a class="file-meta marginalia cut" href="<?php echo purl($file, 'show') ?>"><?php __($file->type() . ' / ' . $file->niceSize()) ?></a>
+          </figcaption>
+          <nav class="file-options cf">
+
+            <a class="btn btn-with-icon" href="<?php echo purl($file, 'show') ?>">
+              <?php i('pencil', 'left') ?><span><?php _l('files.index.edit') ?></span>
+            </a>
+
+            <a class="btn btn-with-icon" href="<?php echo purl($file, 'delete-from-index') ?>">
+              <?php i('trash-o', 'left') ?><span><?php _l('files.index.delete') ?></span>
+            </a>
+
+          </nav>
+        </figure>
+      </div><!--
+   --><?php endforeach ?>
+
+    </div>
 
   </div>
 
-  <div class="manager__empty" ng-show="page.files.length == 0">
-    <a ui-sref="files.modal.upload" href=""><i class="fa fa-cloud-upload fa-lg"></i> <span><?php echo l('files.manager.upload.first') ?></span></a>
+  <?php else: ?>
+
+  <div class="instruction">
+    <div class="instruction-content">
+      <p class="instruction-text"><?php echo l('files.index.upload.first.text') ?></p>
+      <a data-shortcut="+" class="btn btn-rounded" href="<?php echo purl('files/upload/' . $page->id()) ?>">
+        <?php echo l('files.index.upload.first.button') ?>
+      </a>
+    </div>
   </div>
+
+  <?php endif ?>
 
 </div>

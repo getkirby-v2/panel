@@ -1,35 +1,34 @@
-<div class="form">
+<div class="modal-content">
+  <div class="form">
 
-  <div ng-show="!uploadable">
+    <?php if($uploadable): ?>
 
-    <div class="form__field">
-      <label class="form__label"><?php echo l('users.avatar.error.folder.headline') ?></label>
-      <p><?php echo l('users.avatar.error.folder.text') ?></p>
+      <?php if($user->avatar()): ?>
+      <div class="field">
+        <figure class="avatar avatar-large avatar-centered"><img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>"></figure>
+      </div>
+      <?php endif ?>
+
+      <div class="field">
+        <div class="dropzone dropzone-input" autofocus tabindex="0">
+          <div class="dropzone-text section">
+            <h2><?php _l('users.avatar.drop') ?></h2>
+            <small class="marginalia"><?php _l('users.avatar.click') ?></small>
+          </div>
+        </div>
+      </div>
+
+    <?php else: ?>
+    <div class="field">
+      <label class="label"><?php _l('users.avatar.error.folder.headline') ?></label>
+      <p class="text">
+        <?php echo l('users.avatar.error.folder.text') ?>
+      </p>
     </div>
+    <?php endif ?>
 
-  </div>
-
-  <div ng-show="uploadable">
-
-    <div class="form__field" ng-show="user.avatar">
-      <figure class="form__avatar">
-        <span ng-click="delete()">
-          <img ng-show="user.avatar" ng-src="{{user.avatar}}">
-          <a href="">&times;</a>
-        </span>
-      </figure>
+    <div class="buttons buttons-centered">
+      <a class="btn btn-rounded btn-cancel" href="<?php __($back) ?>"><?php _l('cancel') ?></a>
     </div>
-
-    <form class="form__field dz" action="api/users/avatar" dropzone done="submit()">
-      <strong><?php echo l('users.avatar.drop') ?></strong>
-      <small><?php echo l('users.avatar.click') ?></small>
-      <input type="hidden" name="username" ng-value="user.username">
-    </form>
-
   </div>
-
-  <div class="form__buttons form__buttons--centered">
-    <input type="reset" class="form__button" ng-click="close()" value="<?php echo l('cancel') ?>">
-  </div>
-
 </div>

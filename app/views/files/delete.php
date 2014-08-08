@@ -1,16 +1,17 @@
-<form class="form" ng-class="{loading: loading}" ng-submit="submit()">
+<div class="modal-content">
+  <form class="form" method="delete">
 
-  <div class="form__alert" ng-show="message" ng-click="alert('')">
-    {{message}}
-  </div>
+    <input type="hidden" name="page" value="<?php __($p->id()) ?>">
 
-  <div class="form__field">
-    <label class="form__label"><?php echo l('files.delete.headline') ?></label>
-    <div class="form__input form__input--readonly">{{file.filename}}</div>
-  </div>
+    <div class="field">
+      <label class="label"><?php _l('files.delete.headline') ?></label>
+      <p class="input input-is-readonly"><?php __($f->filename()) ?></p>
+    </div>
 
-  <div class="form__buttons">
-    <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="<?php echo l('cancel') ?>">
-    <input type="submit" class="form__button form__button--submit form__button--negative" autofocus="autofocus" value="<?php echo l('delete') ?>">
-  </div>
-</form>
+    <div class="buttons cf">
+      <a class="btn btn-rounded btn-cancel" href="<?php __($back) ?>"><?php _l('cancel') ?></a>
+      <input class="btn btn-rounded btn-submit btn-negative" type="submit" value="<?php _l('delete') ?>" autofocus>
+    </div>
+
+  </form>
+</div>

@@ -1,41 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en">
   <head>
 
     <?php echo $meta ?>
 
-    <title>Kirby Panel</title>
+    <title><?php __(site()->title() . ' | ' . l('installation')) ?></title>
 
-    <?php
-
-    echo css(array(
-      'panel/assets/css/app.css',
-      'panel/assets/css/form.css',
-      'panel/assets/css/font-awesome.css'
-    ));
-
-    echo html::shiv();
-
-    ?>
+    <?php echo assets::css() ?>
 
   </head>
-  <body ng-controller="InstallationController">
+  <body class="app">
 
-    <div class="modal">
-      <div class="modal__box login" ng-include="view" onload="reposition()"></div>
-    </div>
+    <div class="modal-content"><?php echo $content ?></div>
 
-    <?php
+    <?php echo assets::js() ?>
 
-    echo js(array(
-      'panel/assets/js/lib/jquery.js',
-      'panel/assets/js/lib/angular.js',
-      'panel/assets/js/apps/installation.js',
-      'panel/assets/js/factories/reposition.js',
-      'panel/assets/js/controllers/installation/index.js',
-    ));
-
-    ?>
+    <script>
+      $('.message').on('click', function() {
+        $(this).remove();
+      });
+    </script>
 
   </body>
 </html>

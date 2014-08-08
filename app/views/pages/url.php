@@ -1,41 +1,25 @@
-<form class="form" ng-class="{loading: loading}" ng-submit="submit()">
+<div class="modal-content">
+  <form class="form" method="post">
+    <fieldset class="fieldset">
+      <div class="field">
+        <label class="label">
+          <?php _l('pages.url.uid.label') ?>
 
-  <div class="form__alert" ng-show="message" ng-click="alert('')">
-    {{message}}
-  </div>
+          <a data-element="toggle" data-title="<?php __($page->title()) ?>" class="btn btn-icon label-option" href="#">
+            <?php i('plus-circle', 'left') . _l('pages.url.uid.label.option') ?>
+          </a>
 
-  <div ng-show="page.changeableURL.status">
-
-    <div class="form__field">
-      <label class="form__label">
-        <?php echo l('pages.url.headline') ?>
-        <a class="form__labelOption" ng-click="convertTitle()" href=""><i class="fa fa-plus-circle"></i> <?php echo l('pages.url.createFromTitle') ?></a>
-      </label>
-      <div class="form__inputWrapper">
-        <input class="form__input form__input--with-icon" type="text" autofocus required ng-model="page.slug" focus-on="ChangeUrlController.page.slug" />
-        <div class="form__inputIcon">
-          <i class="fa fa-chain"></i>
-        </div>
+        </label>
+        <input data-element="input" class="input" id="page-add-title" type="text" name="uid" placeholder="appendix…" autofocus autocomplete="off" required value="<?php __($page->slug()) ?>">
+        <p class="field-help marginalia">
+          <?php __(ltrim($page->parent()->uri() . '/', '/')) ?><span data-element="preview"><?php __($page->slug()) ?></span>
+        </p>
       </div>
-      <p class="form__help">{{page.parent.uri}}/<strong class="nowrap">{{page.slug}}</strong></p>
-    </div>
 
-    <div class="form__buttons">
-      <input tabindex="-1" type="reset" class="form__button form__button--cancel" ng-click="close()" value="<?php echo l('cancel') ?>">
-      <input type="submit" class="form__button form__button--submit" value="<?php echo l('save') ?>">
-    </div>
-
-  </div>
-
-  <div ng-show="!page.changeableURL.status">
-    <div class="form__field form__field--centered">
-      {{page.changeableURL.message}}
-    </div>
-
-    <div class="form__buttons form__buttons--centered">
-      <input type="reset" class="form__button" ng-click="close()" value="<?php echo l('ok') ?>">
-    </div>
-
-  </div>
-
-</form>
+      <div class="buttons cf">
+        <a class="btn btn-rounded btn-cancel" href="<?php _u($page, 'show') ?>"><?php _l('cancel') ?></a>
+        <input class="btn btn-rounded btn-submit" type="submit" value="<?php _l('save') ?>">
+      </div>
+    </fieldset>
+  </form>
+</div>

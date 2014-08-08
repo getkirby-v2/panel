@@ -1,34 +1,54 @@
-<?php echo $header ?>
+<?php echo $topbar ?>
 
-<div class="content manager">
+<div class="section">
 
-  <header class="manager__header">
-    <h1 class="alpha"><?php echo l('users.index.headline') ?></h1>
-    <a class="manager__toggle" ui-sref="users.modal.add"><i class="fa fa-plus-circle"></i> <span><?php echo l('users.index.add') ?></span></a>
-  </header>
+  <h2 class="hgroup hgroup-single-line cf">
+    <span class="hgroup-title"><?php _l('users.index.headline') ?></span>
+    <span class="hgroup-options shiv shiv-dark shiv-left">
+      <a title="+" data-shortcut="+" class="hgroup-option-right" href="#/users/add">
+        <?php i('plus-circle', 'left') . _l('users.index.add') ?>
+      </a>
+    </span>
+  </h2>
 
-  <div class="users">
-    <article class="user" ng-repeat="user in users">
-      <figure class="user__avatar">
-        <a ui-sref="users.modal.avatar({username: user.username})">
-          <img ng-show="user.avatar" ng-src="{{user.avatar}}">
-          <i ng-show="!user.avatar" class="fa fa-user fa-lg"></i>
-        </a>
-      </figure>
+  <div class="items users">
+    <?php foreach($users as $user): ?>
+    <div class="item item-with-image">
+      <div class="item-content">
+        <figure class="item-image">
+          <a class="item-image-container" href="<?php echo purl($user, 'avatar') ?>/via:index">
+            <?php if($user->avatar()): ?>
+            <img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>" alt="<?php __($user->username()) ?>">
+            <?php else: ?>
+            <img src="<?php echo url('panel/assets/images/avatar.png') ?>" alt="<?php __($user->username()) ?>">
+            <?php endif ?>
+          </a>
+        </figure>
+        <div class="item-info">
+          <a href="<?php echo purl($user, 'edit') ?>">
+            <strong class="item-title"><?php __($user->username()) ?></strong>
+            <small class="item-meta marginalia"><?php __($user->email()) ?></small>
+          </a>
+        </div>
+      </div>
+      <nav class="item-options">
 
-      <strong class="user__username">{{user.username}}</strong>
-      <small class="user__email">{{user.email}}</small>
+        <ul class="nav nav-bar">
+          <li>
+            <a class="btn btn-with-icon" href="<?php echo purl($user, 'edit') ?>">
+              <?php i('pencil', 'left') . _l('users.index.edit') ?>
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-with-icon" href="<?php echo purl($user, 'delete') ?>/via:index">
+              <?php i('trash-o', 'left') . _l('users.index.delete') ?>
+            </a>
+          </li>
+        </ul>
 
-      <nav class="manager__options user__options">
-        <a ui-sref="users.modal.edit({username : user.username})">
-          <i class="fa fa-pencil"></i> <?php echo l('users.index.edit') ?>
-        </a><!--
-     --><a ui-sref="users.modal.delete({username : user.username})">
-          <i class="fa fa-trash-o"></i> <?php echo l('users.index.delete') ?>
-        </a>
       </nav>
-
-    </article>
+    </div>
+    <?php endforeach ?>
   </div>
 
 </div>
