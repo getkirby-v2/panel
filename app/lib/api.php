@@ -41,6 +41,20 @@ class Api {
 
   }
 
+  static public function maxPages($page, $max) {
+
+    if($max === 0) {
+      return true;
+    }
+
+    if($max !== null and $max <= $page->children()->count()) {
+      return true;
+    }
+
+    return false;
+
+  }
+
   static public function subpages($pages, $blueprint) {
 
     switch($blueprint->pages()->sort()) {

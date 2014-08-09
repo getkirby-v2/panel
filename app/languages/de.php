@@ -74,6 +74,8 @@ return array (
     'pages.add.template.label' => 'Vorlage',
     'pages.add.error.title' => 'Der Titel fehlt',
     'pages.add.error.template' => 'Die Vorlage fehlt',
+    'pages.add.error.max.headline' => 'Keine weiteren Unterseiten zugelassen',
+    'pages.add.error.max.text' => 'Die maximale Anzahl an Unterseiten für die aktuelle Seite ist erreicht.',
     'pages.url.uid.label' => 'URL-Anhang',
     'pages.url.uid.label.option' => 'Aus Titel erzeugen',
     'pages.url.error.exists' => 'Eine Seite mit dem selben Anhang besteht bereits.',

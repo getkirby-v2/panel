@@ -15,7 +15,7 @@
         <?php i('arrow-circle-left', 'left') . _l('subpages.index.back') ?>
       </a>
 
-      <?php if($page->hasChildren()): ?>
+      <?php if($addbutton): ?>
       <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php echo purl('subpages/add/' . $page->id()) ?>">
         <?php i('plus-circle', 'left') ?>
         <?php _l('subpages.index.add') ?>

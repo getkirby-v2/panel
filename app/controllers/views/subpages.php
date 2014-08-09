@@ -50,6 +50,7 @@ class SubpagesController extends Controller {
         'search' => purl($page, 'search')
       )),
       'baseurl'             => $baseUrl,
+      'addbutton'           => !api::maxPages($page, $blueprint->pages()->max()) and $page->hasChildren(),
       'sortable'            => $blueprint->pages()->sortable(),
       'visible'             => $visible,
       'visiblePagination'   => $visiblePagination,

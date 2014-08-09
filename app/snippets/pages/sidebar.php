@@ -35,17 +35,19 @@
     </ul>
 
     <!-- Subpages -->
-    <?php if($blueprint->pages()->max() === null and $blueprint->pages()->hide() == false): ?>
+    <?php if($blueprint->pages()->max() !== 0 and $blueprint->pages()->hide() == false): ?>
 
       <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
         <span class="hgroup-title">
           <a href="<?php echo purl('subpages/index/' . $page->id()) ?>"><?php _l('pages.show.subpages.title') ?></a>
         </span>
+        <?php if($addbutton): ?>
         <span class="hgroup-options shiv shiv-dark shiv-left">
           <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php echo purl($page, 'add') ?>">
             <?php i('plus-circle', 'left') . _l('pages.show.subpages.add') ?>
           </a>
         </span>
+        <?php endif ?>
       </h2>
 
       <?php if($subpages->count()): ?>

@@ -91,6 +91,8 @@ return array(
     'pages.add.template.label' => 'Template',
     'pages.add.error.title' => 'The title is missing',
     'pages.add.error.template' => 'The template is missing',
+    'pages.add.error.max.headline' => 'No new pages allowed',
+    'pages.add.error.max.text' => 'The maximum number of subpages for the current page has been reached.',
     'pages.url.uid.label' => 'URL-appendix',
     'pages.url.uid.label.option' => 'Create from title',
     'pages.url.error.exists' => 'A page with the same appendix already exists',

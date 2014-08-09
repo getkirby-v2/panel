@@ -71,6 +71,7 @@ class PagesController extends Controller {
         'blueprint'  => $blueprint,
         'subpages'   => $subpages,
         'preview'    => $preview,
+        'addbutton'  => !api::maxPages($page, $blueprint->pages()->max()),
         'pagination' => $subpages->pagination(),
         'deletable'  => !$page->hasChildren() and $page->isDeletable() and $blueprint->deletable()
       )),
@@ -112,6 +113,17 @@ class PagesController extends Controller {
     }
 
     $form->fields()->append('template', $select);
+
+    if(api::maxPages($page, $blueprint->pages()->max())) {
+      $form->fields = array(
+        'info' => form::field('info', array(
+          'label' => 'pages.add.error.max.headline',
+          'text'  => 'pages.add.error.max.text'
+        ))
+      );
+      $form->save     = false;
+      $form->centered = true;
+    }
 
     return view('pages/add', array(
       'page' => $page,
