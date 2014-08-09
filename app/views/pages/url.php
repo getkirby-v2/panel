@@ -1,7 +1,7 @@
 <div class="modal-content">
   <form class="form" method="post">
     <fieldset class="fieldset">
-      <div class="field">
+      <div class="field field-with-icon">
         <label class="label">
           <?php _l('pages.url.uid.label') ?>
 
@@ -10,10 +10,15 @@
           </a>
 
         </label>
-        <input data-element="input" class="input" id="page-add-title" type="text" name="uid" placeholder="appendix…" autofocus autocomplete="off" required value="<?php __($page->slug()) ?>">
-        <p class="field-help marginalia">
-          <?php __(ltrim($page->parent()->uri() . '/', '/')) ?><span data-element="preview"><?php __($page->slug()) ?></span>
-        </p>
+        <div class="field-content">
+          <input data-element="input" class="input" id="page-add-title" type="text" name="uid" placeholder="appendix…" autofocus autocomplete="off" required value="<?php __($page->slug()) ?>">
+          <div class="field-icon">
+            <?php i('chain') ?>
+          </div>
+        </div>
+        <div class="field-help marginalia">
+          <?php __(ltrim($page->parent()->uri() . '/', '/')) ?><span class="uid-preview" data-element="preview"><?php __($page->slug()) ?></span>
+        </div>
       </div>
 
       <div class="buttons cf">

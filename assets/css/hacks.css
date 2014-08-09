@@ -257,3 +257,12 @@ a.tag {
 .input-is-readonly .selectbox-wrapper {
   pointer-events: none;
 }
+
+.uid-preview {
+  width: 20em;
+  overflow: hidden;
+  display: block;
+  -ms-word-break: break-word;
+  word-break: break-word;
+  text-overflow: ellipsis;
+}
