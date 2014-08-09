@@ -145,4 +145,9 @@ class App {
 
   }
 
+  static public function form($id, $data = array()) {
+    $fields = data::read(root('panel.app') . DS . 'forms' . DS . $id . '.php', 'yaml');
+    return new Form($fields, $data);
+  }
+
 }

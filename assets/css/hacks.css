@@ -253,3 +253,7 @@ a.tag {
 .dashboard-box .text {
   padding: .75em 1em;
 }
+
+.input-is-readonly .selectbox-wrapper {
+  pointer-events: none;
+}

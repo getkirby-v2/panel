@@ -4,7 +4,7 @@
 
     <?php echo $meta ?>
 
-    <title><?php _l('login') ?></title>
+    <title><?php __(site()->title() . ' | Panel | ' . l('login')) ?></title>
 
     <?php
 
@@ -25,22 +25,8 @@
         <span class="message-toggle"><i>&times;</i></span>
       </div>
 
-      <form class="form" method="post">
+      <?php echo $form ?>
 
-        <div class="field">
-          <label class="label"><?php _l('login.username.label') ?></label>
-          <input class="input" autofocus type="text" name="username" required>
-        </div>
-
-        <div class="field">
-          <label class="label"><?php _l('login.password.label') ?></label>
-          <input class="input" type="password" name="password" required>
-        </div>
-
-        <div class="buttons buttons-centered cf">
-          <input type="submit" class="btn btn-rounded btn-submit" value="<?php _l('login.button') ?>">
-        </div>
-      </form>
     </div>
 
     <?php echo assets::js() ?>

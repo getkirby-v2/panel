@@ -4,7 +4,7 @@
 
     <?php echo $meta ?>
 
-    <title><?php __(site()->title() . ' | ' . l('installation')) ?></title>
+    <title><?php __(site()->title() . ' | Panel | ' . l('installation')) ?></title>
 
     <?php echo assets::css() ?>
 
@@ -16,9 +16,13 @@
     <?php echo assets::js() ?>
 
     <script>
+
+      $('.form').form();
+
       $('.message').on('click', function() {
         $(this).remove();
       });
+
     </script>
 
   </body>

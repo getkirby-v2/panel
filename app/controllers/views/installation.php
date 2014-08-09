@@ -17,22 +17,28 @@ class InstallationController extends Controller {
       ));
     } else {
 
-      $alert = null;
+      $form = app::form('installation', array('language' => c::get('panel.language', 'en')));
+      $form->cancel   = false;
+      $form->save     = l::get('installation.signup.button');
+      $form->centered = true;
 
-      if(r::is('post')) {
-
-        try {
-          app::$site->users()->create(get());
-          go('panel/login');
-        } catch(Exception $e) {
-          $alert = $e->getMessage();
-        }
-
+      foreach(app::languages() as $lang) {
+        $form->fields()->get('language')->options[$lang->code()] = $lang->title();
       }
 
+      $form->on('submit', function($form) {
+
+        try {
+          app::$site->users()->create($form->serialize());
+          go('panel/login/welcome');
+        } catch(Exception $e) {
+          $form->alert($e->getMessage());
+        }
+
+      });
+
       $content = view('installation/signup', array(
-        'languages' => app::languages(),
-        'alert'     => $alert
+        'form' => $form
       ));
 
     }

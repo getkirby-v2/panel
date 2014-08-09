@@ -8,9 +8,15 @@ class AuthController extends Controller {
       go('panel');
     }
 
+    $form = app::form('login');
+    $form->cancel   = false;
+    $form->save     = l('login.button');
+    $form->centered = true;
+
     return layout('login', array(
       'meta'    => new Snippet('meta'),
-      'welcome' => $welcome ? l('login.welcome') : ''
+      'welcome' => $welcome ? l('login.welcome') : '',
+      'form'    => $form
     ));
 
   }

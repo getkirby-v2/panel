@@ -89,13 +89,8 @@ class UsersController extends Controller {
   }
 
   protected function form($user = null) {
-
-    $mode    = $user ? 'edit' : 'add';
-    $fields  = data::read(root('panel.app') . DS . 'forms' . DS . 'user.' . $mode . '.php', 'yaml');
-    $form    = new Form($fields);
-
-    return $form;
-
+    $mode = $user ? 'edit' : 'add';
+    return app::form('user.' . $mode);
   }
 
 }

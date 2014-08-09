@@ -5,10 +5,14 @@ class Form extends Brick {
   static public $root  = array();
   static public $files = null;
 
-  public $tag    = 'form';
-  public $fields = array();
-  public $values = array();
-  public $alert  = null;
+  public $tag      = 'form';
+  public $fields   = array();
+  public $values   = array();
+  public $alert    = null;
+  public $save     = true;
+  public $cancel   = true;
+  public $centered = false;
+  public $back     = false;
 
   public function __construct($fields = array(), $values = array()) {
 
@@ -241,24 +245,38 @@ class Form extends Brick {
     $fieldset = new Brick('fieldset');
     $fieldset->addClass('fieldset buttons cf');
 
+    if($this->centered) {
+      $fieldset->addClass('buttons-centered');
+    }
+
     $button = new Brick('input');
     $button->addClass('btn btn-rounded');
 
-    $submit = clone $button;
-    $submit->attr('type', 'submit');
-    $submit->addClass('btn-submit');
-    $submit->data('saved', 'Saved!');
-    $submit->val('Save');
+    if($this->cancel) {
 
-    $cancel = clone $button;
-    $cancel->attr('type', 'reset');
-    $cancel->addClass('btn-cancel');
-    $cancel->val('Cancel');
+      $cancel = clone $button;
+      $cancel->tag('a');
+      $cancel->addClass('btn-cancel');
+      $cancel->attr('href', $this->back);
+      $cancel->text($this->cancel === true ? l::get('cancel') : $this->cancel);
 
-    $fieldset->append($cancel);
-    $fieldset->append($submit);
+      $fieldset->append($cancel);
 
-    return $fieldset;
+    }
+
+    if($this->save) {
+
+      $submit = clone $button;
+      $submit->attr('type', 'submit');
+      $submit->addClass('btn-submit');
+      $submit->data('saved', l::get('saved'));
+      $submit->val($this->save === true ? l::get('save') : $this->save);
+
+      $fieldset->append($submit);
+
+    }
+
+    return ($this->save or $this->cancel) ? $fieldset : null;
 
   }
 

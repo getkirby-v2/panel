@@ -109,6 +109,10 @@ class SelectField extends BaseField {
       $select->append($this->option('', '', $this->value() == ''));
     }
 
+    if($this->readonly()) {
+      $select->attr('tabindex', '-1');
+    }
+
     foreach($this->options() as $value => $text) {
       $select->append($this->option($value, $text, $this->value() == $value));
     }
@@ -119,11 +123,12 @@ class SelectField extends BaseField {
 
     $wrapper = new Brick('div');
     $wrapper->addClass('input input-with-selectbox');
-    $wrapper->attr('data-focus', 'true');
     $wrapper->append($inner);
 
     if($this->readonly()) {
       $wrapper->addClass('input-is-readonly');
+    } else {
+      $wrapper->attr('data-focus', 'true');
     }
 
     return $wrapper;

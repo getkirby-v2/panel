@@ -105,10 +105,7 @@
           <?php foreach($form->fields() as $field) echo $field ?>
         </fieldset>
 
-        <div class="buttons cf">
-          <a class="btn btn-rounded btn-cancel" href="<?php _u('users') ?>"><?php _l('cancel') ?></a>
-          <input class="btn btn-rounded btn-submit" type="submit" data-saved="<?php _l('saved') ?>" value="<?php echo $save ?>">
-        </div>
+        <?php echo $form->buttons() ?>
         <?php endif ?>
 
       </form>

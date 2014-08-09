@@ -171,12 +171,12 @@ class PagesController extends Controller {
 
     try {
 
-      if(app::$language == site()->defaultLanguage()->code()) {
-        $page->move(get('uid'));
-      } else {
+      if(site()->multilang() and app::$language != site()->defaultLanguage()->code()) {
         $page->update(array(
           'URL-Key' => get('uid')
         ));
+      } else {
+        $page->move(get('uid'));
       }
 
       return response::success('success', array(

@@ -82,9 +82,17 @@ class Blueprint extends Obj {
 
     $files  = dir::read(static::$root);
     $result = array();
+    $home   = site()->homePage()->uid();
+    $error  = site()->errorPage()->uid();
 
     foreach($files as $file) {
-      $result[] = f::name($file);
+
+      $name = f::name($file);
+
+      if($name != 'site' and $name != $home and $name != $error) {
+        $result[] = $name;
+      }
+
     }
 
     return $result;

@@ -84,15 +84,38 @@ class PagesController extends Controller {
 
     $page      = $this->page($id);
     $blueprint = blueprint::find($page);
+    $templates = $blueprint->pages()->template();
+    $options   = array();
     $back      = array(
       'subpages' => purl('subpages/index/' . $page->id()),
       'page'     => purl($page, 'show')
     );
 
+    $form = app::form('pages.add');
+    $form->save = l('add');
+    $form->back = a::get($back, get('to'));
+
+    foreach($templates as $template) {
+      $options[$template->name()] = $template->title();
+    }
+
+    $select = form::field('select', array(
+      'name'     => 'template',
+      'label'    => l('pages.add.template.label'),
+      'options'  => $options,
+      'required' => true
+    ));
+
+    if($templates->count() == 1) {
+      $select->readonly = true;
+      $select->value    = $templates->first()->name();
+    }
+
+    $form->fields()->append('template', $select);
+
     return view('pages/add', array(
-      'page'      => $page,
-      'back'      => a::get($back, get('to')),
-      'templates' => $blueprint->pages()->template(),
+      'page' => $page,
+      'form' => $form
     ));
 
   }
