@@ -1081,13 +1081,13 @@ var PagesController = {
 
     switch(to) {
       case 'subpages':
-        SubpagesController.index(uri, app.store.get(uri + '/visible:'), app.store.get(uri + '/invisible:'));
+        SubpagesController.index(uri, app.store.get(uri + '/visible:', 1), app.store.get(uri + '/invisible:', 1));
         break;
       case 'dashboard':
         DashboardController.index(uri);
         break;
       default:
-        PagesController.show(uri, app.store.get(uri + '/p:'));
+        PagesController.show(uri, app.store.get(uri + '/p:', 1));
         break;
     }
 
@@ -1125,7 +1125,7 @@ var PagesController = {
 
   url : function(uri) {
 
-    PagesController.show(uri, app.store.get(uri + '/p:'));
+    PagesController.show(uri, app.store.get(uri + '/p:', 1));
 
     app.modal.view('pages/url/' + uri, function(element) {
 
@@ -1171,11 +1171,11 @@ var PagesController = {
 
     switch(to) {
       case 'subpages':
-        SubpagesController.index(parent, app.store.get(parent + '/visible:'), app.store.get(parent + '/invisible:'));
+        SubpagesController.index(parent, app.store.get(parent + '/visible:', 1), app.store.get(parent + '/invisible:', 1));
         var back = '#/subpages/index/' + parent;
         break;
       default:
-        PagesController.show(uri, app.store.get(uri + '/p:'));
+        PagesController.show(uri, app.store.get(uri + '/p:', 1));
         var back = '#/pages/show/' + parent;
         break;
     }
