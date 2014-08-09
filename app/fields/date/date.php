@@ -26,6 +26,10 @@ class DateField extends InputField {
     return v::date($this->result());
   }
 
+  public function value() {
+    return date('Y-m-d', strtotime($this->value));
+  }
+
   public function input() {
     $input = parent::input();
     $input->data(array(
