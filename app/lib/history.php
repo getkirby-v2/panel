@@ -10,10 +10,12 @@ class History {
       $history = array();
     }
 
-    if(a::last($history) == $uri) return true;
+    // remove existing entries
+    foreach($history as $key => $val) {
+      if($val == $uri) unset($history[$key]);
+    }
 
     array_unshift($history, $uri);
-
     $history = array_slice($history, 0, 5);
 
     try {
