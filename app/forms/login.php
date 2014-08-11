@@ -3,6 +3,7 @@ username:
   type: text
   icon: user
   required: true
+  autofocus: true
 password:
   label: login.password.label
   type: password

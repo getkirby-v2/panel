@@ -9,7 +9,7 @@
     <?php echo assets::css() ?>
 
   </head>
-  <body class="app">
+  <body class="grey">
 
     <div class="modal-content"><?php echo $content ?></div>
 
