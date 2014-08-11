@@ -57,7 +57,7 @@ return array(
     'dashboard.index.site.title' => 'URL du site',
     'dashboard.index.account.title' => 'Votre profil',
     'dashboard.index.account.edit' => 'Modifier',
-    'dashboard.index.metatags.title' => 'Paramètres du sites',
+    'dashboard.index.metatags.title' => 'Paramètres du site',
     'dashboard.index.metatags.edit' => 'Modifier',
     'dashboard.index.history.title' => 'Modifications récentes',
     'dashboard.index.history.text' => 'Vos modifications les plus récentes seront affichées ici afin de les retrouver plus aisément.',
