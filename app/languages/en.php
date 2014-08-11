@@ -57,13 +57,13 @@ return array(
     'dashboard.index.site.title' => 'Your site\'s URL',
     'dashboard.index.account.title' => 'Your account',
     'dashboard.index.account.edit' => 'Edit',
-    'dashboard.index.metatags.title' => 'Metatags',
+    'dashboard.index.metatags.title' => 'Site variables',
     'dashboard.index.metatags.edit' => 'Edit',
     'dashboard.index.history.title' => 'Your last updates',
     'dashboard.index.history.text' => 'Your last modified pages will be displayed here to make it easy to find them again later.',
 
     // metatags
-    'metatags' => 'Metatags',
+    'metatags' => 'Site variables',
     'metatags.back' => 'Back to the dashboard',
 
     // pages
@@ -71,7 +71,7 @@ return array(
     'pages.show.preview' => 'Open preview',
     'pages.show.changeurl' => 'Change URL',
     'pages.show.delete' => 'Delete this page',
-    'pages.show.subpages.title' => 'Subpages',
+    'pages.show.subpages.title' => 'Pages',
     'pages.show.subpages.add' => 'Add',
     'pages.show.subpages.empty' => 'This page has no subpages',
     'pages.show.files.title' => 'Files',
@@ -82,7 +82,7 @@ return array(
     'pages.show.error.permissions.retry'  => 'Retry',
     'pages.show.error.form'  => 'Please fill in all fields correctly',
 
-    'pages.add.title.label' => 'Add a new subpage',
+    'pages.add.title.label' => 'Add a new page',
     'pages.add.title.placeholder' => 'Title',
     'pages.add.url.label' => 'URL-appendix',
     'pages.add.url.enter' => '(enter your title)',
@@ -111,15 +111,15 @@ return array(
     'pages.error.missing' => 'The page could not be found',
 
     // subpages
-    'subpages' => 'Subpages',
-    'subpages.index.headline' => 'Subpages of',
+    'subpages' => 'Pages',
+    'subpages.index.headline' => 'Pages in',
     'subpages.index.back' => 'Back',
-    'subpages.index.add' => 'Add a new subpage',
+    'subpages.index.add' => 'Add a new page',
     'subpages.index.add.first.text' => 'This page has no subpages yet',
-    'subpages.index.add.first.button' => 'Add the first subpage',
-    'subpages.index.visible' => 'Visible subpages',
+    'subpages.index.add.first.button' => 'Add the first page',
+    'subpages.index.visible' => 'Visible pages',
     'subpages.index.visible.help' => 'Drag invisible pages here to sort them/make them visible.',
-    'subpages.index.invisible' => 'Invisible subpages',
+    'subpages.index.invisible' => 'Invisible pages',
     'subpages.index.invisible.help' => 'Drag visible pages here to unsort them/make them invisible.',
     'subpages.error.missing' => 'The page could not be found',
 

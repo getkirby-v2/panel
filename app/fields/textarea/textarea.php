@@ -21,10 +21,7 @@ class TextareaField extends InputField {
     $input->removeAttr('type');
     $input->removeAttr('value');
     $input->html($this->value() ?: false);
-
-    if($this->buttons) {
-      $input->data('field', 'editor');
-    }
+    $input->data('field', 'editor');
 
     return $input;
 

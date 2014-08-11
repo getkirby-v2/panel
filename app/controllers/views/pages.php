@@ -8,9 +8,11 @@ class PagesController extends Controller {
     $blueprint = blueprint::find($page);
     $fields    = $blueprint->fields();
     $content   = $page->content()->toArray();
-    $subpages  = api::subpages($page->children(), $blueprint);
-    $files     = api::files($page, $blueprint);
+    $files     = null;
+    $subpages  = null;
+    $preview   = null;
 
+    // create the preview link
     if($previewSetting = $blueprint->preview()) {
 
       switch($previewSetting) {
@@ -28,17 +30,10 @@ class PagesController extends Controller {
           break;
       }
 
-    } else {
-      $preview = false;
     }
 
-    foreach($fields as $field) {
-      $field->page = $page;
-    }
-
-    if($limit = $blueprint->pages()->limit()) {
-      $subpages = $subpages->paginate($limit, array('page' => get('page')));
-    }
+    // add the page to each form field
+    foreach($fields as $field) $field->page = $page;
 
     // make sure the title is always there
     $content['title'] = $page->title();
@@ -58,25 +53,55 @@ class PagesController extends Controller {
 
     }
 
+    // create the subpages if they exist
+    if($blueprint->pages()->max() !== 0 and $blueprint->pages()->hide() == false) {
+
+      // fetch all subpages in the right order
+      $children = api::subpages($page->children(), $blueprint);
+
+      // add pagination to the subpages
+      if($limit = $blueprint->pages()->limit()) {
+        $children = $children->paginate($limit, array('page' => get('page')));
+      }
+
+      // create the snippet and fill it with all data
+      $subpages = new Snippet('pages/sidebar/subpages', array(
+        'title'      => l('pages.show.subpages.title'),
+        'page'       => $page,
+        'subpages'   => $children,
+        'addbutton'  => !api::maxPages($page, $blueprint->pages()->max()),
+        'pagination' => $children->pagination(),
+      ));
+
+    }
+
+    // create the files
+    if($blueprint->files()->max() !== 0 and $blueprint->files()->hide() == false) {
+
+      $files = new Snippet('pages/sidebar/files', array(
+        'page'  => $page,
+        'files' => api::files($page, $blueprint),
+      ));
+
+    }
+
+    // create the monster sidebar
+    $sidebar = new Snippet('pages/sidebar', array(
+      'page'      => $page,
+      'preview'   => $preview,
+      'deletable' => !$page->hasChildren() and $page->isDeletable() and $blueprint->deletable(),
+      'subpages'  => $subpages,
+      'files'     => $files,
+    ));
 
     return view('pages/show', array(
       'topbar' => new Snippet('pages/topbar', array(
-        'menu'       => new Snippet('menu'),
         'breadcrumb' => new Snippet('pages/breadcrumb', array('page' => $page)),
         'search'     => purl($page, 'search')
       )),
-      'sidebar' => new Snippet('pages/sidebar', array(
-        'page'       => $page,
-        'files'      => $files,
-        'blueprint'  => $blueprint,
-        'subpages'   => $subpages,
-        'preview'    => $preview,
-        'addbutton'  => !api::maxPages($page, $blueprint->pages()->max()),
-        'pagination' => $subpages->pagination(),
-        'deletable'  => !$page->hasChildren() and $page->isDeletable() and $blueprint->deletable()
-      )),
-      'form' => $form,
-      'page' => $page
+      'sidebar' => $sidebar,
+      'form'    => $form,
+      'page'    => $page
     ));
 
   }

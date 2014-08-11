@@ -2,6 +2,24 @@
 
 class Installation {
 
+  static public function old() {
+
+    $panel = c::get('root.site') . DS . 'panel';
+
+    return (is_dir($panel) or
+            is_dir($panel . DS . 'blueprints') or
+            is_dir($panel . DS . 'accounts')) ? true : false;
+
+  }
+
+  static public function migration() {
+
+
+
+
+
+  }
+
   static public function check() {
 
     $checks   = array('accounts', 'thumbs', 'blueprints', 'content', 'avatars');
@@ -16,7 +34,7 @@ class Installation {
 
     }
 
-    return $problems;
+    return empty($problems) ? false : $problems;
 
   }
 

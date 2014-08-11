@@ -8,10 +8,7 @@ class InstallationController extends Controller {
       go('panel/login');
     }
 
-    // check for installation issues
-    $problems = installation::check();
-
-    if(!empty($problems)) {
+    if($problems = installation::check()) {
       $content = view('installation/check', array(
         'problems' => $problems
       ));

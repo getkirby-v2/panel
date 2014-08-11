@@ -29,6 +29,7 @@ class Assets {
       'lib/kirby.js',
       'controllers/users.js',
       'controllers/pages.js',
+      'controllers/metatags.js',
       'controllers/dashboard.js',
       'controllers/subpages.js',
       'controllers/files.js',

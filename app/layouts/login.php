@@ -6,17 +6,10 @@
 
     <title><?php __(site()->title() . ' | Panel | ' . l('login')) ?></title>
 
-    <?php
-
-    echo css(array(
-      'panel/assets/css/app.css',
-      'panel/assets/css/font-awesome.css'
-    ));
-
-    ?>
+    <?php echo assets::css() ?>
 
   </head>
-  <body class="app">
+  <body class="grey">
 
     <div class="modal-content">
 

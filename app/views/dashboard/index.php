@@ -19,7 +19,7 @@
 
       <ul class="nav nav-list sidebar-list">
         <?php foreach($site->children() as $c): ?>
-        <?php echo new Snippet('pages/subpage', array('subpage' => $c)) ?>
+        <?php echo new Snippet('pages/sidebar/subpage', array('subpage' => $c)) ?>
         <?php endforeach ?>
       </ul>
 

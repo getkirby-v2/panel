@@ -1,6 +1,6 @@
 <header id="topbar" class="topbar">
 
-  <?php echo $menu ?>
+  <?php echo new Snippet('menu') ?>
   <?php echo $breadcrumb ?>
 
   <?php echo new Snippet('languages') ?>

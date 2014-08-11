@@ -3,8 +3,8 @@ var routes = {
   '/' : function() {
     PagesController.show('');
   },
-  '/metatags/*' : function(uri) {
-    DashboardController.metatags(uri);
+  '/metatags/?*' : function(uri) {
+    MetatagsController.index(uri);
   },
   '/pages/add/*' : function(uri) {
     PagesController.add(uri, 'page');

@@ -74,7 +74,7 @@ var FilesController = {
 
         var data = $(this).serializeObject();
 
-        FileModel.update(path.uri, path.filename, {name: data.name, meta: data}, function() {
+        FileModel.update(path.uri, path.filename, data, function() {
           if(name !== data.name) {
             FileModel.rename(path.uri, path.filename, data.name, function(response) {
               window.location.href = '#/files/show/' + path.uri + '/' + response.data.filename;

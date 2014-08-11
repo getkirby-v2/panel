@@ -4,7 +4,7 @@ body,
   height: 100%;
 }
 
-body {
+.app {
   padding-top: 3em;
 }
 
@@ -265,4 +265,11 @@ a.tag {
   -ms-word-break: break-word;
   word-break: break-word;
   text-overflow: ellipsis;
+}
+
+.field-buttons ul {
+  overflow-y: hidden;
+}
+.field-with-icon .input {
+  padding-right: 3.5em;
 }

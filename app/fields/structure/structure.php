@@ -39,8 +39,9 @@ class StructureField extends BaseField {
   }
 
   public function result() {
-    $raw  = (array)json_decode($this->value());
-    $data = array();
+    $result = parent::result();
+    $raw    = (array)json_decode($result);
+    $data   = array();
     foreach($raw as $key => $row) {
       unset($row->_id);
       $data[$key] = (array)$row;
@@ -59,6 +60,25 @@ class StructureField extends BaseField {
     } else {
       return $this->entry;
     }
+
+  }
+
+  public function label() {
+    return null;
+  }
+
+  public function headline() {
+
+    $add = new Brick('a');
+    $add->html('<i class="icon icon-left fa fa-plus-circle"></i>' . l('fields.structure.add'));
+    $add->addClass('structure-add-button label-option');
+    $add->attr('#');
+
+    $label = parent::label();
+    $label->addClass('structure-label');
+    $label->append($add);
+
+    return $label;
 
   }
 
