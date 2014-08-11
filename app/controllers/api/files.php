@@ -88,8 +88,8 @@ class FilesController extends Controller {
 
     $blueprint = blueprint::find($page);
     $fields    = $blueprint->files()->fields()->toArray();
-    $form      = new Form($fields, get('meta'));
-    $data      = $form->toArray();
+    $form      = new Form($fields);
+    $data      = $form->serialize();
 
     // trigger the validation
     $form->validate();
@@ -102,6 +102,8 @@ class FilesController extends Controller {
     }
 
     try {
+
+
       $file->update($data, app::$language);
       return response::success('success', array(
         'data' => $data
