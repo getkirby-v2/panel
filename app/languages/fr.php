@@ -57,13 +57,13 @@ return array(
     'dashboard.index.site.title' => 'URL du site',
     'dashboard.index.account.title' => 'Votre profil',
     'dashboard.index.account.edit' => 'Modifier',
-    'dashboard.index.metatags.title' => 'Métadonnées',
+    'dashboard.index.metatags.title' => 'Paramètres du sites',
     'dashboard.index.metatags.edit' => 'Modifier',
     'dashboard.index.history.title' => 'Modifications récentes',
     'dashboard.index.history.text' => 'Vos modifications les plus récentes seront affichées ici afin de les retrouver plus aisément.',
 
     // metatags
-    'metatags' => 'Métadonnées',
+    'metatags' => 'Paramètres du site',
     'metatags.back' => 'Retour au tableau de bord',
 
     // pages
@@ -71,7 +71,7 @@ return array(
     'pages.show.preview' => 'Prévisualiser',
     'pages.show.changeurl' => 'Modifier l’URL',
     'pages.show.delete' => 'Supprimer cette page',
-    'pages.show.subpages.title' => 'Pages secondaires',
+    'pages.show.subpages.title' => 'Pages',
     'pages.show.subpages.add' => 'Ajouter',
     'pages.show.subpages.empty' => 'Cette page n’a aucune page secondaire',
     'pages.show.files.title' => 'Fichiers',
@@ -82,7 +82,7 @@ return array(
     'pages.show.error.permissions.retry'  => 'Essayer de nouveau',
     'pages.show.error.form'  => 'Merci de remplir correctement l’ensemble des champs',
 
-    'pages.add.title.label' => 'Ajouter une nouvelle page secondaire',
+    'pages.add.title.label' => 'Ajouter une nouvelle page',
     'pages.add.title.placeholder' => 'Titre',
     'pages.add.url.label' => 'Identifiant pour l’URL de l’article',
     'pages.add.url.enter' => '(saisir votre titre)',
@@ -91,6 +91,8 @@ return array(
     'pages.add.template.label' => 'Modèle de page',
     'pages.add.error.title' => 'Il n’y a pas de titre',
     'pages.add.error.template' => 'Vous n’avez pas choisi de modèle',
+    'pages.add.error.max.headline' => 'La création de nouvelles pages n’est pas autorisée',
+    'pages.add.error.max.text' => 'Le nombre maximum de pages secondaires a été atteint.',
     'pages.url.uid.label' => 'Identifiant de l’URL',
     'pages.url.uid.label.option' => 'Créer à partir du titre',
     'pages.url.error.exists' => 'Une page du même nom existe déjà',
@@ -109,13 +111,13 @@ return array(
     'pages.error.missing' => 'Cette page n’a peu être trouvée',
 
     // subpages
-    'subpages' => 'Pages secondaires',
-    'subpages.index.headline' => 'Pages secondaires de :',
+    'subpages' => 'Pages',
+    'subpages.index.headline' => 'Pages dans :',
     'subpages.index.back' => 'Retour',
     'subpages.index.add' => 'Ajouter',
     'subpages.index.add.first.text' => 'Cette page n’a pas encore de pages secondaires',
-    'subpages.index.add.first.button' => 'Ajouter une première page secondaire',
-    'subpages.index.visible' => 'Pages secondaires visibles',
+    'subpages.index.add.first.button' => 'Ajouter une première page',
+    'subpages.index.visible' => 'Pages visibles',
     'subpages.index.visible.help' => 'Glisser ici une page invisible pour la classer et la rendre visible.',
     'subpages.index.invisible' => 'Pages invisibles',
     'subpages.index.invisible.help' => 'Glisser ici une page pour la rendre invisible.',
