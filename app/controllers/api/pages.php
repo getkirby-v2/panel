@@ -114,6 +114,9 @@ class PagesController extends Controller {
       $index = get('index', 1);
       $uids  = array_reverse($uids);
       $n     = $page->children()->visible()->count() - ($index * $blueprint->pages()->limit() - 1);
+
+      if($n <= 0) $n = 1;
+
     } else {
       $index = (get('index', 1) - 1);
       $n     = (($blueprint->pages()->limit() * $index) + 1);
