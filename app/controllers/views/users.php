@@ -4,13 +4,17 @@ class UsersController extends Controller {
 
   public function index() {
     return view('users/index', array(
-      'topbar' => new Snippet('users/topbar', array(
-        'menu' => new Snippet('menu'),
-        'breadcrumb' => new Snippet('users/breadcrumb', array(
-          'user' => null
+      'users'  => site()->users(),
+      'topbar' => new Snippet('topbar', array(
+        'breadcrumb' => new Snippet('breadcrumb', array(
+          'items' => array(
+            array(
+              'title' => l('users'),
+              'url'   => purl('users')
+            )
+          )
         ))
       )),
-      'users' => site()->users(),
     ));
   }
 
@@ -22,10 +26,18 @@ class UsersController extends Controller {
     );
 
     return view('users/edit', array(
-      'topbar' => new Snippet('users/topbar', array(
-        'menu'       => new Snippet('menu'),
-        'breadcrumb' => new Snippet('users/breadcrumb', array(
-          'user' => false
+      'topbar' => new Snippet('topbar', array(
+        'breadcrumb' => new Snippet('breadcrumb', array(
+          'items' => array(
+            array(
+              'title' => l('users'),
+              'url'   => purl('users')
+            ),
+            array(
+              'title' => l('users.index.add'),
+              'url'   => purl('users/add')
+            )
+          )
         ))
       )),
       'user'     => null,
@@ -46,10 +58,18 @@ class UsersController extends Controller {
     );
 
     return view('users/edit', array(
-      'topbar' => new Snippet('users/topbar', array(
-        'menu'       => new Snippet('menu'),
-        'breadcrumb' => new Snippet('users/breadcrumb', array(
-          'user' => $user
+      'topbar' => new Snippet('topbar', array(
+        'breadcrumb' => new Snippet('breadcrumb', array(
+          'items' => array(
+            array(
+              'title' => l('users'),
+              'url'   => purl('users')
+            ),
+            array(
+              'title' => $user->username(),
+              'url'   => purl($user, 'edit')
+            )
+          )
         ))
       )),
       'form'     => $this->form($user),

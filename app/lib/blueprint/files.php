@@ -9,6 +9,7 @@ class Files extends Obj {
 
   public $fields   = array();
   public $max      = null;
+  public $hide     = false;
   public $sort     = null;
   public $sortable = false;
 
@@ -20,8 +21,10 @@ class Files extends Obj {
     if($params === false) {
       $this->max      = 0;
       $this->sortable = false;
+      $this->hide     = true;
     } else if(is_array($params)) {
       $this->max      = a::get($params, 'max', $this->max);
+      $this->hide     = a::get($params, 'hide', $this->hide);
       $this->sort     = a::get($params, 'sort', $this->sort);
       $this->sortable = a::get($params, 'sortable', $this->sortable);
 

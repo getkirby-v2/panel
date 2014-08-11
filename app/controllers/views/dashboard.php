@@ -17,8 +17,7 @@ class DashboardController extends Controller {
 
     return view('dashboard/index', array(
       'topbar' => new Snippet('pages/topbar', array(
-        'menu'       => new Snippet('menu'),
-        'breadcrumb' => new Snippet('dashboard/breadcrumb', array('metatags' => false)),
+        'breadcrumb' => new Snippet('breadcrumb'),
         'search'     => purl('pages/search/')
       )),
       'history' => history::get(),
@@ -26,25 +25,6 @@ class DashboardController extends Controller {
       'widgets' => $widgets,
       'user'    => site()->user(),
     ));
-  }
-
-  public function metatags() {
-
-    $site      = site();
-    $blueprint = blueprint::find($site);
-    $fields    = $blueprint->fields()->toArray();
-    $content   = $site->content()->toArray();
-
-    return view('dashboard/metatags', array(
-      'topbar' => new Snippet('pages/topbar', array(
-        'menu'       => new Snippet('menu'),
-        'breadcrumb' => new Snippet('dashboard/breadcrumb', array('metatags' => true)),
-        'search'     => purl('pages/search/')
-      )),
-      'form' => new Form($fields, $content),
-      's'    => $site,
-    ));
-
   }
 
 }

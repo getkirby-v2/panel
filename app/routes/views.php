@@ -36,9 +36,11 @@ return array(
     'action'  => 'views/DashboardController::index',
     'filter'  => 'auth'
   ),
+
+  // Metatags
   array(
-    'pattern' => 'views/dashboard/metatags',
-    'action'  => 'views/DashboardController::metatags',
+    'pattern' => 'views/metatags/index',
+    'action'  => 'views/MetatagsController::index',
     'filter'  => 'auth'
   ),
 

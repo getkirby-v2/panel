@@ -1244,15 +1244,11 @@ var PagesController = {
 /**
  *
  */
-var DashboardController = {
+var MetatagsController = {
 
-  index : function() {
-    app.main.view('dashboard/index');
-  },
+  index : function(uri, callback) {
 
-  metatags : function(uri, callback) {
-
-    app.main.view('dashboard/metatags', function(element) {
+    app.main.view('metatags/index', function(element) {
 
       var form = element.find('.form').form();
 
@@ -1266,7 +1262,7 @@ var DashboardController = {
 
           app.main.data('current', false);
 
-          DashboardController.metatags(uri, function(element) {
+          MetatagsController.index(uri, function(element) {
             element.find('.form').trigger('success');
           });
 
@@ -1283,6 +1279,16 @@ var DashboardController = {
 
     });
 
+  }
+
+};
+/**
+ *
+ */
+var DashboardController = {
+
+  index : function() {
+    app.main.view('dashboard/index');
   }
 
 };
@@ -1633,8 +1639,8 @@ var routes = {
   '/' : function() {
     PagesController.show('');
   },
-  '/metatags/*' : function(uri) {
-    DashboardController.metatags(uri);
+  '/metatags/?*' : function(uri) {
+    MetatagsController.index(uri);
   },
   '/pages/add/*' : function(uri) {
     PagesController.add(uri, 'page');

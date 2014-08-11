@@ -270,3 +270,6 @@ a.tag {
 .field-buttons ul {
   overflow-y: hidden;
 }
+.field-with-icon .input {
+  padding-right: 3.5em;
+}
