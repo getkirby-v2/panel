@@ -122,12 +122,16 @@ class App {
 
     }
 
+    ob_start();
+
     // check for a valid response object
     if(is_a($response, 'Response')) {
       echo $response;
     } else {
       echo new Response($response);
     }
+
+    ob_end_flush();
 
   }
 
