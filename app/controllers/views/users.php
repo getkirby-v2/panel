@@ -20,10 +20,8 @@ class UsersController extends Controller {
 
   public function add() {
 
-    $back = array(
-      'users'     => purl('users'),
-      'dashboard' => purl('')
-    );
+    $form = $this->form();
+    $form->back = purl('users');
 
     return view('users/edit', array(
       'topbar' => new Snippet('topbar', array(
@@ -42,9 +40,7 @@ class UsersController extends Controller {
       )),
       'user'     => null,
       'writable' => is_writable(c::get('root.accounts')),
-      'form'     => $this->form(),
-      'save'     => l('add'),
-      'back'     => a::get($back, get('to'))
+      'form'     => $form,
     ));
 
   }
@@ -52,10 +48,8 @@ class UsersController extends Controller {
   public function edit($username) {
 
     $user = $this->user($username);
-    $back = array(
-      'users'     => purl('users'),
-      'dashboard' => purl('')
-    );
+    $form = $this->form($user);
+    $form->back = purl('users');
 
     return view('users/edit', array(
       'topbar' => new Snippet('topbar', array(
@@ -72,11 +66,9 @@ class UsersController extends Controller {
           )
         ))
       )),
-      'form'     => $this->form($user),
+      'form'     => $form,
       'writable' => is_writable(c::get('root.accounts')),
       'user'     => $user,
-      'save'     => l('save'),
-      'back'     => a::get($back, get('to'))
     ));
 
   }
