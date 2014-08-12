@@ -3,10 +3,12 @@
 class RadioField extends InputListField {
 
   public function input() {
+    $val   = func_get_arg(0);
     $input = parent::input();
     $input->addClass('radio');
     $input->attr('type', 'radio');
-    $input->attr('checked', func_get_arg(0) == $this->value());
+    $input->val($val);
+    $input->attr('checked', $val == $this->value());
     return $input;
   }
 
