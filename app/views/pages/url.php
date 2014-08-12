@@ -17,7 +17,9 @@
           </div>
         </div>
         <div class="field-help marginalia">
-          <?php __(ltrim($page->parent()->uri() . '/', '/')) ?><span class="uid-preview" data-element="preview"><?php __($page->slug()) ?></span>
+          <div class="uid-preview">
+            <?php __(ltrim($page->parent()->uri() . '/', '/')) ?><span data-element="preview"><?php __($page->slug()) ?></span>
+          </div>
         </div>
       </div>
 
