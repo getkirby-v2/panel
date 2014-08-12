@@ -52,8 +52,11 @@ class FilesController extends Controller {
     $page      = $this->page($id);
     $file      = $this->file($page, $filename);
     $blueprint = blueprint::find($page);
-    $fields    = $blueprint->files()->fields()->toArray();
+    $fields    = $blueprint->files()->fields();
     $meta      = $file->meta()->toArray();
+
+    // add the page to each form field
+    foreach($fields as $field) $field->page = $page;
 
     return view('files/show', array(
       'topbar' => new Snippet('pages/topbar', array(
@@ -73,7 +76,7 @@ class FilesController extends Controller {
         )),
         'search' => purl($page, 'search')
       )),
-      'form' => new Form($fields, $meta),
+      'form' => new Form($fields->toArray(), $meta),
       'p'    => $page,
       'f'    => $file
     ));

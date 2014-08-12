@@ -28,13 +28,18 @@ class PagesController extends Controller {
     }
 
     $blueprint = blueprint::find($page);
-    $fields    = $blueprint->fields()->toArray();
-    $form      = new Form($fields);
-    $data      = $form->toArray();
+    $fields    = $blueprint->fields();
     $oldTitle  = (string)$page->title();
 
+    // add the page to each form field
+    foreach($fields as $field) $field->page = $page;
+
     // trigger the validation
+    $form = new Form($fields->toArray());
     $form->validate();
+
+    // fetch the data for the form
+    $data = $form->serialize();
 
     // stop at invalid fields
     if(!$form->isValid()) {

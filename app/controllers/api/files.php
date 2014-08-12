@@ -87,12 +87,17 @@ class FilesController extends Controller {
     }
 
     $blueprint = blueprint::find($page);
-    $fields    = $blueprint->files()->fields()->toArray();
-    $form      = new Form($fields);
-    $data      = $form->serialize();
+    $fields    = $blueprint->files()->fields();
+
+    // add the page to each form field
+    foreach($fields as $field) $field->page = $page;
 
     // trigger the validation
+    $form = new Form($fields->toArray());
     $form->validate();
+
+    // fetch the form data
+    $data = $form->serialize();
 
     // stop at invalid fields
     if(!$form->isValid()) {
@@ -102,8 +107,6 @@ class FilesController extends Controller {
     }
 
     try {
-
-
       $file->update($data, app::$language);
       return response::success('success', array(
         'data' => $data
