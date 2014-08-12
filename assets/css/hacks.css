@@ -273,3 +273,7 @@ a.tag {
 .field-with-icon .input {
   padding-right: 3.5em;
 }
+
+.modal {
+  z-index: 1000;
+}
