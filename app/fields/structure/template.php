@@ -1,29 +1,8 @@
-<div class="structure" data-field="structure" data-sortable="true">
+<div class="structure" data-field="structure" data-page="<?php echo $field->page() ?>" data-sortable="true">
 
   <?php echo $field->headline() ?>
 
   <input type="hidden" name="<?php __($field->name()) ?>" value="<?php __(json_encode($field->value()), false) ?>">
-
-  <script class="structure-form-template" type="text/x-handlebars-template">
-    <div class="structure-modal modal">
-      <div class="structure-modal-blocker modal-blocker"></div>
-      <div class="structure-modal-content modal-content">
-        <form class="structure-form form" method="post">
-          {{#with data}}
-          <fieldset class="field-grid cf">
-            <?php foreach($field->fields() as $f): ?>
-            <?php echo form::field($f['type'], $f) ?>
-            <?php endforeach ?>
-          </fieldset>
-          {{/with}}
-          <div class="structure-form-buttons buttons cf">
-            <button class="btn btn-rounded btn-cancel structure-cancel-button" type="reset"><?php _l('fields.structure.cancel') ?></button>
-            <button class="btn btn-rounded btn-submit structure-action-button" type="submit"><?php _l('fields.structure.save') ?></button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </script>
 
   <script class="structure-entries-template" type="text/x-handlebars-template">
 

@@ -40,6 +40,25 @@ class EditorController extends Controller {
 
   }
 
+  public function structure($id, $field) {
+
+    $page = page($id);
+
+    if(!$page) throw new Exception('The page could not be found');
+
+    $blueprint  = blueprint::find($page);
+    $field      = $blueprint->fields()->get($field);
+    $fields     = $field->fields();
+    $form       = new Form($fields);
+    $form->save = get('_id') ? l('fields.structure.save') : l('fields.structure.add');
+
+    return view('editor/structure', array(
+      'page' => $page,
+      'form' => $form
+    ));
+
+  }
+
   protected function id($uri) {
     return implode('/', array_slice(str::split(trim($uri, '/'), '/'), 2));
   }

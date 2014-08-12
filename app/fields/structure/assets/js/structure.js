@@ -7,17 +7,15 @@
     this.element   = $(element);
     this.list      = $('<div class="structure-entries"></div>');
     this.input     = this.element.find('input[type=hidden]');
+    this.page      = this.element.data('page');
     this.button    = this.element.find('.structure-add-button');
     this.json      = this.input.val() ? $.parseJSON(this.input.val()) : [];
     this.entries   = [];
-    this.templates = {
-      form    : Handlebars.compile(this.element.find('.structure-form-template').html()),
-      entries : Handlebars.compile(this.element.find('.structure-entries-template').html())
-    };
+    this.template  = Handlebars.compile(this.element.find('.structure-entries-template').html());
 
     this.render = function() {
 
-      self.list.html(self.templates.entries({
+      self.list.html(self.template({
         entries: self.entries
       }));
 
@@ -76,50 +74,11 @@
       return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     };
 
-    this.form = function(data, mode) {
-
-      var html = self.templates.form({
-        data: data
+    this.form = function(input, mode) {
+      app.popup.form('editor/structure/' + self.page + '/' + self.input.attr('name'), input, null, function(form, data) {
+        mode == 'add' ? self.add(data) : self.update(input._id, data);
+        app.popup.hide();
       });
-
-      $('body').append(html);
-
-      $(document).on('keydown.structure', function(e) {
-        if(e.keyCode == 27) self.hideForm();
-      });
-
-      var $modal = $('.structure-modal');
-      var $form  = $modal.find('.structure-form');
-
-      $form.find('.input').first().focus();
-
-      $modal.on('click', function() {
-        self.hideForm();
-      });
-
-      $modal.find('.structure-modal-content').on('click', function(e) {
-        e.stopPropagation();
-      });
-
-      $form.form();
-
-      $form.on('submit', function() {
-        var d = $(this).serializeObject();
-        mode == 'add' ? self.add(d) : self.update(data._id, d);
-        self.hideForm();
-        return false;
-      });
-
-      $form.find('.btn-cancel').on('click', function() {
-        self.hideForm();
-        return false;
-      });
-
-    };
-
-    this.hideForm = function() {
-      $('.structure-modal').remove();
-      $(document).off('keydown.structure');
     };
 
     this.add = function(data) {

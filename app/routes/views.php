@@ -108,6 +108,13 @@ return array(
     'method'  => 'POST|GET',
     'modal'   => true,
   ),
+  array(
+    'pattern' => 'views/editor/structure/(:all)/(:any)',
+    'action'  => 'views/EditorController::structure',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
+  ),
 
   // Subpages
   array(
