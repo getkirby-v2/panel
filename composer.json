@@ -1,0 +1,23 @@
+{
+  "name": "kirby/panel",
+  "description": "The Kirby Panel is a open-source interface for your Kirby installation.",
+  "keywords": ["cms"],
+  "homepage": "http://getkirby.com",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Bastian Allgeier",
+      "email": "bastian@getkirby.com",
+      "homepage": "http://bastianallgeier.com"
+    }
+  ],
+  "support": {
+    "email": "support@getkirby.com",
+    "issues": "https://github.com/getkirby/panel/issues",
+    "forum": "http://forum.getkirby.com",
+    "source": "https://github.com/getkirby/panel"
+  },
+  "autoload": {
+    "files": ["app/bootstrap.php"]
+  }
+}
