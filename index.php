@@ -1,6 +1,6 @@
 <?php 
 
-define('DS', DIRECTORY_SEPARATOR);
+if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
 // load the kirby bootstrapper
 include(dirname(__DIR__) . DS . 'kirby' . DS . 'bootstrap.php');
