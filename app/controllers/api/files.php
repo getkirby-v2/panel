@@ -9,8 +9,6 @@ class FilesController extends Controller {
       'overwrite' => true,
       'accept'    => function($file) {
 
-        if($file->mime() == 'text/plain') return false;
-
         $callback = c::get('panel.upload.accept');
 
         if(is_callable($callback)) {
@@ -22,7 +20,13 @@ class FilesController extends Controller {
       }
     ));
 
-    if($upload->file()) {
+    if($file = $upload->file()) {
+
+      if($file->extension() == 'txt') {
+        $file->delete();
+        return response::error('Txt files cannot be uploaded');
+      }
+
       return response::success('success');
     } else {
       return response::error($upload->error()->getMessage());
