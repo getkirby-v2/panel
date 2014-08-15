@@ -2,7 +2,7 @@
 
 return array(
   'title' => 'Français',
-  'author' => 'Aris Papathéodorou',
+  'author' => 'Philippe Gervaise & Aris Papathéodorou',
   'version' => '1.0.0',
   'data' => array(
 
