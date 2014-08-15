@@ -21,7 +21,7 @@ return array(
 
     // installation
     'installation' => 'Installation',
-    'installation.check.headline' => 'Installation du bureau Kirby',
+    'installation.check.headline' => 'Installation de Kirby Panel',
     'installation.check.text' => 'Durant l’installation, Kirby a rencontré les problèmes suivants…',
     'installation.check.retry' => 'Essayer à nouveau',
     'installation.check.error' => 'Des problèmes on été rencontrés !',
