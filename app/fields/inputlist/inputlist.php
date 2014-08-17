@@ -10,6 +10,10 @@ class InputListField extends InputField {
     return $input;
   }
 
+  public function options() {
+    return fieldoptions::build($this);
+  }
+
   public function item($value, $text) {
 
     $input = $this->input($value);

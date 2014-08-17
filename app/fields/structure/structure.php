@@ -44,6 +44,7 @@ class StructureField extends BaseField {
     $data   = array();
     foreach($raw as $key => $row) {
       unset($row->_id);
+      unset($row->_csfr);
       $data[$key] = (array)$row;
     }
     return yaml::encode($data);

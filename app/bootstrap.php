@@ -33,6 +33,7 @@ load(array(
   'pagedata'     => root('panel.app.lib') . DS . 'pagedata.php',
   'installation' => root('panel.app.lib') . DS . 'installation.php',
   'form'         => root('panel.app.lib') . DS . 'form.php',
+  'fieldoptions' => root('panel.app.lib') . DS . 'fieldoptions.php',
   'assets'       => root('panel.app.lib') . DS . 'assets.php',
   'history'      => root('panel.app.lib') . DS . 'history.php',
 
