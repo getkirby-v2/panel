@@ -132,6 +132,7 @@ class UsersController extends Controller {
 
     // add all languages
     $fields['language']['options'] = array();
+    $fields['language']['default'] = c::get('panel.language', 'en');
 
     foreach(app::languages() as $code => $lang) {
       $fields['language']['options'][$code] = $lang->title();
