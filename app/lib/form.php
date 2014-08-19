@@ -46,7 +46,7 @@ class Form extends Brick {
 
       $field['name']    = $name;
       $field['default'] = a::get($field, 'default', null);
-      $field['value']   = a::get($this->values(), $name, $field['default']);
+      $field['value']   = a::get($this->values(), str::lower($name), $field['default']);
 
       $this->fields->append($name, static::field($field['type'], $field));
 
