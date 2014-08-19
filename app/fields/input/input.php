@@ -10,7 +10,7 @@ class InputField extends BaseField {
     $input->addClass('input');
     $input->attr(array(
       'type'         => $this->type(),
-      'value'        => $this->value(),
+      'value'        => html($this->value(), false),
       'required'     => $this->required(),
       'name'         => $this->name(),
       'autocomplete' => $this->autocomplete() === false ? 'off' : 'on',
