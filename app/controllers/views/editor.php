@@ -42,7 +42,7 @@ class EditorController extends Controller {
 
   public function structure($id, $field) {
 
-    $page = page($id);
+    $page = empty($id) ? site() : page($id);
 
     if(!$page) throw new Exception('The page could not be found');
 
