@@ -28,11 +28,8 @@ class PagesController extends Controller {
     }
 
     $blueprint = blueprint::find($page);
-    $fields    = $blueprint->fields();
+    $fields    = $blueprint->fields($page);
     $oldTitle  = (string)$page->title();
-
-    // add the page to each form field
-    foreach($fields as $field) $field->page = $page;
 
     // trigger the validation
     $form = new Form($fields->toArray());

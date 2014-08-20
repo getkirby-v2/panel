@@ -28,20 +28,14 @@ class Blueprint extends Obj {
     $this->deletable = a::get($this->yaml, 'deletable', true);
     $this->pages     = new Blueprint\Pages(a::get($this->yaml, 'pages', true));
     $this->files     = new Blueprint\Files(a::get($this->yaml, 'files', true));
-    $this->fields    = new Blueprint\Fields();
 
-    foreach(a::get($this->yaml, 'fields', array()) as $name => $field) {
+  }
 
-      // add the name to the field
-      $field['name'] = $name;
+  public function fields($page = null) {
 
-      // creat the field object
-      $field = new Blueprint\Field($field);
+    $fields = a::get($this->yaml, 'fields', array());
 
-      // append it to the collection
-      $this->fields->append($name, $field);
-
-    }
+    return new Blueprint\Fields($fields, $page);
 
   }
 

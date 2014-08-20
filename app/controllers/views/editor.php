@@ -48,13 +48,8 @@ class EditorController extends Controller {
 
     $blueprint  = blueprint::find($page);
     $field      = $blueprint->fields()->get($field);
-    $fields     = $field->fields();
-
-    foreach($fields as $k => $v) {
-      $fields[$k]['page'] = $page;
-    }
-
-    $form       = new Form($fields);
+    $fields     = new Blueprint\Fields($field->fields(), $page);
+    $form       = new Form($fields->toArray());
     $form->save = get('_id') ? l('fields.structure.save') : l('fields.structure.add');
 
     return view('editor/structure', array(

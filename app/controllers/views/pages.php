@@ -6,7 +6,7 @@ class PagesController extends Controller {
 
     $page      = $this->page($id);
     $blueprint = blueprint::find($page);
-    $fields    = $blueprint->fields();
+    $fields    = $blueprint->fields($page);
     $content   = $page->content()->toArray();
     $files     = null;
     $subpages  = null;
@@ -31,9 +31,6 @@ class PagesController extends Controller {
       }
 
     }
-
-    // add the page to each form field
-    foreach($fields as $field) $field->page = $page;
 
     // make sure the title is always there
     $content['title'] = $page->title();

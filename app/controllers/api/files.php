@@ -91,10 +91,7 @@ class FilesController extends Controller {
     }
 
     $blueprint = blueprint::find($page);
-    $fields    = $blueprint->files()->fields();
-
-    // add the page to each form field
-    foreach($fields as $field) $field->page = $page;
+    $fields    = $blueprint->files()->fields($page);
 
     // trigger the validation
     $form = new Form($fields->toArray());

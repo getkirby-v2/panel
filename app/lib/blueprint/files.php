@@ -16,33 +16,26 @@ class Files extends Obj {
   public function __construct($params = array()) {
 
     // start the fields collection
-    $this->fields = new Fields();
+    $this->params = $params;
 
     if($params === false) {
       $this->max      = 0;
       $this->sortable = false;
       $this->hide     = true;
+      $this->fields   = array();
     } else if(is_array($params)) {
       $this->max      = a::get($params, 'max', $this->max);
       $this->hide     = a::get($params, 'hide', $this->hide);
       $this->sort     = a::get($params, 'sort', $this->sort);
       $this->sortable = a::get($params, 'sortable', $this->sortable);
-
-      foreach(a::get($params, 'fields', array()) as $name => $field) {
-
-        // add the name to the field
-        $field['name'] = $name;
-
-        // creat the field object
-        $field = new Field($field);
-
-        // append it to the collection
-        $this->fields->append($name, $field);
-
-      }
+      $this->fields   = a::get($params, 'fields', array());
 
     }
 
+  }
+
+  public function fields($page = null) {
+    return new Fields($this->fields, $page);
   }
 
 }
