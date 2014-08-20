@@ -22,6 +22,10 @@ class Field extends Obj {
       $params['required'] = true;
     }
 
+    if(empty($params['type'])) {
+      $params['type'] = 'text';
+    }
+
     // create the default value
     $params['default'] = $this->_default(a::get($params, 'default'));
 
