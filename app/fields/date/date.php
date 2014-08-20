@@ -27,7 +27,7 @@ class DateField extends InputField {
   }
 
   public function value() {
-    return date('Y-m-d', strtotime($this->value));
+    return !empty($this->value) ? date('Y-m-d', strtotime($this->value)) : null;
   }
 
   public function input() {
