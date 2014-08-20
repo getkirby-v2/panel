@@ -6,7 +6,7 @@ class Assets {
 
     $files = array(
       'app.css',
-      'font-awesome.css',
+      'fontawesome.css',
       'autocomplete.css',
       'hacks.css'
     );
