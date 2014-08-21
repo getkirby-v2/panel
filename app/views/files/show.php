@@ -6,13 +6,13 @@
 
     <nav class="fileview-nav">
 
-      <?php if($prev = $f->prev()): ?>
+      <?php if($prev): ?>
       <a title="&lsaquo;" data-shortcut="left" class="fileview-nav-prev" href="<?php _u($prev, 'show') ?>">
         <?php i('chevron-left fa-lg') ?>
       </a>
       <?php endif ?>
 
-      <?php if($next = $f->next()): ?>
+      <?php if($next): ?>
       <a title="&rsaquo;" data-shortcut="right" class="fileview-nav-next" href="<?php _u($next, 'show') ?>">
         <?php i('chevron-right fa-lg') ?>
       </a>

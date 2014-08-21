@@ -54,6 +54,10 @@ class FilesController extends Controller {
     $blueprint = blueprint::find($page);
     $fields    = $blueprint->files()->fields($page);
     $meta      = $file->meta()->toArray();
+    $files     = api::files($page, $blueprint);
+    $index     = $files->indexOf($file);
+    $next      = $files->nth($index + 1);
+    $prev      = $files->nth($index - 1);
 
     return view('files/show', array(
       'topbar' => new Snippet('pages/topbar', array(
@@ -75,7 +79,9 @@ class FilesController extends Controller {
       )),
       'form' => new Form($fields->toArray(), $meta),
       'p'    => $page,
-      'f'    => $file
+      'f'    => $file,
+      'next' => $next,
+      'prev' => $prev
     ));
 
   }
