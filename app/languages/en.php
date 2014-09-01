@@ -80,6 +80,9 @@ return array(
     'pages.show.error.permissions.title' => 'The page is not writable',
     'pages.show.error.permissions.text'  => 'Please check the permissions for the content folder and all files.',
     'pages.show.error.permissions.retry'  => 'Retry',
+    'pages.show.error.notitle.title' => 'The blueprint does not have a title field',
+    'pages.show.error.notitle.text' => 'Please add a title field and try again',
+    'pages.show.error.notitle.retry' => 'Retry',
     'pages.show.error.form'  => 'Please fill in all fields correctly',
 
     'pages.add.title.label' => 'Add a new page',

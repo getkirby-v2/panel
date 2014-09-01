@@ -98,7 +98,8 @@ class PagesController extends Controller {
       )),
       'sidebar' => $sidebar,
       'form'    => $form,
-      'page'    => $page
+      'page'    => $page,
+      'notitle' => !$form->fields()->get('title')
     ));
 
   }
