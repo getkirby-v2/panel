@@ -98,7 +98,7 @@ class FilesController extends Controller {
     $form->validate();
 
     // fetch the form data
-    $data = $form->serialize();
+    $data = filedata::createByInput($file, $form->serialize());
 
     // stop at invalid fields
     if(!$form->isValid()) {

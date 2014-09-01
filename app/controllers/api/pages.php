@@ -36,7 +36,7 @@ class PagesController extends Controller {
     $form->validate();
 
     // fetch the data for the form
-    $data = $form->serialize();
+    $data = pagedata::createByInput($page, $form->serialize());
 
     // stop at invalid fields
     if(!$form->isValid()) {

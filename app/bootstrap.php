@@ -31,6 +31,7 @@ load(array(
   // panel stuff
   'api'          => root('panel.app.lib') . DS . 'api.php',
   'pagedata'     => root('panel.app.lib') . DS . 'pagedata.php',
+  'filedata'     => root('panel.app.lib') . DS . 'filedata.php',
   'installation' => root('panel.app.lib') . DS . 'installation.php',
   'form'         => root('panel.app.lib') . DS . 'form.php',
   'fieldoptions' => root('panel.app.lib') . DS . 'fieldoptions.php',

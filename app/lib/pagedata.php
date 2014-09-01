@@ -2,6 +2,14 @@
 
 class PageData {
 
+  static public function createByInput($page, $input = array()) {
+    $data = array();
+    foreach($page->content()->toArray() as $key => $value) {
+      $data[$key] = null;
+    }
+    return array_merge($data, $input);
+  }
+
   static public function createByBlueprint($blueprint, $input = array()) {
 
     $bp = blueprint::find($blueprint);
