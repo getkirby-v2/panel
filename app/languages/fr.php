@@ -78,7 +78,7 @@ return array(
     'pages.show.files.add' => 'Ajouter',
     'pages.show.files.empty' => 'Cette page n’a aucun fichier attaché',
     'pages.show.error.permissions.title' => 'La page n’est pas accessible en écriture',
-    'pages.show.error.permissions.text'  => 'Merci de vérifier les permissions pour le répertoire "/content" et ses fichiers.',
+    'pages.show.error.permissions.text'  => 'Merci de vérifier les permissions pour le répertoire “/content” et ses fichiers.',
     'pages.show.error.permissions.retry'  => 'Essayer de nouveau',
     'pages.show.error.notitle.title' => 'Le modèle de page n’a pas de champ “title”',
     'pages.show.error.notitle.text' => 'Veuillez ajouter un champ “title” puis essayer de nouveau',
