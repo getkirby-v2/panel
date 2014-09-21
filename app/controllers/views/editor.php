@@ -49,7 +49,13 @@ class EditorController extends Controller {
     $blueprint  = blueprint::find($page);
     $field      = $blueprint->fields()->get($field);
     $fields     = new Blueprint\Fields($field->fields(), $page);
-    $form       = new Form($fields->toArray());
+    $fields     = $fields->toArray();
+
+    foreach($fields as $key => $field) {
+      if($field['type'] == 'textarea') $fields[$key]['buttons'] = false;
+    }
+
+    $form       = new Form($fields);
     $form->save = get('_id') ? l('fields.structure.save') : l('fields.structure.add');
 
     return view('editor/structure', array(
