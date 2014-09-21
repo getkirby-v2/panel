@@ -1,22 +1,9 @@
-// create a simple new app object
-var app = {};
-
-// store the main api url for our $http helper
-$http.endpoint = 'api';
-
 // cache the most relevant elements
 app.nav   = $('#menu-toggle');
-app.body  = $('body');
-app.doc   = $(document);
-app.win   = $(window);
 app.views = $('[data-view]');
-app.title = document.title;
 
 // init all available views
 app.views.views(app, 'views');
-
-// init the modal view
-app.modal.hide();
 
 // storage for the loader interval
 app.loader = false;
@@ -49,6 +36,9 @@ app.doc.ajaxStop(function() {
 app.doc.ajaxError(function() {
   app.isLoading(false);
 });
+
+// init the modal view
+app.modal.hide();
 
 // a click on the modal background will close the modal
 app.modal.on('click', function() {
