@@ -21,7 +21,7 @@ class InputField extends BaseField {
       'id'           => $this->id()
     ));
 
-    if(is_string($this->value())) {
+    if(!is_array($this->value())) {
       $input->val(html($this->value(), false));
     }
 
