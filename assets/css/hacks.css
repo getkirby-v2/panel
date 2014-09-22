@@ -124,6 +124,10 @@ body.loading .topbar:after {
   border: 0;
   border-bottom: 2px solid #ddd;
   border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
 }
 .search-dropdown {
   padding-bottom: 3em;

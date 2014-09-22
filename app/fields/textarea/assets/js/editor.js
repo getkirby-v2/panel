@@ -5,7 +5,7 @@
     return this.each(function() {
 
       var textarea = $(this).autosize();
-      var buttons  = textarea.next();
+      var buttons  = textarea.parent().find('.field-buttons');
 
       buttons.find('.btn').on('click', function(e) {
 

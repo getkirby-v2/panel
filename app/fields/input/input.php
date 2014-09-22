@@ -10,7 +10,7 @@ class InputField extends BaseField {
     $input->addClass('input');
     $input->attr(array(
       'type'         => $this->type(),
-      'value'        => html($this->value(), false),
+      'value'        => '',
       'required'     => $this->required(),
       'name'         => $this->name(),
       'autocomplete' => $this->autocomplete() === false ? 'off' : 'on',
@@ -20,6 +20,10 @@ class InputField extends BaseField {
       'disabled'     => $this->disabled(),
       'id'           => $this->id()
     ));
+
+    if(!is_array($this->value())) {
+      $input->val(html($this->value(), false));
+    }
 
     if($this->readonly()) {
       $input->attr('tabindex', '-1');

@@ -477,7 +477,6 @@ body > .message-is-alert .message-content:after {
   vertical-align: top;
   display: block;
   position: relative;
-  overflow: hidden;
   cursor: pointer;
   background: #000;
   border-radius: 3px;

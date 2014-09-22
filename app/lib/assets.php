@@ -37,7 +37,7 @@ class Assets {
       'controllers/editor.js',
       'models.js',
       'routes.js',
-      'app.js',
+      'setup.js',
     );
 
     return static::combine('js', $files);
