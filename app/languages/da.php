@@ -137,7 +137,7 @@ return array(
     'files.show.name.label' => 'Filnavn',
     'files.show.info.label' => 'Type / Vægt / Dimensioner',
     'files.show.link.label' => 'Offentligt link',
-    'files.show.open' => 'Se/hent fil',
+    'files.show.open' => 'Se og hent fil',
     'files.show.back' => 'Tilbage',
     'files.show.replace' => 'Erstat',
     'files.show.delete' => 'Slet',
