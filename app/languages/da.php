@@ -34,8 +34,8 @@ return array(
     'installation.signup.username.placeholder' => 'Brugernavn',
     'installation.signup.email.label' => 'Email',
     'installation.signup.email.placeholder' => 'mail@eksempel.dk',
-    'installation.signup.language.label' => 'Sprog',
     'installation.signup.password.label' => 'Adgangskode',
+    'installation.signup.language.label' => 'Sprog',
     'installation.signup.button' => 'Opret din konto',
 
     // login

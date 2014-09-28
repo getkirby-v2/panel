@@ -34,7 +34,6 @@ return array(
     'installation.signup.username.placeholder' => 'Gebruikersnaam',
     'installation.signup.email.label' => 'Email',
     'installation.signup.email.placeholder' => 'mail@voorbeeld.com',
-    'installation.signup.language.label' => 'Taal',
     'installation.signup.password.label' => 'Wachtwoord',
     'installation.signup.language.label' => 'Taal',
     'installation.signup.button' => 'Maak uw account',

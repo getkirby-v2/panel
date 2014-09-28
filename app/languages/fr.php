@@ -34,7 +34,6 @@ return array(
     'installation.signup.username.placeholder' => 'Nom d’utilisateur',
     'installation.signup.email.label' => 'Email',
     'installation.signup.email.placeholder' => 'mail@example.com',
-    'installation.signup.language.label' => 'Langue',
     'installation.signup.password.label' => 'Mot de passe',
     'installation.signup.language.label' => 'Langue',
     'installation.signup.button' => 'Créer votre compte',
