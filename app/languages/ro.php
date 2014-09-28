@@ -168,7 +168,7 @@ return array(
     'users.form.email.label' => 'Email',
     'users.form.email.placeholder' => 'email@exemplu.com',
     'users.form.password.label' => 'Parola',
-    'users.form.password.confirm.label' => 'Confirmare parola',
+    'users.form.password.confirm.label' => 'Confirmare parolă',
     'users.form.password.new.label' => 'Parolă nouă',
     'users.form.password.new.confirm.label' => 'Confirmarea parolei noi',
     'users.form.password.new.help' => 'Lasă necompletat pentru a păstra parola curentă.',
