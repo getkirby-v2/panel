@@ -16,7 +16,7 @@ class PageField extends InputField {
     $input = parent::input();
     $input->data(array(
       'field' => 'autocomplete',
-      'url'   => url('panel/api/autocomplete/uris')
+      'url'   => panel()->urls()->api() . '/autocomplete/uris'
     ));
 
     return $input;

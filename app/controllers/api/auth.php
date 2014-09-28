@@ -4,7 +4,7 @@ class AuthController extends Controller {
 
   public function login() {
 
-    $user    = app::$site->users()->find(str::lower(get('username')));
+    $user    = panel()->site()->users()->find(str::lower(get('username')));
     $message = l('login.error');
 
     if(!$user) {

@@ -4,19 +4,11 @@ class Installation {
 
   static public function old() {
 
-    $panel = c::get('root.site') . DS . 'panel';
+    $panel = kirby()->roots()->site() . DS . 'panel';
 
     return (is_dir($panel) or
             is_dir($panel . DS . 'blueprints') or
             is_dir($panel . DS . 'accounts')) ? true : false;
-
-  }
-
-  static public function migration() {
-
-
-
-
 
   }
 
@@ -39,24 +31,24 @@ class Installation {
   }
 
   static protected function checkAccounts() {
-    return is_writable(c::get('root.accounts'));
+    return is_writable(kirby()->roots()->accounts());
   }
 
   static protected function checkThumbs() {
-    return is_writable(thumb::$defaults['root']);
+    return is_writable(kirby()->roots()->thumbs());
   }
 
   static protected function checkBlueprints() {
-    return is_dir(c::get('root.site') . DS . 'blueprints');
+    return is_dir(kirby()->roots()->blueprints());
   }
 
   static protected function checkContent() {
-    $folder = new Folder(c::get('root.content'));
+    $folder = new Folder(kirby()->roots()->content());
     return $folder->isWritable(true);
   }
 
   static protected function checkAvatars() {
-    return is_writable(c::get('root') . DS . 'assets' . DS . 'avatars');
+    return is_writable(kirby()->roots()->avatars());
   }
 
 }

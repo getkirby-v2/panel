@@ -115,7 +115,7 @@ class PagesController extends Controller {
       'page'     => purl($page, 'show')
     );
 
-    $form = app::form('pages.add');
+    $form = panel()->form('pages.add');
     $form->save = l('add');
     $form->back = a::get($back, get('to'));
 

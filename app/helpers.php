@@ -1,5 +1,9 @@
 <?php
 
+function panel() {
+  return panel::instance();
+}
+
 function dragText($obj) {
 
   if(is_a($obj, 'Page')) {

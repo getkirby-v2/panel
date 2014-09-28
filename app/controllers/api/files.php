@@ -9,7 +9,7 @@ class FilesController extends Controller {
       'overwrite' => true,
       'accept'    => function($file) {
 
-        $callback = c::get('panel.upload.accept');
+        $callback = kirby()->option('panel.upload.accept');
 
         if(is_callable($callback)) {
           return call($callback, $file);
@@ -108,7 +108,7 @@ class FilesController extends Controller {
     }
 
     try {
-      $file->update($data, app::$language);
+      $file->update($data);
       return response::success('success', array(
         'data' => $data
       ));
@@ -138,7 +138,7 @@ class FilesController extends Controller {
       $counter++;
 
       try {
-        $file->update(array('sort' => $counter), app::$language);
+        $file->update(array('sort' => $counter));
       } catch(Exception $e) {
 
       }

@@ -23,7 +23,7 @@
     </div>
 
     <?php echo assets::js() ?>
-    <?php echo js('panel/assets/js/apps/login.js') ?>
+    <?php echo js(panel()->urls()->js() . '/apps/login.js') ?>
 
   </body>
 </html>

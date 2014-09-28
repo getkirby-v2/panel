@@ -5,7 +5,7 @@ class DashboardController extends Controller {
   public function index() {
 
     $widgets = array();
-    $wroot   = c::get('root.site') . DS . 'widgets';
+    $wroot   = kirby()->roots()->widgets();
     $wdirs   = dir::read($wroot);
 
     foreach($wdirs as $dir) {

@@ -90,7 +90,7 @@ class BaseField {
     if(empty($value)) {
       return null;
     } else if(is_array($value)) {
-      return a::get($value, app::$interfaceLanguage, $this->name());
+      return a::get($value, panel()->language(), $this->name());
     } else if($translation = l::get($value)) {
       return $translation;
     } else {

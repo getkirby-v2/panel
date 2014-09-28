@@ -38,7 +38,7 @@ class TagsField extends TextField {
         'separator' => $this->separator()
       );
 
-      $input->data('url', url('panel/api/autocomplete/field?' . http_build_query($query)));
+      $input->data('url', panel()->urls()->api() . '/autocomplete/field?' . http_build_query($query));
 
     }
 

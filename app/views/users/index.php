@@ -20,7 +20,7 @@
             <?php if($user->avatar()): ?>
             <img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>" alt="<?php __($user->username()) ?>">
             <?php else: ?>
-            <img src="<?php echo url('panel/assets/images/avatar.png') ?>" alt="<?php __($user->username()) ?>">
+            <img src="<?php echo panel()->urls()->images() . '/avatar.png' ?>" alt="<?php __($user->username()) ?>">
             <?php endif ?>
           </a>
         </figure>
