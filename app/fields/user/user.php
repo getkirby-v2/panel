@@ -14,7 +14,7 @@ class UserField extends InputField {
     $input = parent::input();
     $input->data(array(
       'field' => 'autocomplete',
-      'url'   => url('panel/api/autocomplete/usernames')
+      'url'   => panel()->urls()->api() . '/autocomplete/usernames'
     ));
 
     return $input;

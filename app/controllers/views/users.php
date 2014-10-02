@@ -39,7 +39,7 @@ class UsersController extends Controller {
         ))
       )),
       'user'     => null,
-      'writable' => is_writable(c::get('root.accounts')),
+      'writable' => is_writable(kirby()->roots()->accounts()),
       'form'     => $form,
     ));
 
@@ -67,7 +67,7 @@ class UsersController extends Controller {
         ))
       )),
       'form'     => $form,
-      'writable' => is_writable(c::get('root.accounts')),
+      'writable' => is_writable(kirby()->roots()->accounts()),
       'user'     => $user,
     ));
 
@@ -100,7 +100,7 @@ class UsersController extends Controller {
 
     return view('users/avatar', array(
       'user'       => $user,
-      'uploadable' => is_writable(c::get('root') . DS . 'assets' . DS . 'avatars'),
+      'uploadable' => is_writable(kirby()->roots()->avatars()),
       'back'       => a::get($back, get('to'))
     ));
 
@@ -127,14 +127,14 @@ class UsersController extends Controller {
   protected function form($user = null) {
 
     $mode    = $user ? 'edit' : 'add';
-    $fields  = data::read(root('panel.app') . DS . 'forms' . DS . 'user.' . $mode . '.php', 'yaml');
+    $fields  = data::read(panel()->roots()->forms() . DS . 'user.' . $mode . '.php', 'yaml');
     $content = $user ? $user->data() : array();
 
     // add all languages
     $fields['language']['options'] = array();
-    $fields['language']['default'] = c::get('panel.language', 'en');
+    $fields['language']['default'] = kirby()->option('panel.language', 'en');
 
-    foreach(app::languages() as $code => $lang) {
+    foreach(panel()->languages() as $code => $lang) {
       $fields['language']['options'][$code] = $lang->title();
     }
 

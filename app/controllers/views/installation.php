@@ -4,7 +4,7 @@ class InstallationController extends Controller {
 
   public function index() {
 
-    if(app::$site->users()->count() > 0) {
+    if(site()->users()->count() > 0) {
       go('panel/login');
     }
 
@@ -14,19 +14,19 @@ class InstallationController extends Controller {
       ));
     } else {
 
-      $form = app::form('installation', array('language' => c::get('panel.language', 'en')));
+      $form = panel()->form('installation', array('language' => kirby()->option('panel.language', 'en')));
       $form->cancel   = false;
-      $form->save     = l::get('installation.signup.button');
+      $form->save     = l('installation.signup.button');
       $form->centered = true;
 
-      foreach(app::languages() as $lang) {
+      foreach(panel()->languages() as $lang) {
         $form->fields()->get('language')->options[$lang->code()] = $lang->title();
       }
 
       $form->on('submit', function($form) {
 
         try {
-          app::$site->users()->create($form->serialize());
+          panel()->site()->users()->create($form->serialize());
           go('panel/login/welcome');
         } catch(Exception $e) {
           $form->alert($e->getMessage());

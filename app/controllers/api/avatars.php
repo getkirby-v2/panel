@@ -59,7 +59,7 @@ class AvatarsController extends Controller {
   }
 
   protected function user($username) {
-    return app::$site->users()->find($username);
+    return panel()->site()->users()->find($username);
   }
 
 }

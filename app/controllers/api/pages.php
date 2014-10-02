@@ -47,7 +47,7 @@ class PagesController extends Controller {
 
     try {
 
-      $page->update($data, app::$language);
+      $page->update($data);
 
       // make sure that the sorting number is correct
       if($page->isVisible()) {
@@ -176,7 +176,7 @@ class PagesController extends Controller {
 
     try {
 
-      if(site()->multilang() and app::$language != site()->defaultLanguage()->code()) {
+      if(site()->multilang() and site()->language()->code() != site()->defaultLanguage()->code()) {
         $page->update(array(
           'URL-Key' => get('uid')
         ));

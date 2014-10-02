@@ -29,7 +29,11 @@ class TagsField extends TextField {
       'separator' => $this->separator,
     ));
 
-    if($page = $this->page()) {
+    if(isset($this->data)) {
+
+      $input->data('url', html(json_encode($this->data), false));
+
+    } else if($page = $this->page()) {
 
       $query = array(
         'uri'       => $page->id(),
@@ -38,7 +42,7 @@ class TagsField extends TextField {
         'separator' => $this->separator()
       );
 
-      $input->data('url', url('panel/api/autocomplete/field?' . http_build_query($query)));
+      $input->data('url', panel()->urls()->api() . '/autocomplete/field?' . http_build_query($query));
 
     }
 

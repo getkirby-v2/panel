@@ -3,7 +3,7 @@
 <div class="languages">
 
   <a id="languages-toggle" class="languages-toggle" data-dropdown="true" href="#languages">
-    <span><?php __(app::$language) ?></span>
+    <span><?php __(site()->language()->code()) ?></span>
   </a>
 
   <nav id="languages" class="dropdown dropdown-left">

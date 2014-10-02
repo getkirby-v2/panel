@@ -46,7 +46,7 @@ class Assets {
 
   static public function combine($type, $files, $compress = false) {
 
-    $root  = root('panel.assets') . DS . $type;
+    $root  = panel::instance()->roots()->assets() . DS . $type;
     $cache = new Media($root . DS . 'panel.' . $type);
     $media = new Collection(array_map(function($file) use($root) {
       return new Media($root . DS . str_replace('/', DS, $file));
@@ -64,7 +64,7 @@ class Assets {
     }
 
     if($cache->exists()) {
-      return $type('panel/assets/' . $type . '/panel.' . $type);
+      return $type(panel()->urls()->$type() . '/panel.' . $type);
     }
 
     return $type(array_map(function($item) use($type) {

@@ -4,11 +4,11 @@ class AuthController extends Controller {
 
   public function login($welcome = null) {
 
-    if($user = app::$site->user()) {
-      go('panel');
+    if($user = panel()->site()->user()) {
+      go(panel()->urls()->index());
     }
 
-    $form = app::form('login');
+    $form = panel()->form('login');
     $form->cancel   = false;
     $form->save     = l('login.button');
     $form->centered = true;
@@ -23,11 +23,11 @@ class AuthController extends Controller {
 
   public function logout() {
 
-    if($user = app::$site->user()) {
+    if($user = panel()->site()->user()) {
       $user->logout();
     }
 
-    go('panel/login');
+    go(panel()->urls()->login());
 
   }
 

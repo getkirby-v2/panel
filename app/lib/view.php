@@ -7,7 +7,7 @@ class View {
   public $data = array();
 
   public function __construct($file, $data = array()) {
-    $this->root = root('panel.app.views');
+    $this->root = panel::instance()->roots()->views();
     $this->file = $file;
     $this->data = $data;
   }

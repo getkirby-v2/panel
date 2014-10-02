@@ -17,7 +17,7 @@
   <div data-view="main"  class="main"><i class="loader"></i></div>
 
   <?php echo assets::js() ?>
-  <?php echo js('panel/assets/js/apps/main.js') ?>
+  <?php echo js(panel()->urls()->js() . '/apps/main.js') ?>
   <script><?php echo form::js(false) ?></script>
 
 </body>

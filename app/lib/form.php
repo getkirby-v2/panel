@@ -150,7 +150,7 @@ class Form extends Brick {
     $files = dir::read(static::$root['default']);
 
     if(isset(static::$root['custom'])) {
-      $files = array_merge(static::$files, dir::read(static::$root['custom']));
+      $files = array_merge($files, dir::read(static::$root['custom']));
     }
 
     foreach($files as $file) {

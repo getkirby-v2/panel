@@ -81,16 +81,16 @@ class UsersController extends Controller {
   }
 
   protected function users() {
-    return app::$site->users();
+    return panel()->site()->users();
   }
 
   protected function user($username) {
-    return app::$site->users()->find($username);
+    return panel()->site()->users()->find($username);
   }
 
   protected function form($user = null) {
     $mode = $user ? 'edit' : 'add';
-    return app::form('user.' . $mode);
+    return panel()->form('user.' . $mode);
   }
 
 }

@@ -208,6 +208,6 @@ return array(
   array(
     'pattern' => '(:all)',
     'action'  => 'views/ErrorsController::page',
-  )
+  ),
 
 );

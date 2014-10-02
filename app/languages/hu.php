@@ -34,7 +34,6 @@ return array(
     'installation.signup.username.placeholder' => 'Felhasználónév',
     'installation.signup.email.label' => 'Email',
     'installation.signup.email.placeholder' => 'mail@példa.hu',
-    'installation.signup.language.label' => 'Nyelv',
     'installation.signup.password.label' => 'Jelszó',
     'installation.signup.language.label' => 'Nyelv',
     'installation.signup.button' => 'Fiókod létrehozása',
