@@ -37,7 +37,7 @@ class Panel {
     blueprint::$root = $this->kirby->roots()->blueprints();
 
     // setup the form plugin
-    form::setup($this->roots->fields);
+    form::setup($this->roots->fields, $this->kirby->roots()->fields());
 
     // start the router
     $this->router = new Router($this->routes);
