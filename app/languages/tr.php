@@ -34,7 +34,6 @@ return array(
     'installation.signup.username.placeholder' => 'Kullanıcı Adı',
     'installation.signup.email.label' => 'E-Posta',
     'installation.signup.email.placeholder' => 'eposta@ornek.com',
-    'installation.signup.language.label' => 'Dil',
     'installation.signup.password.label' => 'Şifre',
     'installation.signup.language.label' => 'Dil',
     'installation.signup.button' => 'Hesabını oluştur',

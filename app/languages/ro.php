@@ -34,7 +34,6 @@ return array(
     'installation.signup.username.placeholder' => 'Nume utilizator',
     'installation.signup.email.label' => 'Email',
     'installation.signup.email.placeholder' => 'mail@example.com',
-    'installation.signup.language.label' => 'Limba',
     'installation.signup.password.label' => 'Parola',
     'installation.signup.language.label' => 'Limba',
     'installation.signup.button' => 'Creeaza contul',
