@@ -34,13 +34,20 @@
     };
 
     this.data = function(callback) {
+
+      if($.isArray(self.url)) {
+        return callback(self.url);
+      }
+
       if(!self.cache) {
         $.getJSON(self.url, function(data) {
           self.cache = data;
           callback(data);
         });
       }
+
       return callback(self.cache);
+
     };
 
     this.add = function(value) {
