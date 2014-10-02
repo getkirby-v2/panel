@@ -164,6 +164,9 @@ class Panel {
 
   public function launch($path = null) {
 
+    // set the timezone for all date functions
+    date_default_timezone_set($this->kirby->options['timezone']);
+
     $this->i18n();
     $this->multilang();
 
