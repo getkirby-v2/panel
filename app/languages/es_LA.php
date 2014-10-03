@@ -172,6 +172,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Confirmar la nueva contraseña',
     'users.form.password.new.help' => 'Dejar en blanco para mantener la misma contraseña',
     'users.form.language.label' => 'Idioma',
+    'users.form.role.label' => 'Role',
     'users.form.options.headline' => 'Opciones de cuenta',
     'users.form.options.message' => 'Enviar email',
     'users.form.options.delete' => 'Eliminar cuenta',

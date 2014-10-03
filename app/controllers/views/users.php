@@ -5,6 +5,7 @@ class UsersController extends Controller {
   public function index() {
     return view('users/index', array(
       'users'  => site()->users(),
+      'admin'  => site()->user()->isAdmin(),
       'topbar' => new Snippet('topbar', array(
         'breadcrumb' => new Snippet('breadcrumb', array(
           'items' => array(
@@ -19,6 +20,8 @@ class UsersController extends Controller {
   }
 
   public function add() {
+
+    if(!site()->user()->isAdmin()) go(purl('error'));
 
     $form = $this->form();
     $form->back = purl('users');
@@ -51,6 +54,10 @@ class UsersController extends Controller {
     $form = $this->form($user);
     $form->back = purl('users');
 
+    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+      goToErrorView();
+    }
+
     return view('users/edit', array(
       'topbar' => new Snippet('topbar', array(
         'breadcrumb' => new Snippet('breadcrumb', array(
@@ -82,6 +89,10 @@ class UsersController extends Controller {
       'dashboard' => purl('')
     );
 
+    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+      goToErrorView('modal');
+    }
+
     return view('users/delete', array(
       'user' => $user,
       'back' => a::get($back, get('to'))
@@ -97,6 +108,10 @@ class UsersController extends Controller {
       'user'      => purl($user, 'edit'),
       'dashboard' => purl('')
     );
+
+    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+      goToErrorView('modal');
+    }
 
     return view('users/avatar', array(
       'user'       => $user,
@@ -136,6 +151,19 @@ class UsersController extends Controller {
 
     foreach(panel()->languages() as $code => $lang) {
       $fields['language']['options'][$code] = $lang->title();
+    }
+
+    // add all roles
+    $fields['role']['options'] = array();
+    $fields['role']['default'] = site()->roles()->findDefault()->id();
+
+    foreach(site()->roles() as $role) {
+      $fields['role']['options'][$role->id()] = $role->name();
+    }
+
+    // make the role selector readonly when the user is not an admin
+    if(!site()->user()->isAdmin()) {
+      $fields['role']['readonly'] = true;
     }
 
     // make sure the password is never shown in the form

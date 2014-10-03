@@ -16,6 +16,7 @@ lastName:
 email:
   label: users.form.email.label
   type: email
+  required: true
 password:
   label: users.form.password.new.label
   type: password
@@ -24,7 +25,15 @@ password:
 passwordConfirmation:
   label: users.form.password.new.confirm.label
   type: password
+  help: &nbsp;
   width: 1/2
 language:
   label: users.form.language.label
   type: select
+  required: true
+  width: 1/2
+role:
+  label: users.form.role.label
+  type: select
+  required: true
+  width: 1/2

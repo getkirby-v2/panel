@@ -150,6 +150,7 @@ return array (
     'users.form.password.new.confirm.label' => 'Neues Passwort bestätigen',
     'users.form.password.new.help' => 'Leer lassen, um das aktuelle Passwort zu behalten',
     'users.form.language.label' => 'Sprache',
+    'users.form.role.label' => 'Rolle',
     'users.form.options.headline' => 'Accounteinstellungen',
     'users.form.options.message' => 'Email schicken',
     'users.form.options.delete' => 'Account löschen',

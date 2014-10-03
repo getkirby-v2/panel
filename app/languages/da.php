@@ -172,6 +172,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Bekræft den nye adgangskode',
     'users.form.password.new.help' => 'Lad stå tomt for at beholde den nuværende adgangskode',
     'users.form.language.label' => 'Sprog',
+    'users.form.role.label' => 'Role',
     'users.form.options.headline' => 'Konto instillinger',
     'users.form.options.message' => 'Send email',
     'users.form.options.delete' => 'Slet konto',

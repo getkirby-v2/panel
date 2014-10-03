@@ -172,6 +172,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Bevestig het nieuwe wachtwoord',
     'users.form.password.new.help' => 'Laat leeg om het huidige wachtwoord te behouden',
     'users.form.language.label' => 'Taal',
+    'users.form.role.label' => 'Role',
     'users.form.options.headline' => 'Account opties',
     'users.form.options.message' => 'Stuur email',
     'users.form.options.delete' => 'Verwijder account',

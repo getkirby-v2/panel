@@ -169,6 +169,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Confirmer le nouveau mot de passe',
     'users.form.password.new.help' => 'Laisser vide pour conserver votre mot de passe actuel',
     'users.form.language.label' => 'Langue',
+    'users.form.role.label' => 'Role',
     'users.form.options.headline' => 'Options du compte',
     'users.form.options.message' => 'Envoyer un email',
     'users.form.options.delete' => 'Supprimer le compte',

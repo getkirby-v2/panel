@@ -172,6 +172,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Confirmarea parolei noi',
     'users.form.password.new.help' => 'Lasă necompletat pentru a păstra parola curentă.',
     'users.form.language.label' => 'Limba',
+    'users.form.role.label' => 'Role',
     'users.form.options.headline' => 'Opţiuni cont',
     'users.form.options.message' => 'Trimite email',
     'users.form.options.delete' => 'Şterge contul',

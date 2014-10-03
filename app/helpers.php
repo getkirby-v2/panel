@@ -21,8 +21,8 @@ function dragText($obj) {
 
 }
 
-function goToErrorView() {
-  go('panel/views/errors/index');
+function goToErrorView($type = 'index') {
+  go(panel()->urls()->index() . '/views/errors/' . $type);
 }
 
 function n($page) {

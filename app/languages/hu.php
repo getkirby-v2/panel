@@ -169,6 +169,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Az új jelszó megerősítése',
     'users.form.password.new.help' => 'Hagyd üresen, ha a jelenlegi jelszót meg akarod tartani',
     'users.form.language.label' => 'Nyelv',
+    'users.form.role.label' => 'Role',
     'users.form.options.headline' => 'Fiók beállítások',
     'users.form.options.message' => 'Email küldése',
     'users.form.options.delete' => 'Fiók törlése',

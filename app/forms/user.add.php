@@ -31,3 +31,9 @@ language:
   label: users.form.language.label
   type: select
   required: true
+  width: 1/2
+role:
+  label: users.form.role.label
+  type: select
+  required: true
+  width: 1/2
