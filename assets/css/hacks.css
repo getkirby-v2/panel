@@ -287,3 +287,8 @@ a.tag {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.message-is-alert a {
+  color: #fff;
+  border-bottom: 2px solid rgba(255,255,255,.5);
+}
