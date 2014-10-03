@@ -6,7 +6,7 @@ class InputField extends BaseField {
 
   public function input() {
 
-    $input = new Brick('input');
+    $input = new Brick('input', null);
     $input->addClass('input');
     $input->attr(array(
       'type'         => $this->type(),

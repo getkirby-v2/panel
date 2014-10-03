@@ -249,7 +249,7 @@ class Form extends Brick {
       $fieldset->addClass('buttons-centered');
     }
 
-    $button = new Brick('input');
+    $button = new Brick('input', null);
     $button->addClass('btn btn-rounded');
 
     if($this->cancel) {

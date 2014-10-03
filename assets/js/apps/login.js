@@ -9,7 +9,7 @@ $message.on('click', function() {
 $form.on('submit', function() {
 
   $http.post('auth/login', $form.serializeObject(), function(r) {
-    window.location.href = '#/'
+    window.location.reload();
   }, function(message) {
     $message.removeClass('hidden')
             .removeClass('message-is-notice')
