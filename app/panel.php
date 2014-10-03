@@ -91,12 +91,13 @@ class Panel {
 
       // panel stuff
       'api'          => $this->roots->lib . DS . 'api.php',
-      'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
-      'installation' => $this->roots->lib . DS . 'installation.php',
-      'form'         => $this->roots->lib . DS . 'form.php',
-      'fieldoptions' => $this->roots->lib . DS . 'fieldoptions.php',
       'assets'       => $this->roots->lib . DS . 'assets.php',
+      'fieldoptions' => $this->roots->lib . DS . 'fieldoptions.php',
+      'filedata'     => $this->roots->lib . DS . 'filedata.php',
+      'form'         => $this->roots->lib . DS . 'form.php',
       'history'      => $this->roots->lib . DS . 'history.php',
+      'installation' => $this->roots->lib . DS . 'installation.php',
+      'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
 
       // blueprint stuff
       'blueprint'         => $this->roots->lib . DS . 'blueprint.php',
