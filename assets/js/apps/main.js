@@ -5,6 +5,26 @@ app.views = $('[data-view]');
 // init all available views
 app.views.views(app, 'views');
 
+// go to error page if a view could not be loaded
+app.views.on('view:error', function(r, response) {
+
+  var message  = 'The view could not be loaded because of an unexpected PHP error.\n';
+      message += 'Please get in contact: support@getkirby.com and copy the following info.\n\n';
+      message += 'Error:\n';
+      message += response + '\n\n';
+      message += 'User Agent:\n';
+      message += navigator.userAgent + '\n\n';
+      message += 'Kirby Version:\n';
+      message += app.body.data('kirby-version') + '\n\n';
+      message += 'Panel Version:\n';
+      message += app.body.data('panel-version');
+
+      console.log(message);
+
+      alert(message);
+
+});
+
 // storage for the loader interval
 app.loader = false;
 

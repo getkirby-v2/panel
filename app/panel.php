@@ -2,6 +2,9 @@
 
 class Panel {
 
+  static public $version = '2.0.0';
+  static public $instance;
+
   public $kirby;
   public $site;
   public $path;
@@ -12,10 +15,12 @@ class Panel {
   public $language = null;
   public $languages = null;
 
-  static public $instance;
-
   static public function instance() {
     return static::$instance;
+  }
+
+  static public function version() {
+    return static::$version;
   }
 
   public function __construct($kirby, $dir) {
