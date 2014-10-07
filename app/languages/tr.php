@@ -16,8 +16,8 @@ return array(
     'ok' => 'Tamam',
 
     // options (sidebar)
-    'options.show' => 'Show options',
-    'options.hide' => 'Hide options',
+    'options.show' => 'Seçenekleri Göster',
+    'options.hide' => 'Seçenekleri Gizle',
 
     // installation
     'installation' => 'Kurulum',
