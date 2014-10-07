@@ -7,7 +7,7 @@ function panel() {
 function dragText($obj) {
 
   if(is_a($obj, 'Page')) {
-    return '(link: ' . $obj->uid() . ' text: ' . $obj->title() . ')';
+    return '(link: ' . $obj->uri() . ' text: ' . $obj->title() . ')';
   } else if(is_a($obj, 'File')) {
     switch($obj->type()) {
       case 'image':
