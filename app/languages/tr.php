@@ -56,7 +56,7 @@ return array(
     'dashboard.index.site.title' => 'Website Adresi',
     'dashboard.index.account.title' => 'Hesap Bilgilerin',
     'dashboard.index.account.edit' => 'Düzenle',
-    'dashboard.index.metatags.title' => 'Anahtar Kelimeler',
+    'dashboard.index.metatags.title' => 'Site Bilgileri',
     'dashboard.index.metatags.edit' => 'Düzenle',
     'dashboard.index.history.title' => 'Son güncellemelerin',
     'dashboard.index.history.text' => 'Son güncellemelerin, daha sonra tekrar kolayca bulabilmen için burada görünecek.',
