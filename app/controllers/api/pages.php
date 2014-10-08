@@ -174,6 +174,11 @@ class PagesController extends Controller {
       return response::error(l('pages.error.missing'));
     }
 
+    // avoid url changes for the home and error pages
+    if($page->isErrorPage() or $page->isHomePage()) {
+      return response::error('This page type cannot be deleted');
+    }
+
     try {
 
       if(site()->multilang() and site()->language()->code() != site()->defaultLanguage()->code()) {
