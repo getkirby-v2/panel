@@ -195,8 +195,15 @@ class PagesController extends Controller {
   }
 
   public function url($id) {
+
+    $page = $this->page($id);
+
+    if($page->isHomePage() or $page->isErrorPage()) {
+      goToErrorView('modal');
+    }
+
     return view('pages/url', array(
-      'page' => $this->page($id)
+      'page' => $page
     ));
   }
 
