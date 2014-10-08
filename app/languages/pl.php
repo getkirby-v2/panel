@@ -173,7 +173,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Potwierdź nowe hasło',
     'users.form.password.new.help' => 'Pozostaw puste, aby zachować bieżące hasło',
     'users.form.language.label' => 'Język',
-    'users.form.role.label' => 'Role',
+    'users.form.role.label' => 'Rola',
     'users.form.options.headline' => 'Opcje konta',
     'users.form.options.message' => 'Wyślij email',
     'users.form.options.delete' => 'Usuń konto',
