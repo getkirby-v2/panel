@@ -240,8 +240,8 @@ return array(
     'fields.page.placeholder' => 'path/ke/halaman',
     'fields.password.label' => 'Sandi',
     'fields.structure.add' => 'Tambah',
-    'fields.structure.add.first' => 'Add the first entry',
-    'fields.structure.empty' => 'No entries yet.',
+    'fields.structure.add.first' => 'Tambahkan entri pertama',
+    'fields.structure.empty' => 'Belum ada entri',
     'fields.structure.cancel' => 'Batal',
     'fields.structure.save' => 'Simpan',
     'fields.structure.edit' => 'Edit',
@@ -262,15 +262,15 @@ return array(
     'fields.toggle.off' => 'Off',
 
     // textarea overlays
-    'editor.link.url.label' => 'Insert URL',
+    'editor.link.url.label' => 'Masukkan URL',
     'editor.link.text.label' => 'Link text',
-    'editor.link.text.help' => 'The link text is optional',
-    'editor.email.address.label' => 'Insert email address',
-    'editor.email.address.placeholder' => 'mail@example.com',
+    'editor.link.text.help' => 'Link text opsional',
+    'editor.email.address.label' => 'Masukkan alamat email',
+    'editor.email.address.placeholder' => 'email@contohemail.com',
     'editor.email.text.label' => 'Link text',
-    'editor.email.text.help' => 'The link text is optional',
-    'editor.file.empty' => 'This page has no files',
-    'editor.image.empty' => 'This page has no images',
+    'editor.email.text.help' => 'Link text opsional',
+    'editor.file.empty' => 'Halaman ini tidak memiliki file',
+    'editor.image.empty' => 'Halaman ini tidak memiliki gambar',
 
     // error page
     'error' => 'Error',
