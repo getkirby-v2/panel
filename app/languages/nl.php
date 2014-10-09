@@ -121,7 +121,7 @@ return array(
     'subpages.index.add.first.button' => 'Voeg de eerste pagina toe',
     'subpages.index.visible' => 'Zichtbare paginas',
     'subpages.index.visible.help' => 'Sleep onzichtbare paginas hier om ze zichtbaar te maken.',
-    'subpages.index.invisible' => 'Onzichtbare pages',
+    'subpages.index.invisible' => 'Onzichtbare paginas',
     'subpages.index.invisible.help' => 'Sleep zichtbare paginas hier om ze onzichtbaar te maken.',
     'subpages.error.missing' => 'De pagina kan niet worden gevonden',
 
