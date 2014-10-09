@@ -72,6 +72,7 @@ return array(
     'pages.show.delete' => 'Delete this page',
     'pages.show.subpages.title' => 'Pages',
     'pages.show.subpages.add' => 'Add',
+    'pages.show.subpages.manage' => 'Manage',
     'pages.show.subpages.empty' => 'This page has no subpages',
     'pages.show.files.title' => 'Files',
     'pages.show.files.add' => 'Add',
