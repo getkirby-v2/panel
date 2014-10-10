@@ -35,7 +35,8 @@ function n($page) {
         return str::substr($page->title(), 0, 1);
         break;
       case 'date':
-        return date('Y/m/d', strtotime($page->num()));
+        $date = date_create_from_format($blueprint->pages()->num()->format(), $page->num());
+        return $date->format($blueprint->pages()->num()->displayformat());
         break;
       default:
         return intval($page->num());
