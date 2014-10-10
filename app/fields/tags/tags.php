@@ -38,7 +38,7 @@ class TagsField extends TextField {
       $query = array(
         'uri'       => $page->id(),
         'index'     => $this->index(),
-        'field'     => $this->field(),
+        'field'     => $this->name(),
         'separator' => $this->separator()
       );
 
