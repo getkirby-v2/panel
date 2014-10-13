@@ -22,6 +22,10 @@ class DateField extends InputField {
 
   }
 
+  public function format() {
+    return str::upper($this->format);
+  }
+
   public function validate() {
     return v::date($this->result());
   }
