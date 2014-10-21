@@ -36,6 +36,7 @@ class HelpersController extends Controller {
         switch($index) {
           case 'siblings':
           case 'children':
+          case 'grandChildren':
             $pages = $page->$index();
             break;
           case 'template':
