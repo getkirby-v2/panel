@@ -19,7 +19,7 @@ class CheckboxesField extends RadioField {
 
   public function value() {
 
-    $value = parent::value();
+    $value = InputListField::value();
 
     if(is_array($value)) {
       return $value;
