@@ -29,7 +29,7 @@
    --><div class="grid-item" id="<?php __($file->filename()) ?>">
         <figure class="file">
           <a class="file-preview file-preview-is-{{type}}" href="<?php echo purl($file, 'show') ?>">
-            <?php if(in_array($file->extension(), array('jpg', 'gif', 'png'))): ?>
+            <?php if(in_array($file->extension(), array('jpg', 'gif', 'png')) and $file->width() < 2000 and $file->height() < 2000): ?>
             <?php echo thumb($file, array('width' => 300, 'height' => '200', 'crop' => true)) ?>
             <?php else: ?>
             <span><?php __($file->extension()) ?></span>
