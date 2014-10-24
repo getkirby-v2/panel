@@ -35,7 +35,9 @@ class DateField extends InputField {
   }
 
   public function input() {
+
     $input = parent::input();
+    $input->removeAttr('name');
     $input->data(array(
       'field'  => 'date',
       'format' => $this->format(),
@@ -47,7 +49,14 @@ class DateField extends InputField {
         'weekdaysShort' => l::get('fields.date.weekdays.short')
       )), false)
     ));
-    return $input;
+
+    $hidden = new Brick('input', null);
+    $hidden->type  = 'hidden';
+    $hidden->name  = $this->name();
+    $hidden->value = $this->value();
+
+    return $input . $hidden;
+
   }
 
 }
