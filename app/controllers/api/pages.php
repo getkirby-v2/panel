@@ -60,6 +60,7 @@ class PagesController extends Controller {
             $page->sort($num);
           } else {
 
+            /* Needs a better alternative
             // update the slug
             if($data['title'] != $oldTitle) {
               // only update the slug for movable pages
@@ -68,6 +69,7 @@ class PagesController extends Controller {
                 $page->move($uid);
               }
             }
+            */
 
           }
 
