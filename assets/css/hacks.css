@@ -292,3 +292,7 @@ a.tag {
   color: #fff;
   border-bottom: 2px solid rgba(255,255,255,.5);
 }
+
+.field-grid-item {
+  display: inline-block;
+}
