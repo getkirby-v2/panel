@@ -8,6 +8,8 @@ class Fields extends Collection {
 
   public function __construct($fields = array(), $page = null) {
 
+    if(empty($fields) or !is_array($fields)) $fields = array();
+
     foreach($fields as $name => $field) {
 
       // add the name to the field
