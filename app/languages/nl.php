@@ -2,8 +2,8 @@
 
 return array(
   'title' => 'Nederlands',
-  'author' => 'Donan Gallagher <donangallagher@gmail.com>',
-  'version' => '1.0.0',
+  'author' => 'Donan Gallagher <donangallagher@gmail.com> and Rutger Laurman <info@lekkerduidelijk.nl>',
+  'version' => '1.0.1',
   'data' => array(
 
     // global
@@ -21,12 +21,12 @@ return array(
 
     // installation
     'installation' => 'Installatie',
-    'installation.check.headline' => 'Kirby Paneel Installatie',
+    'installation.check.headline' => 'Kirby Panel Installatie',
     'installation.check.text' => 'Kirby heeft de volgende problemen ondervonden tijdens de installatie…',
     'installation.check.retry' => 'Opnieuw proberen',
     'installation.check.error' => 'Er zijn wat problemen!',
-    'installation.check.error.accounts' => '/site/accounts zijn niet bewerkbaar',
-    'installation.check.error.avatars' => '/assets/avatars zijn niet bewerkbaar',
+    'installation.check.error.accounts' => '/site/accounts is niet bewerkbaar',
+    'installation.check.error.avatars' => '/assets/avatars is niet bewerkbaar',
     'installation.check.error.blueprints' => 'Voeg een /site/blueprints map toe',
     'installation.check.error.content' => 'De inhoud van de map en alle opgenomen bestanden en mappen moeten bewerkbaar zijn.',
     'installation.check.error.thumbs' => 'De thumbs map moet bewerkbaar zijn.',
@@ -51,7 +51,8 @@ return array(
 
     // dashboard
     'dashboard' => 'Controlepaneel',
-    'dashboard.index.pages.title' => 'Paginas',
+    'dashboard.index.pages.title' => 'Pagina\'s',
+    'dashboard.index.pages.edit' => 'Edit',
     'dashboard.index.pages.add' => 'Toevoegen',
     'dashboard.index.site.title' => 'Uw site\'s URL',
     'dashboard.index.account.title' => 'Uw account',
@@ -63,7 +64,7 @@ return array(
 
     // metatags
     'metatags' => 'Site variabelen',
-    'metatags.back' => 'Terug naar het controlepaneel',
+    'metatags.back' => 'Terug naar het controlpanel',
 
     // pages
     'pages.show.settings' => 'Pagina instellingen',
@@ -71,9 +72,11 @@ return array(
     'pages.show.changeurl' => 'Verander URL',
     'pages.show.delete' => 'Verwijder deze pagina',
     'pages.show.subpages.title' => 'Paginas',
+    'pages.show.subpages.edit' => 'Edit',
     'pages.show.subpages.add' => 'Toevoegen',
-    'pages.show.subpages.empty' => 'Deze pagina heeft geen subpaginas',
+    'pages.show.subpages.empty' => 'Deze pagina heeft geen subpagina\'s',
     'pages.show.files.title' => 'Bestanden',
+    'pages.show.files.edit' => 'Edit',
     'pages.show.files.add' => 'Toevoegen',
     'pages.show.files.empty' => 'Deze pagina heeft geen bestanden',
     'pages.show.error.permissions.title' => 'Deze pagina is niet bewerkbaar',
@@ -101,9 +104,9 @@ return array(
     'pages.url.error.move' => 'De toevoeging kon niet worden veranderd',
     'pages.delete.headline' => 'Wilt u deze pagina echt verwijderen?',
     'pages.delete.error.home.headline' => 'De home pagina kan niet worden verwijderd',
-    'pages.delete.error.home.text' => 'U probeert de home pagina te verwijderen. Dit is niet mogelijk en zou leiden tot ongewenste resultaten.',
+    'pages.delete.error.home.text' => 'U probeert de home pagina te verwijderen. Dit is niet mogelijk en zou kunnen leiden tot ongewenste resultaten.',
     'pages.delete.error.error.headline' => 'De error pagina kan niet worden verwijderd',
-    'pages.delete.error.error.text' => 'U probeert de error pagina te verwijderen. Dit is niet mogelijk en zou leiden tot ongewenste resultaten.',
+    'pages.delete.error.error.text' => 'U probeert de error pagina te verwijderen. Dit is niet mogelijk en zou kunnen leiden tot ongewenste resultaten.',
     'pages.delete.error.children.headline' => 'De pagina kan niet worden verwijderd',
     'pages.delete.error.children.text' => 'Deze pagina heeft subpaginas en kan niet worden verwijderd. Verwijder eerst alle subpaginas.',
     'pages.delete.error.blocked.headline' => 'De pagina kan niet worden verwijderd',
@@ -114,15 +117,15 @@ return array(
 
     // subpages
     'subpages' => 'Paginas',
-    'subpages.index.headline' => 'Paginas in',
+    'subpages.index.headline' => 'Pagina\'s in',
     'subpages.index.back' => 'Terug',
     'subpages.index.add' => 'Nieuwe pagina toevoegen',
-    'subpages.index.add.first.text' => 'Deze pagina heeft nog geen subpaginas',
+    'subpages.index.add.first.text' => 'Deze pagina heeft nog geen subpagina\'s',
     'subpages.index.add.first.button' => 'Voeg de eerste pagina toe',
-    'subpages.index.visible' => 'Zichtbare paginas',
-    'subpages.index.visible.help' => 'Sleep onzichtbare paginas hier om ze zichtbaar te maken.',
-    'subpages.index.invisible' => 'Onzichtbare pages',
-    'subpages.index.invisible.help' => 'Sleep zichtbare paginas hier om ze onzichtbaar te maken.',
+    'subpages.index.visible' => 'Zichtbare pagina\'s',
+    'subpages.index.visible.help' => 'Sleep onzichtbare pagina\'s hier om ze zichtbaar te maken.',
+    'subpages.index.invisible' => 'Onzichtbare pagina\'s',
+    'subpages.index.invisible.help' => 'Sleep zichtbare pagina\'s hier om ze onzichtbaar te maken.',
     'subpages.error.missing' => 'De pagina kan niet worden gevonden',
 
     // files
@@ -164,7 +167,7 @@ return array(
     'users.form.username.readonly' => 'De gebruikersnaam kon niet worden gewijzigd',
     'users.form.firstname.label' => 'Voornaam ',
     'users.form.lastname.label' => 'Achternaam',
-    'users.form.email.label' => 'Email',
+    'users.form.email.label' => 'E-mail',
     'users.form.email.placeholder' => 'mail@voorbeeld.com',
     'users.form.password.label' => 'Wachtwoord',
     'users.form.password.confirm.label' => 'Bevestig wachtwoord',
@@ -172,7 +175,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Bevestig het nieuwe wachtwoord',
     'users.form.password.new.help' => 'Laat leeg om het huidige wachtwoord te behouden',
     'users.form.language.label' => 'Taal',
-    'users.form.role.label' => 'Role',
+    'users.form.role.label' => 'Rol',
     'users.form.options.headline' => 'Account opties',
     'users.form.options.message' => 'Stuur email',
     'users.form.options.delete' => 'Verwijder account',
@@ -185,7 +188,7 @@ return array(
     'users.form.error.update' => 'De gebruiker kon niet worden geüpdated',
     'users.form.error.create' => 'De gebruiker kon niet worden aangemaakt',
     'users.form.error.permissions.title' => 'De account map is niet bewerkbaar',
-    'users.form.error.permissions.text' => 'Zorg ervoor dat/site/accounts bestaat en bewerkbaar is.',
+    'users.form.error.permissions.text' => 'Zorg ervoor dat /site/accounts bestaat en bewerkbaar is.',
     'users.delete.headline' => 'Weet u zeker dat u deze gebruiker wilt verwijderen?',
     'users.delete.error' => 'De gebruiker kon niet worden verwijderd',
     'users.avatar.drop' => 'Plaats hier een profielfoto…',
@@ -232,7 +235,7 @@ return array(
       'Vrij',
       'Zat'
     ),
-    'fields.email.label' => 'Email',
+    'fields.email.label' => 'E-mail',
     'fields.email.placeholder' => 'mail@voorbeeld.com',
     'fields.number.label' => 'Nummer',
     'fields.number.placeholder' => '#',
@@ -248,12 +251,12 @@ return array(
     'fields.structure.delete' => 'Verwijder',
     'fields.tags.label' => 'Tags',
     'fields.tel.label' => 'Telefoon',
-    'fields.textarea.buttons.bold.label' => 'Text vet',
-    'fields.textarea.buttons.bold.text' => 'Text vet',
-    'fields.textarea.buttons.italic.label' => 'Text cursief',
-    'fields.textarea.buttons.italic.text' => 'Text cursief',
+    'fields.textarea.buttons.bold.label' => 'Tekst vet',
+    'fields.textarea.buttons.bold.text' => 'Tekst vet',
+    'fields.textarea.buttons.italic.label' => 'Tekst cursief',
+    'fields.textarea.buttons.italic.text' => 'Tekst cursief',
     'fields.textarea.buttons.link.label' => 'Link',
-    'fields.textarea.buttons.email.label' => 'Email',
+    'fields.textarea.buttons.email.label' => 'E-mail',
     'fields.textarea.buttons.image.label' => 'Afbeelding',
     'fields.textarea.buttons.file.label' => 'Bestand',
     'fields.toggle.yes' => 'Ja',
