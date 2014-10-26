@@ -296,3 +296,17 @@ a.tag {
 .field-grid-item {
   display: inline-block;
 }
+
+
+.hgroup-option-right a {
+  margin-left: 1em;
+}
+
+@media screen and (max-width:70em){
+  .hgroup-option-right > a .icon-left {
+    padding-right: 0em;
+  }
+  .hgroup-option-right > a span {
+    display: none;
+  }
+}

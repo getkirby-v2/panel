@@ -98,8 +98,8 @@ function __($var) {
   echo htmlspecialchars($var);
 }
 
-function _l($key) {
-  echo htmlspecialchars(l($key));
+function _l($key, $default = null) {
+  echo htmlspecialchars(l($key, $default));
 }
 
 function _u($obj = '', $action = false) {
