@@ -49,9 +49,13 @@ class Panel {
 
     // register router filters
     $this->router->filter('auth', function() use($kirby) {
-      if(!$kirby->site()->user()) {
+
+      $user = $kirby->site()->user();
+
+      if(!$user or !$user->hasPanelAccess()) {
+        if($user) $user->logout();
         go('panel/login');
-      }
+      } 
     });
 
     // check for a completed installation
