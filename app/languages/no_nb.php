@@ -3,7 +3,7 @@
 return array(
   'title' => 'Norsk Bokmål',
   'author' => 'Ole-Martin Bratteng <ole-martin@bratteng.me>',
-  'version' => '1.0.0',
+  'version' => '1.1.0',
   'data' => array(
 
     // global
@@ -25,10 +25,10 @@ return array(
     'installation.check.text' => 'Det oppsto problemer under installasjonen av Kirby…',
     'installation.check.retry' => 'Prøv på nytt',
     'installation.check.error' => 'Det er noen problemer!',
-    'installation.check.error.accounts' => '/site/accounts is not skrivbar',
-    'installation.check.error.avatars' => '/assets/avatars is not skrivbar',
+    'installation.check.error.accounts' => '/site/accounts er ikke skrivbar',
+    'installation.check.error.avatars' => '/assets/avatars er ikke skrivbar',
     'installation.check.error.blueprints' => 'Vennligst legg til en /site/blueprints mappe',
-    'installation.check.error.content' => 'Mappen content og alle filer og mapper må være skrivbar.',
+    'installation.check.error.content' => 'Mappen content og alt av innhold må være skrivbar.',
     'installation.check.error.thumbs' => 'Mappen thumbs må være skrivbar.',
     'installation.signup.username.label' => 'Lag din første konto',
     'installation.signup.username.placeholder' => 'Brukernavn',
@@ -52,7 +52,7 @@ return array(
     // dashboard
     'dashboard' => 'Dashboard',
     'dashboard.index.pages.title' => 'Sider',
-    'dashboard.index.pages.edit' => 'Edit',
+    'dashboard.index.pages.edit' => 'Rediger',
     'dashboard.index.pages.add' => 'Legg til',
     'dashboard.index.site.title' => 'Din side\'s URL',
     'dashboard.index.account.title' => 'Din konto',
@@ -72,11 +72,11 @@ return array(
     'pages.show.changeurl' => 'Endre URL',
     'pages.show.delete' => 'Slett denne siden',
     'pages.show.subpages.title' => 'Sider',
-    'pages.show.subpages.edit' => 'Edit',
+    'pages.show.subpages.edit' => 'Rediger',
     'pages.show.subpages.add' => 'Legg til',
     'pages.show.subpages.empty' => 'Denne siden har ingen undersider',
     'pages.show.files.title' => 'Filer',
-    'pages.show.files.edit' => 'Edit',
+    'pages.show.files.edit' => 'Rediger',
     'pages.show.files.add' => 'Legg til',
     'pages.show.files.empty' => 'Denne siden har ingen filer',
     'pages.show.error.permissions.title' => 'Siden er ikke skrivbar',
