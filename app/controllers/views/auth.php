@@ -13,6 +13,10 @@ class AuthController extends Controller {
     $form->save     = l('login.button');
     $form->centered = true;
 
+    if($username = s::get('username')) {
+      $form->fields->username->value = html($username, false);
+    }
+
     return layout('login', array(
       'meta'    => new Snippet('meta'),
       'welcome' => $welcome ? l('login.welcome') : '',

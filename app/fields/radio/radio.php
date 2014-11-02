@@ -6,8 +6,11 @@ class RadioField extends InputListField {
     $value = parent::value();
     if(empty($value)) {
       // get the first key of options
-      reset($this->options);
-      $value = key($this->options);
+      $options = $this->options();
+      if(is_array($options)) {
+        reset($options);
+        $value = key($options);        
+      }
     }
     return $value;
   }

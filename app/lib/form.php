@@ -44,9 +44,11 @@ class Form extends Brick {
 
       if($name == 'title') $field['type'] = 'title';
 
+      $name = str_replace('-','_', str::lower($name));
+
       $field['name']    = $name;
       $field['default'] = a::get($field, 'default', null);
-      $field['value']   = a::get($this->values(), str::lower($name), $field['default']);
+      $field['value']   = a::get($this->values(), $name, $field['default']);
 
       $this->fields->append($name, static::field($field['type'], $field));
 
