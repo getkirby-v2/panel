@@ -10,6 +10,10 @@ class AvatarsController extends Controller {
       return response::error(l('users.avatar.error.missing'));
     }
 
+    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+      return response::error('You are not allowed to upload an avatar for this user');
+    }
+
     $root = $user->avatar() ? $user->avatar()->root() : $user->avatarRoot('{safeExtension}');
 
     $upload = new Upload($root, array(
@@ -46,6 +50,10 @@ class AvatarsController extends Controller {
 
     if(!$user) {
       return response::error(l('users.avatar.delete.error.missing'));
+    }
+
+    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+      return response::error('You are not allowed to delete the avatar of this user');
     }
 
     if($avatar = $user->avatar()) {

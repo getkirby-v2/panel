@@ -5,7 +5,7 @@ class InstallationController extends Controller {
   public function index() {
 
     if(site()->users()->count() > 0) {
-      go('panel/login');
+      go(panel()->urls()->login());
     }
 
     if($problems = installation::check()) {
@@ -26,8 +26,22 @@ class InstallationController extends Controller {
       $form->on('submit', function($form) {
 
         try {
-          panel()->site()->users()->create($form->serialize());
-          go('panel/login/welcome');
+
+          // fetch all the form data
+          $data = $form->serialize();
+
+          // make sure that the first user is an admin
+          $data['role'] = 'admin';
+
+          // try to create the new user
+          $user = panel()->site()->users()->create($data);
+
+          // store the new username for the login screen
+          s::set('username', $user->username());
+
+          // redirect to the login
+          go(panel()->urls()->login() . '/welcome');
+
         } catch(Exception $e) {
           $form->alert($e->getMessage());
         }

@@ -7,7 +7,7 @@ function panel() {
 function dragText($obj) {
 
   if(is_a($obj, 'Page')) {
-    return '(link: ' . $obj->uid() . ' text: ' . $obj->title() . ')';
+    return '(link: ' . $obj->uri() . ' text: ' . $obj->title() . ')';
   } else if(is_a($obj, 'File')) {
     switch($obj->type()) {
       case 'image':
@@ -21,8 +21,8 @@ function dragText($obj) {
 
 }
 
-function goToErrorView() {
-  go('panel/views/errors/index');
+function goToErrorView($type = 'index') {
+  go(panel()->urls()->index() . '/views/errors/' . $type);
 }
 
 function n($page) {
@@ -98,8 +98,8 @@ function __($var) {
   echo htmlspecialchars($var);
 }
 
-function _l($key) {
-  echo htmlspecialchars(l($key));
+function _l($key, $default = null) {
+  echo htmlspecialchars(l($key, $default));
 }
 
 function _u($obj = '', $action = false) {

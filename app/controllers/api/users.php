@@ -14,6 +14,10 @@ class UsersController extends Controller {
 
   public function create() {
 
+    if(!site()->user()->isAdmin()) {
+      return response::error('You are not allowed to create new users');
+    }
+
     $form = $this->form();
     $data = $form->toArray();
 
@@ -39,6 +43,10 @@ class UsersController extends Controller {
     if(!$user) {
       return response::error(l('users.edit.error.missing'));
     } else {
+
+      if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+        return response::error('You are not allowed to edit this user');
+      }
 
       $form = $this->form($user);
       $data = $form->toArray();
@@ -69,6 +77,10 @@ class UsersController extends Controller {
 
     if(!$user) {
       return response::error(l('users.error.missing'));
+    }
+
+    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+      return response::error('You are not allowed to delete this user');
     }
 
     try {

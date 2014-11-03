@@ -1,23 +1,16 @@
 <?php
 
-class UserField extends InputField {
+class UserField extends SelectField {
 
   public function __construct() {
-    $this->type        = 'text';
-    $this->icon        = 'user';
-    $this->label       = l::get('fields.user.label', 'User');
-    $this->placeholder = l::get('fields.user.placeholder', 'Username…');
-  }
+    $this->type    = 'text';
+    $this->icon    = 'user';
+    $this->label   = l::get('fields.user.label', 'User');
+    $this->options = array();
 
-  public function input() {
-
-    $input = parent::input();
-    $input->data(array(
-      'field' => 'autocomplete',
-      'url'   => panel()->urls()->api() . '/autocomplete/usernames'
-    ));
-
-    return $input;
+    foreach(kirby()->site()->users() as $user) {
+      $this->options[$user->username()] = $user->username();
+    }
 
   }
 

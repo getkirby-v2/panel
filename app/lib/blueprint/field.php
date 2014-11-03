@@ -35,7 +35,11 @@ class Field extends Obj {
 
   public function _default($default) {
 
-    if(empty($default)) {
+    if($default === true) {
+      return 'true';
+    } else if($default === false) {
+      return 'false';
+    } else if(empty($default)) {
       return '';
     } else if(is_string($default)) {
       return $default;

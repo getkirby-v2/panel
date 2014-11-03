@@ -2,6 +2,9 @@
 
 class Panel {
 
+  static public $version = '2.0.3';
+  static public $instance;
+
   public $kirby;
   public $site;
   public $path;
@@ -12,10 +15,12 @@ class Panel {
   public $language = null;
   public $languages = null;
 
-  static public $instance;
-
   static public function instance() {
     return static::$instance;
+  }
+
+  static public function version() {
+    return static::$version;
   }
 
   public function __construct($kirby, $dir) {
@@ -44,9 +49,13 @@ class Panel {
 
     // register router filters
     $this->router->filter('auth', function() use($kirby) {
-      if(!$kirby->site()->user()) {
+
+      $user = $kirby->site()->user();
+
+      if(!$user or !$user->hasPanelAccess()) {
+        if($user) $user->logout();
         go('panel/login');
-      }
+      } 
     });
 
     // check for a completed installation
@@ -91,12 +100,13 @@ class Panel {
 
       // panel stuff
       'api'          => $this->roots->lib . DS . 'api.php',
-      'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
-      'installation' => $this->roots->lib . DS . 'installation.php',
-      'form'         => $this->roots->lib . DS . 'form.php',
-      'fieldoptions' => $this->roots->lib . DS . 'fieldoptions.php',
       'assets'       => $this->roots->lib . DS . 'assets.php',
+      'fieldoptions' => $this->roots->lib . DS . 'fieldoptions.php',
+      'filedata'     => $this->roots->lib . DS . 'filedata.php',
+      'form'         => $this->roots->lib . DS . 'form.php',
       'history'      => $this->roots->lib . DS . 'history.php',
+      'installation' => $this->roots->lib . DS . 'installation.php',
+      'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
 
       // blueprint stuff
       'blueprint'         => $this->roots->lib . DS . 'blueprint.php',
@@ -212,7 +222,8 @@ class Panel {
 
       $action     = (isset($this->route->modal) and $this->route->modal) ? 'modal' : 'index';
       $controller = new ErrorsController;
-      $response   = call(array($controller, $action), array($e->getMessage()));
+      $message    = $e->getMessage() . ' in ' . $e->getFile() . ' on Line ' . $e->getLine();
+      $response   = call(array($controller, $action), array($message));
 
     }
 

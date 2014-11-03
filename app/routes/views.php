@@ -204,6 +204,10 @@ return array(
     'pattern' => 'views/errors/index',
     'action'  => 'views/ErrorsController::index',
   ),
+  array(
+    'pattern' => 'views/errors/modal',
+    'action'  => 'views/ErrorsController::modal',
+  ),
 
   array(
     'pattern' => '(:all)',

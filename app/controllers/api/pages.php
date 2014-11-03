@@ -60,11 +60,16 @@ class PagesController extends Controller {
             $page->sort($num);
           } else {
 
+            /* Needs a better alternative
             // update the slug
             if($data['title'] != $oldTitle) {
-              $uid = str::slug($data['title']);
-              $page->move($uid);
+              // only update the slug for movable pages
+              if(!$page->isErrorPage() and !$page->isHomePage()) {
+                $uid = str::slug($data['title']);
+                $page->move($uid);
+              }
             }
+            */
 
           }
 
@@ -172,6 +177,11 @@ class PagesController extends Controller {
 
     if(!$page) {
       return response::error(l('pages.error.missing'));
+    }
+
+    // avoid url changes for the home and error pages
+    if($page->isErrorPage() or $page->isHomePage()) {
+      return response::error('This page type\'s url cannot be changed');
     }
 
     try {

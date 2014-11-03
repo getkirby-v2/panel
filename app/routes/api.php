@@ -133,6 +133,7 @@ return array(
   array(
     'pattern' => 'api/(:all)',
     'action'  => 'api/ErrorsController::index',
+    'filter'  => 'auth',
   )
 
 );

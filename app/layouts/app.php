@@ -11,7 +11,7 @@
   <style><?php echo form::css() ?></style>
 
 </head>
-<body class="app">
+<body class="app" data-kirby-version="<?php echo kirby()->version() ?>" data-panel-version="<?php echo panel()->version() ?>">
 
   <div data-view="modal" class="modal"></div>
   <div data-view="main"  class="main"><i class="loader"></i></div>
