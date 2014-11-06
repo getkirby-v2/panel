@@ -44,7 +44,7 @@ class Form extends Brick {
 
       if($name == 'title') $field['type'] = 'title';
 
-      $name = str_replace('-','_', str::lower($name));
+      $name = str_replace('-','_', $name);
 
       $field['name']    = $name;
       $field['default'] = a::get($field, 'default', null);
