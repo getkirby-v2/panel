@@ -21,11 +21,11 @@ class UsersController extends Controller {
     $form = $this->form();
     $data = $form->toArray();
 
-    if($data['password'] !== $data['passwordConfirmation']) {
+    if($data['password'] !== $data['passwordconfirmation']) {
       return response::error(l('users.form.error.password.confirm'));
     }
 
-    unset($data['passwordConfirmation']);
+    unset($data['passwordconfirmation']);
 
     try {
       $user = $this->users()->create($data);
@@ -52,14 +52,14 @@ class UsersController extends Controller {
       $data = $form->toArray();
 
       if(str::length($data['password']) > 0) {
-        if($data['password'] !== $data['passwordConfirmation']) {
+        if($data['password'] !== $data['passwordconfirmation']) {
           return response::error(l('users.form.error.password.confirm'));
         }
       } else {
         unset($data['password']);
       }
 
-      unset($data['passwordConfirmation']);
+      unset($data['passwordconfirmation']);
 
       if($user->update($data)) {
         return response::success('success');

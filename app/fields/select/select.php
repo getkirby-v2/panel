@@ -35,9 +35,7 @@ class SelectField extends BaseField {
       'disabled'     => $this->disabled(),
     ));
 
-    if(!$this->required()) {
-      $select->append($this->option('', '', $this->value() == ''));
-    }
+    $select->append($this->option('', '', $this->value() == ''));
 
     if($this->readonly()) {
       $select->attr('tabindex', '-1');

@@ -58,20 +58,7 @@ class PagesController extends Controller {
 
           if($num > 0) {
             $page->sort($num);
-          } else {
-
-            /* Needs a better alternative
-            // update the slug
-            if($data['title'] != $oldTitle) {
-              // only update the slug for movable pages
-              if(!$page->isErrorPage() and !$page->isHomePage()) {
-                $uid = str::slug($data['title']);
-                $page->move($uid);
-              }
-            }
-            */
-
-          }
+          } 
 
         }
 
