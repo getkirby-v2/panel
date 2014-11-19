@@ -19,7 +19,10 @@ class Field extends Obj {
 
     if(a::get($params, 'name') == 'title') {
       $params['type']     = 'title';
-      $params['required'] = true;
+
+      if (!isset($params['required'])) {
+        $params['required'] = true;
+      }
     }
 
     if(empty($params['type'])) {
