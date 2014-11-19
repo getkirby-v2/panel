@@ -1,6 +1,7 @@
 <?php
 
 class DateField extends InputField {
+  public $override = false;
 
   static public $assets = array(
     'js' => array(
@@ -31,6 +32,10 @@ class DateField extends InputField {
   }
 
   public function value() {
+    if ($this->override()) {
+      $this->value = $this->default();
+    }
+
     return !empty($this->value) ? date('Y-m-d', strtotime($this->value)) : null;
   }
 
