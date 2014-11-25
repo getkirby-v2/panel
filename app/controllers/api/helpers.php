@@ -42,11 +42,16 @@ class HelpersController extends Controller {
             $template = get('template', $page->template());
             $pages    = site()->index()->filterBy('template', $template);
             break;
+          case 'pages':
           case 'all':
             $pages = site()->index();
             break;
           default:
-            $pages = site()->page($index)->children();
+            if($page = site()->page($index)) {
+              $pages = $page->children();
+            } else {
+              return response::json(array());
+            }
         }
         $result = $pages->pluck(get('field', 'tags'), get('separator', true), true);
         break;
