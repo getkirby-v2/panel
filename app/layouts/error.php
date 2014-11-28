@@ -4,7 +4,7 @@
 
     <?php echo $meta ?>
 
-    <title><?php __(site()->title() . ' | ' . l('error')) ?></title>
+    <title><?php __(r(!site()->title()->empty(), site()->title()) . ' | ' . l('error')) ?></title>
 
     <?php echo assets::css() ?>
 

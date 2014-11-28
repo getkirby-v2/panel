@@ -4,7 +4,7 @@
 
     <?php echo $meta ?>
 
-    <title><?php __(site()->title() . ' | Panel | ' . l('login')) ?></title>
+    <title><?php __(r(!site()->title()->empty(), site()->title()) . ' | Panel | ' . l('login')) ?></title>
 
     <?php echo assets::css() ?>
 
