@@ -230,7 +230,7 @@ return array (
     'fields.structure.delete' => 'Löschen',
     'fields.tags.label' => 'Tags',
     'fields.tel.label' => 'Telefon',
-    'fields.textarea.buttons.bold.label' => 'Fetter Tqext',
+    'fields.textarea.buttons.bold.label' => 'Fetter Text',
     'fields.textarea.buttons.bold.text' => 'Fetter Text',
     'fields.textarea.buttons.italic.label' => 'Kursiver Text',
     'fields.textarea.buttons.italic.text' => 'Kursiver Text',
