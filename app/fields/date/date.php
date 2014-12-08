@@ -6,7 +6,7 @@ class DateField extends InputField {
     'js' => array(
       'moment.min.js',
       'pikaday.min.js',
-      'date.min.js'
+      'date.js'
     ),
     'css' => array(
       'pikaday.css'
