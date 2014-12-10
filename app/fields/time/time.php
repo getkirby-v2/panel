@@ -1,6 +1,7 @@
 <?php
 
 class TimeField extends SelectField {
+  
   public $override = false;
   
   public function __construct() {
@@ -11,9 +12,9 @@ class TimeField extends SelectField {
 
   public function value() {
 
-	if ($this->override()) {
+    if($this->override()) {
       $value = $this->default();
-	} else {
+    } else {
       $value = parent::value();
     }
 
