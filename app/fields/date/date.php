@@ -2,6 +2,8 @@
 
 class DateField extends InputField {
 
+  public $override = false;
+
   static public $assets = array(
     'js' => array(
       'moment.min.js',
@@ -30,7 +32,10 @@ class DateField extends InputField {
     return v::date($this->result());
   }
 
-  public function value() {
+  public function value() {    
+    if($this->override()) {
+      $this->value = $this->default();
+    }
     return !empty($this->value) ? date('Y-m-d', strtotime($this->value)) : null;
   }
 
