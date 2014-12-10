@@ -27,6 +27,11 @@ class TextareaField extends InputField {
 
   }
 
+  public function result() {
+    // Convert all line-endings to UNIX format
+    return str_replace(array("\r\n", "\r"), "\n", parent::result());
+  }
+
   public function element() {
 
     $element = parent::element();

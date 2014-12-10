@@ -1,7 +1,9 @@
 <?php
 
 class TimeField extends SelectField {
-
+  
+  public $override = false;
+  
   public function __construct() {
     $this->icon     = 'clock-o';
     $this->interval = 60;
@@ -10,7 +12,11 @@ class TimeField extends SelectField {
 
   public function value() {
 
-    $value = parent::value();
+    if($this->override()) {
+      $value = $this->default();
+    } else {
+      $value = parent::value();
+    }
 
     if(empty($value)) {
       $time  = round(time() / ($this->interval * 60)) * ($this->interval * 60);
