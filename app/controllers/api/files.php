@@ -21,12 +21,13 @@ class FilesController extends Controller {
     ));
 
     if($file = $upload->file()) {
-
       if($file->extension() == 'txt') {
         $file->delete();
         return response::error('Txt files cannot be uploaded');
+      } else if($file->extension() == 'php' or in_array($file->mime(), f::$mimes['php'])) {
+        $file->delete();
+        return response::error('PHP files cannot be uploaded');
       }
-
       return response::success('success');
     } else {
       return response::error($upload->error()->getMessage());
