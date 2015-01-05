@@ -21,14 +21,13 @@ class FilesController extends Controller {
     ));
 
     if($file = $upload->file()) {
-      if($file->extension() == 'txt') {
+      try {
+        $this->checkUpload($file);
+        return response::success('success');
+      } catch(Exception $e) {
         $file->delete();
-        return response::error('Txt files cannot be uploaded');
-      } else if($file->extension() == 'php' or in_array($file->mime(), f::$mimes['php'])) {
-        $file->delete();
-        return response::error('PHP files cannot be uploaded');
+        return response::error($e->getMessage());
       }
-      return response::success('success');
     } else {
       return response::error($upload->error()->getMessage());
     }
@@ -48,8 +47,14 @@ class FilesController extends Controller {
       }
     ));
 
-    if($upload->file()) {
-      return response::success('success');
+    if($file = $upload->file()) {
+      try {
+        $this->checkUpload($file);
+        return response::success('success');
+      } catch(Exception $e) {
+        $file->delete();
+        return response::error($e->getMessage());
+      }
     } else {
       return response::error($upload->error()->getMessage());
     }
@@ -178,6 +183,24 @@ class FilesController extends Controller {
     } else {
       return false;
     }
+  }
+
+  protected function checkUpload($file) {
+
+    if($file->extension() == kirby()->option('content.file.extension')) {
+      throw new Exception('Content files cannot be uploaded');
+    } else if(strtolower($file->extension()) == 'php' or in_array($file->mime(), f::$mimes['php'])) {
+      throw new Exception('PHP files cannot be uploaded');
+    } else if(strtolower($file->extension()) == 'html' or $file->mime() == 'text/html') {
+      throw new Exception('HTML files cannot be uploaded');
+    } else if(strtolower($file->extension()) == 'exe' or $file->mime() == 'application/x-msdownload') {
+      throw new Exception('EXE files cannot be uploaded');
+    } else if(strtolower($file->filename()) == '.htaccess') {
+      throw new Exception('htaccess files cannot be uploaded');
+    } else if(str::startsWith($file->filename(), '.')) {
+      throw new Exception('Invisible files cannot be uploaded');
+    }
+    
   }
 
 }
