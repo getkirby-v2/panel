@@ -187,7 +187,7 @@ class FilesController extends Controller {
 
   protected function checkUpload($file) {
 
-    if($file->extension() == kirby()->option('content.file.extension')) {
+    if(strtolower($file->extension()) == kirby()->option('content.file.extension', 'txt')) {
       throw new Exception('Content files cannot be uploaded');
     } else if(strtolower($file->extension()) == 'php' or in_array($file->mime(), f::$mimes['php'])) {
       throw new Exception('PHP files cannot be uploaded');
