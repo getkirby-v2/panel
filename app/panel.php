@@ -32,6 +32,9 @@ class Panel {
     $this->roots = new Panel\Roots($dir);
     $this->urls  = new Panel\Urls($kirby->urls()->index() . '/' . basename($dir));
 
+    // load all Kirby extensions (methods, tags, smartypants)
+    $this->kirby->extensions();
+
     $this->load();
 
     // load all available routes
