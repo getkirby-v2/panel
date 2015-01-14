@@ -61,6 +61,21 @@ class FieldOptions {
       $this->options = array();
     }
 
+    // sorting
+
+    if(!empty($this->field->sort)) {
+
+      switch(strtolower($this->field->sort)) {
+        case 'asc':
+          asort($this->options);
+          break;
+        case 'desc':
+          arsort($this->options);
+          break;
+      }
+
+    }
+
   }
 
   protected function tpl($string, $obj) {
