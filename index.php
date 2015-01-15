@@ -1,6 +1,6 @@
 <?php
 
-define('DS', DIRECTORY_SEPARATOR);
+if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
 // fetch the site's index directory
 $index = dirname(__DIR__);
