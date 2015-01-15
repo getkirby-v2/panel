@@ -310,3 +310,7 @@ a.tag {
     display: none;
   }
 }
+
+#form-field-username {
+  text-transform: lowercase;
+}

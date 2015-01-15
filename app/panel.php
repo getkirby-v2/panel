@@ -2,7 +2,7 @@
 
 class Panel {
 
-  static public $version = '2.0.5';
+  static public $version = '2.0.6';
   static public $instance;
 
   public $kirby;
@@ -31,6 +31,9 @@ class Panel {
     $this->site  = $kirby->site();
     $this->roots = new Panel\Roots($dir);
     $this->urls  = new Panel\Urls($kirby->urls()->index() . '/' . basename($dir));
+
+    // load all Kirby extensions (methods, tags, smartypants)
+    $this->kirby->extensions();
 
     $this->load();
 
@@ -125,9 +128,21 @@ class Panel {
     $root      = $this->roots()->languages();
 
     foreach(dir::read($root) as $file) {
-      $language = new Obj(require($root . DS . $file));
+
+      // skip invalid language files
+      if(f::extension($file) != 'php') continue;
+
+      // fetch all strings from the language file
+      $strings = require($root . DS . $file);
+
+      // skip invalid language files
+      if(!is_array($strings)) continue;
+
+      // create the language object
+      $language = new Obj($strings);
       $language->code = str_replace('.php', '', $file);
       $languages->set($language->code, $language);
+    
     }
 
     return $languages;

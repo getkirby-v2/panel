@@ -74,11 +74,12 @@ class Form extends Brick {
 
     foreach($this->fields() as $field) {
 
-      $name = $field->name();
+      $name  = $field->name();
+      $value = $this->value($name);
 
-      if($field->required() and is_null($this->value($name))) {
+      if($field->required() and empty($value)) {
         $field->error = true;
-      } else if($this->value($name) != '' and !$field->validate()) {
+      } else if($value != '' and !$field->validate()) {
         $field->error = true;
       }
 

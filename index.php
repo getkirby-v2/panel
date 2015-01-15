@@ -30,6 +30,16 @@ if(!isset($kirby->roots->index)) {
   $kirby->roots->index = $index;
 }
 
+// the default avatar directory
+if(!isset($kirby->roots->avatars)) {
+  $kirby->roots->avatars = $index . DS . 'assets' . DS . 'avatars';
+}
+
+// the default thumbs directory
+if(!isset($kirby->roots->thumbs)) {
+  $kirby->roots->thumbs = $index . DS . 'thumbs';
+}
+
 // create the panel object
 $panel = new Panel($kirby, __DIR__);
 
