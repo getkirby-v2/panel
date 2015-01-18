@@ -9,10 +9,10 @@ class FilesController extends Controller {
       'overwrite' => true,
       'accept'    => function($file) {
 
-        $callback = kirby()->option('panel.upload.accept');
+        $callbackAccept = kirby()->option('panel.upload.accept');
 
-        if(is_callable($callback)) {
-          return call($callback, $file);
+        if(is_callable($callbackAccept)) {
+          return call($callbackAccept, $file);
         } else {
           return true;
         }
@@ -23,11 +23,23 @@ class FilesController extends Controller {
     if($file = $upload->file()) {
       try {
         $this->checkUpload($file);
-        return response::success('success');
       } catch(Exception $e) {
         $file->delete();
         return response::error($e->getMessage());
       }
+
+      $callbackPost = kirby()->option('panel.upload.post');
+
+      if(is_callable($callbackPost) && $page = $this->page($id)) {
+        $page->reset();
+
+        call($callbackPost, array(
+          $page->file($file->filename()),
+          $upload->source()
+        ));
+      }
+
+      return response::success('success');
     } else {
       return response::error($upload->error()->getMessage());
     }
