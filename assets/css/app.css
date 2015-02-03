@@ -124,7 +124,7 @@ body.loading:before {
 */
 * {
   font-size: 100%;
-  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Source Sans Pro", "Apple LiGothic Medium", "Microsoft JhengHei UI", "Helvetica Neue", Arial, sans-serif;
 }
 
 .light {
