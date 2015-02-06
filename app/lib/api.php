@@ -62,12 +62,8 @@ class Api {
         $pages = $pages->flip();
         break;
       default;
-
         $parts = str::split($blueprint->pages()->sort(), ' ');
-        if(count($parts) > 2) {
-          $pages = call_user_func_array(array($pages, 'sortBy'), $parts);
-        }
-
+        $pages = call_user_func_array(array($pages, 'sortBy'), $parts);
         break;
     }
 
