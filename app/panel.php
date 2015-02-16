@@ -2,7 +2,7 @@
 
 class Panel {
 
-  static public $version = '2.0.6';
+  static public $version = '2.0.7';
   static public $instance;
 
   public $kirby;

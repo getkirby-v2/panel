@@ -161,9 +161,13 @@ class Form extends Brick {
       $name = strtolower($file) . 'field';
 
       if(isset(static::$root['custom']) and is_dir(static::$root['custom'] . DS . $file)) {
-        static::$files[$name] = static::$root['custom'] . DS . $file . DS . $file . '.php';
+        $root = static::$root['custom'] . DS . $file . DS . $file . '.php';
       } else {
-        static::$files[$name] = static::$root['default'] . DS . $file . DS . $file . '.php';
+        $root = static::$root['default'] . DS . $file . DS . $file . '.php';
+      }
+
+      if(file_exists($root)) {
+        static::$files[$name] = $root;        
       }
 
     }
