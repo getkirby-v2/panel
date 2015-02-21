@@ -53,6 +53,7 @@ class SubpagesController extends Controller {
       'addbutton'           => !api::maxPages($page, $blueprint->pages()->max()) and $page->hasChildren(),
       'sortable'            => $blueprint->pages()->sortable(),
       'visible'             => $visible,
+      'flip'                => $blueprint->pages()->sort() == 'flip',
       'visiblePagination'   => $visiblePagination,
       'invisible'           => $invisible,
       'invisiblePagination' => $invisiblePagination,

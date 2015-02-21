@@ -8,8 +8,9 @@ var PageModel = {
   delete : function(uri, done, fail) {
     $http.post('pages/delete/' + uri, {}, done, fail);
   },
-  sort : function(uri, index, uids, done, fail) {
-    $http.post('pages/sort/' + uri, {index: index, uids : uids}, done, fail);
+  sort : function(uri, id, to, done, fail) {
+    var uri = uri ? uri + '/' + id : id;
+    $http.post('pages/sort/' + uri, {to: to}, done, fail);
   },
   hide : function(uri, uid, done, fail) {
     $http.post('pages/hide/' + uri + '/' + uid, {}, done, fail);

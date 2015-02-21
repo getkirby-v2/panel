@@ -32,7 +32,7 @@
       <h3><a href="<?php echo $baseurl . '/visible:1/invisible:' . $invisible->pagination()->page() ?>"><?php _l('subpages.index.visible') ?></a></h3>
 
       <div class="dropzone subpages">
-        <div class="items<?php e($sortable, ' sortable') ?>" id="visible-children">
+        <div class="items<?php e($sortable, ' sortable') ?>" data-flip="<?php echo $flip ?>" data-start="<?php echo $visible->pagination()->numStart() ?>" data-total="<?php echo $visible->pagination()->items() ?>" id="visible-children">
 
           <?php foreach($visible as $subpage): ?>
           <?php echo new Snippet('subpages/subpage', array('subpage' => $subpage)) ?>

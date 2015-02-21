@@ -1309,10 +1309,32 @@ var SubpagesController = {
 
       element.find('.sortable').sortable({
         connectWith: '.sortable',
-        update: function() {
-          if($(this).attr('id') == 'visible-children') {
+        update: function(e, ui) {
 
-            PageModel.sort(uri, visiblePage, $(this).sortable('toArray'), function() {
+          var $this = $(this);
+
+          if($this.attr('id') == 'visible-children') {
+
+            var start = parseInt($this.data('start'));
+            var total = $this.data('total');
+            var flip  = $this.data('flip');
+            var index = $this.find('.item').index(ui.item);
+            var id    = ui.item.attr('id');
+
+            if(flip == '1') {
+              // if this is an invisible element the 
+              // total number of items in the visible list has
+              // to be adjusted to get the right result for the
+              // sorting number
+              if(ui.sender && ui.sender.attr('id') == 'invisible-children') {
+                total++;
+              }
+              var to = total - start - index + 1;
+            } else {
+              var to = index + start;              
+            }
+  
+            PageModel.sort(uri, id, to, function() {
               app.main.data('current', false);
               routie.reload();
             });
@@ -1583,8 +1605,9 @@ var PageModel = {
   delete : function(uri, done, fail) {
     $http.post('pages/delete/' + uri, {}, done, fail);
   },
-  sort : function(uri, index, uids, done, fail) {
-    $http.post('pages/sort/' + uri, {index: index, uids : uids}, done, fail);
+  sort : function(uri, id, to, done, fail) {
+    var uri = uri ? uri + '/' + id : id;
+    $http.post('pages/sort/' + uri, {to: to}, done, fail);
   },
   hide : function(uri, uid, done, fail) {
     $http.post('pages/hide/' + uri + '/' + uid, {}, done, fail);

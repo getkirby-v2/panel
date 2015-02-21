@@ -81,14 +81,16 @@ class PagesController extends Controller {
 
   public function delete($id) {
 
-    $page = $this->page($id);
-
-    if(!$page) {
+    if($page = $this->page($id)) {
+      $parent = $page->parent();
+    } else {
       return response::error(l('pages.error.missing'));
     }
 
+    $subpages = new Subpages($parent);
+
     try {
-      $page->delete();
+      $subpages->delete($page);
       return response::success('success');
     } catch(Exception $e) {
       return response::error($e->getMessage());
@@ -98,59 +100,33 @@ class PagesController extends Controller {
 
   public function sort($id = '') {
 
-    $page      = $this->page($id);
-    $blueprint = blueprint::find($page);
-    $uids      = get('uids');
-    $flip      = $blueprint->pages()->sort() == 'flip';
-    $children  = $page->children();
-
-    if($flip) {
-      $index = get('index', 1);
-      $uids  = array_reverse($uids);
-      $n     = $page->children()->visible()->count() - ($index * $blueprint->pages()->limit() - 1);
-
-      if($n <= 0) $n = 1;
-
+    if($page = $this->page($id)) {
+      $parent = $page->parent();
     } else {
-      $index = (get('index', 1) - 1);
-      $n     = (($blueprint->pages()->limit() * $index) + 1);
+      return response::error(l('pages.error.missing'));
     }
 
-    foreach($uids as $uid) {
+    $subpages = new Subpages($parent);
+    $num      = $subpages->sort($page, get('to'));
 
-      try {
-
-        $child = $children->find($uid);
-        $x     = api::createPageNum($child, $blueprint);
-
-        if($x !== false and $x >= 0) {
-          $child->sort($x);
-        } else {
-          $child->sort($n);
-        }
-
-        $n++;
-
-      } catch(Exception $e) {
-
-      }
-
-    }
-
-    return response::success('success');
+    return response::success('The page has been sorted', array(
+      'num' => $num
+    ));
 
   }
 
   public function hide($id) {
 
-    $page = $this->page($id);
-
-    if(!$page) {
+    if($page = $this->page($id)) {
+      $parent = $page->parent();
+    } else {
       return response::error(l('pages.error.missing'));
     }
 
+    $subpages = new Subpages($parent);
+
     try {
-      $page->hide();
+      $subpages->hide($page);
       return response::success('success');
     } catch(Exception $e) {
       return response::error($e->getMessage());

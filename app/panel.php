@@ -110,6 +110,7 @@ class Panel {
       'history'      => $this->roots->lib . DS . 'history.php',
       'installation' => $this->roots->lib . DS . 'installation.php',
       'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
+      'subpages'     => $this->roots->lib . DS . 'subpages.php',
 
       // blueprint stuff
       'blueprint'         => $this->roots->lib . DS . 'blueprint.php',

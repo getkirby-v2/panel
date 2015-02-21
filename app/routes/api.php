@@ -32,7 +32,7 @@ return array(
   array(
     'pattern' => 'api/pages/sort/(:all?)',
     'action'  => 'api/PagesController::sort',
-    'method'  => 'POST',
+    'method'  => 'GET|POST',
     'filter'  => 'auth',
   ),
   array(
