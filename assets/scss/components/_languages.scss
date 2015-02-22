@@ -1,0 +1,37 @@
+.languages {
+  position: absolute;
+  top: 0;
+  right: 4em;
+  width: 4.5em;
+  bottom: 0;
+  border-left: 1px solid #555;
+  text-align: center;
+  background: #000;
+  z-index: 100;
+}
+.languages-toggle {
+  display: block;
+  color: #fff;
+  line-height: 3em;
+  text-transform: uppercase;
+}
+.languages-toggle span {
+  position: relative;
+  padding-right: 1.25em;
+}
+.languages-toggle span:after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  content: "";
+  border-top: .3em solid #fff;
+  border-left: .3em solid transparent;
+  border-right: .3em solid transparent;
+}
+.languages .dropdown {
+  width: 100%;
+}
+.languages .dropdown:after {
+  left: 50%;
+  margin-left: -.5em;
+}

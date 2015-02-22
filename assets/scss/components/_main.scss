@@ -1,0 +1,30 @@
+.main {
+  height: 100%;
+}
+.main .loader {
+  display: none;
+}
+.main .loader:after {
+  position: fixed;
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 3em;
+  height: 3em;
+  margin-top: -1.5em;
+  margin-left: -1.5em;
+  background: #fff url(../images/loader.black.gif) no-repeat center center;
+  border-radius: 50%;
+  z-index: 10000000;
+}
+@media screen and (min-width: 50em) {
+  .mainbar .form {
+    padding: 0 1.5em 6em 1.5em;
+  }
+}
+.mainbar .form .message {
+  margin: 1.5em 0 3em;
+}
+.mainbar .form .message-content {
+  border-radius: 3px;
+}

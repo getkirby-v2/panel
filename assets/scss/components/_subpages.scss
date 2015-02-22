@@ -1,0 +1,56 @@
+.subpages {
+  padding: .25em;
+  margin-bottom: 1em;
+}
+.subpages .item {
+  margin-bottom: .25em;
+}
+.dropzone.subpages .items {
+  min-height: 2.5em;
+}
+.subpages .items.sortable .item-info {
+  cursor: move;
+}
+.subpages-grid .grid-item {
+  margin-bottom: 1.5em;
+}
+.subpages-grid h3 {
+  margin-bottom: 1em;
+  font-weight: 400;
+  color: #777;
+}
+@media screen and (min-width: 50em) {
+  .subpages .item {
+    margin-bottom: 1px;
+  }
+  .subpages-grid .grid-item {
+    width: 50%;
+  }
+}
+
+/* Subpages Help */
+.subpages-help {
+  position: relative;
+  font-style: italic;
+}
+.subpages-help:after {
+  position: absolute;
+  content: "";
+  top: -1.5em;
+  height: 6em;
+  width: 3em;
+}
+.subpages-help-right {
+  padding-right: 3em;
+}
+.subpages-help-right:after {
+  right: 0;
+  background: url(../images/hint.arrows.png) no-repeat top right;
+}
+.subpages-help-left {
+  padding-left: 3em;
+}
+.subpages-help-left:after {
+  left: 0;
+  background: url(../images/hint.arrows.png) no-repeat top left;
+}
