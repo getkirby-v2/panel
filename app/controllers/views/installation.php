@@ -34,7 +34,10 @@ class InstallationController extends Controller {
           $data['role'] = 'admin';
 
           // try to create the new user
-          panel()->site()->users()->create($data);
+          $user = panel()->site()->users()->create($data);
+
+          // store the new username for the login screen
+          s::set('username', $user->username());
 
           // redirect to the login
           go(panel()->urls()->login() . '/welcome');

@@ -3,7 +3,7 @@
 return array(
   'title' => 'Español (América Latina)',
   'author' => 'Iván Soria <invasoria@gmail.com>',
-  'version' => '1.0.0',
+  'version' => '1.0.2',
   'data' => array(
 
     // global
@@ -52,6 +52,7 @@ return array(
     // dashboard
     'dashboard' => 'Inicio',
     'dashboard.index.pages.title' => 'Páginas',
+    'dashboard.index.pages.edit' => 'Editar',
     'dashboard.index.pages.add' => 'Agregar',
     'dashboard.index.site.title' => 'URL de tu sitio',
     'dashboard.index.account.title' => 'Tu cuenta',
@@ -71,9 +72,11 @@ return array(
     'pages.show.changeurl' => 'Cambiar URL',
     'pages.show.delete' => 'Eliminar esta página',
     'pages.show.subpages.title' => 'Páginas',
+    'pages.show.subpages.edit' => 'Editar',
     'pages.show.subpages.add' => 'Agregar',
     'pages.show.subpages.empty' => 'Esta página no posee subpáginas',
     'pages.show.files.title' => 'Archivos',
+    'pages.show.files.edit' => 'Editar',
     'pages.show.files.add' => 'Agregar',
     'pages.show.files.empty' => 'Esta página no contiene archivos',
     'pages.show.error.permissions.title' => 'Esta página no es modificable',
@@ -172,7 +175,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Confirmar la nueva contraseña',
     'users.form.password.new.help' => 'Dejar en blanco para mantener la misma contraseña',
     'users.form.language.label' => 'Idioma',
-    'users.form.role.label' => 'Role',
+    'users.form.role.label' => 'Rol',
     'users.form.options.headline' => 'Opciones de cuenta',
     'users.form.options.message' => 'Enviar email',
     'users.form.options.delete' => 'Eliminar cuenta',

@@ -40,14 +40,24 @@ class EditorController extends Controller {
 
   }
 
-  public function structure($id, $field) {
+  public function structure($id, $fieldName) {
 
     $page = empty($id) ? site() : page($id);
 
     if(!$page) throw new Exception('The page could not be found');
 
     $blueprint  = blueprint::find($page);
-    $field      = $blueprint->fields()->get($field);
+    $field      = null;
+
+    // make sure to get fields by case insensitive field names
+    foreach($blueprint->fields() as $f) {
+      if(strtolower($f->name) == strtolower($fieldName)) {
+        $field = $f;
+      }
+    }
+
+    if(!$field) throw new Exception('The field could not be found');
+
     $fields     = new Blueprint\Fields($field->fields(), $page);
     $fields     = $fields->toArray();
 

@@ -44,9 +44,11 @@ class Form extends Brick {
 
       if($name == 'title') $field['type'] = 'title';
 
+      $name = str_replace('-','_', str::lower($name));
+
       $field['name']    = $name;
       $field['default'] = a::get($field, 'default', null);
-      $field['value']   = a::get($this->values(), str::lower($name), $field['default']);
+      $field['value']   = a::get($this->values(), $name, $field['default']);
 
       $this->fields->append($name, static::field($field['type'], $field));
 
@@ -72,11 +74,12 @@ class Form extends Brick {
 
     foreach($this->fields() as $field) {
 
-      $name = $field->name();
+      $name  = $field->name();
+      $value = $this->value($name);
 
-      if($field->required() and is_null($this->value($name))) {
+      if($field->required() and empty($value)) {
         $field->error = true;
-      } else if($this->value($name) != '' and !$field->validate()) {
+      } else if($value != '' and !$field->validate()) {
         $field->error = true;
       }
 

@@ -3,9 +3,14 @@
     <a href="<?php _u('files/index/' . $page->id()) ?>"><?php _l('pages.show.files.title') ?></a>
   </span>
   <span class="hgroup-options shiv shiv-dark shiv-left">
-    <a title="f" data-shortcut="f" class="hgroup-option-right" href="<?php _u($page, 'upload') ?>">
-      <?php i('plus-circle', 'left') . _l('pages.show.files.add') ?>
-    </a>
+    <span class="hgroup-option-right">
+      <a title="<?php _l('pages.show.files.edit') ?>" href="<?php _u('files/index/' . $page->id()) ?>">
+        <?php i('pencil', 'left') ?><span><?php _l('pages.show.files.edit') ?></span>
+      </a>
+      <a title="f" data-shortcut="f" href="<?php _u($page, 'upload') ?>">
+        <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.files.add') ?></span>
+      </a>
+    </span>
   </span>
 </h2>
 

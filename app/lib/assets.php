@@ -18,15 +18,34 @@ class Assets {
   static public function js() {
 
     $files = array(
-      'lib/handlebars.js',
-      'lib/routie.js',
-      'lib/dropzone.js',
-      'lib/jquery.js',
-      'lib/jquery.hotkeys.js',
-      'lib/jquery.ui.js',
-      'lib/jquery.ui.touch.js',
-      'lib/jquery.autocomplete.js',
-      'lib/kirby.js',
+      // vendors
+      'vendors/handlebars.js',
+      'vendors/routie.js',
+      'vendors/dropzone.js',
+      'vendors/jquery.js',
+      'vendors/jquery.hotkeys.js',
+      'vendors/jquery.ui.js',
+      'vendors/jquery.ui.touch.js',
+      'vendors/jquery.autocomplete.js',
+      'vendors/jquery.editorHelpers.js',
+      'vendors/jquery.serializeObject.js',
+      'vendors/jquery.view.js',
+      'vendors/http.js',
+
+      // panel
+      'panel/views.js',
+      'panel/shortcuts.js',
+      'panel/slug.js',
+
+      // components
+      'components/breadcrumb.js',
+      'components/dropdown.js',
+      'components/dropzone.js',
+      'components/form.js',
+      'components/message.js',
+      'components/sidebar.js',
+
+      // controllers
       'controllers/users.js',
       'controllers/pages.js',
       'controllers/metatags.js',
@@ -35,9 +54,15 @@ class Assets {
       'controllers/files.js',
       'controllers/errors.js',
       'controllers/editor.js',
-      'models.js',
-      'routes.js',
-      'setup.js',
+      
+      // models
+      'models/page.js',
+      'models/file.js',
+      'models/user.js',
+
+      // config
+      'config/routes.js',
+      'config/config.js',
     );
 
     return static::combine('js', $files);

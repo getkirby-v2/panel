@@ -20,7 +20,7 @@
 
     </nav>
 
-    <?php if(in_array($f->extension(), array('jpg', 'jpeg', 'gif', 'png'))): ?>
+    <?php if(in_array($f->extension(), array('jpg', 'jpeg', 'gif', 'png')) and $f->width() < 2000 and $f->height() < 2000): ?>
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($f->url()) ?>">
       <i style="background-image: url(<?php __($f->url() . '?' . $f->modified()) ?>); max-width: <?php echo $f->width() ?>px; max-height: <?php echo $f->height() ?>px;"></i>
     </a>

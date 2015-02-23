@@ -20,11 +20,14 @@
       </li>
       <?php endif ?>
 
+      <?php if(!$page->isHomePage() and !$page->isErrorPage()): ?>
       <li>
         <a title="u" data-shortcut="u" href="<?php echo purl($page, 'url') ?>">
           <?php i('chain', 'left') . _l('pages.show.changeurl') ?>
         </a>
       </li>
+      <?php endif; ?>
+
       <?php if($deletable): ?>
       <li>
         <a title="#" data-shortcut="#" href="<?php echo purl($page, 'delete') ?>">

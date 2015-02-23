@@ -13,7 +13,6 @@ class TagsField extends TextField {
     $this->icon      = 'tag';
     $this->label     = l::get('fields.tags.label', 'Tags');
     $this->index     = 'siblings';
-    $this->field     = 'tags';
     $this->separator = ',';
     $this->lower     = false;
 
@@ -35,10 +34,12 @@ class TagsField extends TextField {
 
     } else if($page = $this->page()) {
 
+      empty($this->field) ? $field = $this->name() : $field = $this->field;
+
       $query = array(
         'uri'       => $page->id(),
         'index'     => $this->index(),
-        'field'     => $this->field(),
+        'field'     => $field,
         'separator' => $this->separator()
       );
 

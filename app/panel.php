@@ -2,7 +2,7 @@
 
 class Panel {
 
-  static public $version = '2.0.0';
+  static public $version = '2.0.6';
   static public $instance;
 
   public $kirby;
@@ -32,6 +32,9 @@ class Panel {
     $this->roots = new Panel\Roots($dir);
     $this->urls  = new Panel\Urls($kirby->urls()->index() . '/' . basename($dir));
 
+    // load all Kirby extensions (methods, tags, smartypants)
+    $this->kirby->extensions();
+
     $this->load();
 
     // load all available routes
@@ -49,9 +52,13 @@ class Panel {
 
     // register router filters
     $this->router->filter('auth', function() use($kirby) {
-      if(!$kirby->site()->user()) {
+
+      $user = $kirby->site()->user();
+
+      if(!$user or !$user->hasPanelAccess()) {
+        if($user) $user->logout();
         go('panel/login');
-      }
+      } 
     });
 
     // check for a completed installation
@@ -121,9 +128,21 @@ class Panel {
     $root      = $this->roots()->languages();
 
     foreach(dir::read($root) as $file) {
-      $language = new Obj(require($root . DS . $file));
+
+      // skip invalid language files
+      if(f::extension($file) != 'php') continue;
+
+      // fetch all strings from the language file
+      $strings = require($root . DS . $file);
+
+      // skip invalid language files
+      if(!is_array($strings)) continue;
+
+      // create the language object
+      $language = new Obj($strings);
       $language->code = str_replace('.php', '', $file);
       $languages->set($language->code, $language);
+    
     }
 
     return $languages;
@@ -218,7 +237,8 @@ class Panel {
 
       $action     = (isset($this->route->modal) and $this->route->modal) ? 'modal' : 'index';
       $controller = new ErrorsController;
-      $response   = call(array($controller, $action), array($e->getMessage()));
+      $message    = $e->getMessage() . ' in ' . $e->getFile() . ' on Line ' . $e->getLine();
+      $response   = call(array($controller, $action), array($message));
 
     }
 

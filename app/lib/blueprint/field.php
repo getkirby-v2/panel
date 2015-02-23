@@ -18,8 +18,11 @@ class Field extends Obj {
   public function __construct($params = array()) {
 
     if(a::get($params, 'name') == 'title') {
-      $params['type']     = 'title';
-      $params['required'] = true;
+      $params['type'] = 'title';
+
+      if(!isset($params['required'])) {
+        $params['required'] = true;
+      }
     }
 
     if(empty($params['type'])) {

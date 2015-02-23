@@ -76,8 +76,8 @@ class Blueprint extends Obj {
 
     $files  = dir::read(static::$root);
     $result = array();
-    $home   = site()->homePage()->uid();
-    $error  = site()->errorPage()->uid();
+    $home   = kirby()->option('home', 'home');
+    $error  = kirby()->option('error', 'error');
 
     foreach($files as $file) {
 

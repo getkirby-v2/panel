@@ -12,7 +12,7 @@ class UrlField extends InputField {
   }
 
   public function validate() {
-    return filter_var($this->value(), FILTER_VALIDATE_URL);
+    return v::url($this->value());
   }
 
 }

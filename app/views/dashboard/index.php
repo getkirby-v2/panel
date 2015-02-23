@@ -11,9 +11,14 @@
           <a href="#/subpages/index/"><?php _l('dashboard.index.pages.title') ?></a>
         </span>
         <span class="hgroup-options shiv shiv-dark shiv-left">
-          <a title="+" data-shortcut="+" class="hgroup-option-right" href="#/pages/add/">
-            <?php i('plus-circle', 'left') . _l('dashboard.index.pages.add') ?>
-          </a>
+          <span class="hgroup-option-right">
+            <a title="<?php _l('dashboard.index.pages.edit') ?>" href="#/subpages/index/">
+              <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.pages.edit') ?></span>
+            </a>
+            <a title="+" data-shortcut="+" href="#/pages/add/">
+              <?php i('plus-circle', 'left') ?><span><?php _l('dashboard.index.pages.add') ?></span>
+            </a>
+          </span>
         </span>
       </h2>
 
@@ -53,9 +58,11 @@
           <a href="<?php _u($user, 'edit') ?>"><?php _l('dashboard.index.account.title') ?></a>
         </span>
         <span class="hgroup-options shiv shiv-dark shiv-left">
-          <a class="hgroup-option-right" href="<?php _u($user, 'edit') ?>">
-            <?php i('pencil', 'left') . _l('dashboard.index.account.edit') ?>
-          </a>
+          <span class="hgroup-option-right">
+            <a href="<?php _u($user, 'edit') ?>">
+              <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.account.edit') ?></span>
+            </a>
+          </span>
         </span>
       </h2>
 
@@ -105,9 +112,11 @@
           <a href="#/metatags/"><?php _l('dashboard.index.metatags.title') ?></a>
         </span>
         <span class="hgroup-options shiv shiv-dark shiv-left">
-          <a class="hgroup-option-right" href="#/metatags/">
-            <?php i('pencil', 'left') . _l('dashboard.index.metatags.edit') ?>
-          </a>
+          <span class="hgroup-option-right">
+            <a href="#/metatags/">
+              <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.metatags.edit') ?></span>
+            </a>
+          </span>
         </span>
       </h2>
 

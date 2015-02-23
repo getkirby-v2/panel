@@ -2,13 +2,18 @@
   <span class="hgroup-title">
     <a href="<?php _u('subpages/index/' . $page->id()) ?>"><?php __($title) ?></a>
   </span>
-  <?php if($addbutton): ?>
   <span class="hgroup-options shiv shiv-dark shiv-left">
-    <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php _u($page, 'add') ?>">
-      <?php i('plus-circle', 'left') . _l('pages.show.subpages.add') ?>
-    </a>
+    <span class="hgroup-option-right">
+      <a title="<?php _l('pages.show.subpages.edit') ?>" href="<?php _u('subpages/index/' . $page->id()) ?>">
+        <?php i('pencil', 'left') ?><span><?php _l('pages.show.subpages.edit') ?></span>
+      </a>
+      <?php if($addbutton): ?>
+      <a title="+" data-shortcut="+" href="<?php _u($page, 'add') ?>">
+        <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.subpages.add') ?></span>
+      </a>
+      <?php endif ?>
+    </span>
   </span>
-  <?php endif ?>
 </h2>
 
 <?php if($subpages->count()): ?>

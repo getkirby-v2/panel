@@ -7,11 +7,29 @@ class NumberField extends InputField {
     $this->type        = 'number';
     $this->label       = l::get('fields.number.label', 'Number');
     $this->placeholder = l::get('fields.number.placeholder', '#');
+    $this->step        = 1;
+    $this->min         = 0;
+    $this->max         = false;
 
   }
 
+  public function input() {
+    $input = parent::input();
+    $input->attr('step', $this->step);
+    $input->attr('min', $this->min);
+    $input->attr('max', $this->max);
+    return $input;
+  }
+
   public function validate() {
-    return v::num($this->result());
+
+    if(!v::num($this->result())) return false;
+
+    if($this->min and !v::min($this->result(), $this->min)) return false;
+    if($this->max and !v::max($this->result(), $this->max)) return false;
+
+    return true;
+
   }
 
 }
