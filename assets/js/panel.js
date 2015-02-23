@@ -185,14 +185,18 @@ this.Handlebars=function(){var a=function(){"use strict";function a(a){this.stri
       }
 
       if(!self.cache) {
+        if (data = localStorage.getItem(self.url))
+            callback(JSON.parse(data))
         $.getJSON(self.url, function(data) {
           self.cache = data;
           callback(data);
+          // store only if request is not page-specific
+          if (!self.url.match(/[\?&]uri=/))
+            localStorage.setItem(self.url, JSON.stringify(data))
         });
+      } else {
+          return callback(self.cache);   
       }
-
-      return callback(self.cache);
-
     };
 
     this.add = function(value) {

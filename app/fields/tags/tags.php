@@ -34,15 +34,20 @@ class TagsField extends TextField {
 
     } else if($page = $this->page()) {
 
-      empty($this->field) ? $field = $this->name() : $field = $this->field;
+      $field = empty($this->field) ? $this->name() : $this->field;
 
       $query = array(
-        'uri'       => $page->id(),
         'index'     => $this->index(),
         'field'     => $field,
         'separator' => $this->separator()
       );
 
+      if (!empty($this->template)) {
+          $query['template'] = $this->template;
+      }
+      if(empty($this->template) && $this->index() != "all") {
+          $query['id'] = $page->id();
+      }
       $input->data('url', panel()->urls()->api() . '/autocomplete/field?' . http_build_query($query));
 
     }
