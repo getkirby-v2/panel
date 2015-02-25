@@ -15,6 +15,7 @@ return array(
     'pattern' => 'login/(:any?)',
     'action'  => 'views/AuthController::login',
     'filter'  => 'isInstalled',
+    'method'  => 'GET|POST'
   ),
   array(
     'pattern' => 'logout',

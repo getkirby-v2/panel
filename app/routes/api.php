@@ -3,13 +3,6 @@
 // register all available routes
 return array(
 
-  // Authentication
-  array(
-    'pattern' => 'api/auth/login',
-    'action'  => 'api/AuthController::login',
-    'method'  => 'POST',
-  ),
-
   // Pages
   array(
     'pattern' => 'api/pages/create/(:all?)',
