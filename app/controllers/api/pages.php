@@ -115,6 +115,27 @@ class PagesController extends Controller {
 
   }
 
+  public function publish($id) {
+
+    if($page = $this->page($id)) {
+      $parent = $page->parent();
+    } else {
+      return response::error(l('pages.error.missing'));
+    }
+
+    if($page->isErrorPage()) {
+      return response::error('The error page cannot be published');
+    }
+
+    $subpages = new Subpages($parent);
+    $num      = $subpages->sort($page, 'last');
+
+    return response::success('The page has been sorted', array(
+      'num' => $num
+    ));
+
+  }
+
   public function hide($id) {
 
     if($page = $this->page($id)) {

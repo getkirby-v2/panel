@@ -18,6 +18,12 @@ var routes = {
   '/pages/show/*' : function(uri) {
     PagesController.show(uri);
   },
+  '/pages/publish/*' : function(uri) {
+    PagesController.publish(uri, 'page');
+  },
+  '/pages/hide/*' : function(uri) {
+    PagesController.hide(uri, 'page');
+  },
   '/pages/delete/*' : function(uri) {
     PagesController.delete(uri, 'page');
   },

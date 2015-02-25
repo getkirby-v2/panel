@@ -12,6 +12,12 @@ var PageModel = {
     var uri = uri ? uri + '/' + id : id;
     $http.post('pages/sort/' + uri, {to: to}, done, fail);
   },
+  publish : function(uri, done, fail) {
+    $http.post('pages/publish/' + uri, {}, done, fail);
+  },
+  unpublish : function(uri, done, fail) {
+    $http.post('pages/hide/' + uri, {}, done, fail);
+  },
   hide : function(uri, uid, done, fail) {
     $http.post('pages/hide/' + uri + '/' + uid, {}, done, fail);
   },

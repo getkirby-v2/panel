@@ -70,6 +70,8 @@ return array(
     'pages.show.settings' => 'Page settings',
     'pages.show.preview' => 'Open preview',
     'pages.show.changeurl' => 'Change URL',
+    'pages.show.invisible' => 'Status: invisible',
+    'pages.show.visible' => 'Status: visible',
     'pages.show.delete' => 'Delete this page',
     'pages.show.subpages.title' => 'Pages',
     'pages.show.subpages.edit' => 'Edit',

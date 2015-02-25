@@ -39,6 +39,10 @@ class Subpages {
     $blueprint = blueprint::find($this->parent);
     $params    = $blueprint->pages()->num();
 
+    if($to == 'last') {
+      $to = $this->visible()->count() + 1;
+    }
+
     switch($params->mode()) {
       case 'zero':
         return 0;

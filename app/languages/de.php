@@ -55,6 +55,8 @@ return array (
     'pages.show.settings' => 'Seiteneinstellungen',
     'pages.show.preview' => 'Seite öffnen',
     'pages.show.changeurl' => 'URL ändern',
+    'pages.show.invisible' => 'Status: unsichtbar',
+    'pages.show.visible' => 'Status: sichtbar',
     'pages.show.delete' => 'Seite löschen',
     'pages.show.subpages.title' => 'Seiten',
     'pages.show.subpages.add' => 'Hinzufügen',

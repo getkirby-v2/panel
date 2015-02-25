@@ -160,6 +160,20 @@ var PagesController = {
 
   },
 
+  publish: function(uri) {
+    PageModel.publish(uri, function() {
+      app.main.data('current', false);
+      window.location.href = '#/pages/show/' + uri;
+    });
+  },
+
+  hide: function(uri) {
+    PageModel.unpublish(uri, function() {
+      app.main.data('current', false);
+      window.location.href = '#/pages/show/' + uri;
+    });
+  },
+
   delete: function(uri, to) {
 
     // get the uri for the parent page

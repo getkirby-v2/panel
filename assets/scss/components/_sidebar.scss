@@ -90,7 +90,12 @@
   overflow: hidden;
 }
 .sidebar-list > li > a {
-  padding: .25em 0;
+  padding: .25em 0 .25em 1.75em;
+}
+.sidebar-list .icon {
+  position: absolute;
+  left: 0;
+  top: .4em;
 }
 .sidebar-list .marginalia {
   position: absolute;

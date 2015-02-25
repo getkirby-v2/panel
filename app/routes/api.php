@@ -35,6 +35,12 @@ return array(
     'filter'  => 'auth',
   ),
   array(
+    'pattern' => 'api/pages/publish/(:all)',
+    'action'  => 'api/PagesController::publish',
+    'method'  => 'POST',
+    'filter'  => 'auth',
+  ),
+  array(
     'pattern' => 'api/pages/url/(:all)',
     'action'  => 'api/PagesController::url',
     'method'  => 'POST',
