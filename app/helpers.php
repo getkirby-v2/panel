@@ -6,18 +6,38 @@ function panel() {
 
 function dragText($obj) {
 
-  if(is_a($obj, 'Page')) {
-    return '(link: ' . $obj->uri() . ' text: ' . $obj->title() . ')';
-  } else if(is_a($obj, 'File')) {
-    switch($obj->type()) {
-      case 'image':
-        return '(image: ' . $obj->filename() . ')';
-        break;
-      default:
-        return '(file: ' . $obj->filename() . ')';
-        break;
+  if(c::get('panel.kirbytext') === false) {
+
+    if(is_a($obj, 'Page')) {
+      return '[' . $obj->title() . '](' . $obj->url() . ')';
+    } else if(is_a($obj, 'File')) {
+      switch($obj->type()) {
+        case 'image':
+          return '![' . $obj->name() . '](' . $obj->url() . ')';
+          break;
+        default:
+          return '[' . $obj->filename() . '](' . $obj->url() . ')';
+          break;
+      }
     }
+
+  } else {
+
+    if(is_a($obj, 'Page')) {
+      return '(link: ' . $obj->uri() . ' text: ' . $obj->title() . ')';
+    } else if(is_a($obj, 'File')) {
+      switch($obj->type()) {
+        case 'image':
+          return '(image: ' . $obj->filename() . ')';
+          break;
+        default:
+          return '(file: ' . $obj->filename() . ')';
+          break;
+      }
+    }
+
   }
+
 
 }
 

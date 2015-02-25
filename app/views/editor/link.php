@@ -1,5 +1,5 @@
 <div class="modal-content">
-  <form class="form" method="post" autocomplete="off" >
+  <form class="form" method="post" autocomplete="off" data-kirbytext="<?php echo c::get('panel.kirbytext', true) ?>">
 
     <fieldset class="fieldset">
       <div class="field">
