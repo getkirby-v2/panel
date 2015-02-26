@@ -59,7 +59,7 @@ class TextareaField extends InputField {
 
   public function buttons() {
     require_once(__DIR__ . DS . 'buttons.php');
-    return new Buttons();
+    return new Buttons($this->buttons);
   }
 
 }
