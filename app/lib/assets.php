@@ -89,7 +89,7 @@ class Assets {
     }
 
     if($cache->exists()) {
-      return $type(panel()->urls()->$type() . '/panel.' . $type);
+      return $type(panel()->urls()->$type() . '/panel.' . $type . '?v=' . panel()->version());
     }
 
     return $type(array_map(function($item) use($type) {
