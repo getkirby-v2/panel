@@ -4,9 +4,14 @@ class DashboardController extends Controller {
 
   public function index() {
 
+    $site    = site();
     $widgets = array();
     $wroot   = kirby()->roots()->widgets();
     $wdirs   = dir::read($wroot);
+
+    // fetch all top-level pages in the right order
+    $blueprint = blueprint::find($site);
+    $pages     = api::subpages($site->children(), $blueprint);
 
     foreach($wdirs as $dir) {
       $file = $wroot . DS . $dir . DS . $dir . '.php';
@@ -21,7 +26,8 @@ class DashboardController extends Controller {
         'search'     => purl('pages/search/')
       )),
       'history' => history::get(),
-      'site'    => site(),
+      'site'    => $site,
+      'pages'   => $pages,
       'widgets' => $widgets,
       'user'    => site()->user(),
     ));
