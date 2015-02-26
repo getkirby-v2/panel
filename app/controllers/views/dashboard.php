@@ -20,10 +20,11 @@ class DashboardController extends Controller {
         'breadcrumb' => new Snippet('breadcrumb'),
         'search'     => purl('pages/search/')
       )),
-      'history' => history::get(),
-      'site'    => site(),
-      'widgets' => $widgets,
-      'user'    => site()->user(),
+      'history'  => history::get(),
+      'site'     => site(),
+      'widgets'  => $widgets,
+      'user'     => site()->user(),
+      'subpages' => api::subpages(site()->children(), blueprint::find('site'))
     ));
   }
 
