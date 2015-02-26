@@ -28,9 +28,11 @@
       <?php foreach($files as $file): ?><!--
    --><div class="grid-item" id="<?php __($file->filename()) ?>">
         <figure class="file">
-          <a class="file-preview file-preview-is-{{type}}" href="<?php echo purl($file, 'show') ?>">
+          <a class="file-preview file-preview-is-<?php echo $file->type() ?>" href="<?php echo purl($file, 'show') ?>">
             <?php if(in_array($file->extension(), array('jpg', 'gif', 'png')) and $file->width() < 2000 and $file->height() < 2000): ?>
             <?php echo thumb($file, array('width' => 300, 'height' => '200', 'crop' => true)) ?>
+            <?php elseif($file->extension() == 'svg'): ?>
+            <img src="<?php echo $file->url() ?>" alt="<?php echo $file->filename() ?>">
             <?php else: ?>
             <span><?php __($file->extension()) ?></span>
             <?php endif ?>

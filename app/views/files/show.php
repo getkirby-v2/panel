@@ -24,6 +24,10 @@
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($f->url()) ?>">
       <i style="background-image: url(<?php __($f->url() . '?' . $f->modified()) ?>); max-width: <?php echo $f->width() ?>px; max-height: <?php echo $f->height() ?>px;"></i>
     </a>
+    <?php elseif($f->extension() == 'svg'): ?>
+    <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($f->url()) ?>">
+      <i style="background-image: url(<?php __($f->url() . '?' . $f->modified()) ?>); max-width: 100%; max-height: 100%"></i>
+    </a>
     <?php else: ?>
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link" href="<?php __($f->url()) ?>">
       <span>
