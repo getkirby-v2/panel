@@ -1282,6 +1282,28 @@ var MetatagsController = {
 
       });
 
+      element.find('.sidebar').sidebar();
+
+      var textareas = element.find('textarea');
+      var draggable = element.find('.draggable');
+
+      draggable.draggable({
+        helper: function(e, ui) {
+          return $('<div class="draggable-helper"></div>');
+        },
+        start: function(e, ui) {
+          ui.helper.text($(this).data('helper'));
+        }
+      });
+
+      textareas.droppable({
+        hoverClass: 'over',
+        accept: draggable,
+        drop: function(e, ui) {
+          $(this).insertAtCursor(ui.draggable.data('text'));
+        }
+      });
+
       if($.type(callback) == 'function') callback(element);
 
     });
@@ -1399,6 +1421,9 @@ var FilesController = {
       case 'page':
         PagesController.show(uri);
         break;
+      case 'metatags':
+        MetatagsController.index();
+        break;
       default:
         FilesController.index(uri);
         break;
@@ -1421,8 +1446,9 @@ var FilesController = {
     FilesController.show(uri);
 
     var path = FilesController.path(uri);
+    var url  = path.uri ? 'files/replace/' + path.uri : 'files/replace';
 
-    app.modal.view('files/replace/' + path.uri + '/?filename=' + path.filename, function(element) {
+    app.modal.view(url + '/?filename=' + path.filename, function(element) {
 
       var url = $http.endpoint + '/files/replace/' + path.uri + '?filename=' + path.filename;
 
@@ -1439,8 +1465,9 @@ var FilesController = {
   show : function(uri) {
 
     var path = FilesController.path(uri);
+    var url  = path.uri ? 'files/show/' + path.uri : 'files/show';
 
-    app.main.view('files/show/' + path.uri + '/?filename=' + path.filename, function(element) {
+    app.main.view(url + '/?filename=' + path.filename, function(element) {
 
       var sidebar = element.find('.fileview-sidebar');
       var form    = element.find('.form').form();
@@ -1623,16 +1650,19 @@ var PageModel = {
 };
 var FileModel = {
   update: function(uri, filename, data, done, fail) {
-    $http.post('files/update/' + uri + '/?filename=' + filename, data, done, fail);
+    var url = uri ? 'files/update/' + uri : 'files/update';
+    $http.post(url + '/?filename=' + filename, data, done, fail);
   },
   rename: function(uri, filename, newName, done, fail) {
-    $http.post('files/rename/' + uri + '/?filename=' + filename, {name: newName}, done, fail);
+    var url = uri ? 'files/rename/' + uri : 'files/rename';
+    $http.post(url + '/?filename=' + filename, {name: newName}, done, fail);
   },
   sort: function(uri, filenames, done, fail) {
     $http.post('files/sort/' + uri, {filenames: filenames}, done, fail);
   },
   delete: function(uri, filename, done, fail) {
-    $http.post('files/delete/' + uri + '/?filename=' + filename, {}, done, fail);
+    var url = uri ? 'files/delete/' + uri : 'files/delete';
+    $http.post(url + '/?filename=' + filename, {}, done, fail);
   }
 };
 var UserModel = {
@@ -1653,6 +1683,9 @@ var UserModel = {
 var routes = {
   '/' : function() {
     PagesController.show('');
+  },
+  '/metatags/upload' : function() {
+    FilesController.upload('', 'metatags');
   },
   '/metatags/?*' : function(uri) {
     MetatagsController.index(uri);
@@ -1699,10 +1732,10 @@ var routes = {
   '/subpages/delete/*' : function(uri) {
     PagesController.delete(uri, 'subpages');
   },
-  '/files/index/*' : function(uri) {
+  '/files/index/?*' : function(uri) {
     FilesController.index(uri);
   },
-  '/files/upload/*' : function(uri) {
+  '/files/upload/?*' : function(uri) {
     FilesController.upload(uri, 'files');
   },
   '/files/replace/*' : function(uri) {

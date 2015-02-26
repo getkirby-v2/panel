@@ -2,7 +2,7 @@
 
 class FilesController extends Controller {
 
-  public function upload($id) {
+  public function upload($id = null) {
 
     $page   = $this->page($id);
     $upload = new Upload($page->root() . DS . '{safeFilename}', array(
@@ -34,7 +34,7 @@ class FilesController extends Controller {
 
   }
 
-  public function replace($id) {
+  public function replace($id = null) {
 
     $filename = get('filename');
     $file     = $this->file($id, $filename);
@@ -61,7 +61,7 @@ class FilesController extends Controller {
 
   }
 
-  public function rename($id) {
+  public function rename($id = null) {
 
     $filename = get('filename');
     $file     = $this->file($id, $filename);
@@ -81,7 +81,7 @@ class FilesController extends Controller {
 
   }
 
-  public function update($id) {
+  public function update($id = null) {
 
     $filename = get('filename');
     $page     = $this->page($id);
@@ -124,7 +124,7 @@ class FilesController extends Controller {
 
   }
 
-  public function sort($id) {
+  public function sort($id = null) {
 
     $page = $this->page($id);
 
@@ -155,7 +155,7 @@ class FilesController extends Controller {
 
   }
 
-  public function delete($id) {
+  public function delete($id = null) {
 
     $filename = get('filename');
     $file     = $this->file($id, $filename);

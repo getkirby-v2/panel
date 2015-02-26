@@ -2,42 +2,68 @@
 
 class FilesController extends Controller {
 
-  public function index($id) {
+  public function index($id = null) {
 
     $page      = $this->page($id);
     $blueprint = blueprint::find($page);
     $files     = api::files($page, $blueprint);
+    $back      = purl($page, 'show');
 
     // don't create the view if the page is not allowed to have files
     if($blueprint->files()->max() === 0) goToErrorView();
+
+
+    if($page->isSite()) {
+
+      // breadcrumb items
+      $items = array(
+        array(
+          'url'   => purl('metatags'),
+          'title' => l('metatags')
+        ),
+        array(
+          'url'   => purl('files/index'),
+          'title' => l('metatags.files')
+        )
+      );      
+
+      // modify the back url
+      $back = purl('metatags');
+
+    } else {
+      // breadcrumb items
+      $items = array(
+        array(
+          'url'   => purl('files/index/' . $page->id()),
+          'title' => l('files')
+        )
+      );      
+    }
 
     return view('files/index', array(
       'topbar' => new Snippet('pages/topbar', array(
         'menu'       => new Snippet('menu'),
         'breadcrumb' => new Snippet('pages/breadcrumb', array(
           'page'  => $page,
-          'items' => array(
-            array(
-              'url'   => purl('files/index/' . $page->id()),
-              'title' => l('files')
-            )
-          ),
+          'items' => $items
         )),
         'search' => purl($page, 'search')
       )),
       'page'     => $page,
       'files'    => $files,
+      'back'     => $back,
       'sortable' => $blueprint->files()->sortable(),
     ));
 
   }
 
-  public function upload($id) {
+  public function upload($id = null) {
 
     $page = $this->page($id);
     $back = array(
-      'files' => purl('files/index/' . $page->id()),
-      'page'  => purl($page, 'show')
+      'files'    => purl('files/index/' . $page->id()),
+      'metatags' => purl('metatags'),
+      'page'     => purl($page, 'show')
     );
 
     return view('files/upload', array(
@@ -46,7 +72,7 @@ class FilesController extends Controller {
     ));
   }
 
-  public function show($id) {
+  public function show($id = null) {
 
     $filename  = get('filename');
     $page      = $this->page($id);
@@ -59,21 +85,41 @@ class FilesController extends Controller {
     $next      = $files->nth($index + 1);
     $prev      = $files->nth($index - 1);
 
+    // breadcrumb items
+    if($page->isSite()) {
+      $items = array(
+        array(
+          'url'   => purl('metatags'),
+          'title' => l('metatags')
+        ),
+        array(
+          'url'   => purl('files/index'),
+          'title' => l('metatags.files')
+        ),
+        array(
+          'url'   => purl($file, 'show'),
+          'title' => $file->filename()
+        ),
+      );      
+    } else {
+      $items = array(
+        array(
+          'url'   => purl('files/index/' . $page->id()),
+          'title' => l('files')
+        ),
+        array(
+          'url'   => purl($file, 'show'),
+          'title' => $file->filename()
+        ),
+      );      
+    }
+
     return view('files/show', array(
       'topbar' => new Snippet('pages/topbar', array(
         'menu'       => new Snippet('menu'),
         'breadcrumb' => new Snippet('pages/breadcrumb', array(
           'page'  => $page,
-          'items' => array(
-            array(
-              'url'   => purl('files/index/' . $page->id()),
-              'title' => l('files')
-            ),
-            array(
-              'url'   => purl($file, 'show'),
-              'title' => $file->filename()
-            ),
-          )
+          'items' => $items,
         )),
         'search' => purl($page, 'search')
       )),
@@ -86,7 +132,7 @@ class FilesController extends Controller {
 
   }
 
-  public function replace($id) {
+  public function replace($id = null) {
 
     $filename = get('filename');
     $page     = $this->page($id);
@@ -99,7 +145,7 @@ class FilesController extends Controller {
 
   }
 
-  public function delete($id) {
+  public function delete($id = null) {
 
     $filename = get('filename');
     $page     = $this->page($id);
@@ -119,7 +165,9 @@ class FilesController extends Controller {
 
   protected function page($id) {
 
-    if($page = page($id)) {
+    if(!$id) {
+      return site();
+    } else if($page = page($id)) {
       return $page;
     } else {
       throw new Exception(l('files.error.missing.page'));

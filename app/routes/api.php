@@ -49,37 +49,37 @@ return array(
 
   // Files
   array(
-    'pattern' => 'api/files/upload/(:all)',
+    'pattern' => 'api/files/upload/(:all?)',
     'action'  => 'api/FilesController::upload',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/replace/(:all)',
+    'pattern' => 'api/files/replace/(:all?)',
     'action'  => 'api/FilesController::replace',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/update/(:all)',
+    'pattern' => 'api/files/update/(:all?)',
     'action'  => 'api/FilesController::update',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/rename/(:all)',
+    'pattern' => 'api/files/rename/(:all?)',
     'action'  => 'api/FilesController::rename',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/sort/(:all)',
+    'pattern' => 'api/files/sort/(:all?)',
     'action'  => 'api/FilesController::sort',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
-    'pattern' => 'api/files/delete/(:all)',
+    'pattern' => 'api/files/delete/(:all?)',
     'action'  => 'api/FilesController::delete',
     'method'  => 'POST',
     'filter'  => 'auth',

@@ -131,7 +131,11 @@ function purl($obj, $action = false) {
   if(is_string($obj)) {
     return '#/' . $obj;
   } else if(is_a($obj, 'File')) {
-    return '#/files/' . $action . '/' . $obj->page()->id() . '/' . urlencode($obj->filename());
+    if($obj->page()->isSite()) {
+      return '#/files/' . $action . '/' . urlencode($obj->filename());
+    } else {      
+      return '#/files/' . $action . '/' . $obj->page()->id() . '/' . urlencode($obj->filename());
+    }
   } else if(is_a($obj, 'Page')) {
     return '#/pages/' . $action . '/' . $obj->id();
   } else if(is_a($obj, 'User')) {

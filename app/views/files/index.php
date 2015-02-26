@@ -4,11 +4,15 @@
 
   <h2 class="hgroup cf">
     <span class="hgroup-title">
-      <?php _l('files.index.headline') ?> <a href="<?php echo purl($page, 'show') ?>"><?php __($page->title()) ?></a>
+      <?php if($page->isSite()): ?>
+      <?php _l('metatags.files') ?>
+      <?php else: ?>
+      <?php _l('files.index.headline') ?> <a href="<?php echo $back ?>"><?php __($page->title()) ?></a>
+      <?php endif ?>
     </span>
     <span class="hgroup-options shiv shiv-dark shiv-left cf">
 
-      <a class="hgroup-option-left" href="<?php echo purl($page, 'show') ?>">
+      <a class="hgroup-option-left" href="<?php echo $back ?>">
         <?php i('arrow-circle-left', 'left') . _l('files.index.back') ?>
       </a>
 

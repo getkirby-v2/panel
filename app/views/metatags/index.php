@@ -6,15 +6,20 @@
 
     <a class="sidebar-toggle" href="#sidebar" data-hide="<?php _l('options.hide') ?>"><span><?php _l('options.show') ?></span></a>
 
-    <div class="sidebar-content section">
+    <div class="sidebar-content">
 
-      <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
-        <span class="hgroup-title">
-          <?php _l('metatags') ?>
-        </span>
-      </h2>
+      <div class="section">
+        <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
+          <span class="hgroup-title">
+            <?php _l('metatags') ?>
+          </span>
+        </h2>
+        <ul class="nav nav-list sidebar-list">
+          <li><a href="#/"><?php i('arrow-circle-left', 'left') ?><?php _l('metatags.back') ?></a></li>
+        </ul>
 
-      <a class="btn btn-with-icon" href="#/"><?php i('arrow-circle-left', 'left') ?><?php _l('metatags.back') ?></a>
+        <?php echo $files ?>
+      </div>
 
     </div>
 

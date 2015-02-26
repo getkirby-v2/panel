@@ -8,6 +8,17 @@ class MetatagsController extends Controller {
     $blueprint = blueprint::find($site);
     $fields    = $blueprint->fields()->toArray();
     $content   = $site->content()->toArray();
+    $files     = null;
+
+    // create the files
+    if($blueprint->files()->max() !== 0 and $blueprint->files()->hide() == false) {
+
+      $files = new Snippet('pages/sidebar/files', array(
+        'page'  => $site,
+        'files' => api::files($site, $blueprint),
+      ));
+
+    }
 
     return view('metatags/index', array(
       'topbar' => new Snippet('pages/topbar', array(
@@ -21,8 +32,9 @@ class MetatagsController extends Controller {
         )),
         'search' => purl('pages/search/')
       )),
-      'form' => new Form($fields, $content),
-      's'    => $site,
+      'form'  => new Form($fields, $content),
+      's'     => $site,
+      'files' => $files
     ));
 
   }

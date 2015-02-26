@@ -23,6 +23,9 @@ var FilesController = {
       case 'page':
         PagesController.show(uri);
         break;
+      case 'metatags':
+        MetatagsController.index();
+        break;
       default:
         FilesController.index(uri);
         break;
@@ -45,8 +48,9 @@ var FilesController = {
     FilesController.show(uri);
 
     var path = FilesController.path(uri);
+    var url  = path.uri ? 'files/replace/' + path.uri : 'files/replace';
 
-    app.modal.view('files/replace/' + path.uri + '/?filename=' + path.filename, function(element) {
+    app.modal.view(url + '/?filename=' + path.filename, function(element) {
 
       var url = $http.endpoint + '/files/replace/' + path.uri + '?filename=' + path.filename;
 
@@ -63,8 +67,9 @@ var FilesController = {
   show : function(uri) {
 
     var path = FilesController.path(uri);
+    var url  = path.uri ? 'files/show/' + path.uri : 'files/show';
 
-    app.main.view('files/show/' + path.uri + '/?filename=' + path.filename, function(element) {
+    app.main.view(url + '/?filename=' + path.filename, function(element) {
 
       var sidebar = element.find('.fileview-sidebar');
       var form    = element.find('.form').form();

@@ -57,14 +57,15 @@ return array(
     'dashboard.index.site.title' => 'Your site\'s URL',
     'dashboard.index.account.title' => 'Your account',
     'dashboard.index.account.edit' => 'Edit',
-    'dashboard.index.metatags.title' => 'Site variables',
+    'dashboard.index.metatags.title' => 'Site options',
     'dashboard.index.metatags.edit' => 'Edit',
     'dashboard.index.history.title' => 'Your last updates',
     'dashboard.index.history.text' => 'Your last modified pages will be displayed here to make it easy to find them again later.',
 
     // metatags
-    'metatags' => 'Site variables',
+    'metatags' => 'Site options',
     'metatags.back' => 'Back to the dashboard',
+    'metatags.files' => 'Site files',
 
     // pages
     'pages.show.settings' => 'Page settings',
