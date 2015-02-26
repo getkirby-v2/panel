@@ -12,6 +12,7 @@ class Files extends Obj {
   public $hide     = false;
   public $sort     = null;
   public $sortable = false;
+  public $sanitize = true;
 
   public function __construct($params = array()) {
 
@@ -29,7 +30,7 @@ class Files extends Obj {
       $this->sort     = a::get($params, 'sort', $this->sort);
       $this->sortable = a::get($params, 'sortable', $this->sortable);
       $this->fields   = a::get($params, 'fields', array());
-
+      $this->sanitize = a::get($params, 'sanitize', true);
     }
 
   }

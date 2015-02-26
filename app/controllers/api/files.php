@@ -4,8 +4,11 @@ class FilesController extends Controller {
 
   public function upload($id = null) {
 
-    $page   = $this->page($id);
-    $upload = new Upload($page->root() . DS . '{safeFilename}', array(
+    $page      = $this->page($id);
+    $blueprint = blueprint::find($page);
+    $filename  = $blueprint->files()->sanitize() ? '{safeFilename}' : '{filename}';
+
+    $upload = new Upload($page->root() . DS . $filename, array(
       'overwrite' => true,
       'accept'    => function($file) {
 
