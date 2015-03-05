@@ -18,7 +18,7 @@ var PagesController = {
     }
 
     app.main.view('pages/show/' + uri, {page: page}, function(element) {
-
+      $('[visibly]').Visibly();
       var form = element.find('.form').form();
 
       form.on('submit', function() {
@@ -88,7 +88,7 @@ var PagesController = {
     }
 
     app.modal.view('pages/add/' + uri, {to: to}, function(element) {
-
+      $('[visibly]').Visibly();
       element.find('.form').form().on('submit', function() {
         PageModel.create(uri, $(this).serializeObject(), function() {
           app.main.data('current', false);
