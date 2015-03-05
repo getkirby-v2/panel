@@ -23,6 +23,7 @@ class BaseField {
   public $validate;
   public $width;
   public $default;
+  public $visible;
   public $error = false;
 
   public function root() {
@@ -168,6 +169,10 @@ class BaseField {
 
     if($this->icon) {
       $element->addClass('field-with-icon');
+    }
+
+    if($this->visible) {
+      $element->attr('visibly', $this->visible);
     }
 
     return $element;

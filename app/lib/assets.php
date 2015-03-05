@@ -30,6 +30,7 @@ class Assets {
       'vendors/jquery.editorHelpers.js',
       'vendors/jquery.serializeObject.js',
       'vendors/jquery.view.js',
+      'vendors/jquery.visibly.js',
       'vendors/http.js',
 
       // panel
