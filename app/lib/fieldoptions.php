@@ -21,16 +21,21 @@ class FieldOptions {
     } else if($field->options == 'query') {
 
       $defaults = array(
-        'page'  => $field->page->id(),
-        'fetch' => 'children',
-        'value' => '{{uid}}',
-        'text'  => '{{title}}',
-        'flip'  => false
+        'page'     => $field->page->id(),
+        'fetch'    => 'children',
+        'value'    => '{{uid}}',
+        'text'     => '{{title}}',
+        'flip'     => false,
+        'template' => false
       );
 
       $query   = array_merge($defaults, $field->query);
       $page    = page($query['page']);
       $items   = $this->items($page, $query['fetch']);
+      
+      if($query['template']) {
+        $items = $items->filterBy('intendedTemplate', $query['template']);
+      }
 
       if($query['flip']) {
         $items = $items->flip();
