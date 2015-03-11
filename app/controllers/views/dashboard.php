@@ -25,11 +25,12 @@ class DashboardController extends Controller {
         'breadcrumb' => new Snippet('breadcrumb'),
         'search'     => purl('pages/search/')
       )),
-      'history' => history::get(),
-      'site'    => $site,
-      'pages'   => $pages,
-      'widgets' => $widgets,
-      'user'    => site()->user(),
+      'history'   => history::get(),
+      'site'      => $site,
+      'pages'     => $pages,
+      'addbutton' => !api::maxPages($site, $blueprint->pages()->max()),
+      'widgets'   => $widgets,
+      'user'      => site()->user(),
     ));
   }
 

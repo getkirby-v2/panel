@@ -15,9 +15,11 @@
             <a title="<?php _l('dashboard.index.pages.edit') ?>" href="#/subpages/index/">
               <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.pages.edit') ?></span>
             </a>
+            <?php if($addbutton): ?>
             <a title="+" data-shortcut="+" href="#/pages/add/">
               <?php i('plus-circle', 'left') ?><span><?php _l('dashboard.index.pages.add') ?></span>
             </a>
+            <?php endif ?>
           </span>
         </span>
       </h2>
