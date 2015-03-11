@@ -13,6 +13,7 @@ class Files extends Obj {
   public $sort     = null;
   public $sortable = false;
   public $sanitize = true;
+  public $type     = null;
 
   public function __construct($params = array()) {
 
@@ -23,6 +24,7 @@ class Files extends Obj {
       $this->max      = 0;
       $this->sortable = false;
       $this->hide     = true;
+      $this->type     = null;
       $this->fields   = array();
     } else if(is_array($params)) {
       $this->max      = a::get($params, 'max', $this->max);
@@ -31,6 +33,7 @@ class Files extends Obj {
       $this->sortable = a::get($params, 'sortable', $this->sortable);
       $this->fields   = a::get($params, 'fields', array());
       $this->sanitize = a::get($params, 'sanitize', true);
+      $this->type      = a::get($params, 'type', $this->type);
     }
 
   }
