@@ -8,6 +8,11 @@
 
     <?php echo assets::css() ?>
 
+    <!-- custom panel stylesheet -->
+    <?php if($stylesheet = kirby()->option('panel.stylesheet')): ?>
+    <?php echo css($stylesheet) ?>
+    <?php endif ?>
+
   </head>
   <body class="grey">
 
