@@ -202,8 +202,8 @@ class FilesController extends Controller {
       throw new Exception('htaccess files cannot be uploaded');
     } else if(str::startsWith($file->filename(), '.')) {
       throw new Exception('Invisible files cannot be uploaded');
-    } else if($blueprint->files()->type() !== null and $blueprint->files()->type() != $file->type()) {
-      throw new Exception('Only '.$blueprint->files()->type().'s allowed');
+    } else if(count($blueprint->files()->type()) > 0 and !in_array($file->type(), $blueprint->files()->type())) {
+      throw new Exception('File format not allowed for this page.');
     }
 
   }
