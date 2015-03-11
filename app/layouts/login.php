@@ -14,7 +14,7 @@
     <?php endif ?>
 
   </head>
-  <body class="grey">
+  <body class="login grey">
 
     <div class="modal-content">
 
