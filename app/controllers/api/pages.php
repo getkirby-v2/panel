@@ -64,6 +64,16 @@ class PagesController extends Controller {
 
       }
 
+      // get the blueprint of the parent page to find the 
+      // correct sorting mode for this page
+      $parentBlueprint = blueprint::find($page->parent());
+
+      // auto-update the uid if the sorting mode is set to zero
+      if($parentBlueprint->pages()->num()->mode() == 'zero') {
+        $uid = str::slug($page->title());
+        $page->move($uid);
+      }
+
       history::visit($page->id());
 
       return response::success('success', array(
