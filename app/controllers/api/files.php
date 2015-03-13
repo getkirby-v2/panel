@@ -25,7 +25,7 @@ class FilesController extends Controller {
 
     if($file = $upload->file()) {
       try {
-        $this->checkUpload($file);
+        $this->checkUpload($file, $blueprint);
         return response::success('success');
       } catch(Exception $e) {
         $file->delete();
@@ -188,7 +188,7 @@ class FilesController extends Controller {
     }
   }
 
-  protected function checkUpload($file) {
+  protected function checkUpload($file, $blueprint) {
 
     if(strtolower($file->extension()) == kirby()->option('content.file.extension', 'txt')) {
       throw new Exception('Content files cannot be uploaded');
@@ -202,8 +202,10 @@ class FilesController extends Controller {
       throw new Exception('htaccess files cannot be uploaded');
     } else if(str::startsWith($file->filename(), '.')) {
       throw new Exception('Invisible files cannot be uploaded');
+    } else if(count($blueprint->files()->type()) > 0 and !in_array($file->type(), $blueprint->files()->type())) {
+      throw new Exception('File format not allowed for this page.');
     }
-    
+
   }
 
 }
