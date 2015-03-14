@@ -192,18 +192,41 @@ class FilesController extends Controller {
 
     if(strtolower($file->extension()) == kirby()->option('content.file.extension', 'txt')) {
       throw new Exception('Content files cannot be uploaded');
-    } else if(strtolower($file->extension()) == 'php' or in_array($file->mime(), f::$mimes['php'])) {
+    } else if(strtolower($file->extension()) == 'php' or
+              in_array($file->mime(), f::$mimes['php'])) {
       throw new Exception('PHP files cannot be uploaded');
-    } else if(strtolower($file->extension()) == 'html' or $file->mime() == 'text/html') {
+    } else if(strtolower($file->extension()) == 'html' or
+              $file->mime() == 'text/html') {
       throw new Exception('HTML files cannot be uploaded');
-    } else if(strtolower($file->extension()) == 'exe' or $file->mime() == 'application/x-msdownload') {
+    } else if(strtolower($file->extension()) == 'exe' or
+              $file->mime() == 'application/x-msdownload') {
       throw new Exception('EXE files cannot be uploaded');
     } else if(strtolower($file->filename()) == '.htaccess') {
       throw new Exception('htaccess files cannot be uploaded');
     } else if(str::startsWith($file->filename(), '.')) {
       throw new Exception('Invisible files cannot be uploaded');
-    } else if(count($blueprint->files()->type()) > 0 and !in_array($file->type(), $blueprint->files()->type())) {
-      throw new Exception('File format not allowed for this page.');
+
+    // Files blueprint option 'type'
+    } else if(count($blueprint->files()->type()) > 0 and
+              !in_array($file->type(), $blueprint->files()->type())) {
+      throw new Exception('Page only allows: '.implode(', ', $blueprint->files()->type()));
+
+    // Files blueprint option 'size'
+    } else if($blueprint->files()->size() and
+              f::size($file->root()) > $blueprint->files()->size()) {
+      throw new Exception('Page only allows file size of '.f::niceSize($blueprint->files()->size()));
+
+    // Files blueprint option 'width'
+    } else if($file->type() == 'image' and
+              $blueprint->files()->width() and
+              $file->width() > $blueprint->files()->width()) {
+      throw new Exception('Page only allows image width of '.$blueprint->files()->width().'px');
+
+    // Files blueprint option 'height'
+    } else if($file->type() == 'image' and
+              $blueprint->files()->height() and
+              $file->height() > $blueprint->files()->height()) {
+      throw new Exception('Page only allows image height of '.$blueprint->files()->height().'px');
     }
 
   }
