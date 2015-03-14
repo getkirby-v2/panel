@@ -16,6 +16,17 @@ class FieldOptions {
 
     if(is_array($field->options)) {
       $this->options = $field->options;
+    } else if(v::url($field->options)) {
+      
+      $response = remote::get($field->options);
+      $options  = @json_decode($response->content(), true);
+
+      if(is_array($options)) {
+        $this->options = $options;        
+      } else {
+        $this->options = array();
+      }
+
     } else if(!$field->page) {
       $this->options = array();
     } else if($field->options == 'query') {
