@@ -9,7 +9,7 @@
     <?php echo assets::css() ?>
 
   </head>
-  <body class="grey">
+  <body class="grey <?php echo panel()->direction() ?>">
 
     <div class="modal-content"><?php echo $content ?></div>
 

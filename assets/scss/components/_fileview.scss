@@ -11,14 +11,24 @@
 .fileview-image-link {
   position: absolute;
   top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
   max-width: 75%;
   max-height: 75%;
   width: 100%;
+
+  body.ltr & {
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  body.rtl & {
+    right: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    -moz-transform: translate(-50%, 50%);
+    -ms-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
+  }
 }
 .fileview-image-link span {
   background: #000;
@@ -41,17 +51,27 @@
 .fileview-preview-link i {
   position: absolute;
   top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
   line-height: 0;
   height: 100%;
   width: 100%;
+
+  body.ltr & {
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  body.rtl & {
+    right: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    -moz-transform: translate(-50%, 50%);
+    -ms-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
+  }
 }
 .fileview-nav {
   position: absolute;
@@ -65,10 +85,20 @@
   padding: 1em;
 }
 .fileview-nav-prev {
-  float: left;
+  body.ltr & {
+    float: left;
+  }
+  body.rtl & {
+    float: right;
+  }
 }
 .fileview-nav-next {
-  float: right;
+  body.ltr & {
+    float: right;
+  }
+  body.rtl & {
+    float: left;
+  }
 }
 .fileview-options {
   margin-top: 6em;
@@ -126,7 +156,12 @@
     right: 1.5em;
   }
   .fileview-image {
-    right: 33.33%;
+    body.ltr & {
+      right: 33.33%;
+    }
+    body.rtl & {
+      left: 33.33%;
+    }
   }
   .fileview-sidebar {
     width: 33.33%;

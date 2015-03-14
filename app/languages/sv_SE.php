@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Svenska',
+  'direction' => 'ltr',
   'author' => 'Linus Stengård <linus_stengard@hotmail.com>',
   'version' => '1.0.0',
   'data' => array(

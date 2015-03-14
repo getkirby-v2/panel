@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Suomi',
+  'direction' => 'ltr',
   'author' => 'Ilja Sillman <isillman@gmail.com>',
   'version' => '1.0.0',
   'data' => array(

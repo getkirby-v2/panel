@@ -44,8 +44,14 @@
 }
 .btn-with-icon {
   color: #777;
-  text-align: left;
   white-space: nowrap;
+
+  body.ltr & {
+    text-align: left;
+  }
+  body.rtl & {
+    text-align: right;
+  }
 }
 .btn-with-icon:focus,
 .btn-with-icon:hover {

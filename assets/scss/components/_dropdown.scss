@@ -8,22 +8,48 @@
   position: absolute;
   content: "";
   top: -.5em;
-  margin-left: -.1em;
   border-bottom: .5em solid #fff;
   border-left: .5em solid transparent;
   border-right: .5em solid transparent;
+
+  body.ltr & {
+    margin-left: -.1em;
+  }
+  body.rtl & {
+    margin-right: -.1em;
+  }
 }
 .dropdown-left {
-  left: 0;
+  body.ltr & {
+    left: 0;
+  }
+  body.rtl & {
+    right: 0;
+  }
 }
 .dropdown-left:after {
-  left: 1.5em;
+  body.ltr & {
+    left: 1.5em;
+  }
+  body.rtl & {
+    right: 1.5em;
+  }
 }
 .dropdown-right {
-  right: 0;
+  body.ltr & {
+    right: 0;
+  }
+  body.rtl & {
+    left: 0;
+  }
 }
 .dropdown-right:after {
-  right: 1.5em;
+  body.ltr & {
+   right: 1.5em;
+  }
+  body.rtl & {
+    left: 1.5em;
+  }
 }
 
 /* dropdown lists */

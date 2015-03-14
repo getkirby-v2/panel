@@ -15,9 +15,15 @@
 .file-preview img {
   position: absolute;
   top: 0;
-  left: 0;
   min-width: 100%;
   min-height: 100%;
+
+  body.ltr & {
+    left: 0;
+  }
+  body.rtl & {
+    right: 0;
+  }
 }
 .file-preview span {
   position: absolute;
@@ -42,10 +48,16 @@
 }
 .file-options .btn {
   width: 50%;
-  float: left;
   border-bottom: 0;
   padding: .75em 1.5em;
   text-align: center;
+
+  body.ltr & {
+    float: left;
+  }
+  body.rtl & {
+    float: right;
+  }
 }
 .file-options .btn:first-child {
   border-right: 1px solid #ddd;
@@ -58,8 +70,14 @@
 }
 @media screen and (min-width: 120em) {
   .file-options .btn {
-    text-align: left;
     padding: 1em 1.5em;
+
+    body.ltr & {
+      text-align: left;
+    }
+    body.rtl & {
+      text-align: right;
+    }
   }
   .file-options .btn span {
     display: inline;

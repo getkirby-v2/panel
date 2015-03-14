@@ -8,8 +8,14 @@
   display: block;
 }
 .pagination .pagination-prev {
-  float: left;
-  padding-right: 1em;
+  body.ltr & {
+    float: left;
+    padding-right: 1em;
+  }
+  body.rtl & {
+    float: right;
+    padding-left: 1em;
+  }
 }
 .pagination-index {
   position: absolute;
@@ -19,8 +25,14 @@
   color: #777;
 }
 .pagination .pagination-next {
-  float: right;
-  padding-left: 1em;
+  body.ltr & {
+    float: right;
+    padding-left: 1em;
+  }
+  body.rtl & {
+    float: left;
+    padding-right: 1em;
+  }
 }
 .pagination .pagination-inactive {
   color: #ddd;

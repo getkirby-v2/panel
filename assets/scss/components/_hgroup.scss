@@ -14,10 +14,15 @@
   content: "";
   bottom: -.5em;
   margin-bottom: -2px;
-  left: 0;
   height: 2px;
   width: 100%;
   background: #000;
+  body.ltr & {
+    left: 0;
+  }
+  body.rtl & {
+    right: 0;
+  }
 }
 .hgroup-title {
   display: block;
@@ -40,17 +45,37 @@
   color: #000;
 }
 .hgroup-option-left {
-  float: left;
+  body.ltr & {
+    float: left;
+  }
+  body.rtl & {
+    float: right;
+  }
 }
 .hgroup-option-right {
-  float: right;
+  body.ltr & {
+    float: right;
+  }
+  body.rtl & {
+    float: left;
+  }
 }
 .hgroup-option-right a {
-  margin-left: 1em;
+  body.ltr & {
+    margin-left: 1em;
+  }
+  body.rtl & {
+    margin-right: 1em;
+  }
 }
 @media screen and (max-width:70em){
   .hgroup-option-right > a .icon-left {
-    padding-right: 0em;
+    body.ltr & {
+      padding-right: 0em;
+    }
+    body.rtl & {
+      padding-left: 0em;
+    }
   }
   .hgroup-option-right > a span {
     display: none;
@@ -69,8 +94,13 @@
 }
 .hgroup-single-line .hgroup-options {
   position: absolute;
-  right: 0;
   top: 0;
+  body.ltr & {
+    right: 0;
+  }
+  body.rtl & {
+    left: 0;
+  }
 }
 .hgroup-compressed {
   margin-bottom: .5em;

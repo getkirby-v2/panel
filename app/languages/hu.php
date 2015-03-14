@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Hungarian',
+  'direction' => 'ltr',
   'author' => 'Dávid Bóta <kukac7@gmail.com>',
   'version' => '0.0.1',
   'data' => array(

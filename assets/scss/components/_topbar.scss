@@ -11,25 +11,47 @@ body.loading .topbar:after {
   position: absolute;
   content: "";
   top: 0;
-  right: 0;
   width: 4em;
   height: 3em;
   background: #000 url(../images/loader.white.gif) no-repeat center center;
-  border-left: 1px solid #555;
   z-index: 10000000;
+
+  body.ltr & {
+    right: 0;
+    border-left: 1px solid #555;
+  }
+  body.rtl & {
+    left: 0;
+    border-right: 1px solid #555;
+  }
 }
 .topbar .nav-icon {
   position: absolute;
   top: 0;
 }
 .topbar .nav-icon-left {
-  left: 0;
+  body.ltr & {
+    left: 0;
+  }
+  body.rtl & {
+    right: 0;
+  }
 }
 .topbar .nav-icon-right {
-  right: 0;
+  body.ltr & {
+    right: 0;
+  }
+  body.rtl & {
+    left: 0;
+  }
 }
 .topbar .breadcrumb {
-  margin-left: 4em;
+  body.ltr & {
+    margin-left: 4em;
+  }
+  body.rtl & {
+    margin-right: 4em;
+  }
 }
 .topbar .dropdown {
   position: absolute;

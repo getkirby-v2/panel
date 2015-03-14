@@ -26,14 +26,24 @@
     position: absolute;
     width: 22em;
     top: 50%;
-    left: 50%;
     border-radius: 3px;
     box-shadow: rgba(0,0,0, .1) 0 2px 10px;
     z-index: 2;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
     margin: 0;
+
+    body.ltr & {
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    body.rtl & {
+      right: 50%;
+      -webkit-transform: translate(50%, -50%);
+      -moz-transform: translate(50%, -50%);
+      -ms-transform: translate(50%, -50%);
+      transform: translate(50%, -50%);
+    }
   }
 }

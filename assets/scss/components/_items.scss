@@ -44,13 +44,23 @@
 }
 .item-options li {
   width: 50%;
-  border-left: 1px solid #efefef;
+  body.ltr & {
+    border-left: 1px solid #efefef;
+  }
+  body.rtl & {
+    border-right: 1px solid #efefef;
+  }
 }
 .item-options-three li {
   width: 33.33%;
 }
 .item-options li:first-child {
-  border-left: 0;
+  body.ltr & {
+    border-left: 0;
+  }
+  body.rtl & {
+    border-right: 0;
+  }
 }
 .item-options .btn {
   padding: 1em 1.5em;
@@ -66,17 +76,33 @@
     height: 3em;
   }
   .item-title {
-    float: left;
     margin-bottom: 0;
+    body.ltr & {
+      float: left;
+    }
+    body.rtl & {
+      float: right;
+    }
   }
   .item-meta {
-    float: left;
+    body.ltr & {
+      float: left;
+    }
+    body.rtl & {
+      float: right;
+    }
   }
   .item-options {
     position: absolute;
     top: 0;
-    right: 0;
-    border-left: 1px solid #efefef;
+    body.ltr & {
+      right: 0;
+      border-left: 1px solid #efefef;
+    }
+    body.rtl & {
+      left: 0;
+      border-left: 1px solid #efefef;
+    }
   }
   .item-options li {
     width: auto;
@@ -93,7 +119,12 @@
   width: 100%;
 }
 .item-with-image .item-info {
-  margin-left: 4.25em;
+  body.ltr & {
+    margin-left: 4.25em;
+  }
+  body.rtl & {
+    margin-right: 4.25em;
+  }
 }
 
 @media screen and (min-width: 50em) {
@@ -103,7 +134,12 @@
     height: 3em;
   }
   .item-with-image .item-info {
-    margin-left: 3em;
+    body.ltr & {
+      margin-left: 3em;
+    }
+    body.rtl & {
+      margin-right: 3em;
+    }
   }
 
 }
@@ -125,7 +161,12 @@
     display: none;
   }
   .item-condensed .item-options i {
-    padding-right: 0;
+    body.ltr & {
+      padding-right: 0;
+    }
+    body.rtl & {
+      padding-left: 0;
+    }
   }
 
 }
@@ -135,7 +176,12 @@
   height: 3.75em;
 }
 .item-condensed.item-with-image .item-info {
-  margin-left: 3.75em;
+  body.ltr & {
+    margin-left: 3.75em;
+  }
+  body.rtl & {
+    margin-right: 3.75em;
+  }
 }
 
 @media screen and (min-width: 50em) {
@@ -145,7 +191,12 @@
     height: 2.5em;
   }
   .item-condensed.item-with-image .item-info {
-    margin-left: 2.5em;
+    body.ltr & {
+      margin-left: 2.5em;
+    }
+    body.rtl & {
+      margin-right: 2.5em;
+    }
   }
 
 }

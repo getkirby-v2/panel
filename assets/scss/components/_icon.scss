@@ -8,8 +8,18 @@
   text-align: center;
 }
 .icon-left {
-  padding-right: .5em;
+  body.ltr & {
+    padding-right: .5em;
+  }
+  body.rtl & {
+    padding-left: .5em;
+  }
 }
 .icon-right {
-  padding-left: .5em;
+  body.ltr & {
+    padding-left: .5em;
+  }
+  body.rtl & {
+    padding-right: .5em;
+  }
 }

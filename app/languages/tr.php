@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Türkçe',
+  'direction' => 'ltr',
   'author' => 'Levent Usta <aristotheme@gmail.com>',
   'version' => '1.0.0',
   'data' => array(

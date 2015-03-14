@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Français',
+  'direction' => 'ltr',
   'author' => 'Philippe Gervaise & Aris Papathéodorou',
   'version' => '1.0.0',
   'data' => array(

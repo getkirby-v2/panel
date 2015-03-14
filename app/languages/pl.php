@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Polski',
+  'direction' => 'ltr',
   'author' => 'Piotr Świderek <piotrek@bardzofajny.net>',
   'version' => '1.0.0',
   'data' => array(

@@ -41,16 +41,38 @@
   width: 3em;
 }
 .subpages-help-right {
-  padding-right: 3em;
+  body.ltr & {
+    padding-right: 3em;
+  }
+  body.rtl & {
+    padding-left: 3em;
+  }
 }
 .subpages-help-right:after {
-  right: 0;
-  background: url(../images/hint.arrows.png) no-repeat top right;
+  body.ltr & {
+    right: 0;
+    background: url(../images/hint.arrows.png) no-repeat top right;
+  }
+  body.rtl & {
+    left: 0;
+    background: url(../images/hint.arrows.png) no-repeat top left;
+  }
 }
 .subpages-help-left {
-  padding-left: 3em;
+  body.ltr & {
+    padding-left: 3em;
+  }
+  body.rtl & {
+    padding-right: 3em;
+  }
 }
 .subpages-help-left:after {
-  left: 0;
-  background: url(../images/hint.arrows.png) no-repeat top left;
+  body.ltr & {
+    left: 0;
+    background: url(../images/hint.arrows.png) no-repeat top left;
+  }
+  body.rtl & {
+    right: 0;
+    background: url(../images/hint.arrows.png) no-repeat top right;
+  }
 }

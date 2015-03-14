@@ -2,6 +2,9 @@ html,
 body {
   height: 100%;
 }
+body.rtl {
+  direction: rtl;
+}
 .app {
   padding-top: 3em;
 }

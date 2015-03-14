@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'English',
+  'direction' => 'ltr',
   'author' => 'Bastian Allgeier <bastian@getkirby.com>',
   'version' => '1.0.0',
   'data' => array(
