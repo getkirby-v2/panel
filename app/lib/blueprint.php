@@ -44,11 +44,11 @@ class Blueprint extends Obj {
     if(is_a($id, 'Page')) {
 
       $name = $id->intendedTemplate();
-      $file = static::$root . DS . $name . '.php';
+      $file = static::$root . DS . strtolower($name) . '.php';
 
       if(!file_exists($file)) {
         $name = $id->template();
-        $file = static::$root . DS . $name . '.php';
+        $file = static::$root . DS . strtolower($name) . '.php';
 
         if(!file_exists($file)) {
           $name = 'default';
@@ -60,7 +60,7 @@ class Blueprint extends Obj {
       $name = f::name($id);
     } else {
       $name = $id;
-      $file = static::$root . DS . $name . '.php';
+      $file = static::$root . DS . strtolower($name) . '.php';
 
       if(!file_exists($file)) {
         $name = 'default';
