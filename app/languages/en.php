@@ -249,7 +249,7 @@ return array(
     'fields.structure.add.first' => 'Add the first entry',
     'fields.structure.empty' => 'No entries yet.',
     'fields.structure.cancel' => 'Cancel',
-    'fields.structure.save' => 'Save',
+    'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Edit',
     'fields.structure.delete' => 'Delete',
     'fields.tags.label' => 'Tags',

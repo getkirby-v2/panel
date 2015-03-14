@@ -228,7 +228,7 @@ return array (
     'fields.structure.add.first' => 'Füge den ersten Eintrag hinzu',
     'fields.structure.empty' => 'Es bestehen keine Einträge.',
     'fields.structure.cancel' => 'Abbrechen',
-    'fields.structure.save' => 'Speichern',
+    'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Bearbeiten',
     'fields.structure.delete' => 'Löschen',
     'fields.tags.label' => 'Tags',
