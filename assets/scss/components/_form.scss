@@ -158,37 +158,18 @@ fieldset {
   z-index: 1;
 }
 .field-buttons:before {
-  body.ltr & {
-    left: 0;
-    background: -webkit-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: -moz-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: -ms-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-  }
-  body.rtl & {
-    right: 0;
-    background: -webkit-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: -moz-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: -ms-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-  }
+  left: 0;
+  background: -webkit-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+  background: -moz-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+  background: -ms-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+  background: linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
 }
 .field-buttons:after {
-  body.ltr & {
-    right: 0;
-    background: -webkit-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: -moz-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: -ms-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-  }
-  body.rtl & {
-    left: 0;
-    background: -webkit-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: -moz-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: -ms-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-    background: linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-  }
-
+  right: 0;
+  background: -webkit-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+  background: -moz-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+  background: -ms-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+  background: linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
 }
 @media screen and (min-width: 30em) {
   .field-buttons:before,
@@ -201,21 +182,11 @@ fieldset {
 }
 .field-buttons li {
   display: inline-block;
-  float: none;
-  body.ltr & {
-    border-right: 1px solid #efefef;
-  }
-  body.rtl & {
-    border-left: 1px solid #efefef;
-  }
+  border-right: 1px solid #efefef;
+  float: none !important;
 }
 .field-buttons li:last-child {
-  body.ltr & {
-    border-right: 0;
-  }
-  body.rtl & {
-    border-left: 0;
-  }
+  border-right: 0;
 }
 .field-buttons .btn {
   padding: .5em 1.5em;
@@ -465,7 +436,7 @@ textarea.over {
 }
 .buttons-centered .btn-cancel,
 .buttons-centered .btn-submit {
-  float: none;
+  float: none !important;
 }
 
 /* Special fields */
