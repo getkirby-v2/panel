@@ -41,22 +41,40 @@
   text-align: center;
 }
 .fa-ul {
-  padding-left: 0;
-  margin-left: 2.14285714em;
   list-style-type: none;
+
+  body.ltr & {
+    margin-left: 2.14285714em;
+    padding-left: 0;
+  }
+  body.rtl & {
+    margin-right: 2.14285714em;
+    padding-right: 0;
+  }
 }
 .fa-ul > li {
   position: relative;
 }
 .fa-li {
   position: absolute;
-  left: -2.14285714em;
   width: 2.14285714em;
   top: 0.14285714em;
   text-align: center;
+
+  body.ltr & {
+    left: -2.14285714em;
+  }
+  body.rtl & {
+    right: -2.14285714em;
+  }
 }
 .fa-li.fa-lg {
-  left: -1.85714286em;
+  body.ltr & {
+    left: -1.85714286em;
+  }
+  body.rtl & {
+    right: -1.85714286em;
+  }
 }
 .fa-border {
   padding: .2em .25em .15em;
@@ -64,16 +82,36 @@
   border-radius: .1em;
 }
 .pull-right {
-  float: right;
+  body.ltr & {
+    float: right;
+  }
+  body.rtl & {
+    float: left;
+  }
 }
 .pull-left {
-  float: left;
+  body.ltr & {
+    float: left;
+  }
+  body.rtl & {
+    float: right;
+  }
 }
 .fa.pull-left {
-  margin-right: .3em;
+  body.ltr & {
+    margin-right: .3em;
+  }
+  body.rtl & {
+    margin-left: .3em;
+  }
 }
 .fa.pull-right {
-  margin-left: .3em;
+  body.ltr & {
+    margin-left: .3em;
+  }
+  body.rtl & {
+    margin-right: .3em;
+  }
 }
 .fa-spin {
   -webkit-animation: fa-spin 2s infinite linear;

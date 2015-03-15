@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Bahasa Indonesia',
+  'direction' => 'ltr',
   'author' => 'Justin Rahardjo <emailme@justinrahardjo.info>',
   'version' => '1.0.0',
   'data' => array(

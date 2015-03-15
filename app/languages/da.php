@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Dansk',
+  'direction' => 'ltr',
   'author' => 'Jimmy Rittenborg <jimmy@rittencom.dk>',
   'version' => '1.1.0',
   'data' => array(

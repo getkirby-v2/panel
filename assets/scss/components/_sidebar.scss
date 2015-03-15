@@ -18,11 +18,16 @@
   position: absolute;
   content: "";
   top: 50%;
-  right: 1.5em;
   margin-top: -.15em;
   border-top: .4em solid #000;
   border-left: .4em solid transparent;
   border-right: .4em solid transparent;
+  body.ltr & {
+    right: 1.5em;
+  }
+  body.rtl & {
+    left: 1.5em;
+  }
 }
 .sidebar-expanded .sidebar-toggle:before {
   content: attr(data-hide);
@@ -53,8 +58,13 @@
 @media screen and (min-width: 50em) {
   .sidebar {
     width: 33.33%;
-    float: left;
     padding: 0;
+    body.ltr & {
+      float: left;
+    }
+    body.rtl & {
+      float: right;
+    }
   }
   .sidebar-toggle {
     display: none !important;
@@ -64,18 +74,28 @@
   }
   .mainbar {
     width: 66.66%;
-    float: left;
+    body.ltr & {
+      float: left;
+    }
+    body.rtl & {
+      float: right;
+    }
   }
   .bars-with-sidebar-left:before {
     position: absolute;
     content: "";
     top: 0;
-    left: 0;
     bottom: 0;
     height: 100%;
     width: 33.33%;
     background: #fff;
     z-index: -1;
+    body.ltr & {
+      left: 0;
+    }
+    body.rtl & {
+      right: 0;
+    }
   }
 
 }
@@ -90,17 +110,33 @@
   overflow: hidden;
 }
 .sidebar-list > li > a {
-  padding: .25em 0 .25em 1.75em;
+  body.ltr & {
+    padding: .25em 0 .25em 1.75em;
+  }
+  body.rtl & {
+    padding: .25em 1.75em .25em 0;
+  }
 }
 .sidebar-list .icon {
   position: absolute;
-  left: 0;
   top: .4em;
+  body.ltr & {
+    left: 0;
+  }
+  body.rtl & {
+    right: 0;
+  }
 }
 .sidebar-list .marginalia {
   position: absolute;
-  right: 0;
-  padding-left: .5em;
+  body.ltr & {
+    right: 0;
+    padding-left: .5em;
+  }
+  body.rtl & {
+    left: 0;
+    padding-right: .5em;
+  }
 }
 .sidebar-search {
   padding: .5em 0;

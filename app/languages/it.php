@@ -2,6 +2,7 @@
 
 return array(
   'title'   => 'Italiano',
+  'direction' => 'ltr',
   'author'  => 'mirco <e0ae240@gmail.com>',
   'version' => '1.0.0',
   'data'    => array(

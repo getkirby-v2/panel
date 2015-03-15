@@ -18,8 +18,14 @@
   color: #fff;
 }
 .text blockquote {
-  padding-left: 1.5em;
-  border-left: 6px solid #ddd;
+  body.ltr & {
+    padding-left: 1.5em;
+    border-left: 6px solid #ddd;
+  }
+  body.rtl & {
+    padding-right: 1.5em;
+    border-right: 6px solid #ddd;
+  }
 }
 .text figure {
   display: block;
@@ -36,7 +42,12 @@
   margin-bottom: 0;
 }
 .text ul {
-  margin-left: 1em;
+  body.ltr & {
+    margin-left: 1em;
+  }
+  body.rtl & {
+    margin-right: 1em;
+  }
 }
 .text ol {
   margin-bottom: 1.5em;
@@ -46,5 +57,10 @@
   margin-bottom: 0;
 }
 .text ol {
-  margin-left: 1.25em;
+  body.ltr & {
+    margin-left: 1.25em;
+  }
+  body.rtl & {
+    margin-right: 1.25em;
+  }
 }

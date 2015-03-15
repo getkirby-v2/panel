@@ -14,7 +14,7 @@
     <?php endif ?>
 
   </head>
-  <body class="login grey">
+  <body class="login grey <?php echo panel()->direction() ?>">
 
     <div class="modal-content">
 

@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Español (América Latina)',
+  'direction' => 'ltr',
   'author' => 'Iván Soria <invasoria@gmail.com>',
   'version' => '1.0.2',
   'data' => array(

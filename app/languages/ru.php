@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Русский (Russian)',
+  'direction' => 'ltr',
   'author' => 'Mike Sakhonenko <hello@imike.ru>',
   'version' => '1.0.2',
   'data' => array(

@@ -8,21 +8,25 @@
   position: absolute;
   content: "";
   top: -.5em;
-  left: 1em;
   border-left: .5em solid transparent;
   border-right: .5em solid transparent;
   border-bottom: .5em solid #000;
+
+  body.ltr & { left: 1em; }
+  body.rtl & { right: 1em; }
 }
 .autocomplete button {
   display: block;
   width: 100%;
-  text-align: left;
   background: none;
   border: 0;
   padding: .5em 1em;
   border-bottom: 1px solid rgba(255,255,255, .2);
   color: #fff;
   background: #000;
+
+  body.ltr & { text-align: left; }
+  body.rtl & { text-align: right; }
 }
 .autocomplete button:first-child {
   border-top-left-radius: 3px;

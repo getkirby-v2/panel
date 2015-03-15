@@ -39,18 +39,29 @@ a.tag {
   padding: 0;
 }
 .tag button.tag-label {
-  padding-right: 3.5em;
+  body.ltr & {
+    padding-right: 3.5em;
+  }
+  body.rtl & {
+    padding-left: 3.5em;
+  }
 }
 .tag .tag-x {
   position: absolute;
   top: 0;
-  right: 0;
   line-height: 1em;
   padding: .4em 1em;
   font-style: normal;
   z-index: 1;
   color: rgba(255,255,255, .7);
-  border-left: 1px solid rgba(255,255,255, .3);
+  body.ltr & {
+    right: 0;
+    border-left: 1px solid rgba(255,255,255, .3);
+  }
+  body.rtl & {
+    left: 0;
+    border-right: 1px solid rgba(255,255,255, .3);
+  }
 }
 .tag .tag-x:hover,
 .tag .tag-x:focus {

@@ -9,5 +9,11 @@
 .file-selector input {
   position: absolute;
   top: 1.1em;
-  right: 1.5em;
+
+  body.ltr & {
+    right: 1.5em;
+  }
+  body.rtl & {
+    left: 1.5em;
+  }
 }

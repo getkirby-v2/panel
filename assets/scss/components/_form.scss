@@ -14,16 +14,26 @@ fieldset {
 }
 .label abbr {
   color: #8dae28;
-  padding-left: .25em;
   border: 0;
+  body.ltr & {
+    padding-left: .25em;
+  }
+  body.rtl & {
+    padding-right: .25em;
+  }
 }
 .label-option {
   position: absolute;
-  right: 0;
   top: 0;
   font-weight: 400;
   color: #777;
   line-height: 1.5em;
+  body.ltr & {
+    right: 0;
+  }
+  body.rtl & {
+    left: 0;
+  }
 }
 .label-option:hover {
   color: #000;
@@ -67,12 +77,18 @@ fieldset {
 .field-icon {
   position: absolute;
   top: 2px;
-  right: 2px;
   bottom: 2px;
   width: 3em;
-  border-left: 1px dashed #ddd;
   pointer-events: none;
   background: #fff;
+  body.ltr & {
+    right: 2px;
+    border-left: 1px dashed #ddd;
+  }
+  body.rtl & {
+    left: 2px;
+    border-right: 1px dashed #ddd;
+  }
 }
 .field-icon .icon {
   position: absolute;
@@ -84,7 +100,12 @@ fieldset {
   color: #777;
 }
 .field-with-icon .input {
-  padding-right: 3.5em;
+  body.ltr & {
+    padding-right: 3.5em;
+  }
+  body.rtl & {
+    padding-left: 3.5em;
+  }
 }
 .field-icon span {
   display: block;
@@ -96,7 +117,12 @@ fieldset {
 }
 .field-is-readonly .field-icon {
   background: #efefef;
-  border-left-color: #ccc;
+  body.ltr & {
+    border-left-color: #ccc;
+  }
+  body.rtl & {
+    border-right-color: #ccc;
+  }
 }
 .field-is-disabled {
   opacity: .5;
@@ -132,18 +158,37 @@ fieldset {
   z-index: 1;
 }
 .field-buttons:before {
-  left: 0;
-  background: -webkit-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-  background: -moz-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-  background: -ms-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
-  background: linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+  body.ltr & {
+    left: 0;
+    background: -webkit-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: -moz-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: -ms-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+  }
+  body.rtl & {
+    right: 0;
+    background: -webkit-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: -moz-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: -ms-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+  }
 }
 .field-buttons:after {
-  right: 0;
-  background: -webkit-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-  background: -moz-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-  background: -ms-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
-  background: linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+  body.ltr & {
+    right: 0;
+    background: -webkit-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: -moz-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: -ms-linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: linear-gradient(right, rgba(0,0,0, .05), rgba(255,255,255,0));
+  }
+  body.rtl & {
+    left: 0;
+    background: -webkit-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: -moz-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: -ms-linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+    background: linear-gradient(left, rgba(0,0,0, .05), rgba(255,255,255,0));
+  }
+
 }
 @media screen and (min-width: 30em) {
   .field-buttons:before,
@@ -155,12 +200,22 @@ fieldset {
   overflow: auto;
 }
 .field-buttons li {
-  border-right: 1px solid #efefef;
   display: inline-block;
   float: none;
+  body.ltr & {
+    border-right: 1px solid #efefef;
+  }
+  body.rtl & {
+    border-left: 1px solid #efefef;
+  }
 }
 .field-buttons li:last-child {
-  border-right: 0;
+  body.ltr & {
+    border-right: 0;
+  }
+  body.rtl & {
+    border-left: 0;
+  }
 }
 .field-buttons .btn {
   padding: .5em 1.5em;
@@ -178,13 +233,23 @@ fieldset {
 
 /* Field Grid */
 .field-grid {
-  margin-left: -1.5em;
+  body.ltr & {
+    margin-left: -1.5em;
+  }
+  body.rtl & {
+    margin-right: -1.5em;
+  }
 }
 .field-grid-item {
   display: inline-block;
   width: 100%;
-  padding-left: 1.5em;
   vertical-align: top;
+  body.ltr & {
+    padding-left: 1.5em;
+  }
+  body.rtl & {
+    padding-right: 1.5em;
+  }
 }
 @media screen and (min-width: 60em) {
   .field-grid-item-1-2,
@@ -252,14 +317,25 @@ textarea.over {
 .input-with-radio .radio {
   position: relative;
   top: -1px;
-  margin: 0 1em 0 .25em;
+  body.ltr & {
+    margin: 0 1em 0 .25em;
+  }
+  body.rtl & {
+    margin: 0 .25em 0 1em;
+  }
 }
 .input-with-checkbox {
   overflow: hidden;
 }
 .input-with-checkbox .checkbox {
-  float: left;
-  margin: .3em 1em .3em .25em;
+  body.ltr & {
+    float: left;
+    margin: .3em 1em .3em .25em;
+  }
+  body.rtl & {
+    float: right;
+    margin: .3em .25em .3em 1;
+  }
 }
 .selectbox {
   width: 100%;
@@ -275,7 +351,12 @@ textarea.over {
   line-height: 1em;
 }
 .input-with-selectbox .selectbox-wrapper {
-  margin-right: -3em;
+  body.ltr & {
+    margin-right: -3em;
+  }
+  body.rtl & {
+    margin-left: -3em;
+  }
 }
 .input-with-selectbox .selectbox {
   line-height: 1.5em;
@@ -307,7 +388,12 @@ textarea.over {
   padding: 3px;
 }
 .field-with-icon .input-with-tags {
-  padding-right: 3.25em;
+  body.ltr & {
+    padding-right: 3.25em;
+  }
+  body.rtl & {
+    padding-left: 3.25em;
+  }
 }
 .tag-input {
   margin: 3px;
@@ -356,10 +442,20 @@ textarea.over {
   margin: .5em 0;
 }
 .buttons .btn-cancel {
-  float: left;
+  body.ltr & {
+    float: left;
+  }
+  body.rtl & {
+    float: right;
+  }
 }
 .buttons .btn-submit {
-  float: right;
+  body.ltr & {
+    float: right;
+  }
+  body.rtl & {
+    float: left;
+  }
 }
 .buttons-centered {
   text-align: center;

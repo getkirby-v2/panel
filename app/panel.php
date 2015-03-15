@@ -58,7 +58,7 @@ class Panel {
       if(!$user or !$user->hasPanelAccess()) {
         if($user) $user->logout();
         go('panel/login');
-      } 
+      }
     });
 
     // check for a completed installation
@@ -143,7 +143,7 @@ class Panel {
       $language = new Obj($strings);
       $language->code = str_replace('.php', '', $file);
       $languages->set($language->code, $language);
-    
+
     }
 
     return $languages;
@@ -169,6 +169,14 @@ class Panel {
     // set all language variables
     l::$data = $translation['data'];
 
+    // set language direction (ltr is default)
+    if (isset($translation['direction']) and
+        $translation['direction'] == 'rtl') {
+      l::set('language.direction', 'rtl');
+    } else {
+      l::set('language.direction', 'ltr');
+    }
+
   }
 
   public function multilang() {
@@ -186,6 +194,10 @@ class Panel {
 
     s::set('lang', $this->site->language()->code());
 
+  }
+
+  public function direction() {
+    return l::get('language.direction');
   }
 
   public function launch($path = null) {

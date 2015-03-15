@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Nederlands',
+  'direction' => 'ltr',
   'author' => 'Donan Gallagher <donangallagher@gmail.com> and Rutger Laurman <info@lekkerduidelijk.nl>',
   'version' => '1.0.1',
   'data' => array(

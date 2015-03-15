@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Română',
+  'direction' => 'ltr',
   'author' => 'Structor <zabamarza@yahoo.com>',
   'version' => '2.0.0',
   'data' => array(
