@@ -28,6 +28,7 @@ class Assets {
       'vendors/jquery.ui.touch.js',
       'vendors/jquery.autocomplete.js',
       'vendors/jquery.editorHelpers.js',
+      'vendors/jquery.passwordsuggestion.js',
       'vendors/jquery.serializeObject.js',
       'vendors/jquery.view.js',
       'vendors/http.js',
@@ -54,7 +55,7 @@ class Assets {
       'controllers/files.js',
       'controllers/errors.js',
       'controllers/editor.js',
-      
+
       // models
       'models/page.js',
       'models/file.js',

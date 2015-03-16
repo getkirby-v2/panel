@@ -4,7 +4,7 @@ return array (
   'title' => 'Deutsch',
   'direction' => 'ltr',
   'author' => 'Bastian Allgeier <bastian@getkirby.com>',
-  'version' => '1.0.0',
+  'version' => '1.0.1',
   'data' =>
   array (
     'cancel' => 'Abbrechen',
@@ -32,6 +32,7 @@ return array (
     'installation.signup.email.placeholder' => 'mail@beispiel.de',
     'installation.signup.language.label' => 'Sprache',
     'installation.signup.password.label' => 'Passwort',
+    'installation.signup.passwordsuggestion.label' => 'Vorschlag: <code class="pw-suggestion"></code> <a href="#" class="pw-fill">Use</a>',
     'installation.signup.button' => 'Erstellen',
     'login' => 'Anmelden',
     'login.welcome' => 'Bitte melde dich mit deinem neuen Account an',
@@ -156,6 +157,7 @@ return array (
     'users.form.password.new.label' => 'Neues Passwort',
     'users.form.password.new.confirm.label' => 'Neues Passwort bestätigen',
     'users.form.password.new.help' => 'Leer lassen, um das aktuelle Passwort zu behalten',
+    'user.form.password.suggestion' => 'Vorschlag: <code class="pw-suggestion"></code> <a href="#" class="pw-fill">Use</a>',
     'users.form.language.label' => 'Sprache',
     'users.form.role.label' => 'Rolle',
     'users.form.options.headline' => 'Accounteinstellungen',

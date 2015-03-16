@@ -15,6 +15,7 @@ var UsersController = {
 
       var form = element.find('.form').form();
 
+
       form.find('[autofocus]').focus();
 
       form.on('submit', function() {
@@ -26,6 +27,13 @@ var UsersController = {
         });
         return false
 
+      });
+
+      // Password suggestion
+      form.find('.pw-suggestion').text(form.suggestPassword());
+      form.find('.pw-fill').click(function(e) {
+        e.preventDefault();
+        form.find('input[type=password]').fillPassword();
       });
 
     });
