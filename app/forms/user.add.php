@@ -22,6 +22,7 @@ password:
   type: password
   width: 1/2
   required: true
+  help: user.form.password.suggestion
 passwordConfirmation:
   label: users.form.password.confirm.label
   type: password

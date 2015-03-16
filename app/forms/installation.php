@@ -16,6 +16,7 @@ password:
   type: password
   required: true
   autocomplete: false
+  help: installation.signup.passwordsuggestion.label
 language:
   label: installation.signup.language.label
   type: select

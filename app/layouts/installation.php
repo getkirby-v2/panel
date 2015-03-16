@@ -23,6 +23,13 @@
         $(this).remove();
       });
 
+      $('.pw-suggestion').text($('.form').suggestPassword());
+
+      $('.pw-fill').click(function(e) {
+        e.preventDefault();
+        $('input[type=password]').fillPassword();
+      });
+
     </script>
 
   </body>
