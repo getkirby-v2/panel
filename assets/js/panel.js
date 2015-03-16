@@ -459,6 +459,29 @@ this.Handlebars=function(){var a=function(){"use strict";function a(a){this.stri
 })(jQuery);  
 (function($) {
 
+  $.suggestPassword = function(length) {
+
+    var length   = length || 32;
+    var set      = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789!@#$%&*?';
+    var password = '';
+
+    for(x=0; x<length; x++) {
+      password += set[Math.floor(set.length * Math.random())];
+    }
+
+    return password;
+
+  };
+
+  $.fn.fillPassword = function () {
+    return this.each(function() {
+      $(this).val($('.pw-suggestion').text());
+    });
+  };
+
+})(jQuery);
+(function($) {
+
   $.fn.serializeObject = function() {
     var o = {};
     var a = this.serializeArray();
@@ -885,8 +908,24 @@ var UsersController = {
       element.find('.sidebar').sidebar();
 
       var form = element.find('.form').form();
+      var pass = form.find('input[type=password]');
 
       form.find('[autofocus]').focus();
+
+      // Password suggestion
+      form.find('.pw-reload').on('click', function(e) {
+        e.preventDefault();
+        form.find('.pw-suggestion').text($.suggestPassword());
+      }).trigger('click');
+
+      pass.on('blur', function() {
+        pass.attr('type', 'password');
+      });
+
+      form.find('.pw-suggestion').click(function(e) {
+        e.preventDefault();
+        pass.attr('type', 'text').fillPassword().first().select();
+      });
 
       form.on('submit', function() {
 
@@ -910,8 +949,24 @@ var UsersController = {
 
       var form = element.find('.form').form();
       var lang = form.find('[name=language]').val();
+      var pass = form.find('input[type=password]');
 
       form.find('[autofocus]').focus();
+
+      // Password suggestion
+      form.find('.pw-reload').on('click', function(e) {
+        e.preventDefault();
+        form.find('.pw-suggestion').text($.suggestPassword());
+      }).trigger('click');
+
+      pass.on('blur', function() {
+        pass.attr('type', 'password');
+      });
+
+      form.find('.pw-suggestion').click(function(e) {
+        e.preventDefault();
+        pass.attr('type', 'text').fillPassword().first().select();
+      });
 
       form.on('submit', function() {
         
@@ -1005,6 +1060,7 @@ var UsersController = {
 
   }
 };
+
 /**
  *
  */

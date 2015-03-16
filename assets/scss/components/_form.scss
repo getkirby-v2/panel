@@ -53,6 +53,26 @@ fieldset {
   padding: .5em 0;
   font-style: italic;
 }
+.field-help .pw-suggestion {
+  background: #dedede;
+  padding: .15em .75em;
+  border-radius: 1em;
+  line-height: 1em;
+  font-size: 1em;
+  font-family: Courier, monospace;
+  font-style: normal;
+  cursor: pointer;
+}
+.field-help .pw-suggestion:hover {
+  background: #8DAE28;
+  color: #fff;
+}
+.field-help .pw-reload {
+  position: relative;
+  top: 3px;
+  border: 0;
+  margin-left: .5em;
+}
 .field-with-error .input {
   border-color: #b3000a;
 }

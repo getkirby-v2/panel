@@ -16,7 +16,8 @@ password:
   type: password
   required: true
   autocomplete: false
-  help: installation.signup.passwordsuggestion.label
+  help: >
+    <code class="pw-suggestion"></code><a class="pw-reload" href="#"><i class="fa fa-refresh icon"></i></a>
 language:
   label: installation.signup.language.label
   type: select

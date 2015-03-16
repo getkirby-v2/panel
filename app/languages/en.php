@@ -36,7 +36,6 @@ return array(
     'installation.signup.email.label' => 'Email',
     'installation.signup.email.placeholder' => 'mail@example.com',
     'installation.signup.password.label' => 'Password',
-    'installation.signup.passwordsuggestion.label' => 'Suggestion: <code class="pw-suggestion"></code> <a href="#" class="pw-fill">Use</a>',
     'installation.signup.language.label' => 'Language',
     'installation.signup.button' => 'Create your account',
 
@@ -179,7 +178,6 @@ return array(
     'users.form.password.new.label' => 'New password',
     'users.form.password.new.confirm.label' => 'Confirm the new password',
     'users.form.password.new.help' => 'Leave blank to keep the current password',
-    'user.form.password.suggestion' => 'Suggestion: <code class="pw-suggestion"></code> <a href="#" class="pw-fill">Use</a>',
     'users.form.language.label' => 'Language',
     'users.form.role.label' => 'Role',
     'users.form.options.headline' => 'Account options',

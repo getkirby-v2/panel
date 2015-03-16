@@ -22,6 +22,8 @@ password:
   type: password
   help: users.form.password.new.help
   width: 1/2
+  help: >
+    <code class="pw-suggestion"></code><a class="pw-reload" href="#"><i class="fa fa-refresh icon"></i></a>
 passwordConfirmation:
   label: users.form.password.new.confirm.label
   type: password

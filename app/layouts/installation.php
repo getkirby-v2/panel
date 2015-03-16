@@ -23,11 +23,21 @@
         $(this).remove();
       });
 
-      $('.pw-suggestion').text($('.form').suggestPassword());
+      var $suggest = $('.pw-suggestion');
+      var $input   = $('input[type=password]');
 
-      $('.pw-fill').click(function(e) {
+      $input.on('blur', function() {
+        $input.attr('type', 'password');
+      });
+
+      $suggest.text($.suggestPassword(24)).on('click', function(e) {
         e.preventDefault();
-        $('input[type=password]').fillPassword();
+        $input.attr('type', 'text').fillPassword().select();
+      });
+
+      $('.pw-reload').on('click', function(e) {
+        e.preventDefault();
+        $suggest.text($.suggestPassword(24));
       });
 
     </script>

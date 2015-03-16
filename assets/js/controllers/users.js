@@ -14,9 +14,24 @@ var UsersController = {
       element.find('.sidebar').sidebar();
 
       var form = element.find('.form').form();
-
+      var pass = form.find('input[type=password]');
 
       form.find('[autofocus]').focus();
+
+      // Password suggestion
+      form.find('.pw-reload').on('click', function(e) {
+        e.preventDefault();
+        form.find('.pw-suggestion').text($.suggestPassword());
+      }).trigger('click');
+
+      pass.on('blur', function() {
+        pass.attr('type', 'password');
+      });
+
+      form.find('.pw-suggestion').click(function(e) {
+        e.preventDefault();
+        pass.attr('type', 'text').fillPassword().first().select();
+      });
 
       form.on('submit', function() {
 
@@ -27,13 +42,6 @@ var UsersController = {
         });
         return false
 
-      });
-
-      // Password suggestion
-      form.find('.pw-suggestion').text(form.suggestPassword());
-      form.find('.pw-fill').click(function(e) {
-        e.preventDefault();
-        form.find('input[type=password]').fillPassword();
       });
 
     });
@@ -47,8 +55,24 @@ var UsersController = {
 
       var form = element.find('.form').form();
       var lang = form.find('[name=language]').val();
+      var pass = form.find('input[type=password]');
 
       form.find('[autofocus]').focus();
+
+      // Password suggestion
+      form.find('.pw-reload').on('click', function(e) {
+        e.preventDefault();
+        form.find('.pw-suggestion').text($.suggestPassword());
+      }).trigger('click');
+
+      pass.on('blur', function() {
+        pass.attr('type', 'password');
+      });
+
+      form.find('.pw-suggestion').click(function(e) {
+        e.preventDefault();
+        pass.attr('type', 'text').fillPassword().first().select();
+      });
 
       form.on('submit', function() {
         

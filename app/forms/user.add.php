@@ -22,7 +22,8 @@ password:
   type: password
   width: 1/2
   required: true
-  help: user.form.password.suggestion
+  help: >
+    <code class="pw-suggestion"></code><a class="pw-reload" href="#"><i class="fa fa-refresh icon"></i></a>
 passwordConfirmation:
   label: users.form.password.confirm.label
   type: password
