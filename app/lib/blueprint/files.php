@@ -16,6 +16,7 @@ class Files extends Obj {
   public $hide      = false;
   public $sort      = null;
   public $sortable  = false;
+  public $permissions = null;
   public $sanitize  = true;
 
   public function __construct($params = array()) {
@@ -24,14 +25,15 @@ class Files extends Obj {
     $this->params = $params;
 
     if($params === false) {
-      $this->fields     = array();
-      $this->type       = array();
-      $this->size       = false;
-      $this->width      = false;
-      $this->height     = false;
-      $this->max        = 0;
-      $this->hide       = true;
-      $this->sortable   = false;
+      $this->fields       = array();
+      $this->type         = array();
+      $this->size         = false;
+      $this->width        = false;
+      $this->height       = false;
+      $this->max          = 0;
+      $this->hide         = true;
+      $this->sortable     = false;
+      $this->permissions  = new Permissions(false, 'files');
 
     } else if(is_array($params)) {
       $this->fields     = a::get($params, 'fields', $this->fields);
@@ -46,10 +48,14 @@ class Files extends Obj {
       $this->sort       = a::get($params, 'sort', $this->sort);
       $this->sortable   = a::get($params, 'sortable', $this->sortable);
       $this->sanitize   = a::get($params, 'sanitize', true);
-
+      $this->permissions  = new Permissions(a::get($params, 'permissions', $this->permissions), 'files');
 
     }
 
+  }
+
+  public function can($permission, $role) {
+    return ($this->permissions == null) ? true : $this->permissions->allowed($permission, $role);
   }
 
   public function fields($page = null) {

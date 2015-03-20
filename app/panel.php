@@ -113,11 +113,12 @@ class Panel {
       'subpages'     => $this->roots->lib . DS . 'subpages.php',
 
       // blueprint stuff
-      'blueprint'         => $this->roots->lib . DS . 'blueprint.php',
-      'blueprint\\pages'  => $this->roots->lib . DS . 'blueprint' . DS . 'pages.php',
-      'blueprint\\files'  => $this->roots->lib . DS . 'blueprint' . DS . 'files.php',
-      'blueprint\\fields' => $this->roots->lib . DS . 'blueprint' . DS . 'fields.php',
-      'blueprint\\field'  => $this->roots->lib . DS . 'blueprint' . DS . 'field.php',
+      'blueprint'             => $this->roots->lib . DS . 'blueprint.php',
+      'blueprint\\pages'      => $this->roots->lib . DS . 'blueprint' . DS . 'pages.php',
+      'blueprint\\files'      => $this->roots->lib . DS . 'blueprint' . DS . 'files.php',
+      'blueprint\\fields'     => $this->roots->lib . DS . 'blueprint' . DS . 'fields.php',
+      'blueprint\\field'      => $this->roots->lib . DS . 'blueprint' . DS . 'field.php',
+      'blueprint\\permissions' => $this->roots->lib . DS . 'blueprint' . DS . 'permissions.php',
 
     ));
 
