@@ -50,13 +50,14 @@
   width: 50%;
   border-bottom: 0;
   padding: .75em 1.5em;
-  text-align: center;
 
   body.ltr & {
     float: left;
+    text-align: center;
   }
   body.rtl & {
     float: right;
+    text-align: center;
   }
 }
 .file-options .btn:first-child {
