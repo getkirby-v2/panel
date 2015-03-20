@@ -15,16 +15,16 @@ body.loading .topbar:after {
   height: 3em;
   background: #000 url(../images/loader.white.gif) no-repeat center center;
   z-index: 10000000;
-
-  body.ltr & {
-    right: 0;
-    border-left: 1px solid #555;
-  }
-  body.rtl & {
-    left: 0;
-    border-right: 1px solid #555;
-  }
 }
+body.ltr.loading .topbar:after {
+  right: 0;
+  border-left: 1px solid #555;
+}
+body.rtl.loading .topbar:after {
+  left: 0;
+  border-right: 1px solid #555;
+}
+
 .topbar .nav-icon {
   position: absolute;
   top: 0;
