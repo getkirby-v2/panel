@@ -55,7 +55,7 @@ class Panel {
 
       $user = $kirby->site()->user();
 
-      if(!$user or !$user->hasPanelAccess()) {
+      if(!$user or !$user->hasPermission('panel.access')) {
         if($user) $user->logout();
         go('panel/login');
       }

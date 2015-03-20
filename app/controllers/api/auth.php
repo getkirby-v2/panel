@@ -11,7 +11,7 @@ class AuthController extends Controller {
       return response::error($message);
     }
 
-    if(!$user->hasPanelAccess()) {
+    if(!$user->hasPermission('panel.access')) {
       return response::error($message);
     }
 
