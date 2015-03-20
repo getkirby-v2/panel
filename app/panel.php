@@ -109,6 +109,7 @@ class Panel {
       'form'         => $this->roots->lib . DS . 'form.php',
       'history'      => $this->roots->lib . DS . 'history.php',
       'installation' => $this->roots->lib . DS . 'installation.php',
+      'pageoptions'  => $this->roots->lib . DS . 'pageoptions.php',
       'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
       'subpages'     => $this->roots->lib . DS . 'subpages.php',
 

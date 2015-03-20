@@ -12,18 +12,22 @@
           <span>Move</span>
         </a>
       </li>
-      <li>
-        <a class="btn btn-with-icon" href="<?php _u($subpage, 'show') ?>">
-          <?php i('pencil', 'left') ?>
-          <span>Edit</span>
-        </a>
-      </li>
-      <li>
-        <a class="btn btn-with-icon" href="<?php _u('subpages/delete/' . $subpage->id()) ?>">
-          <?php i('trash-o', 'left') ?>
-          <span>Delete</span>
-        </a>
-      </li>
+      <?php if($editbutton) : ?>
+        <li>
+          <a class="btn btn-with-icon" href="<?php _u($subpage, 'show') ?>">
+            <?php i('pencil', 'left') ?>
+            <span>Edit</span>
+          </a>
+        </li>
+      <?php endif ?>
+      <?php if($deletebutton) : ?>
+        <li>
+          <a class="btn btn-with-icon" href="<?php _u('subpages/delete/' . $subpage->id()) ?>">
+            <?php i('trash-o', 'left') ?>
+            <span>Delete</span>
+          </a>
+        </li>
+      <?php endif ?>
     </ul>
   </nav>
 </div>

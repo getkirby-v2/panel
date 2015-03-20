@@ -4,6 +4,8 @@ class MetatagsController extends Controller {
 
   public function index() {
 
+    if(!site()->user()->hasPermission('site.update')) goToErrorView();
+
     $site      = site();
     $blueprint = blueprint::find($site);
     $fields    = $blueprint->fields()->toArray();

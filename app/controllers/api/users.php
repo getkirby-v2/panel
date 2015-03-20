@@ -14,7 +14,7 @@ class UsersController extends Controller {
 
   public function create() {
 
-    if(!site()->user()->isAdmin()) {
+    if(!site()->user()->hasPermission('user.add')) {
       return response::error('You are not allowed to create new users');
     }
 
@@ -44,7 +44,7 @@ class UsersController extends Controller {
       return response::error(l('users.edit.error.missing'));
     } else {
 
-      if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+      if(!site()->user()->hasPermission('user.edit') and !$user->isCurrent()) {
         return response::error('You are not allowed to edit this user');
       }
 
@@ -79,7 +79,8 @@ class UsersController extends Controller {
       return response::error(l('users.error.missing'));
     }
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!site()->user()->hasPermission('user.delete') or
+      ($user->isAdmin() and site()->roles()->get('admin')->users()->count() <= 1)) {
       return response::error('You are not allowed to delete this user');
     }
 

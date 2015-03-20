@@ -60,3 +60,11 @@
 .btn-with-icon .icon {
   color: #000;
 }
+.btn-disabled,
+.btn-disabled .icon {
+  color: #ddd;
+  cursor: default;
+}
+.btn-disabled:hover {
+  color: #ddd;
+}

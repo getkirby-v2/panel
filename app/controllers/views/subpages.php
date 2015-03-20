@@ -4,11 +4,12 @@ class SubpagesController extends Controller {
 
   public function index($id = null) {
 
-    $page      = $this->page($id);
-    $blueprint = blueprint::find($page);
-    $visible   = api::subpages($page->children()->visible(), $blueprint);
-    $invisible = $page->children()->invisible();
-    $baseUrl   = rtrim(purl('subpages/index/' . $page->id()), '/');
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+    $blueprint    = blueprint::find($page);
+    $visible      = api::subpages($page->children()->visible(), $blueprint);
+    $invisible    = $page->children()->invisible();
+    $baseUrl      = rtrim(purl('subpages/index/' . $page->id()), '/');
 
     // don't create the view if the page is not allowed to have subpages
     if($blueprint->pages()->max() === 0) {
@@ -18,7 +19,19 @@ class SubpagesController extends Controller {
     if($limit = $blueprint->pages()->limit()) {
 
       $visible   = $visible->paginate($limit, array('page' => get('visible')));
+      $visibleBtns = array('edit' => array(), 'delete' => array());
+      foreach ($visible as $index => $subpage) {
+        $subpageOptions = new PageOptions($subpage);
+        $visibleBtns['edit'][$subpage->uid()] = $subpageOptions->canEdit();
+        $visibleBtns['delete'][$subpage->uid()] = $subpageOptions->canDelete();
+      }
       $invisible = $invisible->paginate($limit, array('page' => get('invisible')));
+      $invisibleBtns = array('edit' => array(), 'delete' => array());
+      foreach ($invisible as $index => $subpage) {
+        $subpageOptions = new PageOptions($subpage);
+        $invisibleBtns['edit'][$subpage->uid()] = $subpageOptions->canEdit();
+        $invisibleBtns['delete'][$subpage->uid()] = $subpageOptions->canDelete();
+      }
 
       $visiblePagination = new Snippet('subpages/pagination', array(
         'pagination' => $visible->pagination(),
@@ -50,12 +63,16 @@ class SubpagesController extends Controller {
         'search' => purl($page, 'search')
       )),
       'baseurl'             => $baseUrl,
-      'addbutton'           => !api::maxPages($page, $blueprint->pages()->max()) and $page->hasChildren(),
-      'sortable'            => $blueprint->pages()->sortable(),
+      'addbutton'           => $pageOptions->canSubpagesAdd(),
+      'sortable'            => $pageOptions->canSubpagesSort(),
       'visible'             => $visible,
+      'visibleEditBtns'     => $visibleBtns['edit'],
+      'visibleDeleteBtns'   => $visibleBtns['delete'],
       'flip'                => $blueprint->pages()->sort() == 'flip',
       'visiblePagination'   => $visiblePagination,
       'invisible'           => $invisible,
+      'invisibleEditBtns'   => $invisibleBtns['edit'],
+      'invisibleDeleteBtns' => $invisibleBtns['delete'],
       'invisiblePagination' => $invisiblePagination,
     ));
 

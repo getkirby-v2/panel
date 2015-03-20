@@ -20,7 +20,7 @@
       </li>
       <?php endif ?>
 
-      <?php if(!$page->isErrorPage()): ?>
+      <?php if($hideable and !$page->isErrorPage()): ?>
       <li>
         <?php if($page->isInvisible()): ?>
         <a href="<?php echo purl($page, 'publish') ?>">
@@ -34,7 +34,7 @@
       </li>
       <?php endif; ?>
 
-      <?php if(!$page->isHomePage() and !$page->isErrorPage()): ?>
+      <?php if($urlchangable and !$page->isHomePage() and !$page->isErrorPage()): ?>
       <li>
         <a title="u" data-shortcut="u" href="<?php echo purl($page, 'url') ?>">
           <?php i('chain', 'left') . _l('pages.show.changeurl') ?>

@@ -4,6 +4,13 @@ class PagesController extends Controller {
 
   public function create($id = '') {
 
+    $page           = $this->page($id);
+    $pageOptions    = new PageOptions($page);
+
+    if(!$pageOptions->canSubpagesAdd()) {
+      return response::error('You are not allowed to create new pages');
+
+
     try {
 
       $page = api::createPage($id, get('title'), get('template'), get('uid'));
@@ -21,7 +28,11 @@ class PagesController extends Controller {
 
   public function update($id = '') {
 
-    $page = $this->page($id);
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+
+    if(!$pageOptions->canSave()) {
+      return response::error('You are not allowed to update pages');
 
     if(!$page) {
       return response::error(l('pages.error.missing'));
@@ -58,13 +69,13 @@ class PagesController extends Controller {
 
           if($num > 0) {
             $page->sort($num);
-          } 
+          }
 
         }
 
       }
 
-      // get the blueprint of the parent page to find the 
+      // get the blueprint of the parent page to find the
       // correct sorting mode for this page
       $parentBlueprint = blueprint::find($page->parent());
 
@@ -91,11 +102,16 @@ class PagesController extends Controller {
 
   public function delete($id) {
 
-    if($page = $this->page($id)) {
-      $parent = $page->parent();
+
+    if($page = $this->page($id);) {
+      $parent       = $page->parent();
+      $pageOptions  = new PageOptions($page);
     } else {
       return response::error(l('pages.error.missing'));
     }
+
+    if(!$pageOptions->canDelete())
+      return response::error('You are not allowed to delete pages');
 
     $subpages = new Subpages($parent);
 
@@ -110,11 +126,16 @@ class PagesController extends Controller {
 
   public function sort($id = '') {
 
-    if($page = $this->page($id)) {
-      $parent = $page->parent();
+    if ($page = $this->page($id)) {
+      $parent         = $page->parent();
+      $parentOptions  = new PageOptions($page);
     } else {
       return response::error(l('pages.error.missing'));
     }
+
+    if(!$parentOptions->canSubpagesSort())
+      return response::error('You are not allowed to sort pages');
+
 
     $subpages = new Subpages($parent);
     $num      = $subpages->sort($page, get('to'));
@@ -128,10 +149,14 @@ class PagesController extends Controller {
   public function publish($id) {
 
     if($page = $this->page($id)) {
-      $parent = $page->parent();
+      $parent       = $page->parent();
+      $pageOptions  = new PageOptions($page);
     } else {
       return response::error(l('pages.error.missing'));
     }
+
+    if(!$pageOptions->canHide())
+      return response::error('You are not allowed to publish pages');
 
     if($page->isErrorPage()) {
       return response::error('The error page cannot be published');
@@ -149,10 +174,15 @@ class PagesController extends Controller {
   public function hide($id) {
 
     if($page = $this->page($id)) {
-      $parent = $page->parent();
+      $parent       = $page->parent();
+      $pageOptions  = new PageOptions($page);
     } else {
       return response::error(l('pages.error.missing'));
     }
+
+    if(!$pageOptions->canHide())
+      return response::error('You are not allowed to hide pages');
+
 
     $subpages = new Subpages($parent);
 
@@ -167,11 +197,15 @@ class PagesController extends Controller {
 
   public function url($id) {
 
-    $page = $this->page($id);
-
-    if(!$page) {
+    if($page = $this->page($id)) {
+      $pageOptions  = new PageOptions($page);
+    } else {
       return response::error(l('pages.error.missing'));
     }
+
+    if(!$pageOptions->canChangeURL())
+      return response::error('You are not allowed to change pages urls');
+
 
     // avoid url changes for the home and error pages
     if($page->isErrorPage() or $page->isHomePage()) {

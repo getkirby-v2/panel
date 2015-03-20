@@ -10,7 +10,7 @@ class AvatarsController extends Controller {
       return response::error(l('users.avatar.error.missing'));
     }
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!site()->user()->hasPermission('user.edit') and !$user->isCurrent()) {
       return response::error('You are not allowed to upload an avatar for this user');
     }
 
@@ -52,7 +52,7 @@ class AvatarsController extends Controller {
       return response::error(l('users.avatar.delete.error.missing'));
     }
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!site()->user()->hasPermission('user.edit') and !$user->isCurrent()) {
       return response::error('You are not allowed to delete the avatar of this user');
     }
 

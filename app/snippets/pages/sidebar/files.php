@@ -8,12 +8,16 @@
   </span>
   <span class="hgroup-options shiv shiv-dark shiv-left">
     <span class="hgroup-option-right">
-      <a title="<?php _l('pages.show.files.edit') ?>" href="<?php _u('files/index/' . $page->id()) ?>">
-        <?php i('pencil', 'left') ?><span><?php _l('pages.show.files.edit') ?></span>
-      </a>
-      <a title="f" data-shortcut="f" href="<?php $page->isSite() ? _u('metatags/upload') : _u($page, 'upload') ?>">
-        <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.files.add') ?></span>
-      </a>
+      <?php if($editbutton) :?>
+        <a title="<?php _l('pages.show.files.edit') ?>" href="<?php _u('files/index/' . $page->id()) ?>">
+          <?php i('pencil', 'left') ?><span><?php _l('pages.show.files.edit') ?></span>
+        </a>
+      <?php endif ?>
+      <?php if($addbutton): ?>
+        <a title="f" data-shortcut="f" href="<?php $page->isSite() ? _u('metatags/upload') : _u($page, 'upload') ?>">
+          <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.files.add') ?></span>
+        </a>
+      <?php endif ?>
     </span>
   </span>
 </h2>
@@ -29,5 +33,13 @@
   <?php endforeach ?>
 </ul>
 <?php else: ?>
-<p class="marginalia"><a href="<?php _u($page, 'upload') ?>" class="marginalia"><?php _l('pages.show.files.empty') ?></a></p>
+<p class="marginalia">
+  <?php if($addbutton): ?>
+    <a href="<?php _u($page, 'upload') ?>" class="marginalia">
+  <?php endif ?>
+  <?php _l('pages.show.files.empty') ?>
+  <?php if($addbutton): ?>
+    </a>
+  <?php endif ?>
+</p>
 <?php endif ?>

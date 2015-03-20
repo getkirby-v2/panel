@@ -3,11 +3,17 @@
 class UsersController extends Controller {
 
   public function index() {
+    $user    = site()->user();
+
     return view('users/index', array(
-      'users'  => site()->users(),
-      'admin'  => site()->user()->isAdmin(),
-      'topbar' => new Snippet('topbar', array(
-        'breadcrumb' => new Snippet('breadcrumb', array(
+      'users'         => site()->users(),
+      'addbutton'     => $user->hasPermission('user.add'),
+      'editbutton'    => $user->hasPermission('user.edit') or
+                         $user->hasPermission('user.role'),
+      'deletebutton'  => $user->hasPermission('user.delete'),
+      'adminsleft'    => site()->roles()->get('admin')->users()->count(),
+      'topbar'        => new Snippet('topbar', array(
+        'breadcrumb'  => new Snippet('breadcrumb', array(
           'items' => array(
             array(
               'title' => l('users'),
@@ -21,7 +27,7 @@ class UsersController extends Controller {
 
   public function add() {
 
-    if(!site()->user()->isAdmin()) go(purl('error'));
+    if(!site()->user()->hasPermission('user.add')) goToErrorView();
 
     $form = $this->form();
     $form->back = purl('users');
@@ -50,12 +56,21 @@ class UsersController extends Controller {
 
   public function edit($username) {
 
-    $user = $this->user($username);
-    $form = $this->form($user);
+    $puser  = site()->user();
+    $user   = $this->user($username);
+    $form   = $this->form($user);
     $form->back = purl('users');
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!$user->isCurrent() and
+       !$puser->hasPermission('user.edit') and
+       !$puser->hasPermission('user.role')) {
       goToErrorView();
+    }
+
+    if (!$puser->hasPermission('user.edit')) {
+      foreach($form->fields() as $name => $field) {
+        if($name != 'role') $field->readonly = true;
+      }
     }
 
     return view('users/edit', array(
@@ -73,9 +88,13 @@ class UsersController extends Controller {
           )
         ))
       )),
-      'form'     => $form,
-      'writable' => is_writable(kirby()->roots()->accounts()),
-      'user'     => $user,
+      'form'          => $form,
+      'editbutton'    => $user->isCurrent() or
+                         $puser->hasPermission('user.edit'),
+      'deletebutton'  => $puser->hasPermission('user.delete') and
+                         (!$user->isAdmin() or site()->roles()->get('admin')->users()->count() > 1),
+      'writable'      => is_writable(kirby()->roots()->accounts()),
+      'user'          => $user,
     ));
 
   }
@@ -89,7 +108,7 @@ class UsersController extends Controller {
       'dashboard' => purl('')
     );
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!site()->user()->hasPermission('user.delete') or ($user->isAdmin() and site()->roles()->get('admin')->users()->count() <= 1)) {
       goToErrorView('modal');
     }
 
@@ -109,7 +128,7 @@ class UsersController extends Controller {
       'dashboard' => purl('')
     );
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!$user->isCurrent() and !site()->user()->hasPermission('user.edit')) {
       goToErrorView('modal');
     }
 
@@ -162,7 +181,7 @@ class UsersController extends Controller {
     }
 
     // make the role selector readonly when the user is not an admin
-    if(!site()->user()->isAdmin()) {
+    if(!site()->user()->hasPermission('user.role') and $mode != 'add') {
       $fields['role']['readonly'] = true;
     }
 
