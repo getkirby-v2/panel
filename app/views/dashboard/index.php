@@ -94,17 +94,19 @@
     </div>
 
     <?php foreach($widgets as $widget): ?>
-    <div class="section white dashboard-section">
+      <?php if ($widget): ?>
+        <div class="section white dashboard-section">
 
-      <h2 class="hgroup hgroup-single-line cf">
-        <span class="hgroup-title">
-          <?php __($widget['title']) ?>
-        </span>
-      </h2>
+          <h2 class="hgroup hgroup-single-line cf">
+            <span class="hgroup-title">
+              <?php __($widget['title']) ?>
+            </span>
+          </h2>
 
-      <?php echo $widget['html']() ?>
+          <?php echo $widget['html']() ?>
 
-    </div>
+        </div>
+      <?php endif; ?>
     <?php endforeach ?>
 
     <div class="section white dashboard-section">
