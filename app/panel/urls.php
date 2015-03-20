@@ -6,10 +6,12 @@ use Obj;
 
 class Urls extends Obj {
 
-  public function __construct($index) {
+  public function __construct($panel, $root) {
+
+    $this->panel = $panel;
 
     // base url
-    $this->index  = $index;
+    $this->index  = rtrim($this->panel->kirby()->urls()->index(), '/') . '/' . basename($root);
 
     // assets
     $this->assets = $this->index . '/assets';

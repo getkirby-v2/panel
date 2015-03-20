@@ -23,14 +23,14 @@ class Panel {
     return static::$version;
   }
 
-  public function __construct($kirby, $dir) {
+  public function __construct($kirby, $root) {
 
     static::$instance = $this;
 
     $this->kirby = $kirby;
     $this->site  = $kirby->site();
-    $this->roots = new Panel\Roots($dir);
-    $this->urls  = new Panel\Urls($kirby->urls()->index() . '/' . basename($dir));
+    $this->roots = new Panel\Roots($this, $root);
+    $this->urls  = new Panel\Urls($this, $root);
 
     // load all Kirby extensions (methods, tags, smartypants)
     $this->kirby->extensions();
