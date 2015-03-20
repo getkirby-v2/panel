@@ -321,6 +321,9 @@ textarea.over {
   padding: .5em;
   line-height: 1em;
 }
+.input-is-readonly.input-with-selectbox {
+  cursor: default;
+}
 .input-with-selectbox .selectbox-wrapper {
   body.ltr & {
     margin-right: -3em;
