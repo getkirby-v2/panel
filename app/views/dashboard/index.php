@@ -94,6 +94,7 @@
     </div>
 
     <?php foreach($widgets as $widget): ?>
+    <?php if(!$widget) continue; ?>
     <div class="section white dashboard-section">
 
       <h2 class="hgroup hgroup-single-line cf">
