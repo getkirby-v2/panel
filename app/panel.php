@@ -112,6 +112,7 @@ class Panel {
       'pageoptions'  => $this->roots->lib . DS . 'pageoptions.php',
       'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
       'subpages'     => $this->roots->lib . DS . 'subpages.php',
+      'usersoptions' => $this->roots->lib . DS . 'usersoptions.php',
 
       // blueprint stuff
       'blueprint'             => $this->roots->lib . DS . 'blueprint.php',

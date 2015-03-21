@@ -13,10 +13,10 @@ class UsersController extends Controller {
   }
 
   public function create() {
+    $usersOptions = new UsersOptions();
 
-    if(!site()->user()->hasPermission('user.add')) {
+    if(!$usersOptions->canAdd())
       return response::error('You are not allowed to create new users');
-    }
 
     $form = $this->form();
     $data = $form->toArray();
@@ -38,15 +38,15 @@ class UsersController extends Controller {
 
   public function update($username) {
 
-    $user = $this->user($username);
+    $user         = $this->user($username);
+    $usersOptions = new UsersOptions();
 
     if(!$user) {
       return response::error(l('users.edit.error.missing'));
     } else {
 
-      if(!site()->user()->hasPermission('user.edit') and !$user->isCurrent()) {
+      if(!$usersOptions->canEdit() and !$user->isCurrent())
         return response::error('You are not allowed to edit this user');
-      }
 
       $form = $this->form($user);
       $data = $form->toArray();
@@ -73,14 +73,15 @@ class UsersController extends Controller {
 
   public function delete($username) {
 
-    $user = $this->user($username);
+    $user         = $this->user($username);
+    $usersOptions = new UsersOptions();
 
     if(!$user) {
       return response::error(l('users.error.missing'));
     }
 
-    if(!site()->user()->hasPermission('user.delete') or
-      ($user->isAdmin() and site()->roles()->get('admin')->users()->count() <= 1)) {
+    if(!$usersOptions->canDelete() or
+      ($user->isAdmin() and $usersOptions->lastAdmin()) {
       return response::error('You are not allowed to delete this user');
     }
 

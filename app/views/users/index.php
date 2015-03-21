@@ -73,7 +73,7 @@
             </li>
 
             <li>
-              <?php if($deletebutton and (!$user->isAdmin() or $adminsleft > 1)) :?>
+              <?php if($deletebutton and !($user->isAdmin() and $lastadmin)) :?>
                 <a class="btn btn-with-icon" href="<?php echo purl($user, 'delete') ?>/via:index">
                   <?php i('trash-o', 'left') . _l('users.index.delete') ?>
                 </a>
