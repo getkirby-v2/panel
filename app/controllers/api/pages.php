@@ -103,7 +103,7 @@ class PagesController extends Controller {
   public function delete($id) {
 
 
-    if($page = $this->page($id);) {
+    if($page = $this->page($id)) {
       $parent       = $page->parent();
       $pageOptions  = new PageOptions($page);
     } else {

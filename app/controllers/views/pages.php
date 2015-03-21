@@ -11,27 +11,9 @@ class PagesController extends Controller {
     $content      = $page->content()->toArray();
     $files        = null;
     $subpages     = null;
-    $preview      = null;
 
     // create the preview link
-    if($previewSetting = $blueprint->preview()) {
-
-      switch($previewSetting) {
-        case 'parent':
-          $preview = $page->parent() ? $page->parent()->url() : $page->url();
-          break;
-        case 'first-child':
-          $preview = $page->children()->first() ? $page->children()->first()->url() : false;
-          break;
-        case 'last-child':
-          $preview = $page->children()->last()  ? $page->children()->last()->url() : false;
-          break;
-        default:
-          $preview = $page->url();
-          break;
-      }
-
-    }
+    $preview      = $pageOptions->previewLink();
 
     // make sure the title is always there
     $content['title'] = $page->title();

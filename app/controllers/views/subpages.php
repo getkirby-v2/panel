@@ -12,26 +12,14 @@ class SubpagesController extends Controller {
     $baseUrl      = rtrim(purl('subpages/index/' . $page->id()), '/');
 
     // don't create the view if the page is not allowed to have subpages
-    if($blueprint->pages()->max() === 0) {
-      goToErrorView();
-    }
+    if($blueprint->pages()->max() === 0) goToErrorView();
 
     if($limit = $blueprint->pages()->limit()) {
 
-      $visible   = $visible->paginate($limit, array('page' => get('visible')));
-      $visibleBtns = array('edit' => array(), 'delete' => array());
-      foreach ($visible as $index => $subpage) {
-        $subpageOptions = new PageOptions($subpage);
-        $visibleBtns['edit'][$subpage->uid()] = $subpageOptions->canEdit();
-        $visibleBtns['delete'][$subpage->uid()] = $subpageOptions->canDelete();
-      }
-      $invisible = $invisible->paginate($limit, array('page' => get('invisible')));
-      $invisibleBtns = array('edit' => array(), 'delete' => array());
-      foreach ($invisible as $index => $subpage) {
-        $subpageOptions = new PageOptions($subpage);
-        $invisibleBtns['edit'][$subpage->uid()] = $subpageOptions->canEdit();
-        $invisibleBtns['delete'][$subpage->uid()] = $subpageOptions->canDelete();
-      }
+      $visible       = $visible->paginate($limit, array('page' => get('visible')));
+      $visibleBtns   = $pageOptions->getSubpagesBtnsList($visible);
+      $invisible     = $invisible->paginate($limit, array('page' => get('invisible')));
+      $invisibleBtns = $pageOptions->getSubpagesBtnsList($invisible);
 
       $visiblePagination = new Snippet('subpages/pagination', array(
         'pagination' => $visible->pagination(),
@@ -68,12 +56,12 @@ class SubpagesController extends Controller {
       'visible'             => $visible,
       'visibleEditBtns'     => $visibleBtns['edit'],
       'visibleDeleteBtns'   => $visibleBtns['delete'],
-      'flip'                => $blueprint->pages()->sort() == 'flip',
       'visiblePagination'   => $visiblePagination,
       'invisible'           => $invisible,
       'invisibleEditBtns'   => $invisibleBtns['edit'],
       'invisibleDeleteBtns' => $invisibleBtns['delete'],
       'invisiblePagination' => $invisiblePagination,
+      'flip'                => $blueprint->pages()->sort() == 'flip',
     ));
 
   }
