@@ -15,7 +15,7 @@ class Pages extends Obj {
   public $num         = null;
   public $max         = null;
   public $hide        = false;
-  public $permissions = null;
+  public $permissions = true;
   public $build       = array();
 
   public function __construct($params = array()) {
@@ -54,7 +54,7 @@ class Pages extends Obj {
   }
 
   public function can($permission, $role) {
-    return ($this->permissions == null) ? true : $this->permissions->allowed($permission, $role);
+    return ($this->permissions === true) ? true : $this->permissions->allowed($permission, $role);
   }
 
   public function template() {

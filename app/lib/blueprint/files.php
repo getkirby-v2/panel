@@ -7,17 +7,17 @@ use Obj;
 
 class Files extends Obj {
 
-  public $fields    = array();
-  public $type      = array();
-  public $max       = null;
-  public $size      = false;
-  public $width     = false;
-  public $height    = false;
-  public $hide      = false;
-  public $sort      = null;
-  public $sortable  = false;
-  public $permissions = null;
-  public $sanitize  = true;
+  public $fields      = array();
+  public $type        = array();
+  public $max         = null;
+  public $size        = false;
+  public $width       = false;
+  public $height      = false;
+  public $hide        = false;
+  public $sort        = null;
+  public $sortable    = false;
+  public $permissions = true;
+  public $sanitize    = true;
 
   public function __construct($params = array()) {
 
@@ -55,7 +55,7 @@ class Files extends Obj {
   }
 
   public function can($permission, $role) {
-    return ($this->permissions == null) ? true : $this->permissions->allowed($permission, $role);
+    return ($this->permissions === true) ? true : $this->permissions->allowed($permission, $role);
   }
 
   public function fields($page = null) {

@@ -9,7 +9,7 @@ class Blueprint extends Obj {
   public $yaml        = array();
   public $title       = null;
   public $preview     = 'page';
-  public $permissions = null;
+  public $permissions = true;
   public $pages       = null;
   public $files       = null;
   public $fields      = array();
@@ -35,7 +35,7 @@ class Blueprint extends Obj {
   }
 
   public function can($permission, $role) {
-    return ($this->permissions == null) ? true : $this->permissions->allowed($permission, $role);
+    return ($this->permissions === true) ? true : $this->permissions->allowed($permission, $role);
   }
 
   public function fields($page = null) {
