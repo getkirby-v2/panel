@@ -6,9 +6,11 @@ class FilesController extends Controller {
 
     $page         = $this->page($id);
     $pageOptions  = new PageOptions($page);
+    $blueprint    = blueprint::find($page);
 
-    if(!$pageOptions->canFilesAdd())
+    if(!$pageOptions->canFilesAdd()){
       return response::error('You are not allowed to upload new files');
+    }
 
     $filename  = $blueprint->files()->sanitize() ? '{safeFilename}' : '{filename}';
 
@@ -46,8 +48,9 @@ class FilesController extends Controller {
     $page         = $this->page($id);
     $pageOptions  = new PageOptions($page);
 
-    if(!$pageOptions->canFilesReplace())
+    if(!$pageOptions->canFilesReplace()){
       return response::error('You are not allowed to replace files');
+    }
 
     $filename = get('filename');
     $file     = $this->file($id, $filename);
@@ -79,8 +82,9 @@ class FilesController extends Controller {
     $page         = $this->page($id);
     $pageOptions  = new PageOptions($page);
 
-    if(!$pageOptions->canFilesSave()) {
+    if(!$pageOptions->canFilesSave()){
       return response::error('You are not allowed to rename files');
+    }
 
     $filename = get('filename');
     $file     = $this->file($id, $filename);
@@ -102,20 +106,20 @@ class FilesController extends Controller {
 
   public function update($id = null) {
 
-    $page         = $this->page($id);
-    $pageOptions  = new PageOptions($page);
-
-    if(!$pageOptions->canFilesSave()) {
-      return response::error('You are not allowed to update files');
-
-    $filename = get('filename');
-    $page     = $this->page($id);
+    $page = $this->page($id);
 
     if(!$page) {
       return response::error(l('files.error.missing.page'));
     }
 
-    $file = $page->file($filename);
+    $pageOptions  = new PageOptions($page);
+
+    if(!$pageOptions->canFilesSave()){
+      return response::error('You are not allowed to update files');
+    }
+
+    $filename = get('filename');
+    $file     = $page->file($filename);
 
     if(!$file) {
       return response::error(l('files.error.missing.file'));
@@ -152,13 +156,15 @@ class FilesController extends Controller {
   public function sort($id = null) {
 
     $page         = $this->page($id);
-    $pageOptions  = new PageOptions($page);
-
-    if(!$pageOptions->canFilesSave()) {
-      return response::error('You are not allowed to sort files');
 
     if(!$page) {
       return response::error(l('files.error.missing.page'));
+    }
+
+    $pageOptions  = new PageOptions($page);
+
+    if(!$pageOptions->canFilesSave()){
+      return response::error('You are not allowed to sort files');
     }
 
     $filenames = get('filenames');
@@ -189,8 +195,9 @@ class FilesController extends Controller {
     $page         = $this->page($id);
     $pageOptions  = new PageOptions($page);
 
-    if(!$pageOptions->canFilesDelete()) {
+    if(!$pageOptions->canFilesDelete()){
       return response::error('You are not allowed to delete files');
+    }
 
     $filename = get('filename');
     $file     = $this->file($id, $filename);
