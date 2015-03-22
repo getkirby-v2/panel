@@ -48,13 +48,11 @@ class PageOptions {
     return (
              $this->user->hasPermission('page.update') or
              $this->user->hasPermission('page.changeurl') or
-             $this->user->hasPermission('page.hide') or
-             $this->user->hasPermission('page.delete')
+             $this->user->hasPermission('page.hide')
            ) and (
              $this->blueprint->can('update', $this->user) or
              $this->blueprint->can('changeurl', $this->user) or
-             $this->blueprint->can('hide', $this->user) or
-             $this->blueprint->can('delete', $this->user)
+             $this->blueprint->can('hide', $this->user)
            );
   }
 

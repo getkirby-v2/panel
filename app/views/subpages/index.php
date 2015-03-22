@@ -37,9 +37,11 @@
           <?php
           foreach($visible as $subpage):
             echo new Snippet('subpages/subpage', array(
-              'subpage'      => $subpage,
-              'editbutton'   => $visibleEditBtns[$subpage->uid()],
-              'deletebutton' => $visibleDeleteBtns[$subpage->uid()]
+              'subpage'       => $subpage,
+              'editbutton'    => $visibleEditBtns[$subpage->uid()],
+              'editbuttons'   => count(array_unique($visibleEditBtns)) != 1,
+              'deletebutton'  => $visibleDeleteBtns[$subpage->uid()],
+              'deletebuttons' => count(array_unique($visibleDeleteBtns)) != 1
               ));
           endforeach;
           ?>
@@ -66,9 +68,11 @@
           <?php
           foreach($invisible as $subpage):
             echo new Snippet('subpages/subpage', array(
-              'subpage'      => $subpage,
-              'editbutton'   => $invisibleEditBtns[$subpage->uid()],
-              'deletebutton' => $invisibleDeleteBtns[$subpage->uid()]
+              'subpage'       => $subpage,
+              'editbutton'    => $invisibleEditBtns[$subpage->uid()],
+              'editbuttons'   => count(array_unique($invisibleEditBtns)) != 1,
+              'deletebutton'  => $invisibleDeleteBtns[$subpage->uid()],
+              'deletebuttons' => count(array_unique($invisibleDeleteBtns)) != 1
             ));
           endforeach;
           ?>
