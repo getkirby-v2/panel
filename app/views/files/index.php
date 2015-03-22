@@ -80,9 +80,11 @@
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php echo l('files.index.upload.first.text') ?></p>
-      <a data-shortcut="+" class="btn btn-rounded" href="<?php echo purl('files/upload/' . $page->id()) ?>">
-        <?php echo l('files.index.upload.first.button') ?>
-      </a>
+      <?php if($addbutton): ?>
+        <a data-shortcut="+" class="btn btn-rounded" href="<?php echo purl('files/upload/' . $page->id()) ?>">
+          <?php echo l('files.index.upload.first.button') ?>
+        </a>
+      <?php endif ?>
     </div>
   </div>
 
