@@ -5,11 +5,13 @@ class PageOptions {
   public $page;
   public $blueprint;
   public $user;
+  public $isSite;
 
   public function __construct($page) {
     $this->page       = $page;
     $this->blueprint  = blueprint::find($this->page);
     $this->user       = site()->user();
+    $this->isSite     = ($this->page == site());
   }
 
   // Returns the page's preview link depending on the preview blueprint option
@@ -40,8 +42,12 @@ class PageOptions {
    */
 
   public function canSave() {
-    return $this->user->hasPermission('page.update') and
-           $this->blueprint->can('update', $this->user->role());
+    if ($this->isSite)
+      $permission = $this->user->hasPermission('site.update');
+    else
+      $permission = $this->user->hasPermission('page.update');
+
+    return $permission and $this->blueprint->can('update', $this->user->role());
   }
 
   public function canEdit() {
@@ -121,21 +127,31 @@ class PageOptions {
   // Files
 
   public function canFilesAdd() {
-    return $this->user->hasPermission('file.upload') and
-           $this->blueprint->files()->can('create', $this->user->role());
+    if ($this->isSite)
+      $permission = $this->user->hasPermission('site.update');
+    else
+      $permission = $this->user->hasPermission('file.upload');
+
+    return $permission and $this->blueprint->files()->can('create', $this->user->role());
   }
 
   public function canFilesSave() {
-    return $this->user->hasPermission('file.update') and
-           $this->blueprint->files()->can('update', $this->user->role());
+    if ($this->isSite) $permission = $this->user->hasPermission('site.update');
+    else $permission = $this->user->hasPermission('file.update');
+
+    return $permission and $this->blueprint->files()->can('update', $this->user->role());
   }
 
   public function canFilesEdit() {
-    return (
-             $this->user->hasPermission('file.replace') or
-             $this->user->hasPermission('file.update') or
-             $this->user->hasPermission('file.delete')
-           ) and (
+    if ($this->isSite)
+      $permissions = $this->user->hasPermission('site.update');
+    else
+      $permissions = $this->user->hasPermission('file.replace') or
+                     $this->user->hasPermission('file.update') or
+                     $this->user->hasPermission('file.delete');
+
+    return $permissions and
+           (
              $this->blueprint->files()->can('replace', $this->user->role()) or
              $this->blueprint->files()->can('update', $this->user->role()) or
              $this->blueprint->files()->can('delete', $this->user->role())
@@ -143,8 +159,12 @@ class PageOptions {
   }
 
   public function canFilesReplace() {
-    return $this->user->hasPermission('file.replace') and
-           $this->blueprint->files()->can('replace', $this->user->role());
+    if ($this->isSite)
+      $permission = $this->user->hasPermission('site.update');
+    else
+      $permission = $this->user->hasPermission('file.replace');
+
+    return $permission and $this->blueprint->files()->can('replace', $this->user->role());
   }
 
   public function canFilesSort() {
@@ -152,9 +172,19 @@ class PageOptions {
   }
 
   public function canFilesDelete() {
-    return $this->user->hasPermission('file.delete') and
-           $this->blueprint->files()->can('delete', $this->user->role());
+    if ($this->isSite)
+      $permission = $this->user->hasPermission('site.update');
+    else
+      $permission = $this->user->hasPermission('file.delete');
+
+    return $permission and $this->blueprint->files()->can('delete', $this->user->role());
   }
 
+
+  // site blueprint: metatags
+  public function canMetatagsUpdate() {
+    return $this->user->hasPermission('site.update') and
+           $this->blueprint->can('update', $this->user->role());
+  }
 
 }

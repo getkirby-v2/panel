@@ -6,18 +6,21 @@ class MetatagsController extends Controller {
 
     if(!site()->user()->hasPermission('site.update')) goToErrorView();
 
-    $site      = site();
-    $blueprint = blueprint::find($site);
-    $fields    = $blueprint->fields()->toArray();
-    $content   = $site->content()->toArray();
-    $files     = null;
+    $site        = site();
+    $siteOptions = new PageOptions($site);
+    $blueprint   = blueprint::find($site);
+    $fields      = $blueprint->fields()->toArray();
+    $content     = $site->content()->toArray();
+    $files       = null;
 
     // create the files
     if($blueprint->files()->max() !== 0 and $blueprint->files()->hide() == false) {
 
       $files = new Snippet('pages/sidebar/files', array(
-        'page'  => $site,
-        'files' => api::files($site, $blueprint),
+        'page'        => $site,
+        'files'       => api::files($site, $blueprint),
+        'addbutton'   => $siteOptions->canFilesAdd(),
+        'editbutton'  => $siteOptions->canFilesEdit()
       ));
 
     }
