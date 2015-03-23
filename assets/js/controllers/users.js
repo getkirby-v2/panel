@@ -59,23 +59,27 @@ var UsersController = {
 
       form.find('[autofocus]').focus();
 
-      // Password suggestion
-      form.find('.pw-reload').on('click', function(e) {
-        e.preventDefault();
-        form.find('.pw-suggestion').text($.suggestPassword());
-      }).trigger('click');
+      if (pass.is('[readonly]')) {
+        form.find('.pw-suggestion, .pw-reload').remove();
+      } else {
+        form.find('.pw-reload').on('click', function(e) {
+          e.preventDefault();
+          form.find('.pw-suggestion').text($.suggestPassword());
+        }).trigger('click');
 
-      pass.on('blur', function() {
-        pass.attr('type', 'password');
-      });
+        pass.on('blur', function() {
+          pass.attr('type', 'password');
+        });
 
-      form.find('.pw-suggestion').click(function(e) {
-        e.preventDefault();
-        pass.attr('type', 'text').fillPassword().first().select();
-      });
+        form.find('.pw-suggestion').click(function(e) {
+          e.preventDefault();
+          pass.attr('type', 'text').fillPassword().first().select();
+        });
+      }
+
 
       form.on('submit', function() {
-        
+
         var data = form.serializeObject();
 
         UserModel.update(username, data, function() {
@@ -88,7 +92,7 @@ var UsersController = {
               element.find('.form').trigger('success');
             });            
           }
-
+        
         }, function(message) {
           form.message('alert', message);
         });
