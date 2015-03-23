@@ -461,7 +461,7 @@ this.Handlebars=function(){var a=function(){"use strict";function a(a){this.stri
 
   $.suggestPassword = function(length) {
 
-    var length   = length || 32;
+    var length   = length || 28;
     var set      = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789!@#$%&*?';
     var password = '';
 
@@ -471,12 +471,6 @@ this.Handlebars=function(){var a=function(){"use strict";function a(a){this.stri
 
     return password;
 
-  };
-
-  $.fn.fillPassword = function () {
-    return this.each(function() {
-      $(this).val($('.pw-suggestion').text());
-    });
   };
 
 })(jQuery);
@@ -908,24 +902,8 @@ var UsersController = {
       element.find('.sidebar').sidebar();
 
       var form = element.find('.form').form();
-      var pass = form.find('input[type=password]');
 
       form.find('[autofocus]').focus();
-
-      // Password suggestion
-      form.find('.pw-reload').on('click', function(e) {
-        e.preventDefault();
-        form.find('.pw-suggestion').text($.suggestPassword());
-      }).trigger('click');
-
-      pass.on('blur', function() {
-        pass.attr('type', 'password');
-      });
-
-      form.find('.pw-suggestion').click(function(e) {
-        e.preventDefault();
-        pass.attr('type', 'text').fillPassword().first().select();
-      });
 
       form.on('submit', function() {
 
@@ -949,24 +927,8 @@ var UsersController = {
 
       var form = element.find('.form').form();
       var lang = form.find('[name=language]').val();
-      var pass = form.find('input[type=password]');
 
       form.find('[autofocus]').focus();
-
-      // Password suggestion
-      form.find('.pw-reload').on('click', function(e) {
-        e.preventDefault();
-        form.find('.pw-suggestion').text($.suggestPassword());
-      }).trigger('click');
-
-      pass.on('blur', function() {
-        pass.attr('type', 'password');
-      });
-
-      form.find('.pw-suggestion').click(function(e) {
-        e.preventDefault();
-        pass.attr('type', 'text').fillPassword().first().select();
-      });
 
       form.on('submit', function() {
         

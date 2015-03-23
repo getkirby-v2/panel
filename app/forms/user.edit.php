@@ -20,14 +20,11 @@ email:
 password:
   label: users.form.password.new.label
   type: password
-  help: users.form.password.new.help
   width: 1/2
-  help: >
-    <code class="pw-suggestion"></code><a class="pw-reload" href="#"><i class="fa fa-refresh icon"></i></a>
+  suggestion: true
 passwordConfirmation:
   label: users.form.password.new.confirm.label
   type: password
-  help: &nbsp;
   width: 1/2
 language:
   label: users.form.language.label

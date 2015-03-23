@@ -2,7 +2,7 @@
 
   $.suggestPassword = function(length) {
 
-    var length   = length || 32;
+    var length   = length || 28;
     var set      = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789!@#$%&*?';
     var password = '';
 
@@ -12,12 +12,6 @@
 
     return password;
 
-  };
-
-  $.fn.fillPassword = function () {
-    return this.each(function() {
-      $(this).val($('.pw-suggestion').text());
-    });
   };
 
 })(jQuery);
