@@ -8,17 +8,17 @@ class AuthController extends Controller {
       go(panel()->urls()->index());
     }
 
-    $message = l('login.error');
-    $error   = false;
-    $form    = panel()->form('login');
+    $message        = l('login.error');
+    $error          = false;
+    $form           = panel()->form('login');
     $form->cancel   = false;
     $form->save     = l('login.button');
     $form->centered = true;
     
     if(r::is('post') and get('_csfr') and csfr(get('_csfr'))) {
 
-      $data    = $form->serialize();
-      $user    = site()->user(str::lower($data['username']));
+      $data = $form->serialize();
+      $user = site()->user(str::lower($data['username']));
 
       if(!$user) {
         $error = true;
