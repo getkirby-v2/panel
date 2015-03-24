@@ -7,6 +7,7 @@
   <div class="mainbar">
 
     <div class="section">
+
       <form class="form" method="post" autocomplete="off">
 
         <?php if(!$page->isWritable()): ?>

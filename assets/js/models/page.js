@@ -5,6 +5,9 @@ var PageModel = {
   update : function(uri, data, done, fail) {
     $http.post('pages/update/' + uri, data, done, fail);
   },
+  keep : function(uri, data, done, fail) {
+    $http.post('pages/keep/' + uri, data, done, fail);
+  },
   delete : function(uri, done, fail) {
     $http.post('pages/delete/' + uri, {}, done, fail);
   },

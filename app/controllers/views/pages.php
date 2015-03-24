@@ -35,6 +35,9 @@ class PagesController extends Controller {
     // make sure the title is always there
     $content['title'] = $page->title();
 
+    // merge with the kept snapshot
+    $content = array_merge($content, (array)s::get(sha1($page->id())));
+
     // create the form
     $form = new Form($fields->toArray(), $content);
 

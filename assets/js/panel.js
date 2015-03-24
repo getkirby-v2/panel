@@ -1046,6 +1046,16 @@ var PagesController = {
 
       var form = element.find('.form').form();
 
+      form.data('state', form.serialize());
+
+      // block all outgoing links
+      // and check if the form is properly safed
+      $('a').on('click', function(e) {
+        if(form.data('state') !== form.serialize()) {
+          PageModel.keep(uri, form.serializeObject());
+        }
+      });
+
       form.on('submit', function() {
         PageModel.update(uri, form.serializeObject(), function(response) {
 
@@ -1655,6 +1665,9 @@ var PageModel = {
   },
   update : function(uri, data, done, fail) {
     $http.post('pages/update/' + uri, data, done, fail);
+  },
+  keep : function(uri, data, done, fail) {
+    $http.post('pages/keep/' + uri, data, done, fail);
   },
   delete : function(uri, done, fail) {
     $http.post('pages/delete/' + uri, {}, done, fail);

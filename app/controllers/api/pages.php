@@ -19,6 +19,27 @@ class PagesController extends Controller {
 
   }
 
+  public function keep($id = '') {
+
+    $page = $this->page($id);
+
+    if(!$page) {
+      return response::error(l('pages.error.missing'));
+    }
+
+    $blueprint = blueprint::find($page);
+    $fields    = $blueprint->fields($page);
+
+    // trigger the validation
+    $form = new Form($fields->toArray());
+
+    // fetch the data for the form
+    $data = pagedata::createByInput($page, $form->serialize());
+
+    s::set(sha1($page->id()), $data);
+
+  }
+
   public function update($id = '') {
 
     $page = $this->page($id);
@@ -46,6 +67,8 @@ class PagesController extends Controller {
     }
 
     try {
+
+      s::remove(sha1($page->id()));
 
       $page->update($data);
 
