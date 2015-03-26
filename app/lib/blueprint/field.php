@@ -63,6 +63,9 @@ class Field extends Obj {
           if(!$user) return '';
           return (isset($default['field']) and $default['field'] != 'password') ? $user->{$default['field']}() : $user->username();
           break;
+        case 'structure':
+          return "\n" . \data::encode(array($default), 'yaml') . "\n";
+          break;
         default:
           return $default;
           break;
