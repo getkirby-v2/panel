@@ -24,7 +24,7 @@ class TagsField extends TextField {
     $input->addClass('input-with-tags');
     $input->data(array(
       'field'     => 'tags',
-      'lowercase' => $this->lower,
+      'lowercase' => $this->lower ? 'true' : false,
       'separator' => $this->separator,
     ));
 

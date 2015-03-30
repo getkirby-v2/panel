@@ -30,6 +30,10 @@
     this.lowercase    = this.source.data('lowercase');
     this.separator    = this.source.data('separator');
 
+    if(this.lowercase) {
+      this.input.css('text-transform', 'lowercase');
+    }
+
     if(!this.separator) this.separator = ',';
 
     // keyboard shortcut helper
