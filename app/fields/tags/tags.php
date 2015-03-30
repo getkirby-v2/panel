@@ -4,7 +4,7 @@ class TagsField extends TextField {
 
   static public $assets = array(
     'js' => array(
-      'tags.min.js'
+      'tags.js'
     )
   );
 

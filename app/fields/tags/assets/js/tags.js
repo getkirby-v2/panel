@@ -25,6 +25,7 @@
     this.tags         = [];
     this.elements     = {};
     this.cursor       = 0;
+    this.disabled     = false;
     this.autocomplete = this.source.data('url');
     this.lowercase    = this.source.data('lowercase');
     this.separator    = this.source.data('separator');
@@ -198,6 +199,8 @@
     // remove a tag element
     this.remove = function(tag) {
 
+      if(self.disabled) return;
+
       self.tags = $.grep(self.tags, function(value) {
         return value != tag;
       });
@@ -259,7 +262,7 @@
       }
 
       // focus the input element if the user clicks on the box
-      self.element.on('click', function() {
+      self.element.on('click', function(e) {
         self.focus();
       });
 
@@ -333,6 +336,12 @@
 
       // fetch the first set of tags
       self.add(self.source.val());
+
+      if(self.source.attr('readonly')) {
+        self.disabled = true;
+        self.input.attr('readonly', true).attr('tabindex', -1);
+        self.element.find('button').attr('tabindex', -1);
+      }
 
       // trigger a custom event
       self.element.trigger('tags:init');

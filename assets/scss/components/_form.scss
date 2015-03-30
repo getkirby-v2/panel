@@ -289,8 +289,10 @@ textarea.over {
   background: #efefef;
   border-color: #ddd;
   color: #777;
+  pointer-events: none;
 }
-.input-is-readonly:focus {
+.input-is-readonly:focus,
+.input-is-readonly.input-is-focused {
   border-color: #ddd;
 }
 .input-is-readonly .selectbox-wrapper {
@@ -378,6 +380,9 @@ textarea.over {
 .input-with-tags {
   padding: 3px;
 }
+.input-with-tags.input-is-readonly .tag {
+  opacity: .25;
+}
 .field-with-icon .input-with-tags {
   body.ltr & {
     padding-right: 3.25em;
@@ -399,6 +404,7 @@ textarea.over {
   text-transform: lowercase;
   width: auto;
   outline: 0;
+  background: none;
 }
 @media screen and (min-width: 30em) {
   .tag-input {
