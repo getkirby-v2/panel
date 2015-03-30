@@ -155,3 +155,19 @@ function view($file, $data = array()) {
 function blueprint($page) {
   return $page->blueprint();
 }
+
+function fileHasThumbnail($file) {
+
+  if(!in_array(strtolower($file->extension()), array('jpg', 'jpeg', 'gif', 'png'))) {
+    return false;
+  }
+
+  if(kirby()->option('thumbs.driver') == 'gd') {
+    if($file->width() > 2048 or $file->height() > 2048) {
+      return false;
+    }
+  }
+
+  return true;
+
+}
