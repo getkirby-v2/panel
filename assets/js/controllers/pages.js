@@ -170,18 +170,29 @@ var PagesController = {
 
   },
 
-  publish: function(uri) {
-    PageModel.publish(uri, function() {
-      app.main.data('current', false);
-      window.location.href = '#/pages/show/' + uri;
-    });
-  },
+  toggle: function(uri) {
 
-  hide: function(uri) {
-    PageModel.unpublish(uri, function() {
-      app.main.data('current', false);
-      window.location.href = '#/pages/show/' + uri;
+    PagesController.show(uri, app.store.get(uri + '/p:', 1));
+
+    app.modal.view('pages/toggle/' + uri, function(element) {
+
+      var form   = element.find('.form');
+      var action = element.find('.modal-content').data('action');
+
+      // focus on the change button
+      form.find('.btn-submit').focus();
+      form.on('submit', function() {
+
+        PageModel[action](uri, function(response) {
+          app.main.data('current', false);
+          window.location.href = '#/pages/show/' + uri;
+        }, app.modal.alert);
+        return false;
+
+      });
+
     });
+
   },
 
   discard: function(uri) {

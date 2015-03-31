@@ -11,6 +11,7 @@ return array (
     'add' => 'Hinzufügen',
     'save' => 'Speichern',
     'saved' => 'Gespeichert!',
+    'change' => 'Ändern',
     'delete' => 'Löschen',
     'insert' => 'Einfügen',
     'ok' => 'Ok',

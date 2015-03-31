@@ -74,6 +74,13 @@ return array(
     'modal'   => true,
   ),
   array(
+    'pattern' => 'views/pages/toggle/(:all)',
+    'action'  => 'views/PagesController::toggle',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET',
+    'modal'   => true,
+  ),
+  array(
     'pattern' => 'views/pages/search/(:all?)',
     'action'  => 'views/PagesController::search',
     'filter'  => 'auth',

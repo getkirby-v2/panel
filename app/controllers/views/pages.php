@@ -212,6 +212,30 @@ class PagesController extends Controller {
     ));
   }
 
+  public function toggle($id) {
+
+    $page = $this->page($id);
+
+    if($page->isErrorPage()) {
+      goToErrorView('modal');
+    }
+
+    $form = panel()->form('pages.toggle');
+    $form->save = l('change');
+    $form->back = purl($page, 'show');
+
+    if($page->isVisible()) {
+      $form->fields->confirmation->text = l('pages.toggle.hide');      
+    } else {
+      $form->fields->confirmation->text = l('pages.toggle.publish');      
+    }
+
+    return view('pages/toggle', array(
+      'page' => $page, 
+      'form' => $form
+    ));
+  }
+
   public function search($id = '/') {
 
     $page = $this->page($id);
