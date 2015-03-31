@@ -6,13 +6,19 @@
   border: 2px solid #ddd;
   margin-bottom: .5em;
 }
+.structure-readonly .structure-entry {
+  background: #efefef;
+  color: #777;
+}
 .structure-entry:last-child {
   margin-bottom: 0;
 }
 .structure-entry-content {
   padding: 1em 1.5em;
   border-bottom: 1px solid #efefef;
-  cursor: move;
+}
+.structure[data-sortable=true] .structure-entry-content {
+  cursor: move;  
 }
 .structure-entry-options .btn {
   padding: .75em 1.5em;

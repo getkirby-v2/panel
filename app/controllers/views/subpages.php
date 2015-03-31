@@ -7,7 +7,7 @@ class SubpagesController extends Controller {
     $page      = $this->page($id);
     $blueprint = blueprint::find($page);
     $visible   = api::subpages($page->children()->visible(), $blueprint);
-    $invisible = $page->children()->invisible();
+    $invisible = api::subpages($page->children()->invisible(), $blueprint);
     $baseUrl   = rtrim(purl('subpages/index/' . $page->id()), '/');
 
     // don't create the view if the page is not allowed to have subpages

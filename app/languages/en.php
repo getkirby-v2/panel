@@ -65,6 +65,9 @@ return array(
 
     // metatags
     'metatags' => 'Site options',
+    'metatags.info' => 'Kirby info',
+    'metatags.version.kirby' => 'Kirby version',
+    'metatags.version.panel' => 'Panel version',
     'metatags.back' => 'Back to the dashboard',
     'metatags.files' => 'Site files',
 

@@ -13,6 +13,7 @@ class CheckboxesField extends RadioField {
       'value'   => $value,
       'checked' => in_array($value, (array)$this->value()),
     ));
+
     return $input;
 
   }

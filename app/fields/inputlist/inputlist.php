@@ -23,6 +23,10 @@ class InputListField extends InputField {
     $label->attr('data-focus', 'true');
     $label->prepend($input);
 
+    if($this->readonly) {
+      $label->addClass('input-is-readonly');
+    }
+
     return $label;
 
   }

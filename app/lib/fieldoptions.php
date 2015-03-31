@@ -32,11 +32,12 @@ class FieldOptions {
     } else if($field->options == 'query') {
 
       $defaults = array(
-        'page'  => $field->page->id(),
-        'fetch' => 'children',
-        'value' => '{{uid}}',
-        'text'  => '{{title}}',
-        'flip'  => false
+        'page'     => $field->page->id(),
+        'fetch'    => 'children',
+        'value'    => '{{uid}}',
+        'text'     => '{{title}}',
+        'flip'     => false,
+        'template' => false
       );
 
       $query = array_merge($defaults, $field->query);
@@ -62,6 +63,12 @@ class FieldOptions {
       }
 
       $items = $this->items($page, $query['fetch']);
+
+      if($query['template']) {
+        $items = $items->filter(function($item) use($query) {
+          return in_array(str::lower($item->intendedTemplate()), array_map('str::lower', (array)$query['template']));
+        });
+      }
 
       if($query['flip']) {
         $items = $items->flip();

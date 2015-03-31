@@ -11,12 +11,15 @@
       <div class="section">
         <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
           <span class="hgroup-title">
-            <?php _l('metatags') ?>
+            <?php _l('metatags.info') ?>
           </span>
         </h2>
-        <ul class="nav nav-list sidebar-list">
-          <li><a href="#/"><?php i('arrow-circle-left', 'left') ?><?php _l('metatags.back') ?></a></li>
-        </ul>
+        <div class="text">
+          <p> 
+            <?php _l('metatags.version.kirby') ?>: <?php echo kirby::version() ?><br />
+            <?php _l('metatags.version.panel') ?>: <?php echo panel::version() ?>
+          </p>
+        </div>
 
         <?php echo $files ?>
       </div>

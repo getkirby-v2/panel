@@ -1,4 +1,4 @@
-<div class="structure" data-field="structure" data-page="<?php echo $field->page() ?>" data-sortable="true">
+<div class="structure<?php e($field->readonly(), ' structure-readonly') ?>" data-field="structure" data-page="<?php echo $field->page() ?>" data-sortable="<?php e($field->readonly(), 'false', 'true') ?>">
 
   <?php echo $field->headline() ?>
 
@@ -17,6 +17,7 @@
       <div class="structure-entry-content text">
         <?php echo $field->entry() ?>
       </div>
+      <?php if(!$field->readonly()): ?>
       <nav class="structure-entry-options cf">
         <button type="button" data-structure-id="{{_id}}" class="btn btn-with-icon structure-edit-button">
           <?php i('pencil', 'left') . _l('fields.structure.edit') ?>
@@ -25,6 +26,7 @@
           <?php i('trash-o', 'left') . _l('fields.structure.delete') ?>
         </button>
       </nav>
+      <?php endif ?>
     </div>
     {{/entries}}
   </script>

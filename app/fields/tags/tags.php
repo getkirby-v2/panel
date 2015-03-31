@@ -4,7 +4,7 @@ class TagsField extends TextField {
 
   static public $assets = array(
     'js' => array(
-      'tags.min.js'
+      'tags.js'
     )
   );
 
@@ -24,7 +24,7 @@ class TagsField extends TextField {
     $input->addClass('input-with-tags');
     $input->data(array(
       'field'     => 'tags',
-      'lowercase' => $this->lower,
+      'lowercase' => $this->lower ? 'true' : false,
       'separator' => $this->separator,
     ));
 
