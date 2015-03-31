@@ -27,6 +27,9 @@ var routes = {
   '/pages/hide/*' : function(uri) {
     PagesController.hide(uri, 'page');
   },
+  '/pages/discard/*' : function(uri) {
+    PagesController.discard(uri);
+  },
   '/pages/delete/*' : function(uri) {
     PagesController.delete(uri, 'page');
   },

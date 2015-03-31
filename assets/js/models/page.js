@@ -8,6 +8,9 @@ var PageModel = {
   keep : function(uri, data, done, fail) {
     $http.post('pages/keep/' + uri, data, done, fail);
   },
+  discard : function(uri, data, done, fail) {
+    $http.post('pages/discard/' + uri, data, done, fail);
+  },
   delete : function(uri, done, fail) {
     $http.post('pages/delete/' + uri, {}, done, fail);
   },

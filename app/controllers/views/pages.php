@@ -36,7 +36,8 @@ class PagesController extends Controller {
     $content['title'] = $page->title();
 
     // merge with the kept snapshot
-    $content = array_merge($content, (array)s::get(sha1($page->id())));
+    $changes = (array)s::get(sha1($page->id()));
+    $content = array_merge($content, $changes);
 
     // create the form
     $form = new Form($fields->toArray(), $content);
@@ -101,6 +102,7 @@ class PagesController extends Controller {
       )),
       'sidebar' => $sidebar,
       'form'    => $form,
+      'changes' => $changes,
       'page'    => $page,
       'notitle' => !$form->fields()->get('title')
     ));

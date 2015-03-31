@@ -184,6 +184,13 @@ var PagesController = {
     });
   },
 
+  discard: function(uri) {
+    PageModel.discard(uri, function() {
+      app.main.data('current', false);
+      window.location.href = '#/pages/show/' + uri;
+    });
+  },
+
   delete: function(uri, to) {
 
     // get the uri for the parent page

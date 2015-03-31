@@ -1209,6 +1209,13 @@ var PagesController = {
     });
   },
 
+  discard: function(uri) {
+    PageModel.discard(uri, function() {
+      app.main.data('current', false);
+      window.location.href = '#/pages/show/' + uri;
+    });
+  },
+
   delete: function(uri, to) {
 
     // get the uri for the parent page
@@ -1669,6 +1676,9 @@ var PageModel = {
   keep : function(uri, data, done, fail) {
     $http.post('pages/keep/' + uri, data, done, fail);
   },
+  discard : function(uri, data, done, fail) {
+    $http.post('pages/discard/' + uri, data, done, fail);
+  },
   delete : function(uri, done, fail) {
     $http.post('pages/delete/' + uri, {}, done, fail);
   },
@@ -1748,6 +1758,9 @@ var routes = {
   },
   '/pages/hide/*' : function(uri) {
     PagesController.hide(uri, 'page');
+  },
+  '/pages/discard/*' : function(uri) {
+    PagesController.discard(uri);
   },
   '/pages/delete/*' : function(uri) {
     PagesController.delete(uri, 'page');
