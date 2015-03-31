@@ -39,9 +39,10 @@ class FilesController extends Controller {
 
   public function replace($id = null) {
 
-    $filename = get('filename');
-    $file     = $this->file($id, $filename);
-    $upload   = new Upload($file->root(), array(
+    $filename  = get('filename');
+    $file      = $this->file($id, $filename);
+    $blueprint = blueprint::find($this->page($id));
+    $upload    = new Upload($file->root(), array(
       'overwrite' => true,
       'accept' => function($upload) use($file) {
         if($upload->mime() != $file->mime()) {
@@ -52,7 +53,7 @@ class FilesController extends Controller {
 
     if($file = $upload->file()) {
       try {
-        $this->checkUpload($file);
+        $this->checkUpload($file, $blueprint);
         return response::success('success');
       } catch(Exception $e) {
         $file->delete();
