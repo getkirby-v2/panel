@@ -112,32 +112,6 @@
 
       <h2 class="hgroup hgroup-single-line cf">
         <span class="hgroup-title">
-          <a href="#/metatags/"><?php _l('dashboard.index.metatags.title') ?></a>
-        </span>
-        <span class="hgroup-options shiv shiv-dark shiv-left">
-          <span class="hgroup-option-right">
-            <a href="#/metatags/">
-              <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.metatags.edit') ?></span>
-            </a>
-          </span>
-        </span>
-      </h2>
-
-      <div class="field">
-        <div class="input input-is-readonly input-with-tags">
-
-          <?php foreach($site->content()->toArray() as $key => $meta): ?><!--
-       --><a class="tag" href="#/metatags/<?php __($key) ?>"><span class="tag-label"><?php __($key) ?></span></a><!--
-       --><?php endforeach ?>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="section white dashboard-section">
-
-      <h2 class="hgroup hgroup-single-line cf">
-        <span class="hgroup-title">
           <?php _l('dashboard.index.history.title') ?>
         </span>
       </h2>
