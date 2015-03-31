@@ -7,6 +7,7 @@
   <div class="mainbar">
 
     <div class="section">
+
       <form class="form" method="post" autocomplete="off">
 
         <?php if(!$page->isWritable()): ?>
@@ -32,7 +33,16 @@
         </fieldset>
 
         <div class="buttons buttons-centered cf">
+          
           <input title="meta+enter" class="btn btn-rounded btn-submit" type="submit" data-saved="<?php echo l('saved') ?>" value="<?php echo l('save') ?>">
+
+          <?php if(!empty($changes)): ?>
+          <div class="text marginalia" style="margin-top: 1.5rem">
+            <?php _l('pages.show.changes.text') ?><br />
+            <a href="<?php _u($page, 'discard') ?>"><?php _l('pages.show.changes.button') ?></a>
+          </div>
+          <?php endif ?>
+
         </div>
         <?php endif ?>
 

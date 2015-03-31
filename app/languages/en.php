@@ -77,6 +77,8 @@ return array(
     'pages.show.changeurl' => 'Change URL',
     'pages.show.invisible' => 'Status: invisible',
     'pages.show.visible' => 'Status: visible',
+    'pages.show.changes.text' => 'You have unsaved changes!',
+    'pages.show.changes.button' => 'Discard',
     'pages.show.delete' => 'Delete this page',
     'pages.show.subpages.title' => 'Pages',
     'pages.show.subpages.edit' => 'Edit',

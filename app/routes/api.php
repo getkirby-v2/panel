@@ -11,6 +11,18 @@ return array(
     'filter'  => 'auth',
   ),
   array(
+    'pattern' => 'api/pages/keep/(:all?)',
+    'action'  => 'api/PagesController::keep',
+    'method'  => 'POST',
+    'filter'  => 'auth',
+  ),
+  array(
+    'pattern' => 'api/pages/discard/(:all?)',
+    'action'  => 'api/PagesController::discard',
+    'method'  => 'POST',
+    'filter'  => 'auth',
+  ),
+  array(
     'pattern' => 'api/pages/update/(:all?)',
     'action'  => 'api/PagesController::update',
     'method'  => 'POST',

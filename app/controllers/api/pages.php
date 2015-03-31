@@ -19,6 +19,42 @@ class PagesController extends Controller {
 
   }
 
+  public function keep($id = '') {
+
+    $page = $this->page($id);
+
+    if(!$page) {
+      return response::error(l('pages.error.missing'));
+    }
+
+    $blueprint = blueprint::find($page);
+    $fields    = $blueprint->fields($page);
+
+    // trigger the validation
+    $form = new Form($fields->toArray());
+
+    // fetch the data for the form
+    $data = pagedata::createByInput($page, $form->serialize());
+
+    s::set(sha1($page->id()), $data);
+
+    return response::success('success');
+
+  }
+
+  public function discard($id = '') {
+
+    $page = $this->page($id);
+
+    if(!$page) {
+      return response::error(l('pages.error.missing'));
+    }
+
+    s::remove(sha1($page->id()));
+
+    return response::success('success');
+
+  }
   public function update($id = '') {
 
     $page = $this->page($id);
@@ -46,6 +82,8 @@ class PagesController extends Controller {
     }
 
     try {
+
+      s::remove(sha1($page->id()));
 
       $page->update($data);
 
@@ -96,6 +134,9 @@ class PagesController extends Controller {
     } else {
       return response::error(l('pages.error.missing'));
     }
+
+    // remove unsaved changes
+    s::remove(sha1($page->id()));
 
     $subpages = new Subpages($parent);
 
@@ -178,6 +219,12 @@ class PagesController extends Controller {
       return response::error('This page type\'s url cannot be changed');
     }
 
+    // get currently unsaved changes
+    $changes = s::get(sha1($page->id()));
+
+    // remove the changes for the old id
+    s::remove(sha1($page->id()));
+
     try {
 
       if(site()->multilang() and site()->language()->code() != site()->defaultLanguage()->code()) {
@@ -187,6 +234,9 @@ class PagesController extends Controller {
       } else {
         $page->move(get('uid'));
       }
+
+      // store the changes with the new id
+      s::set(sha1($page->id()), $changes);
 
       return response::success('success', array(
         'uid' => $page->uid(),

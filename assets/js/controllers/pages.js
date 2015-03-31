@@ -21,6 +21,16 @@ var PagesController = {
 
       var form = element.find('.form').form();
 
+      form.data('state', form.serialize());
+
+      // block all outgoing links
+      // and check if the form is properly safed
+      $('a').on('click', function(e) {
+        if(form.data('state') !== form.serialize()) {
+          PageModel.keep(uri, form.serializeObject());
+        }
+      });
+
       form.on('submit', function() {
         PageModel.update(uri, form.serializeObject(), function(response) {
 
@@ -169,6 +179,13 @@ var PagesController = {
 
   hide: function(uri) {
     PageModel.unpublish(uri, function() {
+      app.main.data('current', false);
+      window.location.href = '#/pages/show/' + uri;
+    });
+  },
+
+  discard: function(uri) {
+    PageModel.discard(uri, function() {
       app.main.data('current', false);
       window.location.href = '#/pages/show/' + uri;
     });
