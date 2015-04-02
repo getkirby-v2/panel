@@ -258,7 +258,7 @@ return array(
     'fields.structure.add.first' => 'Créer la première entrée',
     'fields.structure.empty' => 'Aucune entrée pour le moment.',
     'fields.structure.cancel' => 'Annuler',
-    'fields.structure.save' => 'Enregistrer',
+    'fields.structure.save' => 'Valider',
     'fields.structure.edit' => 'Modifier',
     'fields.structure.delete' => 'Supprimer',
     'fields.tags.label' => 'Tags',
