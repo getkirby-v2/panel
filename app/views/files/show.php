@@ -54,7 +54,7 @@
       <div class="field field-is-readonly">
         <label class="label"><?php _l('files.show.info.label') ?></label>
         <div class="field-content">
-          <input class="input input-is-readonly" readonly type="text" value="<?php __($f->type() . ' / ' . $f->niceSize() . ' / ' . $f->dimensions()) ?>">
+          <input class="input input-is-readonly" readonly type="text" value="<?php __($info) ?>">
           <div class="field-icon">
             <?php i('info') ?>
           </div>

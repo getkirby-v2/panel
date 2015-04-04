@@ -114,6 +114,16 @@ class FilesController extends Controller {
       );      
     }
 
+    // file info display
+    $info = array();
+
+    $info[] = $file->type();
+    $info[] = $file->niceSize();
+
+    if((string)$file->dimensions() != '0 x 0') {
+      $info[] = $file->dimensions();      
+    }
+
     return view('files/show', array(
       'topbar' => new Snippet('pages/topbar', array(
         'menu'       => new Snippet('menu'),
@@ -127,7 +137,8 @@ class FilesController extends Controller {
       'p'    => $page,
       'f'    => $file,
       'next' => $next,
-      'prev' => $prev
+      'prev' => $prev,
+      'info' => implode(' / ', $info)
     ));
 
   }
