@@ -15,15 +15,11 @@
 .file-preview img {
   position: absolute;
   top: 0;
+  left: 0;
   min-width: 100%;
   min-height: 100%;
-
-  body.ltr & {
-    left: 0;
-  }
-  body.rtl & {
-    right: 0;
-  }
+  max-width: 100%;
+  max-height: 100%;
 }
 .file-preview span {
   position: absolute;
