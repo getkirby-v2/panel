@@ -1,7 +1,7 @@
 <?php
 
 return array(
-  'title' => '繁體中文（台灣）',
+  'title' => '繁體中文（台灣）&lrm;',
   'direction' => 'ltr',
   'author' => 'fé Zhan <zhanafe@gmail.com>',
   'version' => '1.0.0',

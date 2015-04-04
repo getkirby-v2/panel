@@ -1,7 +1,7 @@
 <?php
 
 return array(
-  'title' => 'Русский (Russian)',
+  'title' => 'Русский (Russian)&lrm;',
   'direction' => 'ltr',
   'author' => 'Mike Sakhonenko <hello@imike.ru>',
   'version' => '1.0.2',

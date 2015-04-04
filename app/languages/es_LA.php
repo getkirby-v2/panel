@@ -1,7 +1,7 @@
 <?php
 
 return array(
-  'title' => 'Español (América Latina)',
+  'title' => 'Español (América Latina)&lrm;',
   'direction' => 'ltr',
   'author' => 'Iván Soria <invasoria@gmail.com>',
   'version' => '1.0.2',
