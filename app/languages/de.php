@@ -96,6 +96,8 @@ return array (
     'pages.url.uid.label.option' => 'Aus Titel erzeugen',
     'pages.url.error.exists' => 'Eine Seite mit dem selben Anhang besteht bereits.',
     'pages.url.error.move' => 'Die URL konnte nicht geändert werden',
+    'pages.toggle.publish' => 'Willst du den Status der Seite wirklich in **sichtbar** umändern?',
+    'pages.toggle.hide' => 'Willst du den Status der Seite wirklich in **unsichtbar** umändern?',
     'pages.delete.headline' => 'Willst du diese Seite wirklich löschen?',
     'pages.delete.error.home.headline' => 'Die Startseite kann nicht gelöscht werden',
     'pages.delete.error.home.text' => 'Du versuchst die Startseite zu löschen. Das ist nicht möglich und würde zu ungewollten Fehlern führen.',

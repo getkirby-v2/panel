@@ -164,14 +164,13 @@ class Panel {
     }
 
     $translation = require($this->roots()->languages() . DS . 'en.php');
-    $translation = array_merge($translation, require($this->roots()->languages() . DS . $this->language . '.php'));
+    $translation = a::merge($translation, require($this->roots()->languages() . DS . $this->language . '.php'));
 
     // set all language variables
     l::$data = $translation['data'];
 
     // set language direction (ltr is default)
-    if (isset($translation['direction']) and
-        $translation['direction'] == 'rtl') {
+    if(isset($translation['direction']) and $translation['direction'] == 'rtl') {
       l::set('language.direction', 'rtl');
     } else {
       l::set('language.direction', 'ltr');
