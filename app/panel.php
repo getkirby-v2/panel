@@ -37,15 +37,15 @@ class Panel {
 
     $this->load();
 
-    // load all available routes
-    $this->routes = array_merge($this->routes, require($this->roots->routes . DS . 'api.php'));
-    $this->routes = array_merge($this->routes, require($this->roots->routes . DS . 'views.php'));
-
     // setup the blueprint root
     blueprint::$root = $this->kirby->roots()->blueprints();
 
     // setup the form plugin
     form::setup($this->roots->fields, $this->kirby->roots()->fields());
+
+    // load all available routes
+    $this->routes = array_merge($this->routes, require($this->roots->routes . DS . 'api.php'));
+    $this->routes = array_merge($this->routes, require($this->roots->routes . DS . 'views.php'));
 
     // start the router
     $this->router = new Router($this->routes);
@@ -80,6 +80,11 @@ class Panel {
 
   public function roots() {
     return $this->roots;
+  }
+
+  public function routes($routes = null) {
+    if(is_null($routes)) return $this->routes;
+    return $this->routes = array_merge($this->routes, (array)$routes);
   }
 
   public function urls() {
@@ -215,6 +220,27 @@ class Panel {
       throw new Exception('Invalid route');
     }
 
+    if(is_callable($this->route->action())) {
+      $response = call($this->route->action(), $this->route->arguments());
+    } else {
+      $response = $this->response();
+    }
+
+    ob_start();
+
+    // check for a valid response object
+    if(is_a($response, 'Response')) {
+      echo $response;
+    } else {
+      echo new Response($response);
+    }
+
+    ob_end_flush();
+
+  }
+
+  public function response() {
+
     // let's find the controller and controller action
     $controllerParts  = str::split($this->route->action(), '::');
     $controllerUri    = $controllerParts[0];
@@ -254,16 +280,7 @@ class Panel {
 
     }
 
-    ob_start();
-
-    // check for a valid response object
-    if(is_a($response, 'Response')) {
-      echo $response;
-    } else {
-      echo new Response($response);
-    }
-
-    ob_end_flush();
+    return $response;
 
   }
 
