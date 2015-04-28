@@ -6,7 +6,7 @@ class MetatagsController extends Controller {
 
     $site      = site();
     $blueprint = blueprint::find($site);
-    $fields    = $blueprint->fields()->toArray();
+    $fields    = $blueprint->fields(site())->toArray();
     $content   = $site->content()->toArray();
     $files     = null;
 
