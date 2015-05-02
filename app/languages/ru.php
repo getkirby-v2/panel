@@ -83,7 +83,7 @@ return array(
     'pages.show.error.permissions.title' => 'Эта страница не доступна для записи',
     'pages.show.error.permissions.text'  => 'Пожалуйста, проверьте права для папки content и всех файлов.',
     'pages.show.error.permissions.retry'  => 'Повторить',
-    'pages.show.error.notitle.title' => 'В этом фаблоне формы должно быть поле для названия',
+    'pages.show.error.notitle.title' => 'В этом шаблоне формы должно быть поле для названия',
     'pages.show.error.notitle.text' => 'Пожалуйста, заполните название и повторите снова',
     'pages.show.error.notitle.retry' => 'Повторить',
     'pages.show.error.form'  => 'Пожалуйста, заполните все необходимые поля корректно',
