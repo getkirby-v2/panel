@@ -14,4 +14,8 @@ class UserField extends SelectField {
 
   }
 
+  public function value() {
+    return empty(parent::value()) ? site()->user()->username() : parent::value();
+  }
+
 }
