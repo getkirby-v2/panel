@@ -40,7 +40,7 @@ class EditorController extends Controller {
 
   }
 
-  public function structure($id, $fieldName) {
+  public function structure($id, $fieldName, $context) {
 
     $page = empty($id) ? site() : page($id);
 
@@ -48,9 +48,10 @@ class EditorController extends Controller {
 
     $blueprint  = blueprint::find($page);
     $field      = null;
+    $fields     = ($context == 'file') ? $blueprint->files()->fields() : $blueprint->fields();
 
     // make sure to get fields by case insensitive field names
-    foreach($blueprint->fields() as $f) {
+    foreach($fields as $f) {
       if(strtolower($f->name) == strtolower($fieldName)) {
         $field = $f;
       }

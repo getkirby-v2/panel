@@ -8,6 +8,7 @@
     this.list      = $('<div class="structure-entries"></div>');
     this.input     = this.element.find('input[type=hidden]');
     this.page      = this.element.data('page');
+    this.context   = this.element.parents('.fileview-sidebar').length > 0 ? 'file' : 'page';
     this.button    = this.element.find('.structure-add-button');
     this.json      = this.input.val() ? $.parseJSON(this.input.val()) : [];
     this.entries   = [];
@@ -75,7 +76,7 @@
     };
 
     this.form = function(input, mode) {
-      app.popup.form('editor/structure/' + self.page + '/' + self.input.attr('name'), input, null, function(form, data) {
+      app.popup.form('editor/structure/' + self.page + '/' + self.input.attr('name') + '/' + self.context, input, null, function(form, data) {
         mode == 'add' ? self.add(data) : self.update(input._id, data);
         app.popup.hide();
       });

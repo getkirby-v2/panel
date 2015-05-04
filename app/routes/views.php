@@ -117,7 +117,7 @@ return array(
     'modal'   => true,
   ),
   array(
-    'pattern' => 'views/editor/structure/(:all)/(:any)',
+    'pattern' => 'views/editor/structure/(:all)/(:any)/(:any)',
     'action'  => 'views/EditorController::structure',
     'filter'  => 'auth',
     'method'  => 'POST|GET',
