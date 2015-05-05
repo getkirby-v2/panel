@@ -77,7 +77,7 @@ class Form extends Brick {
       $name  = $field->name();
       $value = $this->value($name);
 
-      if($field->required() and empty($value)) {
+      if($field->required() and $value == '') {
         $field->error = true;
       } else if($value != '' and !$field->validate()) {
         $field->error = true;
@@ -167,7 +167,7 @@ class Form extends Brick {
       }
 
       if(file_exists($root)) {
-        static::$files[$name] = $root;     
+        static::$files[$name] = $root;
       }
 
     }
