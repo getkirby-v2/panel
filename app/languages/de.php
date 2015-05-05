@@ -80,7 +80,7 @@ return array (
     'pages.show.error.notitle.title' => 'Das Blueprint hat kein Titelfeld',
     'pages.show.error.notitle.text' => 'Bitte füge ein Titelfeld ein und versuche es erneut',
     'pages.show.error.notitle.retry' => 'Wiederholen',
-    'pages.show.error.form'  => 'Bitte fülle alle Felder vollständig aus',
+    'pages.show.error.form'  => 'Bitte fülle alle Felder vollständig und korrekt aus',
     'pages.add.title.label' => 'Eine neue Seite hinzufügen',
     'pages.add.title.placeholder' => 'Titel',
     'pages.add.url.label' => 'URL-Anhang',
