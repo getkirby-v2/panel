@@ -26,8 +26,7 @@ class AvatarsController extends Controller {
 
     if($upload->file()) {
 
-      thumb::$defaults['root']   = dirname($upload->file()->root());
-      thumb::$defaults['driver'] = 'im';
+      thumb::$defaults['root'] = dirname($upload->file()->root());
 
       $thumb = new Thumb($upload->file(), array(
         'filename'  => $upload->file()->filename(),
