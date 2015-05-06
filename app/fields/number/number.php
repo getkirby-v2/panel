@@ -2,6 +2,12 @@
 
 class NumberField extends InputField {
 
+  static public $assets = array(
+    'css' => array(
+      'number.css'
+    )
+  );
+
   public function __construct() {
 
     $this->type        = 'number';
