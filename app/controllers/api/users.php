@@ -29,6 +29,7 @@ class UsersController extends Controller {
 
     try {
       $user = $this->users()->create($data);
+      kirby()->trigger('panel.user.create', $user);
       return response::success('success');
     } catch(Exception $e) {
       return response::error(l('users.form.error.create'));
@@ -62,6 +63,7 @@ class UsersController extends Controller {
       unset($data['passwordconfirmation']);
 
       if($user->update($data)) {
+        kirby()->trigger('panel.user.update', $user);
         return response::success('success');
       } else {
         return response::error(l('users.form.error.update'));
@@ -85,6 +87,7 @@ class UsersController extends Controller {
 
     try {
       $user->delete();
+      kirby()->trigger('panel.user.delete', $user);
       return response::success('success');
     } catch(Exception $e) {
       return response::error(l('users.delete.error'));
