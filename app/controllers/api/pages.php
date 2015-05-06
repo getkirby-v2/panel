@@ -8,6 +8,8 @@ class PagesController extends Controller {
 
       $page = api::createPage($id, get('title'), get('template'), get('uid'));
 
+      kirby()->trigger('panel.page.create', $page);
+
       return response::success('success', array(
         'uid' => $page->uid(),
         'uri' => $page->id()
@@ -114,6 +116,8 @@ class PagesController extends Controller {
 
       history::visit($page->id());
 
+      kirby()->trigger('panel.page.update', $page);
+
       return response::success('success', array(
         'file' => $page->content()->root(),
         'data' => $data,
@@ -158,11 +162,15 @@ class PagesController extends Controller {
     }
 
     $subpages = new Subpages($parent);
-    $num      = $subpages->sort($page, get('to'));
-
-    return response::success('The page has been sorted', array(
-      'num' => $num
-    ));
+    
+    try {
+      $num = $subpages->sort($page, get('to'));
+      return response::success('The page has been sorted', array(
+        'num' => $num
+      ));
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
+    }
 
   }
 
@@ -179,11 +187,15 @@ class PagesController extends Controller {
     }
 
     $subpages = new Subpages($parent);
-    $num      = $subpages->sort($page, 'last');
 
-    return response::success('The page has been sorted', array(
-      'num' => $num
-    ));
+    try {
+      $num = $subpages->sort($page, 'last');
+      return response::success('The page has been sorted', array(
+        'num' => $num
+      ));
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
+    }
 
   }
 
@@ -237,6 +249,9 @@ class PagesController extends Controller {
 
       // store the changes with the new id
       s::set(sha1($page->id()), $changes);
+
+      // hit the hook
+      kirby()->trigger('panel.page.move', $page);
 
       return response::success('success', array(
         'uid' => $page->uid(),

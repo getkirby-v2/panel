@@ -48,10 +48,14 @@ var SubpagesController = {
               var to = index + start;              
             }
   
-            PageModel.sort(uri, id, to, function() {
-              app.main.data('current', false);
-              routie.reload();
-            });
+            if(ui.item.parent().attr('id') !== 'invisible-children') {
+
+              PageModel.sort(uri, id, to, function() {
+                app.main.data('current', false);
+                routie.reload();
+              });
+
+            }
 
           }
         },
