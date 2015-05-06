@@ -1,7 +1,10 @@
 <?php
 
 class TextField extends InputField {
+
   public $type = 'text';
+  public $min  = 0;
+  public $max  = false;
 
   public function __construct() {
     $this->min    = 0;
