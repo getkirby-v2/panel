@@ -158,11 +158,15 @@ class PagesController extends Controller {
     }
 
     $subpages = new Subpages($parent);
-    $num      = $subpages->sort($page, get('to'));
 
-    return response::success('The page has been sorted', array(
-      'num' => $num
-    ));
+    try {
+      $num = $subpages->sort($page, get('to'));
+      return response::success('The page has been sorted', array(
+        'num' => $num
+      ));
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
+    }
 
   }
 
@@ -179,11 +183,15 @@ class PagesController extends Controller {
     }
 
     $subpages = new Subpages($parent);
-    $num      = $subpages->sort($page, 'last');
 
-    return response::success('The page has been sorted', array(
-      'num' => $num
-    ));
+    try {
+      $num = $subpages->sort($page, 'last');
+      return response::success('The page has been sorted', array(
+        'num' => $num
+      ));
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
+    }
 
   }
 
