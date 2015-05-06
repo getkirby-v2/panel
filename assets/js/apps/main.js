@@ -115,7 +115,7 @@ app.modal.on('view:empty', function() {
   app.modal.hide();
   $(window).off('resize.modal');
   $(document).off('keyup.modal');
-  $('body').css('overflow', 'auto');
+  $('body').css('overflow', 'initial');
 });
 
 // create a new close event, which can be triggered from anywhere
