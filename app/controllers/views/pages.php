@@ -4,7 +4,14 @@ class PagesController extends Controller {
 
   public function show($id) {
 
-    $page      = $this->page($id);
+    try {
+      $page = $this->page($id);      
+    } catch(Exception $e) {
+      $page = $this->page(dirname($id));
+      // dirty work around to move to the parent page
+      die('<script>window.location.href = "#/pages/show/' . $page->id() . '"</script>');
+    }
+
     $blueprint = blueprint::find($page);
     $fields    = $blueprint->fields($page);
     $content   = $page->content()->toArray();
