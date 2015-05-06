@@ -162,7 +162,7 @@ class PagesController extends Controller {
     }
 
     $subpages = new Subpages($parent);
-    
+
     try {
       $num = $subpages->sort($page, get('to'));
       return response::success('The page has been sorted', array(
