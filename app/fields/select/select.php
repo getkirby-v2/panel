@@ -35,7 +35,8 @@ class SelectField extends BaseField {
       'disabled'     => $this->disabled(),
     ));
 
-    if (!$this->required() or empty($this->default())) {
+    $default = $this->default();
+    if (!$this->required() or empty($default)) {
       $select->append($this->option('', '', $this->value() == ''));
     }
 
