@@ -290,7 +290,7 @@ class Panel {
     $key  = c::get('license');
     $type = 'trial';
 
-    if(str::startsWith($key, 'K2-PRO') and str::length($key) == 40) {
+    if(str::startsWith($key, 'K2-PRO') and str::length($key) == 39) {
       $type = 'Kirby 2 Professional';
     } else if(str::startsWith($key, 'K2-PERSONAL') and str::length($key) == 44) {
       $type = 'Kirby 2 Personal';
