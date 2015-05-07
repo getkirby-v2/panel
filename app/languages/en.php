@@ -63,10 +63,13 @@ return array(
     'dashboard.index.metatags.edit' => 'Edit',
     'dashboard.index.history.title' => 'Your last updates',
     'dashboard.index.history.text' => 'Your last modified pages will be displayed here to make it easy to find them again later.',
+    'dashboard.index.license.title' => 'Kirby license',
 
     // metatags
     'metatags' => 'Site options',
     'metatags.info' => 'Kirby info',
+    'metatags.license' => 'Kirby license',
+    'metatags.version.toolkit' => 'Toolkit version',
     'metatags.version.kirby' => 'Kirby version',
     'metatags.version.panel' => 'Panel version',
     'metatags.back' => 'Back to the dashboard',

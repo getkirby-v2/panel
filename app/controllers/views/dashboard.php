@@ -31,6 +31,7 @@ class DashboardController extends Controller {
       'addbutton' => !api::maxPages($site, $blueprint->pages()->max()),
       'widgets'   => $widgets,
       'user'      => site()->user(),
+      'license'   => panel()->license(),
     ));
   }
 
