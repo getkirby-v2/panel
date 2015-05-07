@@ -34,6 +34,7 @@ class Panel {
 
     // load all Kirby extensions (methods, tags, smartypants)
     $this->kirby->extensions();
+    $this->kirby->plugins();
 
     $this->load();
 
