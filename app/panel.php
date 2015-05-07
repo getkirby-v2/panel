@@ -34,6 +34,7 @@ class Panel {
 
     // load all Kirby extensions (methods, tags, smartypants)
     $this->kirby->extensions();
+    $this->kirby->plugins();
 
     $this->load();
 
@@ -281,6 +282,31 @@ class Panel {
     }
 
     return $response;
+
+  }
+
+  public function license() {
+
+    $key  = c::get('license');
+    $type = 'trial';
+
+    if(str::startsWith($key, 'K2-PRO') and str::length($key) == 40) {
+      $type = 'Kirby 2 Professional';
+    } else if(str::startsWith($key, 'K2-PERSONAL') and str::length($key) == 44) {
+      $type = 'Kirby 2 Personal';
+    } else if(str::length($key) == 32) {
+      $type = 'Kirby 1';
+    } else {
+      $key = null;
+    }
+
+    $localhosts = array('::1', '127.0.01', '0.0.0.0');
+
+    return new Obj(array(
+      'key'   => $key,
+      'local' => in_array(server::get('SERVER_ADDR'), $localhosts),
+      'type'  => $type,
+    ));
 
   }
 

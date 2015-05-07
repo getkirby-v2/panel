@@ -81,20 +81,46 @@ class Subpages {
   }
 
   public function sort($uid, $to) {
-    $num = $this->num($uid, $to);
-    $this->find($uid)->sort($num);
+
+    $num  = $this->num($uid, $to);
+    $page = $this->find($uid);
+
+    // sort the selected page
+    $page->sort($num);
+
+    // clean the other page numbers
     $this->clean($this->visible()->not($uid), $num);
+
+    // hit the hook
+    kirby()->trigger('panel.page.sort', $page);
+
     return $num;
+
   }
 
   public function hide($uid) {
-    $this->find($uid)->hide();
-    $this->clean($this->visible());
+
+    $page = $this->find($uid);
+    $page->hide();
+
+    // clean the other page numbers
+    $this->clean($this->visible()->not($uid));
+
+    // hit the hook
+    kirby()->trigger('panel.page.hide', $page);
+
   }
 
   public function delete($uid) {
-    $this->find($uid)->delete();
-    $this->clean($this->visible());
+    $page = $this->find($uid);
+    $page->delete();
+
+    // clean the other page numbers
+    $this->clean($this->visible()->not($uid));
+  
+    // hit the hook
+    kirby()->trigger('panel.page.delete', $page);
+
   }
 
 }

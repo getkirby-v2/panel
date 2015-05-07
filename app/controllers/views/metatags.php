@@ -32,9 +32,10 @@ class MetatagsController extends Controller {
         )),
         'search' => purl('pages/search/')
       )),
-      'form'  => new Form($fields, $content),
-      's'     => $site,
-      'files' => $files
+      'form'    => new Form($fields, $content),
+      's'       => $site,
+      'files'   => $files,
+      'license' => panel()->license(),
     ));
 
   }

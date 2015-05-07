@@ -26,6 +26,7 @@ class FilesController extends Controller {
     if($file = $upload->file()) {
       try {
         $this->checkUpload($file, $blueprint);
+        kirby()->trigger('panel.file.upload', $file);
         return response::success('success');
       } catch(Exception $e) {
         $file->delete();
@@ -54,6 +55,7 @@ class FilesController extends Controller {
     if($file = $upload->file()) {
       try {
         $this->checkUpload($file, $blueprint);
+        kirby()->trigger('panel.file.replace', $file);
         return response::success('success');
       } catch(Exception $e) {
         $file->delete();
@@ -76,6 +78,7 @@ class FilesController extends Controller {
 
     try {
       $filename = $file->rename(get('name'));
+      kirby()->trigger('panel.file.rename', $file);
       return response::success('success', array(
         'filename' => $filename
       ));
@@ -119,6 +122,7 @@ class FilesController extends Controller {
 
     try {
       $file->update($data);
+      kirby()->trigger('panel.file.update', $file);
       return response::success('success', array(
         'data' => $data
       ));
@@ -149,6 +153,7 @@ class FilesController extends Controller {
 
       try {
         $file->update(array('sort' => $counter));
+        kirby()->trigger('panel.file.sort', $file);
       } catch(Exception $e) {
 
       }
@@ -170,6 +175,7 @@ class FilesController extends Controller {
 
     try {
       $file->delete();
+      kirby()->trigger('panel.file.delete', $file);
       return response::success('success');
     } catch(Exception $e) {
       return response::error($e->getMessage());
