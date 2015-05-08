@@ -27,8 +27,8 @@
             <?php _l('metatags.license') ?>
           </span>
         </h2>
-        <div class="text">        
-          <?php if($license->type() == 'trial' and $license->local()): ?>
+        <div class="text">
+          <?php if($license->type() == 'trial' and !$license->local()): ?>
           <p>
             You are using the Kirby trial version<br />
             <a target="_blank" href="http://getkirby.com/buy">Please, buy a license &rsaquo;</a>
