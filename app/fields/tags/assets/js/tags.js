@@ -276,7 +276,6 @@
       });
 
       self.element.on('focusout', function() {
-        self.add();
         self.element.removeClass('input-is-focused');
         self.element.trigger('tags:blur');
       });
