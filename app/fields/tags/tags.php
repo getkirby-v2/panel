@@ -40,7 +40,8 @@ class TagsField extends TextField {
         'uri'       => $page->id(),
         'index'     => $this->index(),
         'field'     => $field,
-        'separator' => $this->separator()
+        'yaml'      => $this->parentField,
+        'separator' => $this->separator(),
       );
 
       $input->data('url', panel()->urls()->api() . '/autocomplete/field?' . http_build_query($query));

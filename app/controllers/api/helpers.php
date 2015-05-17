@@ -53,7 +53,23 @@ class HelpersController extends Controller {
               return response::json(array());
             }
         }
-        $result = $pages->pluck(get('field', 'tags'), get('separator', true), true);
+
+        $field  = get('field', 'tags');
+        $yaml   = get('yaml', false);
+
+        if($yaml) {
+          $result = array();
+          foreach($pages as $page) {
+            $row = $pages->extractValue($page, $yaml);
+            $row = yaml::decode($row);
+            if(isset($row[0][$field])) {
+              $result = array_merge($result, str::split($row[0][$field], get('separator', true)));
+            }
+          }
+          $result = array_unique($result);
+        } else {
+          $result = $pages->pluck($field, get('separator', true), true);
+        }
         break;
       default:
         return response::error('Invalid autocomplete method');

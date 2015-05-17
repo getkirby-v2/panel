@@ -5,18 +5,22 @@ class Form extends Brick {
   static public $root  = array();
   static public $files = null;
 
-  public $tag      = 'form';
-  public $fields   = array();
-  public $values   = array();
-  public $alert    = null;
-  public $save     = true;
-  public $cancel   = true;
-  public $centered = false;
-  public $back     = false;
+  public $tag         = 'form';
+  public $fields      = array();
+  public $values      = array();
+  public $alert       = null;
+  public $save        = true;
+  public $cancel      = true;
+  public $centered    = false;
+  public $back        = false;
+  public $parentField = false;
 
-  public function __construct($fields = array(), $values = array()) {
+  public function __construct($fields = array(), $values = array(), $parent = false) {
 
     $this->fields = new Collection;
+
+    // if Form is part of a structureField, set structureField name
+    $this->parentField = $parent;
 
     $this->values($values);
     $this->fields($fields);
@@ -49,6 +53,9 @@ class Form extends Brick {
       $field['name']    = $name;
       $field['default'] = a::get($field, 'default', null);
       $field['value']   = a::get($this->values(), $name, $field['default']);
+
+      // Pass through parent field name (structureField)
+      $field['parentField'] = $this->parentField;
 
       $this->fields->append($name, static::field($field['type'], $field));
 

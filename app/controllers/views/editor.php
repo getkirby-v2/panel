@@ -66,8 +66,8 @@ class EditorController extends Controller {
       if($field['type'] == 'textarea') $fields[$key]['buttons'] = false;
     }
 
-    $form       = new Form($fields);
-    $form->save = get('_id') ? l('fields.structure.save') : l('fields.structure.add');
+    $form        = new Form($fields, null, $fieldName);
+    $form->save  = get('_id') ? l('fields.structure.save') : l('fields.structure.add');
 
     return view('editor/structure', array(
       'page' => $page,
