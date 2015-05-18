@@ -276,9 +276,20 @@
       });
 
       self.element.on('focusout', function() {
-        self.add();
         self.element.removeClass('input-is-focused');
         self.element.trigger('tags:blur');
+
+        // add unconfirmed tag on field unfocus
+        setTimeout(function() {
+          if(self.element.has($(':focus')).length == 0) {
+            self.add();
+          }
+        }, 1);
+      });
+
+      // add unconfirmed tag on form submit
+      self.element.parents('.form').find('input[type=submit]').on('click', function(e){
+        self.add();
       });
 
       // create an invisible element to measure the size of the input field
