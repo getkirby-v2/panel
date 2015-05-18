@@ -54,21 +54,19 @@ class HelpersController extends Controller {
             }
         }
 
-        $field  = get('field', 'tags');
-        $yaml   = get('yaml', false);
+        $field      = get('field', 'tags');
+        $yaml       = get('yaml', false);
+        $separator  = get('separator', true);
 
         if($yaml) {
           $result = array();
           foreach($pages as $page) {
-            $row = $pages->extractValue($page, $yaml);
-            $row = yaml::decode($row);
-            if(isset($row[0][$field])) {
-              $result = array_merge($result, str::split($row[0][$field], get('separator', true)));
-            }
+            $values = $page->$yaml()->toStructure()->pluck($field, $separator, true);
+            $result = array_merge($result, $values);
           }
           $result = array_unique($result);
         } else {
-          $result = $pages->pluck($field, get('separator', true), true);
+          $result = $pages->pluck($field, $separator, true);
         }
         break;
       default:
