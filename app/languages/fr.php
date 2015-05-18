@@ -63,10 +63,13 @@ return array(
     'dashboard.index.metatags.edit' => 'Modifier',
     'dashboard.index.history.title' => 'Modifications récentes',
     'dashboard.index.history.text' => 'Vos modifications les plus récentes seront affichées ici afin de les retrouver plus aisément.',
+    'dashboard.index.license.title' => 'License de Kirby',
 
     // metatags
     'metatags' => 'Paramètres du site',
     'metatags.info' => 'Informations de Kirby',
+    'metatags.license' => 'License de Kirby',
+    'metatags.version.toolkit' => 'Version du Toolkit ',
     'metatags.version.kirby' => 'Version de Kirby ',
     'metatags.version.panel' => 'Version du Panel ',
     'metatags.back' => 'Retour au tableau de bord',
