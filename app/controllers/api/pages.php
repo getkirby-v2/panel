@@ -4,9 +4,13 @@ class PagesController extends Controller {
 
   public function create($id = '') {
 
-    try {
+    $uid = get('uid');
+    if(v::num(str::substr($uid, 0, 1))) {
+      return response::error(l('pages.error.uid.num'));
+    }
 
-      $page = api::createPage($id, get('title'), get('template'), get('uid'));
+    try {
+      $page = api::createPage($id, get('title'), get('template'), $uid);
 
       kirby()->trigger('panel.page.create', $page);
 
@@ -98,13 +102,13 @@ class PagesController extends Controller {
 
           if($num > 0) {
             $page->sort($num);
-          } 
+          }
 
         }
 
       }
 
-      // get the blueprint of the parent page to find the 
+      // get the blueprint of the parent page to find the
       // correct sorting mode for this page
       $parentBlueprint = blueprint::find($page->parent());
 

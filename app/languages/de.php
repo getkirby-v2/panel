@@ -128,6 +128,7 @@ return array(
     'pages.search.help' => 'Durchsuche alle Seiten nach URL-Pfad. Du kannst dich durch Ergebnisse mit den Pfeiltasten bewegen und per Enter zur ausgewählten Seite springen.',
     'pages.search.noresults' => 'Es gibt leider keine Seiten zu deiner Suche. Bitte versuche es mit einem anderen Pfad.',
     'pages.error.missing' => 'Die Seite konnte nicht gefunden werden',
+    'pages.error.uid.num' => 'URL-Anhang darf nicht mit einer Nummer beginnen',
 
     // subpages
     'subpages' => 'Seiten',
