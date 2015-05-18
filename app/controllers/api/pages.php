@@ -4,9 +4,14 @@ class PagesController extends Controller {
 
   public function create($id = '') {
 
-    try {
+    $title = get('title');
 
-      $page = api::createPage($id, get('title'), get('template'), get('uid'));
+    if(v::num(str::substr($title, 0, 1))) {
+      return response::error(l('pages.error.title.num'));
+    }
+
+    try {
+      $page = api::createPage($id, $title, get('template'), get('uid'));
 
       kirby()->trigger('panel.page.create', $page);
 
