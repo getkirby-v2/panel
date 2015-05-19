@@ -1,13 +1,17 @@
 <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
   <span class="hgroup-title">
+    <?php if($page->isSite()): ?>
+    <a href="<?php _u('files/index') ?>"><?php _l('metatags.files') ?></a>
+    <?php else: ?>
     <a href="<?php _u('files/index/' . $page->id()) ?>"><?php _l('pages.show.files.title') ?></a>
+    <?php endif ?>
   </span>
   <span class="hgroup-options shiv shiv-dark shiv-left">
     <span class="hgroup-option-right">
       <a title="<?php _l('pages.show.files.edit') ?>" href="<?php _u('files/index/' . $page->id()) ?>">
         <?php i('pencil', 'left') ?><span><?php _l('pages.show.files.edit') ?></span>
       </a>
-      <a title="f" data-shortcut="f" href="<?php _u($page, 'upload') ?>">
+      <a title="f" data-shortcut="f" href="<?php $page->isSite() ? _u('metatags/upload') : _u($page, 'upload') ?>">
         <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.files.add') ?></span>
       </a>
     </span>

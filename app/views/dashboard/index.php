@@ -15,15 +15,17 @@
             <a title="<?php _l('dashboard.index.pages.edit') ?>" href="#/subpages/index/">
               <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.pages.edit') ?></span>
             </a>
+            <?php if($addbutton): ?>
             <a title="+" data-shortcut="+" href="#/pages/add/">
               <?php i('plus-circle', 'left') ?><span><?php _l('dashboard.index.pages.add') ?></span>
             </a>
+            <?php endif ?>
           </span>
         </span>
       </h2>
 
       <ul class="nav nav-list sidebar-list">
-        <?php foreach($site->children() as $c): ?>
+        <?php foreach($pages as $c): ?>
         <?php echo new Snippet('pages/sidebar/subpage', array('subpage' => $c)) ?>
         <?php endforeach ?>
       </ul>
@@ -41,7 +43,7 @@
       <div class="field field-is-readonly">
         <div class="field-content">
           <div class="input input-is-readonly">
-            <a target="_blank" href="<?php echo url() ?>"><?php echo url::short(url()) ?></a>
+            <a target="_blank" href="<?php echo url() ?>"><?php e(url::isAbsolute(url()), url::short(url()), url()) ?></a>
           </div>
           <div class="field-icon">
             <i class="icon fa fa-chain"></i>
@@ -92,6 +94,7 @@
     </div>
 
     <?php foreach($widgets as $widget): ?>
+    <?php if(!$widget) continue; ?>
     <div class="section white dashboard-section">
 
       <h2 class="hgroup hgroup-single-line cf">
@@ -104,32 +107,6 @@
 
     </div>
     <?php endforeach ?>
-
-    <div class="section white dashboard-section">
-
-      <h2 class="hgroup hgroup-single-line cf">
-        <span class="hgroup-title">
-          <a href="#/metatags/"><?php _l('dashboard.index.metatags.title') ?></a>
-        </span>
-        <span class="hgroup-options shiv shiv-dark shiv-left">
-          <span class="hgroup-option-right">
-            <a href="#/metatags/">
-              <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.metatags.edit') ?></span>
-            </a>
-          </span>
-        </span>
-      </h2>
-
-      <div class="field">
-        <div class="input input-is-readonly input-with-tags">
-
-          <?php foreach($site->content()->toArray() as $key => $meta): ?><!--
-       --><a class="tag" href="#/metatags/<?php __($key) ?>"><span class="tag-label"><?php __($key) ?></span></a><!--
-       --><?php endforeach ?>
-
-        </div>
-      </div>
-    </div>
 
     <div class="section white dashboard-section">
 
@@ -159,6 +136,36 @@
 
       </div>
     </div>
+
+    <?php if($license->type() == 'trial' and !$license->local()): ?>
+    <!-- license -->
+    <div class="section white dashboard-section">
+
+      <h2 class="hgroup hgroup-single-line cf">
+        <span class="hgroup-title">
+          <?php _l('dashboard.index.license.title') ?>
+        </span>
+      </h2>
+
+      <div class="field">
+
+        <div class="dashboard-box">
+          <div class="text">
+            <p>
+              It seems you are running Kirby on a public server without a valid license!
+            </p>
+            <p>
+              Please, support Kirby and <a target="blank" href="http://getkirby.com/buy"><strong>buy&nbsp;a&nbsp;license&nbsp;now&nbsp;&rsaquo;</strong></a>
+            </p>
+            <p style="margin-bottom: 0">
+              If you already have a license key, just add it to your config file: <a target="_blank" href="http://getkirby.com/docs/installation/license-code"><strong>site/config/config.php</strong></a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <?php endif ?>
 
   </div>
 

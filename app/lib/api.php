@@ -64,11 +64,9 @@ class Api {
       default;
 
         $parts = str::split($blueprint->pages()->sort(), ' ');
-        $field = a::get($parts, 0);
-        $order = a::get($parts, 1);
 
-        if($field) {
-          $pages = $pages->sortBy($field, $order);
+        if(count($parts) > 0) {
+          $pages = call_user_func_array(array($pages, 'sortBy'), $parts);
         }
 
         break;

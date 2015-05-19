@@ -4,6 +4,8 @@ class History {
 
   static public function visit($uri) {
 
+    if(empty($uri)) return;
+
     $history = site()->user()->history();
 
     if(empty($history) or !is_array($history)) {

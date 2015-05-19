@@ -8,6 +8,8 @@ class PagesController extends Controller {
 
       $page = api::createPage($id, get('title'), get('template'), get('uid'));
 
+      kirby()->trigger('panel.page.create', $page);
+
       return response::success('success', array(
         'uid' => $page->uid(),
         'uri' => $page->id()
@@ -19,6 +21,33 @@ class PagesController extends Controller {
 
   }
 
+  public function keep($id = '') {
+
+    $page = $this->page($id);
+
+    if(!$page) {
+      return response::error(l('pages.error.missing'));
+    }
+
+    PageStore::keep($page);
+
+    return response::success('success');
+
+  }
+
+  public function discard($id = '') {
+
+    $page = $this->page($id);
+
+    if(!$page) {
+      return response::error(l('pages.error.missing'));
+    }
+
+    PageStore::discard($page);
+
+    return response::success('success');
+
+  }
   public function update($id = '') {
 
     $page = $this->page($id);
@@ -47,6 +76,8 @@ class PagesController extends Controller {
 
     try {
 
+      PageStore::discard($page);
+
       $page->update($data);
 
       // make sure that the sorting number is correct
@@ -64,7 +95,19 @@ class PagesController extends Controller {
 
       }
 
+      // get the blueprint of the parent page to find the 
+      // correct sorting mode for this page
+      $parentBlueprint = blueprint::find($page->parent());
+
+      // auto-update the uid if the sorting mode is set to zero
+      if($parentBlueprint->pages()->num()->mode() == 'zero') {
+        $uid = str::slug($page->title());
+        $page->move($uid);
+      }
+
       history::visit($page->id());
+
+      kirby()->trigger('panel.page.update', $page);
 
       return response::success('success', array(
         'file' => $page->content()->root(),
@@ -81,14 +124,20 @@ class PagesController extends Controller {
 
   public function delete($id) {
 
-    $page = $this->page($id);
-
-    if(!$page) {
+    if($page = $this->page($id)) {
+      $parent = $page->parent();
+    } else {
       return response::error(l('pages.error.missing'));
     }
 
+    $subpages = new Subpages($parent);
+
     try {
-      $page->delete();
+      $subpages->delete($page);
+
+      // remove unsaved changes
+      PageStore::discard($page);
+
       return response::success('success');
     } catch(Exception $e) {
       return response::error($e->getMessage());
@@ -98,59 +147,62 @@ class PagesController extends Controller {
 
   public function sort($id = '') {
 
-    $page      = $this->page($id);
-    $blueprint = blueprint::find($page);
-    $uids      = get('uids');
-    $flip      = $blueprint->pages()->sort() == 'flip';
-    $children  = $page->children();
-
-    if($flip) {
-      $index = get('index', 1);
-      $uids  = array_reverse($uids);
-      $n     = $page->children()->visible()->count() - ($index * $blueprint->pages()->limit() - 1);
-
-      if($n <= 0) $n = 1;
-
+    if($page = $this->page($id)) {
+      $parent = $page->parent();
     } else {
-      $index = (get('index', 1) - 1);
-      $n     = (($blueprint->pages()->limit() * $index) + 1);
+      return response::error(l('pages.error.missing'));
     }
 
-    foreach($uids as $uid) {
+    $subpages = new Subpages($parent);
 
-      try {
-
-        $child = $children->find($uid);
-        $x     = api::createPageNum($child, $blueprint);
-
-        if($x !== false and $x >= 0) {
-          $child->sort($x);
-        } else {
-          $child->sort($n);
-        }
-
-        $n++;
-
-      } catch(Exception $e) {
-
-      }
-
+    try {
+      $num = $subpages->sort($page, get('to'));
+      return response::success('The page has been sorted', array(
+        'num' => $num
+      ));
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
     }
 
-    return response::success('success');
+  }
+
+  public function publish($id) {
+
+    if($page = $this->page($id)) {
+      $parent = $page->parent();
+    } else {
+      return response::error(l('pages.error.missing'));
+    }
+
+    if($page->isErrorPage()) {
+      return response::error('The error page cannot be published');
+    }
+
+    $subpages = new Subpages($parent);
+
+    try {
+      $num = $subpages->sort($page, 'last');
+      return response::success('The page has been sorted', array(
+        'num' => $num
+      ));
+    } catch(Exception $e) {
+      return response::error($e->getMessage());
+    }
 
   }
 
   public function hide($id) {
 
-    $page = $this->page($id);
-
-    if(!$page) {
+    if($page = $this->page($id)) {
+      $parent = $page->parent();
+    } else {
       return response::error(l('pages.error.missing'));
     }
 
+    $subpages = new Subpages($parent);
+
     try {
-      $page->hide();
+      $subpages->hide($page);
       return response::success('success');
     } catch(Exception $e) {
       return response::error($e->getMessage());
@@ -171,6 +223,9 @@ class PagesController extends Controller {
       return response::error('This page type\'s url cannot be changed');
     }
 
+    $changes = PageStore::fetch($page);
+    PageStore::discard($page);
+
     try {
 
       if(site()->multilang() and site()->language()->code() != site()->defaultLanguage()->code()) {
@@ -180,6 +235,11 @@ class PagesController extends Controller {
       } else {
         $page->move(get('uid'));
       }
+
+      PageStore::update($page, $changes);
+
+      // hit the hook
+      kirby()->trigger('panel.page.move', $page);
 
       return response::success('success', array(
         'uid' => $page->uid(),

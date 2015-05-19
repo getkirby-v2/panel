@@ -32,6 +32,28 @@ var MetatagsController = {
 
       });
 
+      element.find('.sidebar').sidebar();
+
+      var textareas = element.find('textarea');
+      var draggable = element.find('.draggable');
+
+      draggable.draggable({
+        helper: function(e, ui) {
+          return $('<div class="draggable-helper"></div>');
+        },
+        start: function(e, ui) {
+          ui.helper.text($(this).data('helper'));
+        }
+      });
+
+      textareas.droppable({
+        hoverClass: 'over',
+        accept: draggable,
+        drop: function(e, ui) {
+          $(this).insertAtCursor(ui.draggable.data('text'));
+        }
+      });
+
       if($.type(callback) == 'function') callback(element);
 
     });

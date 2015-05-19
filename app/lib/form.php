@@ -5,18 +5,22 @@ class Form extends Brick {
   static public $root  = array();
   static public $files = null;
 
-  public $tag      = 'form';
-  public $fields   = array();
-  public $values   = array();
-  public $alert    = null;
-  public $save     = true;
-  public $cancel   = true;
-  public $centered = false;
-  public $back     = false;
+  public $tag         = 'form';
+  public $fields      = array();
+  public $values      = array();
+  public $alert       = null;
+  public $save        = true;
+  public $cancel      = true;
+  public $centered    = false;
+  public $back        = false;
+  public $parentField = false;
 
-  public function __construct($fields = array(), $values = array()) {
+  public function __construct($fields = array(), $values = array(), $parent = false) {
 
     $this->fields = new Collection;
+
+    // if Form is part of a structureField, set structureField name
+    $this->parentField = $parent;
 
     $this->values($values);
     $this->fields($fields);
@@ -50,6 +54,9 @@ class Form extends Brick {
       $field['default'] = a::get($field, 'default', null);
       $field['value']   = a::get($this->values(), $name, $field['default']);
 
+      // Pass through parent field name (structureField)
+      $field['parentField'] = $this->parentField;
+
       $this->fields->append($name, static::field($field['type'], $field));
 
     }
@@ -77,7 +84,7 @@ class Form extends Brick {
       $name  = $field->name();
       $value = $this->value($name);
 
-      if($field->required() and empty($value)) {
+      if($field->required() and $value == '') {
         $field->error = true;
       } else if($value != '' and !$field->validate()) {
         $field->error = true;
@@ -161,9 +168,13 @@ class Form extends Brick {
       $name = strtolower($file) . 'field';
 
       if(isset(static::$root['custom']) and is_dir(static::$root['custom'] . DS . $file)) {
-        static::$files[$name] = static::$root['custom'] . DS . $file . DS . $file . '.php';
+        $root = static::$root['custom'] . DS . $file . DS . $file . '.php';
       } else {
-        static::$files[$name] = static::$root['default'] . DS . $file . DS . $file . '.php';
+        $root = static::$root['default'] . DS . $file . DS . $file . '.php';
+      }
+
+      if(file_exists($root)) {
+        static::$files[$name] = $root;
       }
 
     }
@@ -211,22 +222,15 @@ class Form extends Brick {
     static::$root['default'] = $defaultFieldsRoot;
     static::$root['custom']  = $customFieldsRoot;
 
-    load(static::files());
+    $classes = static::files();
 
-    spl_autoload_register(function($class) use($defaultFieldsRoot, $customFieldsRoot) {
-      $class = strtolower($class);
-      if(str::contains($class, 'field')) {
-        $type    = str_replace('field', '', $class);
-        $file    = $type . DS . $type . '.php';
-        $custom  = $customFieldsRoot . DS . $file;
-        $default = $defaultFieldsRoot . DS . $file;
-        if($customFieldsRoot and file_exists($custom)) {
-          include($custom);
-        } else if(file_exists($default)) {
-          include($default);
-        }
+    load($classes);
+
+    foreach($classes as $classname => $root) {
+      if(method_exists($classname, 'setup')) {
+        call(array($classname, 'setup'));
       }
-    });
+    }
 
   }
 

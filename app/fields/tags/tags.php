@@ -4,7 +4,7 @@ class TagsField extends TextField {
 
   static public $assets = array(
     'js' => array(
-      'tags.min.js'
+      'tags.js'
     )
   );
 
@@ -24,7 +24,7 @@ class TagsField extends TextField {
     $input->addClass('input-with-tags');
     $input->data(array(
       'field'     => 'tags',
-      'lowercase' => $this->lower,
+      'lowercase' => $this->lower ? 'true' : false,
       'separator' => $this->separator,
     ));
 
@@ -40,7 +40,8 @@ class TagsField extends TextField {
         'uri'       => $page->id(),
         'index'     => $this->index(),
         'field'     => $field,
-        'separator' => $this->separator()
+        'yaml'      => $this->parentField,
+        'separator' => $this->separator(),
       );
 
       $input->data('url', panel()->urls()->api() . '/autocomplete/field?' . http_build_query($query));

@@ -1,7 +1,8 @@
 <?php
 
 return array(
-  'title' => 'Português (Brasileiro)',
+  'title' => 'Português (Brasileiro)&lrm;',
+  'direction' => 'ltr',
   'author' => 'Rhawbert Costa <rhawbert@gmail.com>',
   'version' => '1.0.0',
   'data' => array(

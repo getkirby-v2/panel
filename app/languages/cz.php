@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Česky',
+  'direction' => 'ltr',
   'author' => 'Jan Červinka <cervinkah@gmail.com>',
   'version' => '1.0.0',
   'data' => array(

@@ -1,0 +1,125 @@
+/* Search fields */
+.search-field {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.search-field .icon {
+  position: absolute;
+  top: .4em;
+  z-index: 1;
+  body.ltr & {
+    left: 0;
+  }
+  body.rtl & {
+    right: 0;
+  }
+}
+.search-input {
+  background: #efefef;
+  width: 100%;
+  border-radius: 5em;
+  border: 2px solid transparent;
+  line-height: 1em;
+  font-size: 1em;
+  padding: .3em .75em;
+}
+.search-input:focus {
+  outline: 0;
+  border-color: #ddd;
+}
+.search-input {
+  position: relative;
+  font-weight: 600;
+  line-height: 1.5em;
+  border: 0;
+  border-bottom: 2px solid #ddd;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  body.ltr & {
+    padding: 0 0 .5em 2em;
+  }
+  body.rtl & {
+    padding: 0 2em .5em 0;
+  }
+}
+.search-dropdown {
+  padding-bottom: 3em;
+}
+.search-dropdown button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 1em 2em;
+  line-height: 1em;
+  margin-bottom: 1px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background: #fff;
+  body.ltr & {
+    text-align: left;
+  }
+  body.rtl & {
+    text-align: right;
+  }
+}
+.search-dropdown button:focus {
+  outline: 0;
+  background: #8dae28;
+  color: #fff;
+}
+.search-dropdown button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.search-close {
+  position: absolute;
+  top: 0;
+  width: 4em;
+  color: #fff;
+  text-align: center;
+  background: #000;
+  body.ltr & {
+    right: 0;
+    border-left: 1px solid #555;
+  }
+  body.rtl & {
+    left: 0;
+    border-right: 1px solid #555;
+  }
+}
+.search-help {
+  position: relative;
+  font-style: italic;
+  max-width: 30em;
+  body.ltr & {
+    padding-left: 4.5em;
+  }
+  body.rtl & {
+    padding-right: 4.5em;
+  }
+}
+.search-help:after {
+  position: absolute;
+  content: "";
+  top: -1.5em;
+  height: 6em;
+  width: 3em;
+  body.ltr & {
+    left: 1.5em;
+    background: url(../images/hint.arrows.png) no-repeat top left;
+  }
+  body.rtl & {
+    right: 1.5em;
+    background: url(../images/hint.arrows.png) no-repeat top right;
+  }
+}

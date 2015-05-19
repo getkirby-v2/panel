@@ -9,11 +9,12 @@
     <?php echo assets::css() ?>
 
   </head>
-  <body class="grey">
+  <body class="grey <?php echo panel()->direction() ?>">
 
     <div class="modal-content"><?php echo $content ?></div>
 
     <?php echo assets::js() ?>
+    <script><?php echo form::js(false) ?></script>
 
     <script>
 

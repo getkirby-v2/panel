@@ -1,5 +1,5 @@
-<div class="item item-condensed" id="<?php __($subpage->uid()) ?>">
-  <div class="item-content">
+<div class="item item-condensed" id="<?php __($subpage->uid()) ?>" data-index="<?php echo $subpage->num() ?>">
+  <div class="item-content" title="<?php __($subpage->title()) ?>">
     <div class="item-info">
       <span class="item-title"><?php __($subpage->title()) ?></span>
     </div>

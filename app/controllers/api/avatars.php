@@ -26,8 +26,7 @@ class AvatarsController extends Controller {
 
     if($upload->file()) {
 
-      thumb::$defaults['root']   = dirname($upload->file()->root());
-      thumb::$defaults['driver'] = 'im';
+      thumb::$defaults['root'] = dirname($upload->file()->root());
 
       $thumb = new Thumb($upload->file(), array(
         'filename'  => $upload->file()->filename(),
@@ -37,6 +36,7 @@ class AvatarsController extends Controller {
         'crop'      => true
       ));
 
+      kirby()->trigger('panel.avatar.upload', $user->avatar());
       return response::success(l('users.avatar.success'));
     } else {
       return response::error($upload->error()->getMessage());
@@ -58,6 +58,7 @@ class AvatarsController extends Controller {
 
     if($avatar = $user->avatar()) {
       if(f::remove($avatar->root())) {
+        kirby()->trigger('panel.avatar.delete', $avatar);
         return response::success(l('users.avatar.delete.success'));
       }
     }

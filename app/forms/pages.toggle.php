@@ -1,0 +1,2 @@
+confirmation:
+  type: info

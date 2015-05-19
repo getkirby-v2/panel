@@ -8,8 +8,13 @@
 
     <?php echo assets::css() ?>
 
+    <!-- custom panel stylesheet -->
+    <?php if($stylesheet = kirby()->option('panel.stylesheet')): ?>
+    <?php echo css($stylesheet) ?>
+    <?php endif ?>
+
   </head>
-  <body class="grey">
+  <body class="login grey <?php echo panel()->direction() ?>">
 
     <div class="modal-content">
 
@@ -20,17 +25,29 @@
       </div>
       <![endif]-->
 
-      <div class="message <?php e(!empty($welcome), 'message-is-notice', 'message-is-alert hidden') ?>">
+      <?php if($error): ?>
+      <div class="message message-is-alert">
+        <span class="message-content"><?php __($error) ?></span>
+        <span class="message-toggle"><i>&times;</i></span>
+      </div>
+      <?php elseif($welcome): ?>
+      <div class="message message-is-notice">
         <span class="message-content"><?php __($welcome) ?></span>
         <span class="message-toggle"><i>&times;</i></span>
       </div>
+      <?php endif ?>
 
       <?php echo $form ?>
 
     </div>
 
     <?php echo assets::js() ?>
-    <?php echo js(panel()->urls()->js() . '/apps/login.js') ?>
+
+    <script>
+      $('.message').on('click', function() {
+        $(this).addClass('hidden');
+      });
+    </script>
 
   </body>
 </html>

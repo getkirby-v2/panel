@@ -78,7 +78,8 @@ this.Handlebars=function(){var a=function(){"use strict";function a(a){this.stri
 
     handleObj.handler = function( event ) {
       // Don't fire in text-accepting inputs that we didn't directly bind to
-      if ( this !== event.target && (/textarea|select/i.test( event.target.nodeName ) ||
+      if ( this !== event.target && (/textarea|select/i.test( event.target.nodeName ) || 
+        ($(event.target).prop('contenteditable') == 'true' ) ||
         ( jQuery.hotkeys.options.filterTextInputs &&
           jQuery.inArray(event.target.type, jQuery.hotkeys.textAcceptingInputTypes) > -1 ) ) ) {
         return;
@@ -456,6 +457,23 @@ this.Handlebars=function(){var a=function(){"use strict";function a(a){this.stri
   };
 
 })(jQuery);  
+(function($) {
+
+  $.suggestPassword = function(length) {
+
+    var length   = length || 28;
+    var set      = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789!@#$%&*?';
+    var password = '';
+
+    for(x=0; x<length; x++) {
+      password += set[Math.floor(set.length * Math.random())];
+    }
+
+    return password;
+
+  };
+
+})(jQuery);
 (function($) {
 
   $.fn.serializeObject = function() {
@@ -908,15 +926,25 @@ var UsersController = {
       element.find('.sidebar').sidebar();
 
       var form = element.find('.form').form();
+      var lang = form.find('[name=language]').val();
 
       form.find('[autofocus]').focus();
 
       form.on('submit', function() {
-        UserModel.update(username, form.serializeObject(), function() {
-          app.main.data('current', false);
-          UsersController.edit(username, to, function(element) {
-            element.find('.form').trigger('success');
-          });
+        
+        var data = form.serializeObject();
+
+        UserModel.update(username, data, function() {
+
+          if(data.language !== lang) {
+            window.location.reload();
+          } else {
+            app.main.data('current', false);
+            UsersController.edit(username, to, function(element) {
+              element.find('.form').trigger('success');
+            });            
+          }
+
         }, function(message) {
           form.message('alert', message);
         });
@@ -994,6 +1022,7 @@ var UsersController = {
 
   }
 };
+
 /**
  *
  */
@@ -1016,6 +1045,16 @@ var PagesController = {
     app.main.view('pages/show/' + uri, {page: page}, function(element) {
 
       var form = element.find('.form').form();
+
+      form.data('state', form.serialize());
+
+      // block all outgoing links
+      // and check if the form is properly safed
+      $('a').not('[data-keep=false]').on('click', function(e) {
+        if(form.data('state') !== form.serialize()) {
+          PageModel.keep(uri, form.serializeObject());
+        }
+      });
 
       form.on('submit', function() {
         PageModel.update(uri, form.serializeObject(), function(response) {
@@ -1156,6 +1195,38 @@ var PagesController = {
 
   },
 
+  toggle: function(uri) {
+
+    PagesController.show(uri, app.store.get(uri + '/p:', 1));
+
+    app.modal.view('pages/toggle/' + uri, function(element) {
+
+      var form   = element.find('.form');
+      var action = element.find('.modal-content').data('action');
+
+      // focus on the change button
+      form.find('.btn-submit').focus();
+      form.on('submit', function() {
+
+        PageModel[action](uri, function(response) {
+          app.main.data('current', false);
+          window.location.href = '#/pages/show/' + uri;
+        }, app.modal.alert);
+        return false;
+
+      });
+
+    });
+
+  },
+
+  discard: function(uri) {
+    PageModel.discard(uri, function() {
+      app.main.data('current', false);
+      window.location.href = '#/pages/show/' + uri;
+    });
+  },
+
   delete: function(uri, to) {
 
     // get the uri for the parent page
@@ -1267,6 +1338,28 @@ var MetatagsController = {
 
       });
 
+      element.find('.sidebar').sidebar();
+
+      var textareas = element.find('textarea');
+      var draggable = element.find('.draggable');
+
+      draggable.draggable({
+        helper: function(e, ui) {
+          return $('<div class="draggable-helper"></div>');
+        },
+        start: function(e, ui) {
+          ui.helper.text($(this).data('helper'));
+        }
+      });
+
+      textareas.droppable({
+        hoverClass: 'over',
+        accept: draggable,
+        drop: function(e, ui) {
+          $(this).insertAtCursor(ui.draggable.data('text'));
+        }
+      });
+
       if($.type(callback) == 'function') callback(element);
 
     });
@@ -1309,13 +1402,39 @@ var SubpagesController = {
 
       element.find('.sortable').sortable({
         connectWith: '.sortable',
-        update: function() {
-          if($(this).attr('id') == 'visible-children') {
+        update: function(e, ui) {
 
-            PageModel.sort(uri, visiblePage, $(this).sortable('toArray'), function() {
-              app.main.data('current', false);
-              routie.reload();
-            });
+          var $this = $(this);
+
+          if($this.attr('id') == 'visible-children') {
+
+            var start = parseInt($this.data('start'));
+            var total = $this.data('total');
+            var flip  = $this.data('flip');
+            var index = $this.find('.item').index(ui.item);
+            var id    = ui.item.attr('id');
+
+            if(flip == '1') {
+              // if this is an invisible element the 
+              // total number of items in the visible list has
+              // to be adjusted to get the right result for the
+              // sorting number
+              if(ui.sender && ui.sender.attr('id') == 'invisible-children') {
+                total++;
+              }
+              var to = total - start - index + 1;
+            } else {
+              var to = index + start;              
+            }
+  
+            if(ui.item.parent().attr('id') !== 'invisible-children') {
+
+              PageModel.sort(uri, id, to, function() {
+                app.main.data('current', false);
+                routie.reload();
+              });
+
+            }
 
           }
         },
@@ -1362,6 +1481,9 @@ var FilesController = {
       case 'page':
         PagesController.show(uri);
         break;
+      case 'metatags':
+        MetatagsController.index();
+        break;
       default:
         FilesController.index(uri);
         break;
@@ -1384,8 +1506,9 @@ var FilesController = {
     FilesController.show(uri);
 
     var path = FilesController.path(uri);
+    var url  = path.uri ? 'files/replace/' + path.uri : 'files/replace';
 
-    app.modal.view('files/replace/' + path.uri + '/?filename=' + path.filename, function(element) {
+    app.modal.view(url + '/?filename=' + path.filename, function(element) {
 
       var url = $http.endpoint + '/files/replace/' + path.uri + '?filename=' + path.filename;
 
@@ -1402,8 +1525,9 @@ var FilesController = {
   show : function(uri) {
 
     var path = FilesController.path(uri);
+    var url  = path.uri ? 'files/show/' + path.uri : 'files/show';
 
-    app.main.view('files/show/' + path.uri + '/?filename=' + path.filename, function(element) {
+    app.main.view(url + '/?filename=' + path.filename, function(element) {
 
       var sidebar = element.find('.fileview-sidebar');
       var form    = element.find('.form').form();
@@ -1506,14 +1630,19 @@ var EditorController = {
     }
 
     app.popup.form('editor/link/' + this.uri(), data, null, function(form, data) {
+
       if(!data.text.length) {
         if(data.url.match(/^http|s\:\/\//)) {
           var tag = '<' + data.url + '>';
-        } else {
+        } else if(form.data('kirbytext')) {
           var tag = '(link: ' + data.url + ')';
+        } else {
+          var tag = '<' + data.url + '>';
         }
-      } else {
+      } else if(form.data('kirbytext')) {
         var tag = '(link: ' + data.url + ' text: ' + data.text + ')';
+      } else {
+        var tag = '[' + data.text + '](' + data.url + ')';
       }
       textarea.insertAtCursor(tag);
     }, function() { textarea.focus() });
@@ -1534,36 +1663,15 @@ var EditorController = {
     }
 
     app.popup.form('editor/email/' + this.uri(), data, null, function(form, data) {
+
       if(!data.text.length) {
         var tag = '<' + data.address + '>';
-      } else {
+      } else if(form.data('kirbytext')) {
         var tag = '(email: ' + data.address + ' text: ' + data.text + ')';
+      } else {
+        var tag = '[' + data.text + '](mailto:' + data.address + ')';
       }
       textarea.insertAtCursor(tag);
-    }, function() { textarea.focus() });
-
-  },
-
-  image : function(textarea) {
-
-    app.popup.form('editor/image/' + this.uri(), {}, function(element) {
-      element.find('.item').disableSelection().on('dblclick', function() {
-        element.find('.form').trigger('submit');
-      });
-    }, function(form, data) {
-      textarea.insertAtCursor('(image: ' + data.image + ')');
-    }, function() { textarea.focus() });
-
-  },
-
-  file : function(textarea) {
-
-    app.popup.form('editor/file/' + this.uri(), {}, function(element) {
-      element.find('.item').disableSelection().on('dblclick', function() {
-        element.find('.form').trigger('submit');
-      });
-    }, function(form, data) {
-      textarea.insertAtCursor('(file: ' + data.file + ')');
     }, function() { textarea.focus() });
 
   },
@@ -1580,11 +1688,24 @@ var PageModel = {
   update : function(uri, data, done, fail) {
     $http.post('pages/update/' + uri, data, done, fail);
   },
+  keep : function(uri, data, done, fail) {
+    $http.post('pages/keep/' + uri, data, done, fail);
+  },
+  discard : function(uri, data, done, fail) {
+    $http.post('pages/discard/' + uri, data, done, fail);
+  },
   delete : function(uri, done, fail) {
     $http.post('pages/delete/' + uri, {}, done, fail);
   },
-  sort : function(uri, index, uids, done, fail) {
-    $http.post('pages/sort/' + uri, {index: index, uids : uids}, done, fail);
+  sort : function(uri, id, to, done, fail) {
+    var uri = uri ? uri + '/' + id : id;
+    $http.post('pages/sort/' + uri, {to: to}, done, fail);
+  },
+  publish : function(uri, done, fail) {
+    $http.post('pages/publish/' + uri, {}, done, fail);
+  },
+  unpublish : function(uri, done, fail) {
+    $http.post('pages/hide/' + uri, {}, done, fail);
   },
   hide : function(uri, uid, done, fail) {
     $http.post('pages/hide/' + uri + '/' + uid, {}, done, fail);
@@ -1595,16 +1716,19 @@ var PageModel = {
 };
 var FileModel = {
   update: function(uri, filename, data, done, fail) {
-    $http.post('files/update/' + uri + '/?filename=' + filename, data, done, fail);
+    var url = uri ? 'files/update/' + uri : 'files/update';
+    $http.post(url + '/?filename=' + filename, data, done, fail);
   },
   rename: function(uri, filename, newName, done, fail) {
-    $http.post('files/rename/' + uri + '/?filename=' + filename, {name: newName}, done, fail);
+    var url = uri ? 'files/rename/' + uri : 'files/rename';
+    $http.post(url + '/?filename=' + filename, {name: newName}, done, fail);
   },
   sort: function(uri, filenames, done, fail) {
     $http.post('files/sort/' + uri, {filenames: filenames}, done, fail);
   },
   delete: function(uri, filename, done, fail) {
-    $http.post('files/delete/' + uri + '/?filename=' + filename, {}, done, fail);
+    var url = uri ? 'files/delete/' + uri : 'files/delete';
+    $http.post(url + '/?filename=' + filename, {}, done, fail);
   }
 };
 var UserModel = {
@@ -1626,6 +1750,9 @@ var routes = {
   '/' : function() {
     PagesController.show('');
   },
+  '/metatags/upload' : function() {
+    FilesController.upload('', 'metatags');
+  },
   '/metatags/?*' : function(uri) {
     MetatagsController.index(uri);
   },
@@ -1640,6 +1767,12 @@ var routes = {
   },
   '/pages/show/*' : function(uri) {
     PagesController.show(uri);
+  },
+  '/pages/toggle/*' : function(uri) {
+    PagesController.toggle(uri, 'page');
+  },
+  '/pages/discard/*' : function(uri) {
+    PagesController.discard(uri);
   },
   '/pages/delete/*' : function(uri) {
     PagesController.delete(uri, 'page');
@@ -1665,10 +1798,10 @@ var routes = {
   '/subpages/delete/*' : function(uri) {
     PagesController.delete(uri, 'subpages');
   },
-  '/files/index/*' : function(uri) {
+  '/files/index/?*' : function(uri) {
     FilesController.index(uri);
   },
-  '/files/upload/*' : function(uri) {
+  '/files/upload/?*' : function(uri) {
     FilesController.upload(uri, 'files');
   },
   '/files/replace/*' : function(uri) {

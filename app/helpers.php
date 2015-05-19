@@ -6,18 +6,38 @@ function panel() {
 
 function dragText($obj) {
 
-  if(is_a($obj, 'Page')) {
-    return '(link: ' . $obj->uri() . ' text: ' . $obj->title() . ')';
-  } else if(is_a($obj, 'File')) {
-    switch($obj->type()) {
-      case 'image':
-        return '(image: ' . $obj->filename() . ')';
-        break;
-      default:
-        return '(file: ' . $obj->filename() . ')';
-        break;
+  if(c::get('panel.kirbytext') === false) {
+
+    if(is_a($obj, 'Page')) {
+      return '[' . $obj->title() . '](' . $obj->url() . ')';
+    } else if(is_a($obj, 'File')) {
+      switch($obj->type()) {
+        case 'image':
+          return '![' . $obj->name() . '](' . $obj->url() . ')';
+          break;
+        default:
+          return '[' . $obj->filename() . '](' . $obj->url() . ')';
+          break;
+      }
     }
+
+  } else {
+
+    if(is_a($obj, 'Page')) {
+      return '(link: ' . $obj->uri() . ' text: ' . $obj->title() . ')';
+    } else if(is_a($obj, 'File')) {
+      switch($obj->type()) {
+        case 'image':
+          return '(image: ' . $obj->filename() . ')';
+          break;
+        default:
+          return '(file: ' . $obj->filename() . ')';
+          break;
+      }
+    }
+
   }
+
 
 }
 
@@ -111,7 +131,11 @@ function purl($obj, $action = false) {
   if(is_string($obj)) {
     return '#/' . $obj;
   } else if(is_a($obj, 'File')) {
-    return '#/files/' . $action . '/' . $obj->page()->id() . '/' . urlencode($obj->filename());
+    if($obj->page()->isSite()) {
+      return '#/files/' . $action . '/' . urlencode($obj->filename());
+    } else {      
+      return '#/files/' . $action . '/' . $obj->page()->id() . '/' . urlencode($obj->filename());
+    }
   } else if(is_a($obj, 'Page')) {
     return '#/pages/' . $action . '/' . $obj->id();
   } else if(is_a($obj, 'User')) {
@@ -130,4 +154,20 @@ function view($file, $data = array()) {
 
 function blueprint($page) {
   return $page->blueprint();
+}
+
+function fileHasThumbnail($file) {
+
+  if(!in_array(strtolower($file->extension()), array('jpg', 'jpeg', 'gif', 'png'))) {
+    return false;
+  }
+
+  if(kirby()->option('thumbs.driver') == 'gd') {
+    if($file->width() > 2048 or $file->height() > 2048) {
+      return false;
+    }
+  }
+
+  return true;
+
 }

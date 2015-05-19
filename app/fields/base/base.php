@@ -24,6 +24,7 @@ class BaseField {
   public $width;
   public $default;
   public $error = false;
+  public $parentField = false;
 
   public function root() {
     $obj = new ReflectionClass($this);

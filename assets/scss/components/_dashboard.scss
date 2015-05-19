@@ -1,0 +1,58 @@
+.dashboard-section {
+  display: inline-block;
+  margin-bottom: 1.5em;
+  width: 100%;
+  vertical-align: top;
+  padding: 1em 1.5em;
+}
+.dashboard-section:last-child {
+  margin-bottom: 0;
+}
+.dashboard-section ul {
+  margin-bottom: 0;
+}
+.dashboard-section .field:last-child {
+  margin-bottom: .5em;
+}
+@media screen and (min-width: 40em) {
+  .dashboard {
+    -webkit-column-count: 2;
+    -webkit-column-gap: 1.5em;
+    -moz-column-count: 2;
+    -moz-column-gap: 1.5em;
+    column-count: 2;
+    column-gap: 1.5em;
+  }
+}
+@media screen and (min-width: 60em) {
+  .dashboard {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+  }
+}
+
+/* Dashboard Boxes */
+.dashboard-box {
+  border: 2px solid #ddd;
+  overflow: hidden;
+  background: #efefef;
+}
+.dashboard-box li {
+  border-bottom: 1px solid #ddd;
+  list-style: none;
+}
+.dashboard-box li:last-child {
+  border-bottom: 0;
+}
+.dashboard-box li a {
+  display: block;
+  padding: .5em 1em;
+  line-height: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dashboard-box .text {
+  padding: .75em 1em;
+}

@@ -2,8 +2,9 @@
 
 return array(
   'title' => 'English',
+  'direction' => 'ltr',
   'author' => 'Bastian Allgeier <bastian@getkirby.com>',
-  'version' => '1.0.0',
+  'version' => '1.0.1',
   'data' => array(
 
     // global
@@ -11,6 +12,7 @@ return array(
     'add' => 'Add',
     'save' => 'Save',
     'saved' => 'Saved!',
+    'change' => 'Change',
     'delete' => 'Delete',
     'insert' => 'Insert',
     'ok' => 'Ok',
@@ -57,19 +59,30 @@ return array(
     'dashboard.index.site.title' => 'Your site\'s URL',
     'dashboard.index.account.title' => 'Your account',
     'dashboard.index.account.edit' => 'Edit',
-    'dashboard.index.metatags.title' => 'Site variables',
+    'dashboard.index.metatags.title' => 'Site options',
     'dashboard.index.metatags.edit' => 'Edit',
     'dashboard.index.history.title' => 'Your last updates',
     'dashboard.index.history.text' => 'Your last modified pages will be displayed here to make it easy to find them again later.',
+    'dashboard.index.license.title' => 'Kirby license',
 
     // metatags
-    'metatags' => 'Site variables',
+    'metatags' => 'Site options',
+    'metatags.info' => 'Kirby info',
+    'metatags.license' => 'Kirby license',
+    'metatags.version.toolkit' => 'Toolkit version',
+    'metatags.version.kirby' => 'Kirby version',
+    'metatags.version.panel' => 'Panel version',
     'metatags.back' => 'Back to the dashboard',
+    'metatags.files' => 'Site files',
 
     // pages
     'pages.show.settings' => 'Page settings',
     'pages.show.preview' => 'Open preview',
     'pages.show.changeurl' => 'Change URL',
+    'pages.show.invisible' => 'Status: invisible',
+    'pages.show.visible' => 'Status: visible',
+    'pages.show.changes.text' => 'You have unsaved changes!',
+    'pages.show.changes.button' => 'Discard',
     'pages.show.delete' => 'Delete this page',
     'pages.show.subpages.title' => 'Pages',
     'pages.show.subpages.edit' => 'Edit',
@@ -102,6 +115,8 @@ return array(
     'pages.url.uid.label.option' => 'Create from title',
     'pages.url.error.exists' => 'A page with the same appendix already exists',
     'pages.url.error.move' => 'The appendix could not be changed',
+    'pages.toggle.publish' => 'Do you really want to change the status of this page to **visible?**',
+    'pages.toggle.hide' => 'Do you really want to change the status of this page to **invisible?**',
     'pages.delete.headline' => 'Do you really want to delete this page?',
     'pages.delete.error.home.headline' => 'The home page cannot be deleted',
     'pages.delete.error.home.text' => 'You are trying to delete the home page. This is not possible and would lead to unwanted effects.',
@@ -246,7 +261,7 @@ return array(
     'fields.structure.add.first' => 'Add the first entry',
     'fields.structure.empty' => 'No entries yet.',
     'fields.structure.cancel' => 'Cancel',
-    'fields.structure.save' => 'Save',
+    'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Edit',
     'fields.structure.delete' => 'Delete',
     'fields.tags.label' => 'Tags',

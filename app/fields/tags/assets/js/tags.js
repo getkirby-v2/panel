@@ -25,9 +25,14 @@
     this.tags         = [];
     this.elements     = {};
     this.cursor       = 0;
+    this.disabled     = false;
     this.autocomplete = this.source.data('url');
     this.lowercase    = this.source.data('lowercase');
     this.separator    = this.source.data('separator');
+
+    if(this.lowercase) {
+      this.input.css('text-transform', 'lowercase');
+    }
 
     if(!this.separator) this.separator = ',';
 
@@ -198,6 +203,8 @@
     // remove a tag element
     this.remove = function(tag) {
 
+      if(self.disabled) return;
+
       self.tags = $.grep(self.tags, function(value) {
         return value != tag;
       });
@@ -259,7 +266,7 @@
       }
 
       // focus the input element if the user clicks on the box
-      self.element.on('click', function() {
+      self.element.on('click', function(e) {
         self.focus();
       });
 
@@ -271,6 +278,18 @@
       self.element.on('focusout', function() {
         self.element.removeClass('input-is-focused');
         self.element.trigger('tags:blur');
+
+        // add unconfirmed tag on field unfocus
+        setTimeout(function() {
+          if(self.element.has($(':focus')).length == 0) {
+            self.add();
+          }
+        }, 1);
+      });
+
+      // add unconfirmed tag on form submit
+      self.element.parents('.form').find('input[type=submit]').on('click', function(e){
+        self.add();
       });
 
       // create an invisible element to measure the size of the input field
@@ -333,6 +352,12 @@
 
       // fetch the first set of tags
       self.add(self.source.val());
+
+      if(self.source.attr('readonly')) {
+        self.disabled = true;
+        self.input.attr('readonly', true).attr('tabindex', -1);
+        self.element.find('button').attr('tabindex', -1);
+      }
 
       // trigger a custom event
       self.element.trigger('tags:init');

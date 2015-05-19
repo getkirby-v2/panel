@@ -1,0 +1,110 @@
+.message {
+  position: relative;
+  color: #fff;
+  line-height: 1em;
+  cursor: pointer;
+}
+.message-is-notice .message-content {
+  background: #8dae28;
+}
+.message-is-alert .message-content {
+  background: #b3000a;
+}
+.message-is-alert a {
+  color: #fff;
+  border-bottom: 2px solid rgba(255,255,255,.5);
+}
+.message-content {
+  display: block;
+  line-height: 1.5em;
+  background: #000;
+  body.ltr & {
+    padding: .75em 4.5em .75em 1.5em;
+  }
+  body.rtl & {
+    padding: .75em 1.5em .75em 4.5em;
+  }
+}
+.message-toggle {
+  position: absolute;
+  top: 50%;
+  margin-top: -.7em;
+  border: 2px solid rgba(255,255,255, .5);
+  border-radius: 4em;
+  width: 1.5em;
+  height: 1.5em;
+  transition: border-color .3s;
+  cursor: pointer;
+  body.ltr & {
+    right: 1.5em;
+  }
+  body.rtl & {
+    left: 1.5em;
+  }
+}
+.message-toggle:hover {
+  border-color: #fff;
+}
+.message-toggle i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-style: normal;
+  text-align: center;
+  font-size: 1.1em;
+  line-height: 1.1em;
+}
+
+
+body > .message {
+  position: absolute;
+  top: 0;
+  height: 3em;
+  z-index: 1;
+  background: #000;
+  body.ltr & {
+    right: 0;
+    left: 4em;
+    margin-left: -1px;
+  }
+  body.rtl & {
+    left: 0;
+    right: 4em;
+    margin-right: -1px;
+  }
+}
+body > .message .message-content {
+  position: relative;
+  body.ltr & {
+    margin-right: 4.5em;
+    padding-right: 1.5em;
+  }
+  body.rtl & {
+    margin-left: 4.5em;
+    padding-left: 1.5em;
+  }
+}
+body > .message .message-content:after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  margin-top: -.5em;
+  border-top: .5em solid transparent;
+  border-bottom: .5em solid transparent;
+  body.ltr & {
+    right: -.5em;
+    border-left: .5em solid #8dae28;
+  }
+  body.rtl & {
+    left: -.5em;
+    border-right: .5em solid #8dae28;
+  }
+}
+body > .message-is-alert .message-content:after {
+  body.ltr & {
+    border-left: .5em solid #b3000a;
+  }
+  body.rtl & {
+    border-right: .5em solid #b3000a;
+  }
+}

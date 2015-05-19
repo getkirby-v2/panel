@@ -80,19 +80,42 @@ app.modal.on('view:load', function() {
   // show the modal container
   app.modal.show();
 
+  $('body').css('overflow', 'hidden');
+
+  var $window  = $(window);
+  var $content = app.modal.find('.modal-content');
+  var $form    = $content.find('.form');
+  
+  $window.data('height', $form.outerHeight());
+
+  $(document).on('keyup.modal', function() {
+    $window.data('height', $form.outerHeight()).trigger('resize.modal');
+  });
+
+  $window.on('resize.modal', function() {
+    if($window.height() <= $window.data('height')) {
+      $content.addClass('modal-content-fixed');
+    } else {
+      $content.removeClass('modal-content-fixed');
+    }
+  }).trigger('resize.modal');
+
   // avoid closing clicks on modal content
-  app.modal.find('.modal-content').on('click', function(e) {
+  $content.on('click', function(e) {
     e.stopPropagation();
   });
 
   // focus the first element in the modal as soon as it is loaded
-  app.modal.find('[autofocus]').focus();
+  $content.find('[autofocus]').focus();
 
 });
 
 // make sure the modal is also hidden when it is being emptied
 app.modal.on('view:empty', function() {
   app.modal.hide();
+  $(window).off('resize.modal');
+  $(document).off('keyup.modal');
+  $('body').css('overflow', 'initial');
 });
 
 // create a new close event, which can be triggered from anywhere

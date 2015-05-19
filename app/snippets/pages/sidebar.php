@@ -20,6 +20,20 @@
       </li>
       <?php endif ?>
 
+      <?php if(!$page->isErrorPage()): ?>
+      <li>
+        <?php if($page->isInvisible()): ?>
+        <a href="<?php echo purl($page, 'toggle') ?>">
+          <?php i('toggle-off', 'left') . _l('pages.show.invisible', 'Status: unsichtbar') ?>
+        </a>
+        <?php else: ?>
+        <a href="<?php echo purl($page, 'toggle') ?>">
+          <?php i('toggle-on', 'left') . _l('pages.show.visible', 'Status: sichtbar') ?>
+        </a>
+        <?php endif ?>
+      </li>
+      <?php endif; ?>
+
       <?php if(!$page->isHomePage() and !$page->isErrorPage()): ?>
       <li>
         <a title="u" data-shortcut="u" href="<?php echo purl($page, 'url') ?>">

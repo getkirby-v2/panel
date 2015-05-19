@@ -16,13 +16,20 @@ class RadioField extends InputListField {
   }
 
   public function input() {
+
     $val   = func_get_arg(0);
     $input = parent::input();
     $input->addClass('radio');
     $input->attr('type', 'radio');
     $input->val($val);
+
+    if($this->readonly) {
+      $input->attr('disabled', true);      
+    }
+
     $input->attr('checked', $val == $this->value());
     return $input;
+
   }
 
   public function item($value, $text) {

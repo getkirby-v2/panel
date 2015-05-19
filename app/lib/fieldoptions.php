@@ -16,21 +16,59 @@ class FieldOptions {
 
     if(is_array($field->options)) {
       $this->options = $field->options;
+    } else if(v::url($field->options)) {
+      
+      $response = remote::get($field->options);
+      $options  = @json_decode($response->content(), true);
+
+      if(is_array($options)) {
+        $this->options = $options;        
+      } else {
+        $this->options = array();
+      }
+
     } else if(!$field->page) {
       $this->options = array();
     } else if($field->options == 'query') {
 
       $defaults = array(
-        'page'  => $field->page->id(),
-        'fetch' => 'children',
-        'value' => '{{uid}}',
-        'text'  => '{{title}}',
-        'flip'  => false
+        'page'     => $field->page->id(),
+        'fetch'    => 'children',
+        'value'    => '{{uid}}',
+        'text'     => '{{title}}',
+        'flip'     => false,
+        'template' => false
       );
 
-      $query   = array_merge($defaults, $field->query);
-      $page    = page($query['page']);
-      $items   = $this->items($page, $query['fetch']);
+      $query = array_merge($defaults, $field->query);
+      
+      // dynamic page option 
+      // ../
+      // ../../ etc.
+      
+      if(str::startsWith($query['page'], '../')) {
+        $currentPage = $field->page;
+        $path        = $query['page']; 
+        while(str::startsWith($path, '../')) {
+          if($parent = $currentPage->parent()) {
+            $currentPage = $parent;
+          } else {
+            break;
+          }
+          $path = str::substr($path, 3);
+        }
+        $page = $currentPage;
+      } else {
+        $page = page($query['page']);        
+      }
+
+      $items = $this->items($page, $query['fetch']);
+
+      if($query['template']) {
+        $items = $items->filter(function($item) use($query) {
+          return in_array(str::lower($item->intendedTemplate()), array_map('str::lower', (array)$query['template']));
+        });
+      }
 
       if($query['flip']) {
         $items = $items->flip();
@@ -97,6 +135,12 @@ class FieldOptions {
         break;
       case 'siblings':
         $items = $page->siblings()->not($page);
+        break;
+      case 'visibleSiblings':
+        $items = $page->siblings()->not($page)->visible();
+        break;
+      case 'invisibleSiblings':
+        $items = $page->siblings()->not($page)->invisible();
         break;
       case 'pages':
         $items = site()->index();

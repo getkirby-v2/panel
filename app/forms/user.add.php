@@ -21,7 +21,7 @@ password:
   label: users.form.password.label
   type: password
   width: 1/2
-  required: true
+  suggestion: true
 passwordConfirmation:
   label: users.form.password.confirm.label
   type: password

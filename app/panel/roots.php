@@ -6,11 +6,14 @@ use Obj;
 
 class Roots extends Obj {
 
-  public function __construct($index) {
+  public $panel;
 
-    $this->index       = $index;
-    $this->app         = $index . DS . 'app';
-    $this->assets      = $index . DS . 'assets';
+  public function __construct($panel, $root) {
+
+    $this->panel       = $panel;
+    $this->index       = $root;
+    $this->app         = $root . DS . 'app';
+    $this->assets      = $root . DS . 'assets';
 
     $this->controllers = $this->app . DS . 'controllers';
     $this->fields      = $this->app . DS . 'fields';

@@ -70,10 +70,16 @@ class StructureField extends BaseField {
 
   public function headline() {
 
-    $add = new Brick('a');
-    $add->html('<i class="icon icon-left fa fa-plus-circle"></i>' . l('fields.structure.add'));
-    $add->addClass('structure-add-button label-option');
-    $add->attr('#');
+    if(!$this->readonly) {
+
+      $add = new Brick('a');
+      $add->html('<i class="icon icon-left fa fa-plus-circle"></i>' . l('fields.structure.add'));
+      $add->addClass('structure-add-button label-option');
+      $add->attr('#');
+
+    } else {
+      $add = null;
+    }
 
     $label = parent::label();
     $label->addClass('structure-label');

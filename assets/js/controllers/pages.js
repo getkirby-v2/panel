@@ -21,6 +21,16 @@ var PagesController = {
 
       var form = element.find('.form').form();
 
+      form.data('state', form.serialize());
+
+      // block all outgoing links
+      // and check if the form is properly safed
+      $('a').not('[data-keep=false]').on('click', function(e) {
+        if(form.data('state') !== form.serialize()) {
+          PageModel.keep(uri, form.serializeObject());
+        }
+      });
+
       form.on('submit', function() {
         PageModel.update(uri, form.serializeObject(), function(response) {
 
@@ -158,6 +168,38 @@ var PagesController = {
 
     });
 
+  },
+
+  toggle: function(uri) {
+
+    PagesController.show(uri, app.store.get(uri + '/p:', 1));
+
+    app.modal.view('pages/toggle/' + uri, function(element) {
+
+      var form   = element.find('.form');
+      var action = element.find('.modal-content').data('action');
+
+      // focus on the change button
+      form.find('.btn-submit').focus();
+      form.on('submit', function() {
+
+        PageModel[action](uri, function(response) {
+          app.main.data('current', false);
+          window.location.href = '#/pages/show/' + uri;
+        }, app.modal.alert);
+        return false;
+
+      });
+
+    });
+
+  },
+
+  discard: function(uri) {
+    PageModel.discard(uri, function() {
+      app.main.data('current', false);
+      window.location.href = '#/pages/show/' + uri;
+    });
   },
 
   delete: function(uri, to) {

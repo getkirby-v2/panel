@@ -1,20 +1,27 @@
 <?php
 
-return array (
+return array(
   'title' => 'Deutsch',
+  'direction' => 'ltr',
   'author' => 'Bastian Allgeier <bastian@getkirby.com>',
-  'version' => '1.0.0',
-  'data' =>
-  array (
+  'version' => '1.0.1',
+  'data' => array(
+
+    // global
     'cancel' => 'Abbrechen',
     'add' => 'Hinzufügen',
     'save' => 'Speichern',
     'saved' => 'Gespeichert!',
+    'change' => 'Ändern',
     'delete' => 'Löschen',
     'insert' => 'Einfügen',
     'ok' => 'Ok',
+
+    // options (sidebar)
     'options.show' => 'Optionen einblenden',
     'options.hide' => 'Optionen ausblenden',
+
+    // installation
     'installation' => 'Installation',
     'installation.check.headline' => 'Kirby Panel Installation',
     'installation.check.text' => 'Kirby hat die folgenden Probleme festgestellt…',
@@ -32,13 +39,19 @@ return array (
     'installation.signup.language.label' => 'Sprache',
     'installation.signup.password.label' => 'Passwort',
     'installation.signup.button' => 'Erstellen',
+
+    // login
     'login' => 'Anmelden',
     'login.welcome' => 'Bitte melde dich mit deinem neuen Account an',
     'login.username.label' => 'Benutzername',
     'login.password.label' => 'Passwort',
     'login.error' => 'Ungültiger Benutzername oder Passwort',
     'login.button' => 'Anmelden',
+
+    // logout
     'logout' => 'Abmelden',
+
+    // dashboard
     'dashboard' => 'Übersicht',
     'dashboard.index.pages.title' => 'Seiten',
     'dashboard.index.pages.edit' => 'Bearbeiten',
@@ -46,15 +59,30 @@ return array (
     'dashboard.index.site.title' => 'Seite',
     'dashboard.index.account.title' => 'Dein Account',
     'dashboard.index.account.edit' => 'Bearbeiten',
-    'dashboard.index.metatags.title' => 'Seitenvariablen',
+    'dashboard.index.metatags.title' => 'Einstellungen',
     'dashboard.index.metatags.edit' => 'Bearbeiten',
     'dashboard.index.history.title' => 'Deine letzten Änderungen',
     'dashboard.index.history.text' => 'Sobald du die ersten Änderungen an Seiten vornimmst, werden sie hier aufgelistet, um jeder Zeit schnell darauf zugreifen zu können.',
-    'metatags' => 'Seitenvariablen',
+    'dashboard.index.license.title' => 'Kirby Lizenz',
+
+    // metatags
+    'metatags' => 'Einstellungen',
+    'metatags.info' => 'Kirby Information',
+    'metatags.license' => 'Kirby Lizenz',
+    'metatags.version.toolkit' => 'Toolkit Version',
+    'metatags.version.kirby' => 'Kirby Version',
+    'metatags.version.panel' => 'Panel Version',
     'metatags.back' => 'Zurück zur Übersicht',
+    'metatags.files' => 'Globale Dateien',
+
+    // pages
     'pages.show.settings' => 'Seiteneinstellungen',
     'pages.show.preview' => 'Seite öffnen',
     'pages.show.changeurl' => 'URL ändern',
+    'pages.show.invisible' => 'Status: unsichtbar',
+    'pages.show.visible' => 'Status: sichtbar',
+    'pages.show.changes.text' => 'Du hast ungespeicherte Änderungen!',
+    'pages.show.changes.button' => 'Verwerfen',
     'pages.show.delete' => 'Seite löschen',
     'pages.show.subpages.title' => 'Seiten',
     'pages.show.subpages.add' => 'Hinzufügen',
@@ -70,7 +98,7 @@ return array (
     'pages.show.error.notitle.title' => 'Das Blueprint hat kein Titelfeld',
     'pages.show.error.notitle.text' => 'Bitte füge ein Titelfeld ein und versuche es erneut',
     'pages.show.error.notitle.retry' => 'Wiederholen',
-    'pages.show.error.form'  => 'Bitte fülle alle Felder vollständig aus',
+    'pages.show.error.form'  => 'Bitte fülle alle Felder vollständig und korrekt aus',
     'pages.add.title.label' => 'Eine neue Seite hinzufügen',
     'pages.add.title.placeholder' => 'Titel',
     'pages.add.url.label' => 'URL-Anhang',
@@ -86,6 +114,8 @@ return array (
     'pages.url.uid.label.option' => 'Aus Titel erzeugen',
     'pages.url.error.exists' => 'Eine Seite mit dem selben Anhang besteht bereits.',
     'pages.url.error.move' => 'Die URL konnte nicht geändert werden',
+    'pages.toggle.publish' => 'Willst du den Status der Seite wirklich in **sichtbar** umändern?',
+    'pages.toggle.hide' => 'Willst du den Status der Seite wirklich in **unsichtbar** umändern?',
     'pages.delete.headline' => 'Willst du diese Seite wirklich löschen?',
     'pages.delete.error.home.headline' => 'Die Startseite kann nicht gelöscht werden',
     'pages.delete.error.home.text' => 'Du versuchst die Startseite zu löschen. Das ist nicht möglich und würde zu ungewollten Fehlern führen.',
@@ -98,6 +128,8 @@ return array (
     'pages.search.help' => 'Durchsuche alle Seiten nach URL-Pfad. Du kannst dich durch Ergebnisse mit den Pfeiltasten bewegen und per Enter zur ausgewählten Seite springen.',
     'pages.search.noresults' => 'Es gibt leider keine Seiten zu deiner Suche. Bitte versuche es mit einem anderen Pfad.',
     'pages.error.missing' => 'Die Seite konnte nicht gefunden werden',
+
+    // subpages
     'subpages' => 'Seiten',
     'subpages.index.headline' => 'Seiten in',
     'subpages.index.back' => 'Zurück',
@@ -109,6 +141,8 @@ return array (
     'subpages.index.invisible' => 'Unsichtbare Seiten',
     'subpages.index.invisible.help' => 'Ziehe sichtbare Seiten hierher, um sie unsichtbar zu machen',
     'subpages.error.missing' => 'Die Seite konnte nicht gefunden werden.',
+
+    // files
     'files' => 'Dateien',
     'files.index.headline' => 'Dateien für',
     'files.index.back' => 'Zurück',
@@ -134,6 +168,8 @@ return array (
     'files.delete.headline' => 'Willst du diese Datei wirklich löschen?',
     'files.error.missing.page' => 'Die Seite konnte nicht gefunden werden',
     'files.error.missing.file' => 'Die Datei konnte nicht gefunden werden',
+
+    // users
     'users' => 'Benutzer',
     'users.index.headline' => 'Alle Benutzer',
     'users.index.add' => 'Neuen Benutzer anlegen',
@@ -177,10 +213,11 @@ return array (
     'users.avatar.delete.error' => 'Das Profilbild konnte nicht gelöscht werden',
     'users.avatar.delete.success' => 'Das Profilbild wurde gelöscht',
     'users.error.missing' => 'Der Benutzer wurde nicht gefunden',
+
+    // form fields
     'fields.required' => 'Pflichtfeld',
     'fields.date.label' => 'Datum',
-    'fields.date.months' =>
-    array (
+    'fields.date.months' => array(
       0 => 'Januar',
       1 => 'Februar',
       2 => 'März',
@@ -194,8 +231,7 @@ return array (
       10 => 'November',
       11 => 'Dezember',
     ),
-    'fields.date.weekdays' =>
-    array (
+    'fields.date.weekdays' => array(
       0 => 'Sonntag',
       1 => 'Montag',
       2 => 'Dienstag',
@@ -204,8 +240,7 @@ return array (
       5 => 'Freitag',
       6 => 'Samstag',
     ),
-    'fields.date.weekdays.short' =>
-    array (
+    'fields.date.weekdays.short' => array(
       0 => 'So',
       1 => 'Mo',
       2 => 'Di',
@@ -225,7 +260,7 @@ return array (
     'fields.structure.add.first' => 'Füge den ersten Eintrag hinzu',
     'fields.structure.empty' => 'Es bestehen keine Einträge.',
     'fields.structure.cancel' => 'Abbrechen',
-    'fields.structure.save' => 'Speichern',
+    'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Bearbeiten',
     'fields.structure.delete' => 'Löschen',
     'fields.tags.label' => 'Tags',
@@ -242,6 +277,8 @@ return array (
     'fields.toggle.no' => 'Nein',
     'fields.toggle.on' => 'An',
     'fields.toggle.off' => 'Aus',
+
+    // textarea overlays
     'editor.link.url.label' => 'URL einfügen',
     'editor.link.text.label' => 'Linktext',
     'editor.link.text.help' => 'Der Linktext ist optional',
@@ -251,6 +288,8 @@ return array (
     'editor.email.text.help' => 'Der Linktext ist optional',
     'editor.file.empty' => 'Diese Seite hat keine Dateien',
     'editor.image.empty' => 'Diese Seite hat keine Bilder',
+
+    // error page
     'error' => 'Fehler',
     'error.headline' => 'Fehler',
   ),

@@ -23,13 +23,39 @@ var SubpagesController = {
 
       element.find('.sortable').sortable({
         connectWith: '.sortable',
-        update: function() {
-          if($(this).attr('id') == 'visible-children') {
+        update: function(e, ui) {
 
-            PageModel.sort(uri, visiblePage, $(this).sortable('toArray'), function() {
-              app.main.data('current', false);
-              routie.reload();
-            });
+          var $this = $(this);
+
+          if($this.attr('id') == 'visible-children') {
+
+            var start = parseInt($this.data('start'));
+            var total = $this.data('total');
+            var flip  = $this.data('flip');
+            var index = $this.find('.item').index(ui.item);
+            var id    = ui.item.attr('id');
+
+            if(flip == '1') {
+              // if this is an invisible element the 
+              // total number of items in the visible list has
+              // to be adjusted to get the right result for the
+              // sorting number
+              if(ui.sender && ui.sender.attr('id') == 'invisible-children') {
+                total++;
+              }
+              var to = total - start - index + 1;
+            } else {
+              var to = index + start;              
+            }
+  
+            if(ui.item.parent().attr('id') !== 'invisible-children') {
+
+              PageModel.sort(uri, id, to, function() {
+                app.main.data('current', false);
+                routie.reload();
+              });
+
+            }
 
           }
         },

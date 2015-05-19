@@ -20,12 +20,11 @@ email:
 password:
   label: users.form.password.new.label
   type: password
-  help: users.form.password.new.help
   width: 1/2
+  suggestion: true
 passwordConfirmation:
   label: users.form.password.new.confirm.label
   type: password
-  help: &nbsp;
   width: 1/2
 language:
   label: users.form.language.label

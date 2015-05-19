@@ -4,11 +4,15 @@
 
   <h2 class="hgroup cf">
     <span class="hgroup-title">
-      <?php _l('files.index.headline') ?> <a href="<?php echo purl($page, 'show') ?>"><?php __($page->title()) ?></a>
+      <?php if($page->isSite()): ?>
+      <?php _l('metatags.files') ?>
+      <?php else: ?>
+      <?php _l('files.index.headline') ?> <a href="<?php echo $back ?>"><?php __($page->title()) ?></a>
+      <?php endif ?>
     </span>
     <span class="hgroup-options shiv shiv-dark shiv-left cf">
 
-      <a class="hgroup-option-left" href="<?php echo purl($page, 'show') ?>">
+      <a class="hgroup-option-left" href="<?php echo $back ?>">
         <?php i('arrow-circle-left', 'left') . _l('files.index.back') ?>
       </a>
 
@@ -28,9 +32,11 @@
       <?php foreach($files as $file): ?><!--
    --><div class="grid-item" id="<?php __($file->filename()) ?>">
         <figure class="file">
-          <a class="file-preview file-preview-is-{{type}}" href="<?php echo purl($file, 'show') ?>">
-            <?php if(in_array($file->extension(), array('jpg', 'gif', 'png')) and $file->width() < 2000 and $file->height() < 2000): ?>
+          <a class="file-preview file-preview-is-<?php echo $file->type() ?>" href="<?php echo purl($file, 'show') ?>">
+            <?php if(fileHasThumbnail($file)): ?>
             <?php echo thumb($file, array('width' => 300, 'height' => '200', 'crop' => true)) ?>
+            <?php elseif($file->extension() == 'svg'): ?>
+            <img src="<?php echo $file->url() ?>" alt="<?php echo $file->filename() ?>">
             <?php else: ?>
             <span><?php __($file->extension()) ?></span>
             <?php endif ?>

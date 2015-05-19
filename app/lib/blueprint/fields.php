@@ -16,7 +16,7 @@ class Fields extends Collection {
       $field['name'] = $name;
       $field['page'] = $page;
 
-      // creat the field object
+      // create the field object
       $field = new Field($field);
 
       // append it to the collection

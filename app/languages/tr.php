@@ -2,8 +2,9 @@
 
 return array(
   'title' => 'Türkçe',
+  'direction' => 'ltr',
   'author' => 'Levent Usta <aristotheme@gmail.com>',
-  'version' => '1.0.0',
+  'version' => '1.0.1',
   'data' => array(
 
     // global
@@ -16,8 +17,8 @@ return array(
     'ok' => 'Tamam',
 
     // options (sidebar)
-    'options.show' => 'Show options',
-    'options.hide' => 'Hide options',
+    'options.show' => 'Seçenekleri göster',
+    'options.hide' => 'Seçenekleri gizle',
 
     // installation
     'installation' => 'Kurulum',
@@ -52,7 +53,7 @@ return array(
     // dashboard
     'dashboard' => 'Kontrol Paneli',
     'dashboard.index.pages.title' => 'Sayfalar',
-    'dashboard.index.pages.edit' => 'Edit',
+    'dashboard.index.pages.edit' => 'Düzenle',
     'dashboard.index.pages.add' => 'Oluştur',
     'dashboard.index.site.title' => 'Website Adresi',
     'dashboard.index.account.title' => 'Hesap Bilgilerin',
@@ -72,16 +73,19 @@ return array(
     'pages.show.changeurl' => 'Web adresini değiştir',
     'pages.show.delete' => 'Bu sayfayı sil',
     'pages.show.subpages.title' => 'Alt sayfalar',
-    'pages.show.subpages.edit' => 'Edit',
+    'pages.show.subpages.edit' => 'Düzenle',
     'pages.show.subpages.add' => 'Oluştur',
     'pages.show.subpages.empty' => 'Bu sayfanın şu an bir alt sayfası yok.',
     'pages.show.files.title' => 'Dosyalar',
-    'pages.show.files.edit' => 'Edit',
+    'pages.show.files.edit' => 'Düzenle',
     'pages.show.files.add' => 'Oluştur',
     'pages.show.files.empty' => 'Bu sayfanın şu an bir dosyası yok',
     'pages.show.error.permissions.title' => 'Sayfa yazılabilir değil',
     'pages.show.error.permissions.text'  => 'Lütfen content klasörünün ve içindekilerinin izin yapılandırmasını kontrol ediniz.',
     'pages.show.error.permissions.retry'  => 'Tekrar Dene',
+    'pages.show.error.notitle.title' => 'Blueprint\'in başlık alanı yok',
+    'pages.show.error.notitle.text' => 'Lütfen bir başlık girin ve tekrar deneyin',
+    'pages.show.error.notitle.retry' => 'Tekrar Dene',
     'pages.show.error.form'  => 'Lütfen gerekli tüm alanları doğru bir şekilde doldurunuz',
 
     'pages.add.title.label' => 'Yeni bir alt sayfa oluştur',
@@ -172,6 +176,7 @@ return array(
     'users.form.password.new.confirm.label' => 'Yeni şifre tekrarı',
     'users.form.password.new.help' => 'Mevcut şifreyi boş bırak',
     'users.form.language.label' => 'Dil',
+    'users.form.role.label' => 'Rol',
     'users.form.options.headline' => 'Kullanıcı Ayarları',
     'users.form.options.message' => 'E-Posta gönder',
     'users.form.options.delete' => 'Bu hesabı sil',
@@ -224,12 +229,12 @@ return array(
     ),
     'fields.date.weekdays.short' => array(
       'Paz',
-      'Pzrt',
+      'Pzt',
       'Sal',
       'Çar',
       'Per',
-      'Cu',
-      'Cum'
+      'Cum',
+      'Cmt'
     ),
     'fields.email.label' => 'E-Posta',
     'fields.email.placeholder' => 'eposta@ornek.com',

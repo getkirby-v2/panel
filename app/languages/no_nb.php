@@ -2,6 +2,7 @@
 
 return array(
   'title' => 'Norsk Bokmål',
+  'direction' => 'ltr',
   'author' => 'Ole-Martin Bratteng <ole-martin@bratteng.me>',
   'version' => '1.1.0',
   'data' => array(

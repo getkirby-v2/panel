@@ -10,6 +10,11 @@
       </a>
     </li>
     <li>
+      <a href="<?php _u('metatags') ?>">
+        <?php i('gear', 'left') . _l('metatags') ?>
+      </a>
+    </li>
+    <li>
       <a href="<?php _u('users') ?>">
         <?php i('user', 'left') . _l('users') ?>
       </a>

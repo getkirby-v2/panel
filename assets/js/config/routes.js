@@ -3,6 +3,9 @@ var routes = {
   '/' : function() {
     PagesController.show('');
   },
+  '/metatags/upload' : function() {
+    FilesController.upload('', 'metatags');
+  },
   '/metatags/?*' : function(uri) {
     MetatagsController.index(uri);
   },
@@ -17,6 +20,12 @@ var routes = {
   },
   '/pages/show/*' : function(uri) {
     PagesController.show(uri);
+  },
+  '/pages/toggle/*' : function(uri) {
+    PagesController.toggle(uri, 'page');
+  },
+  '/pages/discard/*' : function(uri) {
+    PagesController.discard(uri);
   },
   '/pages/delete/*' : function(uri) {
     PagesController.delete(uri, 'page');
@@ -42,10 +51,10 @@ var routes = {
   '/subpages/delete/*' : function(uri) {
     PagesController.delete(uri, 'subpages');
   },
-  '/files/index/*' : function(uri) {
+  '/files/index/?*' : function(uri) {
     FilesController.index(uri);
   },
-  '/files/upload/*' : function(uri) {
+  '/files/upload/?*' : function(uri) {
     FilesController.upload(uri, 'files');
   },
   '/files/replace/*' : function(uri) {

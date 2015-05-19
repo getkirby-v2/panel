@@ -9,7 +9,7 @@
     <?php echo assets::css() ?>
 
   </head>
-  <body class="app">
+  <body class="app <?php echo panel()->direction() ?>">
 
     <?php echo $content ?>
     <?php echo assets::js() ?>

@@ -4,7 +4,14 @@ class PagesController extends Controller {
 
   public function show($id) {
 
-    $page      = $this->page($id);
+    try {
+      $page = $this->page($id);      
+    } catch(Exception $e) {
+      $page = $this->page(dirname($id));
+      // dirty work around to move to the parent page
+      die('<script>window.location.href = "#/pages/show/' . $page->id() . '"</script>');
+    }
+
     $blueprint = blueprint::find($page);
     $fields    = $blueprint->fields($page);
     $content   = $page->content()->toArray();
@@ -34,6 +41,10 @@ class PagesController extends Controller {
 
     // make sure the title is always there
     $content['title'] = $page->title();
+
+    // merge with the kept snapshot
+    $changes = PageStore::fetch($page);
+    $content = array_merge($content, $changes);
 
     // create the form
     $form = new Form($fields->toArray(), $content);
@@ -98,6 +109,7 @@ class PagesController extends Controller {
       )),
       'sidebar' => $sidebar,
       'form'    => $form,
+      'changes' => $changes,
       'page'    => $page,
       'notitle' => !$form->fields()->get('title')
     ));
@@ -204,6 +216,30 @@ class PagesController extends Controller {
 
     return view('pages/url', array(
       'page' => $page
+    ));
+  }
+
+  public function toggle($id) {
+
+    $page = $this->page($id);
+
+    if($page->isErrorPage()) {
+      goToErrorView('modal');
+    }
+
+    $form = panel()->form('pages.toggle');
+    $form->save = l('change');
+    $form->back = purl($page, 'show');
+
+    if($page->isVisible()) {
+      $form->fields->confirmation->text = l('pages.toggle.hide');      
+    } else {
+      $form->fields->confirmation->text = l('pages.toggle.publish');      
+    }
+
+    return view('pages/toggle', array(
+      'page' => $page, 
+      'form' => $form
     ));
   }
 

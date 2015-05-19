@@ -20,9 +20,13 @@
 
     </nav>
 
-    <?php if(in_array($f->extension(), array('jpg', 'jpeg', 'gif', 'png')) and $f->width() < 2000 and $f->height() < 2000): ?>
+    <?php if(in_array($f->extension(), array('jpg', 'jpeg', 'gif', 'png'))): ?>
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($f->url()) ?>">
       <i style="background-image: url(<?php __($f->url() . '?' . $f->modified()) ?>); max-width: <?php echo $f->width() ?>px; max-height: <?php echo $f->height() ?>px;"></i>
+    </a>
+    <?php elseif($f->extension() == 'svg'): ?>
+    <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($f->url()) ?>">
+      <i style="background-image: url(<?php __($f->url() . '?' . $f->modified()) ?>); max-width: 100%; max-height: 100%"></i>
     </a>
     <?php else: ?>
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link" href="<?php __($f->url()) ?>">
@@ -50,7 +54,7 @@
       <div class="field field-is-readonly">
         <label class="label"><?php _l('files.show.info.label') ?></label>
         <div class="field-content">
-          <input class="input input-is-readonly" readonly type="text" value="<?php __($f->type() . ' / ' . $f->niceSize() . ' / ' . $f->dimensions()) ?>">
+          <input class="input input-is-readonly" readonly type="text" value="<?php __($info) ?>">
           <div class="field-icon">
             <?php i('info') ?>
           </div>
