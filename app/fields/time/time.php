@@ -18,12 +18,16 @@ class TimeField extends SelectField {
       $value = parent::value();
     }
 
-    if(empty($value) or $value == 'now') {
-      $value = date($this->format(), time());
-    }
+    if(!empty($value)) {
 
-    $time  = round((strtotime($value) - strtotime('00:00')) / ($this->interval * 60)) * ($this->interval * 60) + strtotime('00:00');
-    $value = date($this->format(), $time);
+      if($value == 'now') {
+        $value = date($this->format(), time());
+      }
+
+      $time  = round((strtotime($value) - strtotime('00:00')) / ($this->interval * 60)) * ($this->interval * 60) + strtotime('00:00');
+      $value = date($this->format(), $time);
+
+    }
 
     return $value;
 
