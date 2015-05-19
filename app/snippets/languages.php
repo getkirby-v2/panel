@@ -10,7 +10,7 @@
     <ul class="nav nav-list dropdown-list">
       <?php foreach($languages as $lang): ?>
       <li>
-        <a data-lang="<?php __($lang->code()) ?>" href="#"><?php __(strtoupper($lang->code())) ?></a>
+        <a data-keep="false" data-lang="<?php __($lang->code()) ?>" href="#"><?php __(strtoupper($lang->code())) ?></a>
       </li>
       <?php endforeach ?>
     </ul>

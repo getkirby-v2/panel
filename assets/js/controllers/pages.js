@@ -25,7 +25,7 @@ var PagesController = {
 
       // block all outgoing links
       // and check if the form is properly safed
-      $('a').on('click', function(e) {
+      $('a').not('[data-keep=false]').on('click', function(e) {
         if(form.data('state') !== form.serialize()) {
           PageModel.keep(uri, form.serializeObject());
         }

@@ -43,7 +43,7 @@ class PagesController extends Controller {
     $content['title'] = $page->title();
 
     // merge with the kept snapshot
-    $changes = (array)s::get(sha1($page->id()));
+    $changes = PageStore::fetch($page);
     $content = array_merge($content, $changes);
 
     // create the form
