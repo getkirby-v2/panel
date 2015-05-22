@@ -19,7 +19,7 @@ return array(
 
     // options (sidebar)
     'options.show' => 'Toon opties',
-    'options.hide' => 'Verberg options',
+    'options.hide' => 'Verberg opties',
 
     // installation
     'installation' => 'Installatie',
@@ -42,7 +42,7 @@ return array(
 
     // login
     'login' => 'Login',
-    'login.welcome' => 'Login met je account',
+    'login.welcome' => 'Login met je gebruikersnaam en wachtwoord',
     'login.username.label' => 'Gebruikersnaam',
     'login.password.label' => 'Wachtwoord',
     'login.error' => 'Ongeldige gebruikersnaam of wachtwoord',
