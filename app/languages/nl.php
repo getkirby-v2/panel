@@ -3,7 +3,7 @@
 return array(
   'title' => 'Nederlands',
   'direction' => 'ltr',
-  'author' => 'Gerard Kleine Deters <gerard@kleinedeters.com>',
+  'author' => 'Donan Gallagher <donangallagher@gmail.com>, Rutger Laurman <info@lekkerduidelijk.nl> en Gerard Kleine Deters <gerard@kleinedeters.com>',
   'version' => '1.0.1',
   'data' => array(
 
@@ -35,7 +35,7 @@ return array(
     'installation.signup.username.label' => 'Maak je eerste account',
     'installation.signup.username.placeholder' => 'Gebruikersnaam',
     'installation.signup.email.label' => 'E-mailadres',
-    'installation.signup.email.placeholder' => 'mail@example.com',
+    'installation.signup.email.placeholder' => 'mail@voorbeeld.nl',
     'installation.signup.password.label' => 'Wachtwoord',
     'installation.signup.language.label' => 'Taal',
     'installation.signup.button' => 'Maak account aan',
@@ -185,7 +185,7 @@ return array(
     'users.form.firstname.label' => 'Voornaam',
     'users.form.lastname.label' => 'Achternaam',
     'users.form.email.label' => 'E-mailadres',
-    'users.form.email.placeholder' => 'mail@example.com',
+    'users.form.email.placeholder' => 'mail@voorbeeld.nl',
     'users.form.password.label' => 'Wachtwoord',
     'users.form.password.confirm.label' => 'Bevestig wachtwoord',
     'users.form.password.new.label' => 'Nieuw wachtwoord',
@@ -253,7 +253,7 @@ return array(
       'Za'
     ),
     'fields.email.label' => 'E-mailadres',
-    'fields.email.placeholder' => 'mail@example.com',
+    'fields.email.placeholder' => 'mail@voorbeeld.nl',
     'fields.number.label' => 'Nummer',
     'fields.number.placeholder' => '#',
     'fields.page.label' => 'Pagina',
@@ -286,7 +286,7 @@ return array(
     'editor.link.text.label' => 'Link-tekst',
     'editor.link.text.help' => 'De link-tekst is niet verplicht',
     'editor.email.address.label' => 'E-mailadres invoegen',
-    'editor.email.address.placeholder' => 'mail@example.com',
+    'editor.email.address.placeholder' => 'mail@voorbeeld.nl',
     'editor.email.text.label' => 'Link-tekst',
     'editor.email.text.help' => 'De link-tekst is niet verplicht',
     'editor.file.empty' => 'Deze pagina heeft geen bestanden',
