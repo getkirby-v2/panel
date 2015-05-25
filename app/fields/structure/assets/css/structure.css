@@ -18,7 +18,7 @@
   border-bottom: 1px solid #efefef;
 }
 .structure[data-sortable=true] .structure-entry-content {
-  cursor: move;  
+  cursor: move;
 }
 .structure-entry-options .btn {
   padding: .75em 1.5em;
@@ -36,4 +36,7 @@
 }
 .structure-empty a:hover {
   border-color: #000;
+}
+.structure-add-button {
+  cursor: pointer;
 }
