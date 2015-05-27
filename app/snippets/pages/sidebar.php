@@ -51,6 +51,17 @@
       <?php endif ?>
     </ul>
 
+    <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
+      <span class="hgroup-title">
+        <?php _l('pages.show.info') ?>
+      </span>
+    </h2>
+    <ul class="nav nav-list sidebar-list">
+      <li>
+          <?php i('file-code-o', 'left') . _l('pages.show.template') ?> <?php echo $page->template(); ?>
+      </li>
+    </ul>
+
     <?php echo $subpages ?>
 
     <?php echo $files ?>

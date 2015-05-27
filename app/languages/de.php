@@ -81,6 +81,8 @@ return array(
     'pages.show.changeurl' => 'URL ändern',
     'pages.show.invisible' => 'Status: unsichtbar',
     'pages.show.visible' => 'Status: sichtbar',
+    'pages.show.info' => 'Seiteninformationen',
+    'pages.show.template' => 'Vorlage:',
     'pages.show.changes.text' => 'Du hast ungespeicherte Änderungen!',
     'pages.show.changes.button' => 'Verwerfen',
     'pages.show.delete' => 'Seite löschen',
