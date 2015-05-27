@@ -4,9 +4,9 @@
   <h2 class="hgroup cf">
     <span class="hgroup-title">
       <?php if($page->isSite()): ?>
-      <?php _l('subpages') ?>
+        <?php _l('subpages') ?>
       <?php else: ?>
-      <?php _l('subpages.index.headline') ?> <a href="<?php echo purl($page, 'show') ?>"><?php __($page->title()) ?></a>
+        <?php _l('subpages.index.headline') ?> <a href="<?php echo purl($page, 'show') ?>"><?php __($page->title()) ?></a>
       <?php endif ?>
     </span>
     <span class="hgroup-options shiv shiv-dark shiv-left cf">
@@ -34,9 +34,17 @@
       <div class="dropzone subpages">
         <div class="items<?php e($sortable, ' sortable') ?>" data-flip="<?php echo $flip ?>" data-start="<?php echo $visible->pagination()->numStart() ?>" data-total="<?php echo $visible->pagination()->items() ?>" id="visible-children">
 
-          <?php foreach($visible as $subpage): ?>
-          <?php echo new Snippet('subpages/subpage', array('subpage' => $subpage)) ?>
-          <?php endforeach ?>
+          <?php
+          foreach($visible as $subpage):
+            echo new Snippet('subpages/subpage', array(
+              'subpage'       => $subpage,
+              'editbutton'    => $visibleEditBtns[$subpage->uid()],
+              'editbuttons'   => count(array_unique($visibleEditBtns)) != 1,
+              'deletebutton'  => $visibleDeleteBtns[$subpage->uid()],
+              'deletebuttons' => count(array_unique($visibleDeleteBtns)) != 1
+              ));
+          endforeach;
+          ?>
 
         </div>
       </div>
@@ -57,16 +65,24 @@
       <div class="dropzone subpages">
         <div class="items<?php e($sortable, ' sortable') ?>" id="invisible-children">
 
-          <?php foreach($invisible as $subpage): ?>
-          <?php echo new Snippet('subpages/subpage', array('subpage' => $subpage)) ?>
-          <?php endforeach ?>
+          <?php
+          foreach($invisible as $subpage):
+            echo new Snippet('subpages/subpage', array(
+              'subpage'       => $subpage,
+              'editbutton'    => $invisibleEditBtns[$subpage->uid()],
+              'editbuttons'   => count(array_unique($invisibleEditBtns)) != 1,
+              'deletebutton'  => $invisibleDeleteBtns[$subpage->uid()],
+              'deletebuttons' => count(array_unique($invisibleDeleteBtns)) != 1
+            ));
+          endforeach;
+          ?>
 
         </div>
       </div>
 
       <?php echo $invisiblePagination ?>
 
-      <?php if(!$invisible->count()): ?>
+      <?php if(!$invisible->count() and $sortable): ?>
       <div class="subpages-help subpages-help-right marginalia text">
         <?php _l('subpages.index.invisible.help') ?>
       </div>
@@ -81,9 +97,11 @@
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php _l('subpages.index.add.first.text') ?></p>
-      <a data-shortcut="+" class="btn btn-rounded" href="<?php echo purl('subpages/add/' . $page->id()) ?>">
-        <?php _l('subpages.index.add.first.button') ?>
-      </a>
+      <?php if($addbutton) : ?>
+        <a data-shortcut="+" class="btn btn-rounded" href="<?php echo purl('subpages/add/' . $page->id()) ?>">
+          <?php _l('subpages.index.add.first.button') ?>
+        </a>
+      <?php endif ?>
     </div>
   </div>
 

@@ -9,24 +9,25 @@ use Obj;
 
 class Pages extends Obj {
 
-  public $template = array();
-  public $sort     = null;
-  public $limit    = 20;
-  public $num      = null;
-  public $max      = null;
-  public $sortable = true;
-  public $hide     = false;
-  public $build    = array();
+  public $template    = array();
+  public $sort        = null;
+  public $limit       = 20;
+  public $num         = null;
+  public $max         = null;
+  public $hide        = false;
+  public $permissions = true;
+  public $build       = array();
 
   public function __construct($params = array()) {
 
     if($params === true) {
       $this->template = blueprint::all();
     } else if($params === false) {
-      $this->limit    = 0;
-      $this->max      = 0;
-      $this->sortable = false;
-      $this->hide     = true;
+      $this->limit        = 0;
+      $this->max          = 0;
+      $this->sortable     = false;
+      $this->permissions  = new Permissions(false, 'subpages');
+      $this->hide         = true;
     } else if(is_array($params)) {
       $template = a::get($params, 'template');
       if($template == false) {
@@ -36,17 +37,24 @@ class Pages extends Obj {
       } else {
         $this->template = array($template);
       }
-      $this->sort     = a::get($params, 'sort', $this->sort);
-      $this->sortable = a::get($params, 'sortable', $this->sortable);
-      $this->limit    = a::get($params, 'limit', $this->limit);
-      $this->num      = a::get($params, 'num', $this->num);
-      $this->max      = a::get($params, 'max', $this->max);
-      $this->hide     = a::get($params, 'hide', $this->hide);
-      $this->build    = a::get($params, 'build', $this->build);
+      $this->sort         = a::get($params, 'sort', $this->sort);
+      $this->limit        = a::get($params, 'limit', $this->limit);
+      $this->num          = a::get($params, 'num', $this->num);
+      $this->max          = a::get($params, 'max', $this->max);
+      $this->hide         = a::get($params, 'hide', $this->hide);
+      $this->permissions  = new Permissions(a::get($params, 'permissions', $this->permissions), 'subpages');
+      // fallback for former 'sortable' option
+      if ($this->permissions->sort == null)
+        $this->permissions->set('sort', a::get($params, 'sortable', null));
+      $this->build        = a::get($params, 'build', $this->build);
     } else if(is_string($params)) {
       $this->template = array($params);
     }
 
+  }
+
+  public function can($permission, $role) {
+    return ($this->permissions === true) ? true : $this->permissions->allowed($permission, $role);
   }
 
   public function template() {

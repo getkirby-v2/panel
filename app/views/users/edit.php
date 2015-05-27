@@ -23,11 +23,13 @@
         </li>
         <?php endif ?>
 
-        <li>
-          <a title="#" data-shortcut="#" href="<?php echo purl($user, 'delete') ?>">
-            <?php i('trash-o', 'left') . _l('users.form.options.delete') ?>
-          </a>
-        </li>
+        <?php if($deletebutton) : ?>
+          <li>
+            <a title="#" data-shortcut="#" href="<?php echo purl($user, 'delete') ?>">
+              <?php i('trash-o', 'left') . _l('users.form.options.delete') ?>
+            </a>
+          </li>
+        <?php endif ?>
 
       </ul>
 
@@ -42,25 +44,26 @@
       <?php endif ?>
 
       <ul class="nav nav-list sidebar-list">
+        <?php if($editbutton) : ?>
+          <?php if($user->avatar()): ?>
+          <li>
+            <a href="<?php _u($user, 'avatar') ?>">
+              <?php i('pencil', 'left') . _l('users.form.avatar.replace') ?>
+            </a>
+          </li>
 
-        <?php if($user->avatar()): ?>
-        <li>
-          <a href="<?php _u($user, 'avatar') ?>">
-            <?php i('pencil', 'left') . _l('users.form.avatar.replace') ?>
-          </a>
-        </li>
-
-        <li>
-          <a href="<?php _u($user, 'delete-avatar') ?>">
-            <?php i('trash-o', 'left') . _l('users.form.avatar.delete') ?>
-          </a>
-        </li>
-        <?php else: ?>
-        <li>
-          <a href="<?php _u($user, 'avatar') ?>">
-            <?php i('cloud-upload', 'left') . _l('users.form.avatar.upload') ?>
-          </a>
-        </li>
+          <li>
+            <a href="<?php _u($user, 'delete-avatar') ?>">
+              <?php i('trash-o', 'left') . _l('users.form.avatar.delete') ?>
+            </a>
+          </li>
+          <?php else: ?>
+          <li>
+            <a href="<?php _u($user, 'avatar') ?>">
+              <?php i('cloud-upload', 'left') . _l('users.form.avatar.upload') ?>
+            </a>
+          </li>
+          <?php endif ?>
         <?php endif ?>
 
       </ul>

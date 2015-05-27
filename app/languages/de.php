@@ -4,7 +4,7 @@ return array (
   'title' => 'Deutsch',
   'direction' => 'ltr',
   'author' => 'Bastian Allgeier <bastian@getkirby.com>',
-  'version' => '1.0.0',
+  'version' => '1.0.1',
   'data' =>
   array (
     'cancel' => 'Abbrechen',

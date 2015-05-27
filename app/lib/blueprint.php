@@ -4,15 +4,15 @@ class Blueprint extends Obj {
 
   static public $root = null;
 
-  public $name      = null;
-  public $file      = null;
-  public $yaml      = array();
-  public $title     = null;
-  public $preview   = 'page';
-  public $pages     = null;
-  public $files     = null;
-  public $deletable = true;
-  public $fields    = array();
+  public $name        = null;
+  public $file        = null;
+  public $yaml        = array();
+  public $title       = null;
+  public $preview     = 'page';
+  public $permissions = true;
+  public $pages       = null;
+  public $files       = null;
+  public $fields      = array();
 
   public function __construct($name) {
 
@@ -23,12 +23,19 @@ class Blueprint extends Obj {
     // remove the broken first line
     unset($this->yaml[0]);
 
-    $this->title     = a::get($this->yaml, 'title', 'Page');
-    $this->preview   = a::get($this->yaml, 'preview', 'page');
-    $this->deletable = a::get($this->yaml, 'deletable', true);
-    $this->pages     = new Blueprint\Pages(a::get($this->yaml, 'pages', true));
-    $this->files     = new Blueprint\Files(a::get($this->yaml, 'files', true));
+    $this->title        = a::get($this->yaml, 'title', 'Page');
+    $this->preview      = a::get($this->yaml, 'preview', 'page');
+    $this->permissions  = new Blueprint\Permissions(a::get($this->yaml, 'permissions', true), 'page');
+    // legacy fallback for 'deletable'
+    if ($this->permissions->delete == null)
+      $this->permissions->set('delete', a::get($this->yaml, 'deletable', null));
+    $this->pages        = new Blueprint\Pages(a::get($this->yaml, 'pages', true));
+    $this->files        = new Blueprint\Files(a::get($this->yaml, 'files', true));
 
+  }
+
+  public function can($permission, $role) {
+    return ($this->permissions === true) ? true : $this->permissions->allowed($permission, $role);
   }
 
   public function fields($page = null) {

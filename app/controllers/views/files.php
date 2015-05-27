@@ -4,10 +4,11 @@ class FilesController extends Controller {
 
   public function index($id = null) {
 
-    $page      = $this->page($id);
-    $blueprint = blueprint::find($page);
-    $files     = api::files($page, $blueprint);
-    $back      = purl($page, 'show');
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+    $blueprint    = blueprint::find($page);
+    $files        = api::files($page, $blueprint);
+    $back         = purl($page, 'show');
 
     // don't create the view if the page is not allowed to have files
     if($blueprint->files()->max() === 0) goToErrorView();
@@ -25,7 +26,7 @@ class FilesController extends Controller {
           'url'   => purl('files/index'),
           'title' => l('metatags.files')
         )
-      );      
+      );
 
       // modify the back url
       $back = purl('metatags');
@@ -37,11 +38,11 @@ class FilesController extends Controller {
           'url'   => purl('files/index/' . $page->id()),
           'title' => l('files')
         )
-      );      
+      );
     }
 
     return view('files/index', array(
-      'topbar' => new Snippet('pages/topbar', array(
+      'topbar'        => new Snippet('pages/topbar', array(
         'menu'       => new Snippet('menu'),
         'breadcrumb' => new Snippet('pages/breadcrumb', array(
           'page'  => $page,
@@ -49,17 +50,25 @@ class FilesController extends Controller {
         )),
         'search' => purl($page, 'search')
       )),
-      'page'     => $page,
-      'files'    => $files,
-      'back'     => $back,
-      'sortable' => $blueprint->files()->sortable(),
+      'page'          => $page,
+      'files'         => $files,
+      'back'          => $back,
+      'addbutton'     => $pageOptions->canFilesAdd(),
+      'editbutton'    => $pageOptions->canFilesEdit(),
+      'deletebutton'  => $pageOptions->canFilesDelete(),
+      'sortable'      => $pageOptions->canFilesSort(),
     ));
 
   }
 
   public function upload($id = null) {
 
-    $page = $this->page($id);
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+
+    if(!$pageOptions->canFilesAdd()) goToErrorView('modal');
+
+
     $back = array(
       'files'    => purl('files/index/' . $page->id()),
       'metatags' => purl('metatags'),
@@ -74,16 +83,17 @@ class FilesController extends Controller {
 
   public function show($id = null) {
 
-    $filename  = get('filename');
-    $page      = $this->page($id);
-    $file      = $this->file($page, $filename);
-    $blueprint = blueprint::find($page);
-    $fields    = $blueprint->files()->fields($page);
-    $meta      = $file->meta()->toArray();
-    $files     = api::files($page, $blueprint);
-    $index     = $files->indexOf($file);
-    $next      = $files->nth($index + 1);
-    $prev      = $files->nth($index - 1);
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+    $filename     = get('filename');
+    $file         = $this->file($page, $filename);
+    $blueprint    = blueprint::find($page);
+    $fields       = $blueprint->files()->fields($page);
+    $meta         = $file->meta()->toArray();
+    $files        = api::files($page, $blueprint);
+    $index        = $files->indexOf($file);
+    $next         = $files->nth($index + 1);
+    $prev         = $files->nth($index - 1);
 
     // breadcrumb items
     if($page->isSite()) {
@@ -100,7 +110,7 @@ class FilesController extends Controller {
           'url'   => purl($file, 'show'),
           'title' => $file->filename()
         ),
-      );      
+      );
     } else {
       $items = array(
         array(
@@ -111,7 +121,14 @@ class FilesController extends Controller {
           'url'   => purl($file, 'show'),
           'title' => $file->filename()
         ),
-      );      
+      );
+    }
+
+    $form = new Form($fields->toArray(), $meta);
+    if (!$pageOptions->canFilesSave()) {
+      foreach ($form->fields() as $field) {
+        $field->readonly = true;
+      }
     }
 
     return view('files/show', array(
@@ -123,20 +140,26 @@ class FilesController extends Controller {
         )),
         'search' => purl($page, 'search')
       )),
-      'form' => new Form($fields->toArray(), $meta),
+      'form' => $form,
       'p'    => $page,
       'f'    => $file,
       'next' => $next,
-      'prev' => $prev
+      'prev' => $prev,
+      'savebutton'    => $pageOptions->canFilesSave(),
+      'replacebutton' => $pageOptions->canFilesReplace(),
+      'deletebutton'  => $pageOptions->canFilesDelete()
     ));
 
   }
 
   public function replace($id = null) {
 
-    $filename = get('filename');
-    $page     = $this->page($id);
-    $file     = $this->file($page, $filename);
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+    $filename     = get('filename');
+    $file         = $this->file($page, $filename);
+
+    if(!$pageOptions->canFilesReplace()) goToErrorView('modal');
 
     return view('files/replace', array(
       'p' => $page,
@@ -147,8 +170,12 @@ class FilesController extends Controller {
 
   public function delete($id = null) {
 
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+
+    if(!$pageOptions->canFilesDelete()) goToErrorView('modal');
+
     $filename = get('filename');
-    $page     = $this->page($id);
     $file     = $this->file($page, $filename);
     $back     = array(
       'index' => purl('files/index/' . $page->id()),

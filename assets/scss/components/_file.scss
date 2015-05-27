@@ -37,7 +37,6 @@
 .file-info {
   padding: 1em 1.5em;
   line-height: 1.5em;
-  border-bottom: 1px solid #ddd;
 }
 .file-name {
   display: block;
@@ -45,6 +44,9 @@
 }
 .file-meta {
   display: block;
+}
+.file-options {
+  border-top: 1px solid #ddd;
 }
 .file-options .btn {
   width: 50%;

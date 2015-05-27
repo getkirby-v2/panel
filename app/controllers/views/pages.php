@@ -4,33 +4,16 @@ class PagesController extends Controller {
 
   public function show($id) {
 
-    $page      = $this->page($id);
-    $blueprint = blueprint::find($page);
-    $fields    = $blueprint->fields($page);
-    $content   = $page->content()->toArray();
-    $files     = null;
-    $subpages  = null;
-    $preview   = null;
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+    $blueprint    = blueprint::find($page);
+    $fields       = $blueprint->fields($page);
+    $content      = $page->content()->toArray();
+    $files        = null;
+    $subpages     = null;
 
     // create the preview link
-    if($previewSetting = $blueprint->preview()) {
-
-      switch($previewSetting) {
-        case 'parent':
-          $preview = $page->parent() ? $page->parent()->url() : $page->url();
-          break;
-        case 'first-child':
-          $preview = $page->children()->first() ? $page->children()->first()->url() : false;
-          break;
-        case 'last-child':
-          $preview = $page->children()->last()  ? $page->children()->last()->url() : false;
-          break;
-        default:
-          $preview = $page->url();
-          break;
-      }
-
-    }
+    $preview      = $pageOptions->previewLink();
 
     // make sure the title is always there
     $content['title'] = $page->title();
@@ -50,6 +33,13 @@ class PagesController extends Controller {
 
     }
 
+    // disable form fields if permission missing
+    if (!$pageOptions->canSave()) {
+      foreach($form->fields() as $field) {
+        $field->readonly = true;
+      }
+    }
+
     // create the subpages if they exist
     if($blueprint->pages()->max() !== 0 and $blueprint->pages()->hide() == false) {
 
@@ -66,7 +56,8 @@ class PagesController extends Controller {
         'title'      => l('pages.show.subpages.title'),
         'page'       => $page,
         'subpages'   => $children,
-        'addbutton'  => !api::maxPages($page, $blueprint->pages()->max()),
+        'addbutton'  => $pageOptions->canSubpagesAdd(),
+        'editbutton' => $pageOptions->canSubpagesEdit(),
         'pagination' => $children->pagination(),
       ));
 
@@ -76,37 +67,46 @@ class PagesController extends Controller {
     if($blueprint->files()->max() !== 0 and $blueprint->files()->hide() == false) {
 
       $files = new Snippet('pages/sidebar/files', array(
-        'page'  => $page,
-        'files' => api::files($page, $blueprint),
+        'page'        => $page,
+        'files'       => api::files($page, $blueprint),
+        'addbutton'   => $pageOptions->canFilesAdd(),
+        'editbutton'  => $pageOptions->canFilesEdit()
       ));
 
     }
 
     // create the monster sidebar
     $sidebar = new Snippet('pages/sidebar', array(
-      'page'      => $page,
-      'preview'   => $preview,
-      'deletable' => !$page->hasChildren() and $page->isDeletable() and $blueprint->deletable(),
-      'subpages'  => $subpages,
-      'files'     => $files,
+      'page'          => $page,
+      'preview'       => $preview,
+      'urlchangable'  => $pageOptions->canChangeURL(),
+      'hideable'      => $pageOptions->canHide(),
+      'deletable'     => $pageOptions->canDelete(),
+      'subpages'      => $subpages,
+      'files'         => $files,
     ));
 
     return view('pages/show', array(
-      'topbar' => new Snippet('pages/topbar', array(
+      'topbar'    => new Snippet('pages/topbar', array(
         'breadcrumb' => new Snippet('pages/breadcrumb', array('page' => $page)),
         'search'     => purl($page, 'search')
       )),
-      'sidebar' => $sidebar,
-      'form'    => $form,
-      'page'    => $page,
-      'notitle' => !$form->fields()->get('title')
+      'sidebar'   => $sidebar,
+      'form'      => $form,
+      'page'      => $page,
+      'notitle'   => !$form->fields()->get('title'),
+      'updatable' => $pageOptions->canSave()
     ));
 
   }
 
   public function add($id = '/') {
 
-    $page      = $this->page($id);
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+
+    if(!$pageOptions->canSubpagesAdd()) goToErrorView('modal');
+
     $blueprint = blueprint::find($page);
     $templates = $blueprint->pages()->template();
     $options   = array();
@@ -157,13 +157,17 @@ class PagesController extends Controller {
 
   public function delete($id) {
 
-    $page      = $this->page($id);
-    $error     = null;
-    $blueprint = blueprint::find($page);
-    $back      = array(
+    $page         = $this->page($id);
+    $pageOptions  = new PageOptions($page);
+    $error        = null;
+    $blueprint    = blueprint::find($page);
+    $back         = array(
       'subpages' => purl('subpages/index/' . $page->parent()->id()),
       'page'     => purl($page, 'show')
     );
+
+
+    if(!$pageOptions->canDelete()) goToErrorView('modal');
 
     if($page->isHomePage()) {
       $errortype = 'home';

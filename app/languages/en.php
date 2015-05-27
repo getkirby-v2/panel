@@ -4,7 +4,7 @@ return array(
   'title' => 'English',
   'direction' => 'ltr',
   'author' => 'Bastian Allgeier <bastian@getkirby.com>',
-  'version' => '1.0.0',
+  'version' => '1.0.1',
   'data' => array(
 
     // global
@@ -85,6 +85,8 @@ return array(
     'pages.show.files.empty' => 'This page has no files',
     'pages.show.error.permissions.title' => 'The page is not writable',
     'pages.show.error.permissions.text'  => 'Please check the permissions for the content folder and all files.',
+    'pages.show.error.role.permissions.title' => 'No permission',
+    'pages.show.error.role.permissions.text'  => 'Your user role has not the sufficient permissions to update page content.',
     'pages.show.error.permissions.retry'  => 'Retry',
     'pages.show.error.notitle.title' => 'The blueprint does not have a title field',
     'pages.show.error.notitle.text' => 'Please add a title field and try again',

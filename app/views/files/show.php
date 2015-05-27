@@ -42,10 +42,10 @@
   <aside class="fileview-sidebar">
 
     <form class="form section" method="post">
-      <div class="field field-with-icon">
+      <div class="field field-with-icon <?php e(!$savebutton, 'field-is-readonly') ?>">
         <label class="label"><?php _l('files.show.name.label') ?></label>
         <div class="field-content">
-          <input class="input" type="text" value="<?php __($f->name()) ?>" name="name" autofocus required>
+          <input class="input <?php e(!$savebutton, 'input-is-readonly') ?>" type="text" value="<?php __($f->name()) ?>" name="name" autofocus required>
           <div class="field-icon">
             <span>.<?php __($f->extension()) ?></span>
           </div>
@@ -74,9 +74,11 @@
         <?php foreach($form->fields() as $field) echo $field ?>
       </fieldset>
 
-      <div class="buttons buttons-centered cf">
-        <input class="btn btn-rounded btn-submit" type="submit" data-saved="<?php _l('saved') ?>" value="<?php _l('save') ?>">
-      </div>
+      <?php if($savebutton) : ?>
+        <div class="buttons buttons-centered cf">
+          <input class="btn btn-rounded btn-submit" type="submit" data-saved="<?php _l('saved') ?>" value="<?php _l('save') ?>">
+        </div>
+      <?php endif ?>
 
       <nav class="fileview-options">
         <ul class="nav nav-bar nav-btn cf">
@@ -87,19 +89,27 @@
             </a>
           </li>
 
+          <?php if($replacebutton) : ?>
           <li>
             <a title="r" data-shortcut="r" href="<?php _u($f, 'replace') ?>" class="btn btn-with-icon">
               <?php i('cloud-upload', 'left') ?>
               <?php _l('files.show.replace') ?>
             </a>
           </li>
+          <?php else: ?>
+            <li><span class="btn btn-with-icon"></span></li>
+          <?php endif ?>
 
-          <li>
-            <a title="#" data-shortcut="#" href="<?php _u($f, 'delete') ?>" class="btn btn-with-icon">
-              <?php i('trash-o', 'left') ?>
-              <?php _l('files.show.delete') ?>
-            </a>
-          </li>
+          <?php if($deletebutton) : ?>
+            <li>
+              <a title="#" data-shortcut="#" href="<?php _u($f, 'delete') ?>" class="btn btn-with-icon">
+                <?php i('trash-o', 'left') ?>
+                <?php _l('files.show.delete') ?>
+              </a>
+            </li>
+          <?php else: ?>
+            <li><span class="btn btn-with-icon"></span></li>
+          <?php endif ?>
         </ul>
       </nav>
 

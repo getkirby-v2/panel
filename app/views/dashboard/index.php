@@ -8,17 +8,21 @@
 
       <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
         <span class="hgroup-title">
-          <a href="#/subpages/index/"><?php _l('dashboard.index.pages.title') ?></a>
+          <a href="#/subpages/index/">
+            <?php _l('dashboard.index.pages.title') ?>
+          </a>
         </span>
         <span class="hgroup-options shiv shiv-dark shiv-left">
           <span class="hgroup-option-right">
-            <a title="<?php _l('dashboard.index.pages.edit') ?>" href="#/subpages/index/">
-              <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.pages.edit') ?></span>
-            </a>
+            <?php if($editbutton): ?>
+              <a title="<?php _l('dashboard.index.pages.edit') ?>" href="#/subpages/index/">
+                <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.pages.edit') ?></span>
+              </a>
+            <?php endif ?>
             <?php if($addbutton): ?>
-            <a title="+" data-shortcut="+" href="#/pages/add/">
-              <?php i('plus-circle', 'left') ?><span><?php _l('dashboard.index.pages.add') ?></span>
-            </a>
+              <a title="+" data-shortcut="+" href="#/pages/add/">
+                <?php i('plus-circle', 'left') ?><span><?php _l('dashboard.index.pages.add') ?></span>
+              </a>
             <?php endif ?>
           </span>
         </span>
@@ -107,31 +111,35 @@
     </div>
     <?php endforeach ?>
 
-    <div class="section white dashboard-section">
+    <?php if($sitesection): ?>
+      <div class="section white dashboard-section">
 
-      <h2 class="hgroup hgroup-single-line cf">
-        <span class="hgroup-title">
-          <a href="#/metatags/"><?php _l('dashboard.index.metatags.title') ?></a>
-        </span>
-        <span class="hgroup-options shiv shiv-dark shiv-left">
-          <span class="hgroup-option-right">
+        <h2 class="hgroup hgroup-single-line cf">
+          <span class="hgroup-title">
             <a href="#/metatags/">
-              <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.metatags.edit') ?></span>
+              <?php _l('dashboard.index.metatags.title') ?>
             </a>
           </span>
-        </span>
-      </h2>
+          <span class="hgroup-options shiv shiv-dark shiv-left">
+            <span class="hgroup-option-right">
+              <a href="#/metatags/">
+                <?php i('pencil', 'left') ?><span><?php _l('dashboard.index.metatags.edit') ?></span>
+              </a>
+            </span>
+          </span>
+        </h2>
 
-      <div class="field">
-        <div class="input input-is-readonly input-with-tags">
+        <div class="field">
+          <div class="input input-is-readonly input-with-tags">
 
-          <?php foreach($site->content()->toArray() as $key => $meta): ?><!--
-       --><a class="tag" href="#/metatags/<?php __($key) ?>"><span class="tag-label"><?php __($key) ?></span></a><!--
-       --><?php endforeach ?>
+            <?php foreach($site->content()->toArray() as $key => $meta): ?><!--
+         --><a class="tag" href="#/metatags/<?php __($key) ?>"><span class="tag-label"><?php __($key) ?></span></a><!--
+         --><?php endforeach ?>
 
+          </div>
         </div>
       </div>
-    </div>
+    <?php endif ?>
 
     <div class="section white dashboard-section">
 

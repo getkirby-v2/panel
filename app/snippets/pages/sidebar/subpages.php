@@ -4,9 +4,11 @@
   </span>
   <span class="hgroup-options shiv shiv-dark shiv-left">
     <span class="hgroup-option-right">
-      <a title="<?php _l('pages.show.subpages.edit') ?>" href="<?php _u('subpages/index/' . $page->id()) ?>">
-        <?php i('pencil', 'left') ?><span><?php _l('pages.show.subpages.edit') ?></span>
-      </a>
+      <?php if($editbutton): ?>
+        <a title="<?php _l('pages.show.subpages.edit') ?>" href="<?php _u('subpages/index/' . $page->id()) ?>">
+          <?php i('pencil', 'left') ?><span><?php _l('pages.show.subpages.edit') ?></span>
+        </a>
+      <?php endif ?>
       <?php if($addbutton): ?>
       <a title="+" data-shortcut="+" href="<?php _u($page, 'add') ?>">
         <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.subpages.add') ?></span>
@@ -32,5 +34,13 @@
 <?php endif ?>
 
 <?php else: ?>
-<p class="marginalia"><a href="<?php _u($page, 'add') ?>" class="marginalia"><?php _l('pages.show.subpages.empty') ?></a></p>
+<p class="marginalia">
+  <?php if($addbutton): ?>
+    <a href="<?php _u($page, 'add') ?>" class="marginalia">
+  <?php endif ?>
+  <?php _l('pages.show.subpages.empty') ?>
+  <?php if($addbutton): ?>
+    </a>
+  <?php endif ?>
+</p>
 <?php endif ?>

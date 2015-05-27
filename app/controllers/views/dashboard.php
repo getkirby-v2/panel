@@ -8,10 +8,12 @@ class DashboardController extends Controller {
     $widgets = array();
     $wroot   = kirby()->roots()->widgets();
     $wdirs   = dir::read($wroot);
+    $user    = site()->user();
 
     // fetch all top-level pages in the right order
-    $blueprint = blueprint::find($site);
-    $pages     = api::subpages($site->children(), $blueprint);
+    $blueprint   = blueprint::find($site);
+    $pages       = api::subpages($site->children(), $blueprint);
+    $siteOptions = new PageOptions($site);
 
     foreach($wdirs as $dir) {
       $file = $wroot . DS . $dir . DS . $dir . '.php';
@@ -21,16 +23,19 @@ class DashboardController extends Controller {
     }
 
     return view('dashboard/index', array(
-      'topbar' => new Snippet('pages/topbar', array(
+      'topbar'        => new Snippet('pages/topbar', array(
         'breadcrumb' => new Snippet('breadcrumb'),
         'search'     => purl('pages/search/')
       )),
-      'history'   => history::get(),
-      'site'      => $site,
-      'pages'     => $pages,
-      'addbutton' => !api::maxPages($site, $blueprint->pages()->max()),
-      'widgets'   => $widgets,
-      'user'      => site()->user(),
+      'history'       => history::get(),
+      'site'          => $site,
+      'pages'         => $pages,
+      'addbutton'     => $siteOptions->canSubpagesAdd(),
+      'editbutton'    => $siteOptions->canSubpagesEdit() or
+                         $siteOptions->canSubpagesSort(),
+      'sitesection'   => $siteOptions->canSave(),
+      'widgets'       => $widgets,
+      'user'          => $user,
     ));
   }
 

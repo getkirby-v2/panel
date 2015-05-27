@@ -37,7 +37,7 @@ class TextareaField extends InputField {
     $element = parent::element();
     $element->addClass('field-with-textarea');
 
-    if($this->buttons) {
+    if($this->buttons and !$this->readonly) {
       $element->addClass('field-with-buttons');
     }
 
@@ -49,7 +49,7 @@ class TextareaField extends InputField {
 
     $content = parent::content();
 
-    if($this->buttons) {
+    if($this->buttons and !$this->readonly) {
       $content->append($this->buttons());
     }
 

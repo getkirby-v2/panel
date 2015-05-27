@@ -3,11 +3,16 @@
 class UsersController extends Controller {
 
   public function index() {
+    $usersOptions = new UsersOptions();
+
     return view('users/index', array(
-      'users'  => site()->users(),
-      'admin'  => site()->user()->isAdmin(),
-      'topbar' => new Snippet('topbar', array(
-        'breadcrumb' => new Snippet('breadcrumb', array(
+      'users'         => site()->users(),
+      'addbutton'     => $usersOptions->canAdd(),
+      'editbutton'    => $usersOptions->canEdit(),
+      'deletebutton'  => $usersOptions->canDelete(),
+      'lastadmin'     => $usersOptions->lastAdmin(),
+      'topbar'        => new Snippet('topbar', array(
+        'breadcrumb'  => new Snippet('breadcrumb', array(
           'items' => array(
             array(
               'title' => l('users'),
@@ -20,8 +25,9 @@ class UsersController extends Controller {
   }
 
   public function add() {
+    $usersOptions = new UsersOptions();
 
-    if(!site()->user()->isAdmin()) go(purl('error'));
+    if(!$usersOptions->canAdd()) goToErrorView();
 
     $form = $this->form();
     $form->back = purl('users');
@@ -50,12 +56,17 @@ class UsersController extends Controller {
 
   public function edit($username) {
 
-    $user = $this->user($username);
-    $form = $this->form($user);
-    $form->back = purl('users');
+    $usersOptions = new UsersOptions();
+    $user         = $this->user($username);
+    $form         = $this->form($user);
+    $form->back   = purl('users');
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
-      goToErrorView();
+    if(!$user->isCurrent() and !$usersOptions->canEdit()) goToErrorView();
+
+    if (!$user->isCurrent() and !$usersOptions->canEditInfo()) {
+      foreach($form->fields() as $name => $field) {
+        if($name != 'role') $field->readonly = true;
+      }
     }
 
     return view('users/edit', array(
@@ -73,23 +84,28 @@ class UsersController extends Controller {
           )
         ))
       )),
-      'form'     => $form,
-      'writable' => is_writable(kirby()->roots()->accounts()),
-      'user'     => $user,
+      'form'          => $form,
+      'editbutton'    => $user->isCurrent() or
+                         $usersOptions->canEditInfo(),
+      'deletebutton'  => $usersOptions->canDelete() and
+                         !($user->isAdmin() and $usersOptions->lastAdmin()),
+      'writable'      => is_writable(kirby()->roots()->accounts()),
+      'user'          => $user,
     ));
 
   }
 
   public function delete($username) {
 
-    $user = $this->user($username);
-    $back = array(
+    $usersOptions = new UsersOptions();
+    $user         = $this->user($username);
+    $back         = array(
       'users'     => purl('users'),
       'user'      => purl($user, 'edit'),
       'dashboard' => purl('')
     );
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!$usersOptions->canDelete() or ($user->isAdmin() and $usersOptions->lastAdmin())) {
       goToErrorView('modal');
     }
 
@@ -102,14 +118,15 @@ class UsersController extends Controller {
 
   public function avatar($username) {
 
-    $user = $this->user($username);
-    $back = array(
+    $usersOptions = new UsersOptions();
+    $user         = $this->user($username);
+    $back         = array(
       'users'     => purl('users'),
       'user'      => purl($user, 'edit'),
       'dashboard' => purl('')
     );
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!$user->isCurrent() and !$usersOptions->canEditInfo()) {
       goToErrorView('modal');
     }
 
@@ -141,9 +158,10 @@ class UsersController extends Controller {
 
   protected function form($user = null) {
 
-    $mode    = $user ? 'edit' : 'add';
-    $fields  = data::read(panel()->roots()->forms() . DS . 'user.' . $mode . '.php', 'yaml');
-    $content = $user ? $user->data() : array();
+    $mode         = $user ? 'edit' : 'add';
+    $fields       = data::read(panel()->roots()->forms() . DS . 'user.' . $mode . '.php', 'yaml');
+    $content      = $user ? $user->data() : array();
+    $usersOptions = new UsersOptions();
 
     // add all languages
     $fields['language']['options'] = array();
@@ -161,8 +179,8 @@ class UsersController extends Controller {
       $fields['role']['options'][$role->id()] = $role->name();
     }
 
-    // make the role selector readonly when the user is not an admin
-    if(!site()->user()->isAdmin()) {
+    // make the role selector readonly when the user has no permission
+    if(!$usersOptions->canEditRole() and $mode != 'add') {
       $fields['role']['readonly'] = true;
     }
 

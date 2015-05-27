@@ -109,15 +109,18 @@ class Panel {
       'form'         => $this->roots->lib . DS . 'form.php',
       'history'      => $this->roots->lib . DS . 'history.php',
       'installation' => $this->roots->lib . DS . 'installation.php',
+      'pageoptions'  => $this->roots->lib . DS . 'pageoptions.php',
       'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
       'subpages'     => $this->roots->lib . DS . 'subpages.php',
+      'usersoptions' => $this->roots->lib . DS . 'usersoptions.php',
 
       // blueprint stuff
-      'blueprint'         => $this->roots->lib . DS . 'blueprint.php',
-      'blueprint\\pages'  => $this->roots->lib . DS . 'blueprint' . DS . 'pages.php',
-      'blueprint\\files'  => $this->roots->lib . DS . 'blueprint' . DS . 'files.php',
-      'blueprint\\fields' => $this->roots->lib . DS . 'blueprint' . DS . 'fields.php',
-      'blueprint\\field'  => $this->roots->lib . DS . 'blueprint' . DS . 'field.php',
+      'blueprint'              => $this->roots->lib . DS . 'blueprint.php',
+      'blueprint\\pages'       => $this->roots->lib . DS . 'blueprint' . DS . 'pages.php',
+      'blueprint\\files'       => $this->roots->lib . DS . 'blueprint' . DS . 'files.php',
+      'blueprint\\fields'      => $this->roots->lib . DS . 'blueprint' . DS . 'fields.php',
+      'blueprint\\field'       => $this->roots->lib . DS . 'blueprint' . DS . 'field.php',
+      'blueprint\\permissions' => $this->roots->lib . DS . 'blueprint' . DS . 'permissions.php',
 
     ));
 
