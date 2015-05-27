@@ -64,6 +64,10 @@ return array(
     'dashboard.index.history.title' => 'Deine letzten Änderungen',
     'dashboard.index.history.text' => 'Sobald du die ersten Änderungen an Seiten vornimmst, werden sie hier aufgelistet, um jeder Zeit schnell darauf zugreifen zu können.',
     'dashboard.index.license.title' => 'Kirby Lizenz',
+    'dashboard.index.license.warning' => 'Es scheint so, als ob du Kirby auf einem öffentlichen Server ohne gültige Lizenz benutzt!',
+    'dashboard.index.license.support' => 'Bitte unterstütze Kirby und',
+    'dashboard.index.license.buy' => 'kaufe jetzt eine Lizenz',
+    'dashboard.index.license.config' => 'Wenn du bereits einen Lizenzschlüssel besitzt, füge ihn einfach zu deiner Konfigurationsdatei hinzu:',
 
     // metatags
     'metatags' => 'Einstellungen',

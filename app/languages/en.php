@@ -64,6 +64,10 @@ return array(
     'dashboard.index.history.title' => 'Your last updates',
     'dashboard.index.history.text' => 'Your last modified pages will be displayed here to make it easy to find them again later.',
     'dashboard.index.license.title' => 'Kirby license',
+    'dashboard.index.license.warning' => 'It seems you are running Kirby on a public server without a valid license!',
+    'dashboard.index.license.support' => 'Please, support Kirby and',
+    'dashboard.index.license.buy' => 'buy a license now',
+    'dashboard.index.license.config' => 'If you already have a license key, just add it to your config file:',
 
     // metatags
     'metatags' => 'Site options',
