@@ -15,7 +15,7 @@
           </span>
         </h2>
         <div class="text">
-          <p> 
+          <p>
             <?php _l('metatags.version.toolkit') ?>: <?php echo toolkit::version() ?><br />
             <?php _l('metatags.version.kirby') ?>: <?php echo kirby::version() ?><br />
             <?php _l('metatags.version.panel') ?>: <?php echo panel::version() ?>
@@ -30,11 +30,11 @@
         <div class="text">
           <?php if($license->type() == 'trial' and !$license->local()): ?>
           <p>
-            You are using the Kirby trial version<br />
-            <a target="_blank" href="http://getkirby.com/buy">Please, buy a license &rsaquo;</a>
+            <?php _l('metatags.license.warning') ?><br />
+            <a target="_blank" href="http://getkirby.com/buy"><?php _l('metatags.license.buy') ?> &rsaquo;</a>
           </p>
           <?php else: ?>
-          <p> 
+          <p>
             <?php echo $license->type() ?><br />
             <em class="marginalia" style="font-size: .9em"><?php echo $license->key() ?></em>
           </p>

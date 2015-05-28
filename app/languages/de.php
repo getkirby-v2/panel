@@ -73,6 +73,8 @@ return array(
     'metatags' => 'Einstellungen',
     'metatags.info' => 'Kirby Information',
     'metatags.license' => 'Kirby Lizenz',
+    'metatags.license.warning' => 'Du benutzt eine Kirby-Textversion',
+    'metatags.license.buy' => 'Bitte kaufe eine Lizenz',
     'metatags.version.toolkit' => 'Toolkit Version',
     'metatags.version.kirby' => 'Kirby Version',
     'metatags.version.panel' => 'Panel Version',

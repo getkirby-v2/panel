@@ -73,6 +73,8 @@ return array(
     'metatags' => 'Site options',
     'metatags.info' => 'Kirby info',
     'metatags.license' => 'Kirby license',
+    'metatags.license.warning' => 'You are using the Kirby trial version',
+    'metatags.license.buy' => 'Please, buy a license',
     'metatags.version.toolkit' => 'Toolkit version',
     'metatags.version.kirby' => 'Kirby version',
     'metatags.version.panel' => 'Panel version',
