@@ -63,7 +63,7 @@ class Permissions extends Obj {
     elseif(is_array($this->{$permission}))
       return in_array($role, $this->{$permission});
     else
-      return $this->{$permission};
+      return $this->{$permission} === true or $this->{$permission} == $role;
   }
 
   public function set($permission, $value) {
