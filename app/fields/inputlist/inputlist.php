@@ -39,8 +39,14 @@ class InputListField extends InputField {
       case 2:
         $width = ' field-grid-item-1-2';
         break;
+      case 3:
+        $width = ' field-grid-item-1-3';
+        break;
       case 4:
         $width = ' field-grid-item-1-4';
+        break;
+      case 5:
+        $width = ' field-grid-item-1-5';
         break;
       default:
         $width = '';
