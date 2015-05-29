@@ -34,6 +34,7 @@ language:
   width: 1/2
 role:
   label: users.form.role.label
-  type: select
+  type: multiselect
+  yaml: true
   required: true
   width: 1/2

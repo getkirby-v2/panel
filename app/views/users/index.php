@@ -46,7 +46,9 @@
             <strong class="item-title"><?php __($user->username()) ?></strong>
             <small class="item-meta marginalia">
               <?php __($user->email()) ?>
-              <span style="padding-left: 1em; font-style: italic; font-size: .9em; color: #aaa"><?php __($user->role()->name()) ?></span>
+              <span style="padding-left: 1em; font-style: italic; font-size: .9em; color: #aaa">
+                <?php __(implode(', ', array_map(function($r){ return $r->name(); }, $user->roles()))) ?>
+              </span>
             </small>
           </a>
         </div>
