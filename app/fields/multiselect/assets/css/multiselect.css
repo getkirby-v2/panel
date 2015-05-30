@@ -1,0 +1,69 @@
+
+.input-with-multiselectbox .input-display {
+  cursor: pointer;
+}
+.input-with-multiselectbox .input-is-focused {
+  border-bottom-color: #ddd;
+}
+
+
+.input-with-multiselectbox .item {
+  background: none;
+}
+.input-with-multiselectbox .item::after {
+  content: ", ";
+}
+.input-with-multiselectbox .item:last-child::after {
+  content: "";
+}
+
+.input-with-multiselectbox .input-list {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 185px;
+  overflow: auto;
+
+  background-color: #fff;
+  border: solid #8dae28;
+  border-width: 0 2px 2px 2px;
+
+  padding: .25em 0;
+}
+
+.input-with-multiselectbox .input-list-item {
+  margin: 0;
+  border-bottom: 1px dashed #ddd;
+}
+.input-with-multiselectbox .input-list-item:last-child {
+  border-bottom: none;
+}
+
+.input-with-multiselectbox .input-list .input {
+  border: none;
+  font-size: .9em;
+  padding: .2em .5em;
+}
+
+/* readonly or disabled */
+.field-is-readonly .input-with-multiselectbox .input-display,
+.field-is-disabled .input-with-multiselectbox .input-display {
+  cursor: default;
+
+}
+.field-is-readonly .input-with-multiselectbox .field-icon,
+.field-is-disabled .input-with-multiselectbox .field-icon {
+  display: block !important;
+}
+
+/* error */
+.field-with-error .input-with-multiselectbox .input-list {
+  border-color: #b3000a;
+}
+.field-with-error .input-with-multiselectbox .input-is-focused::before,
+.field-with-error .input-with-multiselectbox .input-is-focused::after {
+  border-color: #b3000a;
+}
