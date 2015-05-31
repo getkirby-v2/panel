@@ -13,7 +13,7 @@
 .input-with-multiselectbox .item::after {
   content: ", ";
 }
-.input-with-multiselectbox .item:last-child::after {
+.input-with-multiselectbox .item:last-of-type::after {
   content: "";
 }
 

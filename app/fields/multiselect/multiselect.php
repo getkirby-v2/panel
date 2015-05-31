@@ -28,7 +28,7 @@ class MultiselectField extends CheckboxesField {
       'readonly' => ($this->readonly or $this->disabled) ? 1 : 0
     ));
 
-    $multiselect->append('<span class="placeholder">&nbsp;</span>');
+    $multiselect->append('<div class="placeholder">&nbsp;</div>');
 
     $content = new Brick('div');
     $content->addClass('field-content input-with-multiselectbox');

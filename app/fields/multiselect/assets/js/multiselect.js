@@ -6,88 +6,83 @@
     var self = this;
 
     // basic elements and stuff
-    this.sortmode    = 'order';
     this.multiselect = $(element);
     this.field       = this.multiselect.parent().parent();
     this.list        = this.multiselect.next();
     this.checkboxes  = this.list.find('input[type="checkbox"]');
-    this.gap         = this.multiselect.find('.placeholder');
+    this.space       = this.multiselect.find('.placeholder');
     this.label       = this.field.find('.label');
     this.elements    = [];
     this.readonly    = this.multiselect.data('readonly');
 
+    // add element
     this.add = function(item) {
-      var index    = item.parent().parent().index();
-      var key      = item.val();
-      var value    = item.parent().text();
-      self.elements.push({order: index, name: key, value: value});
+      var element  = {
+                      order: item.parent().parent().index(),
+                      name: item.val(),
+                      value: item.parent().text()
+                     };
+      self.elements.push(element);
+
+      var position = self.sort(element);
+      var html     = '<span class="item" title="' + element.name + '">' + element.value + '</span>';
+      if(position > 0) self.multiselect.find('.item').eq(position - 1).after(html);
+      else self.multiselect.prepend(html);
     };
 
+    // remove element
     this.remove = function(item) {
       var key = item.val();
-      self.multiselect.find('span[title="' + key + '"]').remove();
       self.elements = $.grep(self.elements, function(v) {
         return v.name != key;
       });
+      self.multiselect.find('span[title="' + key + '"]').remove();
     }
 
-    this.sort = function(mode) {
+    // sort elements, returns order of element if provided
+    this.sort = function(element) {
       self.elements.sort(function(a, b) {
-        if(mode=='alpha') {
-          var x = a.name.toLowerCase();
-          var y = b.name.toLowerCase();
-          return x.localeCompare(y);
-        } else if(mode=='order') {
           return a.order - b.order;
-        }
       });
-    };
 
-    this.read = function() {
-      self.checkboxes.filter(':checked').each(function() {
-        self.add($(this));
-      })
-      self.fill();
-    };
-
-    this.fill = function () {
-      self.sort(self.sortmode);
-      self.clear();
-      $.each(self.elements, function(i, v) {
-        var html  = '<span class="item" title="' + v.name + '">' + v.value + '</span>';
-        self.multiselect.append(html);
-      });
-      self.placeholder();
-    };
-
-    this.clear = function () {
-      self.multiselect.find('.item').remove();
-    };
-
-    this.placeholder = function () {
-      if(self.elements.length > 0) {
-        self.gap.hide();
-      } else {
-        self.gap.show();
+      if(element !== undefined) {
+        var index = $.map(self.elements, function(e, i) {
+          if(e.name == element.name) return i;
+        })
+        return index[0];
       }
     };
 
-    this.enableSelect = function() {
+    // shows/hides placeholder
+    this.placeholder = function () {
+      if(self.elements.length > 0) self.space.hide();
+      else self.space.show();
+    };
+
+    // prepopulate with elements
+    this.prepopulate = function() {
+      self.checkboxes.filter(':checked').each(function() {
+        self.add($(this));
+      });
+    };
+
+    // bindings for select list
+    this.initSelect = function() {
       self.multiselect.add(self.label).on('click', function () {
         self.list.toggle();
         self.multiselect.toggleClass('input-is-focused');
       });
 
       $(document).bind('click', function (e) {
-        var target = $(e.target);
-        if(!self.field.has(target).length) {
+        if(!self.field.has($(e.target)).length) {
           self.list.hide();
           self.multiselect.removeClass('input-is-focused');
         }
       });
     };
 
-    this.onCheck = function() {
+    // bindings for checkboxes
+    this.onChecking = function() {
       self.checkboxes.on('change', function () {
         var checkbox = $(this);
         if (checkbox.is(':checked')) {
@@ -95,16 +90,18 @@
         } else {
           self.remove(checkbox);
         }
-        self.fill();
+        self.placeholder();
       });
     };
 
+    // init
     this.init = function () {
-      self.read();
+      self.prepopulate();
+      self.placeholder();
 
       if(!self.readonly) {
-        self.enableSelect();
-        self.onCheck();
+        self.initSelect();
+        self.onChecking();
       }
     };
 
