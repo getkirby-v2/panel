@@ -242,6 +242,13 @@
 
     };
 
+    this.revert = function(tag) {
+      self.add();
+      self.remove(tag);
+      self.input.val(tag);
+      self.input.select();
+    };
+
     // plugin setup
     this.init = function() {
 
@@ -268,6 +275,11 @@
       // focus the input element if the user clicks on the box
       self.element.on('click', function(e) {
         self.focus();
+      });
+
+      self.element.on('dblclick', function(e) {
+        var target = $(e.target);
+        if(target.is('.tag-label')) self.revert(target.text());
       });
 
       self.element.on('focusin', function() {
