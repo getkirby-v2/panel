@@ -8,9 +8,13 @@
 
       <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
         <span class="hgroup-title">
-          <a href="#/subpages/index/">
+          <?php if($addbutton or $editbutton): ?>
+            <a href="#/subpages/index/">
+          <?php endif ?>
             <?php _l('dashboard.index.pages.title') ?>
-          </a>
+          <?php if($addbutton or $editbutton): ?>
+            </a>
+          <?php endif ?>
         </span>
         <span class="hgroup-options shiv shiv-dark shiv-left">
           <span class="hgroup-option-right">

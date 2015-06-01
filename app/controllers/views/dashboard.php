@@ -31,8 +31,9 @@ class DashboardController extends Controller {
       'site'          => $site,
       'pages'         => $pages,
       'addbutton'     => $siteOptions->canSubpagesAdd(),
-      'editbutton'    => $siteOptions->canSubpagesEdit() or
-                         $siteOptions->canSubpagesSort(),
+      'editbutton'    => $blueprint->pages()->max() !== 0 and
+                         ($siteOptions->canSubpagesEdit() or
+                         $siteOptions->canSubpagesSort()),
       'sitesection'   => $siteOptions->canSave(),
       'widgets'       => $widgets,
       'user'          => $user,
