@@ -87,6 +87,11 @@ class Api {
       $files = $files->flip();
     }
 
+    // filter dotfiles
+    $files = $files->filter(function($file) {
+      return substr($file->filename(), 0, 1) !== '.';
+    });
+
     return $files;
 
   }
