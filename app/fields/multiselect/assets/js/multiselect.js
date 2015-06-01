@@ -7,13 +7,14 @@
 
     // basic elements and stuff
     this.multiselect = $(element);
-    this.field       = this.multiselect.parent().parent();
-    this.list        = this.multiselect.next();
-    this.checkboxes  = this.list.find('input[type="checkbox"]');
-    this.space       = this.multiselect.find('.placeholder');
-    this.label       = this.field.find('.label');
+    this.field       = self.multiselect.parent().parent();
+    this.list        = self.multiselect.next();
+    this.checkboxes  = self.list.find('input[type="checkbox"]');
+    this.space       = self.multiselect.find('.placeholder');
+    this.label       = self.field.find('.label');
     this.elements    = [];
-    this.readonly    = this.multiselect.data('readonly');
+    this.readonly    = self.multiselect.data('readonly');
+    this.modal       = self.field.parents('.modal-content');
 
     // add element
     this.add = function(item) {
@@ -71,12 +72,14 @@
       self.multiselect.add(self.label).on('click', function () {
         self.list.toggle();
         self.multiselect.toggleClass('input-is-focused');
+        self.modalize();
       });
 
       $(document).bind('click', function (e) {
         if(!self.field.has($(e.target)).length) {
           self.list.hide();
           self.multiselect.removeClass('input-is-focused');
+          self.modalize('remove');
         }
       });
     };
@@ -92,6 +95,16 @@
         }
         self.placeholder();
       });
+    };
+
+    // fixing display in structure field modal
+    this.modalize = function(mode) {
+      var view  = $(window).height() + $(window).scrollTop();
+      var modal = self.modal.offset().top + self.modal.height();
+      if(view > modal) {
+        if(mode == 'remove') self.modal.removeClass('overflowing');
+        else self.modal.toggleClass('overflowing');
+      }
     };
 
     // init

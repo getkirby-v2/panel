@@ -67,3 +67,8 @@
 .field-with-error .input-with-multiselectbox .input-is-focused::after {
   border-color: #b3000a;
 }
+
+/* structure field fix */
+.modal-content.overflowing {
+  overflow: visible !important;
+}
