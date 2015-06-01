@@ -5,7 +5,7 @@ class PagesController extends Controller {
   public function show($id) {
 
     try {
-      $page = $this->page($id);      
+      $page = $this->page($id);
     } catch(Exception $e) {
       $page = $this->page(dirname($id));
       // dirty work around to move to the parent page
@@ -88,7 +88,9 @@ class PagesController extends Controller {
 
       $files = new Snippet('pages/sidebar/files', array(
         'page'  => $page,
-        'files' => api::files($page, $blueprint),
+        'files' => api::files($page, $blueprint)->filter(function($f) {
+                    return substr($f->filename(), 0, 1) !== '.';  // filter dotfiles
+                   }),
       ));
 
     }
@@ -232,13 +234,13 @@ class PagesController extends Controller {
     $form->back = purl($page, 'show');
 
     if($page->isVisible()) {
-      $form->fields->confirmation->text = l('pages.toggle.hide');      
+      $form->fields->confirmation->text = l('pages.toggle.hide');
     } else {
-      $form->fields->confirmation->text = l('pages.toggle.publish');      
+      $form->fields->confirmation->text = l('pages.toggle.publish');
     }
 
     return view('pages/toggle', array(
-      'page' => $page, 
+      'page' => $page,
       'form' => $form
     ));
   }

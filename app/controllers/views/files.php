@@ -6,7 +6,9 @@ class FilesController extends Controller {
 
     $page      = $this->page($id);
     $blueprint = blueprint::find($page);
-    $files     = api::files($page, $blueprint);
+    $files     = api::files($page, $blueprint)->filter(function($f) {
+                   return substr($f->filename(), 0, 1) !== '.';   // filter dotfiles
+                 });
     $back      = purl($page, 'show');
 
     // don't create the view if the page is not allowed to have files
@@ -25,7 +27,7 @@ class FilesController extends Controller {
           'url'   => purl('files/index'),
           'title' => l('metatags.files')
         )
-      );      
+      );
 
       // modify the back url
       $back = purl('metatags');
@@ -37,7 +39,7 @@ class FilesController extends Controller {
           'url'   => purl('files/index/' . $page->id()),
           'title' => l('files')
         )
-      );      
+      );
     }
 
     return view('files/index', array(
@@ -100,7 +102,7 @@ class FilesController extends Controller {
           'url'   => purl($file, 'show'),
           'title' => $file->filename()
         ),
-      );      
+      );
     } else {
       $items = array(
         array(
@@ -111,7 +113,7 @@ class FilesController extends Controller {
           'url'   => purl($file, 'show'),
           'title' => $file->filename()
         ),
-      );      
+      );
     }
 
     // file info display
@@ -121,7 +123,7 @@ class FilesController extends Controller {
     $info[] = $file->niceSize();
 
     if((string)$file->dimensions() != '0 x 0') {
-      $info[] = $file->dimensions();      
+      $info[] = $file->dimensions();
     }
 
     return view('files/show', array(
