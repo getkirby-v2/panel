@@ -126,7 +126,7 @@
             <?php foreach($history as $item): ?>
             <li>
               <a title="<?php __($item->title()) ?>" href="<?php _u($item, 'show') ?>">
-                <?php i('file-o', 'left') . __($item->title()) ?>
+                <?php i($item) . __($item->title()) ?>
               </a>
             </li>
             <?php endforeach ?>
