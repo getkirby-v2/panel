@@ -2,7 +2,8 @@
 
 class MultiselectField extends CheckboxesField {
 
-  public $yaml = false;
+  public $yaml   = false;
+  public $reload = false;
 
   static public $assets = array(
     'css' => array(
@@ -25,7 +26,8 @@ class MultiselectField extends CheckboxesField {
     if($this->readonly()) $multiselect->addClass('input-is-readonly');
     $multiselect->data(array(
       'field'    => 'multiselect',
-      'readonly' => ($this->readonly or $this->disabled) ? 1 : 0
+      'readonly' => ($this->readonly or $this->disabled) ? 1 : 0,
+      'reload'   => $this->reload ? 1 : 0
     ));
 
     $multiselect->append('<div class="placeholder">&nbsp;</div>');

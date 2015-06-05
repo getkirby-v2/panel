@@ -14,6 +14,7 @@
     this.label       = self.field.find('.label');
     this.elements    = [];
     this.readonly    = self.multiselect.data('readonly');
+    this.reload      = self.multiselect.data('reload');
     this.modal       = self.field.parents('.modal-content');
 
     // add element
@@ -67,19 +68,27 @@
       });
     };
 
+    this.triggerReload = function() {
+      if(self.reload == 1 && !self.multiselect.hasClass('input-is-focused')) {
+        self.field.parents('.form').submit();
+      }
+    };
+
     // bindings for select list
     this.initSelect = function() {
       self.multiselect.add(self.label).on('click', function () {
         self.list.toggle();
         self.multiselect.toggleClass('input-is-focused');
         self.modalize();
+        self.triggerReload();
       });
 
       $(document).bind('click', function (e) {
-        if(!self.field.has($(e.target)).length) {
+        if(self.multiselect.hasClass('input-is-focused') && !self.field.has($(e.target)).length) {
           self.list.hide();
           self.multiselect.removeClass('input-is-focused');
           self.modalize('remove');
+          self.triggerReload();
         }
       });
     };
@@ -100,10 +109,12 @@
     // fixing display in structure field modal
     this.modalize = function(mode) {
       var view  = $(window).height() + $(window).scrollTop();
-      var modal = self.modal.offset().top + self.modal.height();
-      if(view > modal) {
-        if(mode == 'remove') self.modal.removeClass('overflowing');
-        else self.modal.toggleClass('overflowing');
+      if(self.modal.length > 0) {
+        var modal = self.modal.offset().top + self.modal.height();
+        if(view > modal) {
+          if(mode == 'remove') self.modal.removeClass('overflowing');
+          else self.modal.toggleClass('overflowing');
+        }
       }
     };
 

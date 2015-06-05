@@ -35,5 +35,6 @@ role:
   label: users.form.role.label
   type: multiselect
   yaml: true
+  reload: true
   required: true
   width: 1/2
