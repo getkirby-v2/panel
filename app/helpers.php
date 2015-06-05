@@ -72,12 +72,8 @@ function i($icon, $position = null) {
   if(is_string($icon)) {
     echo '<i class="icon' . r($position, ' icon-' . $position) . ' fa fa-' . $icon . '"></i>';
   } else if(is_a($icon, 'Page')) {
-    $blueprint = blueprint::find($icon);
-    if($i = $blueprint->icon()) {
-      i($i, 'left');
-    } else {
-      i('file-o', 'left');
-    }
+    $icon = blueprint::find($icon)->icon();
+    i($icon, 'left');
   } else if(is_a($icon, 'File')) {
 
     switch($icon->type()) {
