@@ -72,7 +72,8 @@ function i($icon, $position = null) {
   if(is_string($icon)) {
     echo '<i class="icon' . r($position, ' icon-' . $position) . ' fa fa-' . $icon . '"></i>';
   } else if(is_a($icon, 'Page')) {
-    i('file-o', 'left');
+    $icon = blueprint::find($icon)->icon();
+    i($icon, 'left');
   } else if(is_a($icon, 'File')) {
 
     switch($icon->type()) {
@@ -133,7 +134,7 @@ function purl($obj, $action = false) {
   } else if(is_a($obj, 'File')) {
     if($obj->page()->isSite()) {
       return '#/files/' . $action . '/' . urlencode($obj->filename());
-    } else {      
+    } else {
       return '#/files/' . $action . '/' . $obj->page()->id() . '/' . urlencode($obj->filename());
     }
   } else if(is_a($obj, 'Page')) {
