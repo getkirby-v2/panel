@@ -81,6 +81,8 @@ return array(
     'pages.show.changeurl' => 'Change URL',
     'pages.show.invisible' => 'Status: invisible',
     'pages.show.visible' => 'Status: visible',
+    'pages.show.info' => 'Page info',
+    'pages.show.template' => 'Template:',
     'pages.show.changes.text' => 'You have unsaved changes!',
     'pages.show.changes.button' => 'Discard',
     'pages.show.delete' => 'Delete this page',
