@@ -4,7 +4,7 @@ return array(
   'title' => 'Română',
   'direction' => 'ltr',
   'author' => 'Structor <zabamarza@yahoo.com>',
-  'version' => '2.0.0',
+  'version' => '2.1.0',
   'data' => array(
 
     // global
@@ -12,6 +12,7 @@ return array(
     'add' => 'Adaugă',
     'save' => 'Salvează',
     'saved' => 'Salvat!',
+    'change' => 'Modifică',
     'delete' => 'Şterge',
     'insert' => 'Inserează',
     'ok' => 'Ok',
@@ -62,15 +63,26 @@ return array(
     'dashboard.index.metatags.edit' => 'Editează',
     'dashboard.index.history.title' => 'Ultimele pagini modificate',
     'dashboard.index.history.text' => 'Paginile modificate recent vor fi afişate aici pentru a putea fi găsite uşor mai târziu.',
+    'dashboard.index.license.title' => 'Licenţa Kirby',
 
     // metatags
     'metatags' => 'Variabile sait',
+    'metatags.info' => 'Info Kirby',
+    'metatags.license' => 'Licenţa Kirby',
+    'metatags.version.toolkit' => 'Versiune Toolkit',
+    'metatags.version.kirby' => 'Versiune Kirby',
+    'metatags.version.panel' => 'Versiune Panel',
     'metatags.back' => 'Înapoi la panoul de control',
+    'metatags.files' => 'Fişiere sait',
 
     // pages
     'pages.show.settings' => 'Setări pagină',
     'pages.show.preview' => 'Previzualizare',
     'pages.show.changeurl' => 'Modifică URL',
+    'pages.show.invisible' => 'Status: invizibilă',
+    'pages.show.visible' => 'Status: vizibilă',
+    'pages.show.changes.text' => 'Există modificări nesalvate!',
+    'pages.show.changes.button' => 'Renunţă',
     'pages.show.delete' => 'Şterge această pagină',
     'pages.show.subpages.title' => 'Pagini',
     'pages.show.subpages.edit' => 'Editează',
@@ -103,6 +115,8 @@ return array(
     'pages.url.uid.label.option' => 'Foloseşte titlul',
     'pages.url.error.exists' => 'Există deja o pagină cu aceeaşi terminaţie URL!',
     'pages.url.error.move' => 'Terminaţia URL nu poate fi modificată!',
+    'pages.toggle.publish' => 'Sigur vrei sa faci **vizibilă** această pagină?',
+    'pages.toggle.hide' => 'Sigur vrei sa faci **invizibilă** această pagină?',
     'pages.delete.headline' => 'Sigur vrei sa ştergi această pagină?',
     'pages.delete.error.home.headline' => 'Pagina principală nu poate fi ştearsă!',
     'pages.delete.error.home.text' => 'Ai încercat să ştergi pagina principală a saitului. Acest lucru nu e posibil pentru că ar apărea efecte nedorite.',
