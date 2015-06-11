@@ -295,7 +295,7 @@ class Panel {
       $type = 'Kirby 2 Professional';
     } else if(str::startsWith($key, 'K2-PERSONAL') and str::length($key) == 44) {
       $type = 'Kirby 2 Personal';
-    } else if(str::length($key) == 32) {
+    } else if(str::length($key) == 32 or (str::startsWith($key, 'BETA') and str::length($key) == 9)) {
       $type = 'Kirby 1';
     } else {
       $key = null;
