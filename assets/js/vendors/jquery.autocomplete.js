@@ -27,7 +27,7 @@
     };
 
     this.highlight = function(string, query) {
-      var rgxp = new RegExp('^' + query, 'gi');
+      var rgxp = new RegExp(query, 'i');
       return string.replace(rgxp, function(matched) {
         return '<strong>' + matched + '</strong>';
       });
@@ -100,7 +100,7 @@
         var results = $.grep(data, function(word) {
           var w = word.toLowerCase();
           var q = query.toLowerCase();
-          return w.indexOf(q) == 0 && $.inArray(w, self.ignored) == -1;
+          return w.indexOf(q) > -1 && $.inArray(w, self.ignored) == -1;
         });
 
         results = results.slice(0, self.limit);
