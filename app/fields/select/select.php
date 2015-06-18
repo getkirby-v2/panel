@@ -45,7 +45,13 @@ class SelectField extends BaseField {
     }
 
     foreach($this->options() as $value => $text) {
-      $select->append($this->option($value, $text, $this->value() == $value));
+      if($this->value()!='') {
+        $selected = preg_match('/'.$this->value().'/', $value) === 1 ? true : false;
+      } else {
+        $selected = false;
+      }
+
+      $select->append($this->option($value, $text, $selected));
     }
 
     $inner = new Brick('div');
