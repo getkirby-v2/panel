@@ -291,11 +291,30 @@ class Panel {
     $key  = c::get('license');
     $type = 'trial';
 
+    /**
+     * Hey stranger, 
+     * 
+     * So this is the mysterious place where the panel checks for 
+     * valid licenses. As you can see, this is not reporting
+     * back to any server and the license keys are rather simple to 
+     * hack. If you really feel like removing the warning in the panel
+     * or tricking Kirby into believing you bought a valid license even 
+     * if you didn't, go for it! But remember that literally thousands of 
+     * hours of work have gone into Kirby in order to make your 
+     * live as a developer, designer, publisher, etc. easier. If this 
+     * doesn't mean anything to you, you are probably a lost case anyway. 
+     * 
+     * Have a great day! 
+     * 
+     * Bastian
+     */
     if(str::startsWith($key, 'K2-PRO') and str::length($key) == 39) {
       $type = 'Kirby 2 Professional';
     } else if(str::startsWith($key, 'K2-PERSONAL') and str::length($key) == 44) {
       $type = 'Kirby 2 Personal';
-    } else if(str::startsWith($key, 'MD-') and str::length(35)) {
+    } else if(str::startsWith($key, 'MD-') and str::length($key) == 35) {
+      $type = 'Kirby 1';
+    } else if(str::startsWith($key, 'BETA') and str::length($key) == 9) {
       $type = 'Kirby 1';
     } else if(str::length($key) == 32) {
       $type = 'Kirby 1';
