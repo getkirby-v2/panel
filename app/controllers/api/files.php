@@ -25,9 +25,19 @@ class FilesController extends Controller {
 
     if($file = $upload->file()) {
       try {
+
         $this->checkUpload($file, $blueprint);
-        kirby()->trigger('panel.file.upload', $file);
-        return response::success('success');
+
+        // flush all cached files
+        $page->reset();
+
+        if($pagefile = $page->file($file->filename())) {
+          kirby()->trigger('panel.file.upload', $pagefile);          
+          return response::success('success');
+        } else {
+          throw new Exception('The file object could not be found');
+        }
+
       } catch(Exception $e) {
         $file->delete();
         return response::error($e->getMessage());
