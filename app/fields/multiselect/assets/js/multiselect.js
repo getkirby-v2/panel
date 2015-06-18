@@ -85,12 +85,22 @@
 
       $(document).bind('click', function (e) {
         if(self.multiselect.hasClass('input-is-focused') && !self.field.has($(e.target)).length) {
-          self.list.hide();
-          self.multiselect.removeClass('input-is-focused');
-          self.modalize('remove');
-          self.triggerReload();
+          self.hide();
         }
       });
+
+      $(document).on('keydown', function(e) {
+        if(self.multiselect.hasClass('input-is-focused') && e.which == 9) {
+          self.hide();
+        }
+      });
+    };
+
+    this.hide = function() {
+      self.list.hide();
+      self.multiselect.removeClass('input-is-focused');
+      self.modalize('remove');
+      self.triggerReload();
     };
 
     // bindings for checkboxes
