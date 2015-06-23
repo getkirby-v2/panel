@@ -129,6 +129,7 @@ return array(
     'pages.search.help' => 'Search pages by URL. Navigate through search results with your up and down arrow keys and hit enter to jump to the selected page.',
     'pages.search.noresults' => 'There are no search results for your query. Please try again with a different URL.',
     'pages.error.missing' => 'The page could not be found',
+    'pages.error.uid.num' => 'URL-appendix must not begin with a number',
 
     // subpages
     'subpages' => 'Pages',
