@@ -83,13 +83,13 @@
         self.triggerReload();
       });
 
-      $(document).bind('click', function (e) {
+      var container = self.modal.length > 0 ? $('.modal-content') : $(document);
+      container.bind('click', function (e) {
         if(self.multiselect.hasClass('input-is-focused') && !self.field.has($(e.target)).length) {
           self.hide();
         }
       });
-
-      $(document).on('keydown', function(e) {
+      container.on('keydown', function(e) {
         if(self.multiselect.hasClass('input-is-focused') && e.which == 9) {
           self.hide();
         }
