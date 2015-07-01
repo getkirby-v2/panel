@@ -22,7 +22,7 @@
 <ul class="nav nav-list sidebar-list">
   <?php foreach($files as $file): ?>
   <li>
-    <a class="draggable" data-helper="<? __($file->filename()) ?>" data-text="<?= dragText($file) ?>" data-url="<? $file->url() ?>" href="<? _u($file, 'show') ?>">
+    <a class="draggable" data-helper="<?php __($file->filename()) ?>" data-text="<?php echo dragText($file) ?>" data-url="<?php echo $file->url() ?>" href="<?php _u($file, 'show') ?>">
       <?php i($file) . __($file->filename()) ?>
     </a>
   </li>
