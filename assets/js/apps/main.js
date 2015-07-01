@@ -122,6 +122,7 @@ app.modal.on('view:empty', function() {
 app.modal.on('view:close', function() {
   // find the cancel button and hit that
   var url = app.modal.find('.btn-cancel').trigger('click').attr('href');
+  debugger
   if(url) window.location.href = url;
 });
 
