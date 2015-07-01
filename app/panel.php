@@ -23,6 +23,20 @@ class Panel {
     return static::$version;
   }
 
+  public function defaults() {
+
+    return array(
+      'panel.language' => 'en',
+      'panel.widgets'  => array(
+        'pages'   => true,
+        'site'    => true,
+        'account' => true,
+        'history' => true
+      ),
+    );
+
+  }
+
   public function __construct($kirby, $root) {
 
     static::$instance = $this;
@@ -31,6 +45,9 @@ class Panel {
     $this->site  = $kirby->site();
     $this->roots = new Panel\Roots($this, $root);
     $this->urls  = new Panel\Urls($this, $root);
+
+    // add the panel default options
+    $this->kirby->options = array_merge($this->defaults(), $this->kirby->options);
 
     // load all Kirby extensions (methods, tags, smartypants)
     $this->kirby->extensions();
@@ -118,6 +135,7 @@ class Panel {
       'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
       'pagestore'    => $this->roots->lib . DS . 'pagestore.php',
       'subpages'     => $this->roots->lib . DS . 'subpages.php',
+      'widgets'      => $this->roots->lib . DS . 'widgets.php',
 
       // blueprint stuff
       'blueprint'         => $this->roots->lib . DS . 'blueprint.php',
