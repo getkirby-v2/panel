@@ -11,4 +11,8 @@ class TitleField extends InputField {
 
   }
 
+  public function type() {
+    return $this->type = 'text';
+  }
+
 }
