@@ -1,5 +1,3 @@
-<?php echo $topbar ?>
-
 <div class="bars bars-with-sidebar-left cf">
 
   <div class="sidebar sidebar-left">

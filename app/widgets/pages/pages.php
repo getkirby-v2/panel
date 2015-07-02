@@ -8,7 +8,7 @@ $options   = array(
   array(
     'text' => l('dashboard.index.pages.edit'),
     'icon' => 'pencil',
-    'link' => '#/subpages/index/'
+    'link' => purl($site, 'subpages')
   )
 );
 
@@ -24,7 +24,7 @@ if($addbutton) {
 return array(
   'title' => array(
     'text'       => l('dashboard.index.pages.title'),
-    'link'       => '#/subpages/index/',
+    'link'       => purl($site, 'subpages'),
     'compressed' => true
   ),
   'options' => $options,

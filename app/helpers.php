@@ -129,18 +129,28 @@ function _u($obj = '', $action = false) {
 
 function purl($obj, $action = false) {
 
+  $base = panel()->urls()->index();
+
   if(is_string($obj)) {
-    return '#/' . $obj;
+    return $obj;
   } else if(is_a($obj, 'File')) {
     if($obj->page()->isSite()) {
-      return '#/files/' . $action . '/' . urlencode($obj->filename());
+      return purl($obj->page(), 'file') . '/' . urlencode($obj->filename()) . '/show';
     } else {
-      return '#/files/' . $action . '/' . $obj->page()->id() . '/' . urlencode($obj->filename());
+      return purl($obj->page(), 'file') . '/' . urlencode($obj->filename()) . '/show';
     }
+  } else if(is_a($obj, 'Site')) {
+
+    if($action == 'show') {
+      return $base;
+    } else {    
+      return $base . '/site/' . $action;
+    }
+
   } else if(is_a($obj, 'Page')) {
-    return '#/pages/' . $action . '/' . $obj->id();
+    return $base . '/pages/' . $obj->id() .  '/' . $action;
   } else if(is_a($obj, 'User')) {
-    return '#/users/' . $action . '/' . $obj->username();
+    return $base . '/users/' . $obj->username() . '/' . $action;
   }
 
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-  <?php echo $meta ?>
+  <?php echo new Snippet('meta') ?>
 
   <title><?php __(site()->title()) ?> | Panel</title>
 
@@ -19,7 +19,10 @@
 <body class="app <?php echo panel()->direction() ?>" data-kirby-version="<?php echo kirby()->version() ?>" data-panel-version="<?php echo panel()->version() ?>">
 
   <div data-view="modal" class="modal"></div>
-  <div data-view="main"  class="main"><i class="loader"></i></div>
+  <div data-view="main"  class="main">
+    <?php echo $topbar ?>
+    <?php echo $content ?>
+  </div>
 
   <?php echo assets::js() ?>
   <?php echo js(panel()->urls()->js() . '/apps/main.js?v=' . panel()->version()) ?>

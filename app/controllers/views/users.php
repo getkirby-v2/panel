@@ -3,9 +3,8 @@
 class UsersController extends Controller {
 
   public function index() {
-    return view('users/index', array(
-      'users'  => site()->users(),
-      'admin'  => site()->user()->isAdmin(),
+
+    return layout('app', array(
       'topbar' => new Snippet('topbar', array(
         'breadcrumb' => new Snippet('breadcrumb', array(
           'items' => array(
@@ -16,7 +15,12 @@ class UsersController extends Controller {
           )
         ))
       )),
+      'content' => view('users/index', array(
+        'users'  => site()->users(),
+        'admin'  => site()->user()->isAdmin(),
+      ))
     ));
+
   }
 
   public function add() {
@@ -26,7 +30,7 @@ class UsersController extends Controller {
     $form = $this->form();
     $form->back = purl('users');
 
-    return view('users/edit', array(
+    return layout('app', array(
       'topbar' => new Snippet('topbar', array(
         'breadcrumb' => new Snippet('breadcrumb', array(
           'items' => array(
@@ -41,9 +45,11 @@ class UsersController extends Controller {
           )
         ))
       )),
-      'user'     => null,
-      'writable' => is_writable(kirby()->roots()->accounts()),
-      'form'     => $form,
+      'content' => view('users/edit', array(
+        'user'     => null,
+        'writable' => is_writable(kirby()->roots()->accounts()),
+        'form'     => $form,
+      ))
     ));
 
   }
@@ -58,7 +64,7 @@ class UsersController extends Controller {
       goToErrorView();
     }
 
-    return view('users/edit', array(
+    return layout('app', array(
       'topbar' => new Snippet('topbar', array(
         'breadcrumb' => new Snippet('breadcrumb', array(
           'items' => array(
@@ -73,9 +79,11 @@ class UsersController extends Controller {
           )
         ))
       )),
-      'form'     => $form,
-      'writable' => is_writable(kirby()->roots()->accounts()),
-      'user'     => $user,
+      'content' => view('users/edit', array(
+        'form'     => $form,
+        'writable' => is_writable(kirby()->roots()->accounts()),
+        'user'     => $user,
+      ))
     ));
 
   }

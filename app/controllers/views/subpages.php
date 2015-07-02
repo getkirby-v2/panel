@@ -34,8 +34,8 @@ class SubpagesController extends Controller {
 
     }
 
-    return view('subpages/index', array(
-      'page'   => $page,
+
+    return layout('app', array(
       'topbar' => new Snippet('pages/topbar', array(
         'menu'       => new Snippet('menu'),
         'breadcrumb' => new Snippet('pages/breadcrumb', array(
@@ -49,14 +49,17 @@ class SubpagesController extends Controller {
         )),
         'search' => purl($page, 'search')
       )),
-      'baseurl'             => $baseUrl,
-      'addbutton'           => !api::maxPages($page, $blueprint->pages()->max()) and $page->hasChildren(),
-      'sortable'            => $blueprint->pages()->sortable(),
-      'visible'             => $visible,
-      'flip'                => $blueprint->pages()->sort() == 'flip',
-      'visiblePagination'   => $visiblePagination,
-      'invisible'           => $invisible,
-      'invisiblePagination' => $invisiblePagination,
+      'content' => view('subpages/index', array(
+        'page'                => $page,
+        'baseurl'             => $baseUrl,
+        'addbutton'           => !api::maxPages($page, $blueprint->pages()->max()) and $page->hasChildren(),
+        'sortable'            => $blueprint->pages()->sortable(),
+        'visible'             => $visible,
+        'flip'                => $blueprint->pages()->sort() == 'flip',
+        'visiblePagination'   => $visiblePagination,
+        'invisible'           => $invisible,
+        'invisiblePagination' => $invisiblePagination,
+      ))
     ));
 
   }

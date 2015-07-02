@@ -1,5 +1,3 @@
-<?php echo $topbar ?>
-
 <div class="section">
 
   <div class="dashboard">

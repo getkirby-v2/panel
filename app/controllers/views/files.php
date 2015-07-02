@@ -18,29 +18,29 @@ class FilesController extends Controller {
       // breadcrumb items
       $items = array(
         array(
-          'url'   => purl('metatags'),
+          'url'   => purl('options'),
           'title' => l('metatags')
         ),
         array(
-          'url'   => purl('files/index'),
+          'url'   => purl($page, 'files'),
           'title' => l('metatags.files')
         )
       );      
 
       // modify the back url
-      $back = purl('metatags');
+      $back = purl('options');
 
     } else {
       // breadcrumb items
       $items = array(
         array(
-          'url'   => purl('files/index/' . $page->id()),
+          'url'   => purl($page, 'files'),
           'title' => l('files')
         )
       );      
     }
 
-    return view('files/index', array(
+    return layout('app', array(
       'topbar' => new Snippet('pages/topbar', array(
         'menu'       => new Snippet('menu'),
         'breadcrumb' => new Snippet('pages/breadcrumb', array(
@@ -49,10 +49,12 @@ class FilesController extends Controller {
         )),
         'search' => purl($page, 'search')
       )),
-      'page'     => $page,
-      'files'    => $files,
-      'back'     => $back,
-      'sortable' => $blueprint->files()->sortable(),
+      'content' => view('files/index', array(
+        'page'     => $page,
+        'files'    => $files,
+        'back'     => $back,
+        'sortable' => $blueprint->files()->sortable(),
+      ))
     ));
 
   }
@@ -61,8 +63,8 @@ class FilesController extends Controller {
 
     $page = $this->page($id);
     $back = array(
-      'files'    => purl('files/index/' . $page->id()),
-      'metatags' => purl('metatags'),
+      'files'    => purl($page, 'files'),
+      'metatags' => purl('options'),
       'page'     => purl($page, 'show')
     );
 
@@ -72,9 +74,25 @@ class FilesController extends Controller {
     ));
   }
 
-  public function show($id = null) {
+  public function show() {
 
-    $filename  = get('filename');
+    $args = func_get_args();
+
+    // site file
+    if(count($args) == 1) {
+      $id       = null;
+      $filename = $args[0];
+
+    // page file
+    } else if(count($args) == 2) {
+      $id       = $args[0];
+      $filename = $args[1];
+
+    // what the fuck is that? 
+    } else {
+      throw new Exception('Invalid number of arguments');
+    }
+
     $page      = $this->page($id);
     $file      = $this->file($page, $filename);
     $blueprint = blueprint::find($page);
@@ -89,11 +107,11 @@ class FilesController extends Controller {
     if($page->isSite()) {
       $items = array(
         array(
-          'url'   => purl('metatags'),
+          'url'   => purl('options'),
           'title' => l('metatags')
         ),
         array(
-          'url'   => purl('files/index'),
+          'url'   => purl($page, 'files'),
           'title' => l('metatags.files')
         ),
         array(
@@ -104,7 +122,7 @@ class FilesController extends Controller {
     } else {
       $items = array(
         array(
-          'url'   => purl('files/index/' . $page->id()),
+          'url'   => purl($page, 'files'),
           'title' => l('files')
         ),
         array(
@@ -124,7 +142,7 @@ class FilesController extends Controller {
       $info[] = $file->dimensions();      
     }
 
-    return view('files/show', array(
+    return layout('app', array(
       'topbar' => new Snippet('pages/topbar', array(
         'menu'       => new Snippet('menu'),
         'breadcrumb' => new Snippet('pages/breadcrumb', array(
@@ -133,12 +151,14 @@ class FilesController extends Controller {
         )),
         'search' => purl($page, 'search')
       )),
-      'form' => new Form($fields->toArray(), $meta),
-      'p'    => $page,
-      'f'    => $file,
-      'next' => $next,
-      'prev' => $prev,
-      'info' => implode(' / ', $info)
+      'content' => view('files/show', array(
+        'form' => new Form($fields->toArray(), $meta),
+        'p'    => $page,
+        'f'    => $file,
+        'next' => $next,
+        'prev' => $prev,
+        'info' => implode(' / ', $info)
+      ))
     ));
 
   }

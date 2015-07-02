@@ -230,4 +230,4 @@ app.store = {
 };
 
 // start the router
-routie(routes);
+//routie(routes);

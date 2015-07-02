@@ -1,5 +1,3 @@
-<?php echo $topbar ?>
-
 <div class="section grey">
   <h2 class="hgroup cf">
     <span class="hgroup-title">
@@ -11,7 +9,7 @@
     </span>
     <span class="hgroup-options shiv shiv-dark shiv-left cf">
 
-      <a class="hgroup-option-left" href="<?php echo purl($page, 'show') ?>">
+      <a class="hgroup-option-left" href="<?php _u($page, 'show') ?>">
         <?php i('arrow-circle-left', 'left') . _l('subpages.index.back') ?>
       </a>
 

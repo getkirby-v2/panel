@@ -102,16 +102,19 @@ class PagesController extends Controller {
       'files'     => $files,
     ));
 
-    return view('pages/show', array(
+
+    return layout('app', array(
       'topbar' => new Snippet('pages/topbar', array(
         'breadcrumb' => new Snippet('pages/breadcrumb', array('page' => $page)),
         'search'     => purl($page, 'search')
       )),
-      'sidebar' => $sidebar,
-      'form'    => $form,
-      'changes' => $changes,
-      'page'    => $page,
-      'notitle' => !$form->fields()->get('title')
+      'content' => view('pages/show', array(
+        'sidebar' => $sidebar,
+        'form'    => $form,
+        'changes' => $changes,
+        'page'    => $page,
+        'notitle' => !$form->fields()->get('title')
+      ))
     ));
 
   }
@@ -247,13 +250,15 @@ class PagesController extends Controller {
 
     $page = $this->page($id);
 
-    return view('pages/search', array(
+    return layout('app', array(
       'topbar' => new Snippet('pages/search/topbar', array(
         'menu'       => new Snippet('menu'),
         'breadcrumb' => new Snippet('pages/breadcrumb', array('page' => $page)),
         'close'      => $page->isSite() ? purl('/') : purl($page, 'show')
       )),
-      'page' => $page
+      'content' => view('pages/search', array(
+        'page' => $page
+      ))
     ));
 
   }

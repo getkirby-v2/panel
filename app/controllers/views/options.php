@@ -1,6 +1,6 @@
 <?php
 
-class MetatagsController extends Controller {
+class OptionsController extends Controller {
 
   public function index() {
 
@@ -20,7 +20,7 @@ class MetatagsController extends Controller {
 
     }
 
-    return view('metatags/index', array(
+    return layout('app', array(
       'topbar' => new Snippet('pages/topbar', array(
         'breadcrumb' => new Snippet('breadcrumb', array(
           'items' => array(
@@ -32,10 +32,12 @@ class MetatagsController extends Controller {
         )),
         'search' => purl('pages/search/')
       )),
-      'form'    => new Form($fields, $content),
-      's'       => $site,
-      'files'   => $files,
-      'license' => panel()->license(),
+      'content' => view('options/index', array(
+        'form'    => new Form($fields, $content),
+        's'       => $site,
+        'files'   => $files,
+        'license' => panel()->license(),
+      ))
     ));
 
   }

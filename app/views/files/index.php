@@ -1,5 +1,3 @@
-<?php echo $topbar ?>
-
 <div class="section">
 
   <h2 class="hgroup cf">

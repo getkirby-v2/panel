@@ -4,7 +4,7 @@
   </a>
   <ul class="nav nav-bar breadcrumb-list cf">
     <li>
-      <a title="<?php _l('dashboard') ?>" class="breadcrumb-link" href="#/"><span class="breadcrumb-label"><?php _l('dashboard') ?></span></a>
+      <a title="<?php _l('dashboard') ?>" class="breadcrumb-link" href="<?php _u() ?>"><span class="breadcrumb-label"><?php _l('dashboard') ?></span></a>
     </li>
     <?php if(!empty($items)): ?>
     <?php foreach($items as $item): ?>

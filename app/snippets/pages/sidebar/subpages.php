@@ -1,6 +1,6 @@
 <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
   <span class="hgroup-title">
-    <a href="<?php _u('subpages/index/' . $page->id()) ?>"><?php __($title) ?></a>
+    <a href="<?php _u($page, 'subpages') ?>"><?php __($title) ?></a>
   </span>
   <span class="hgroup-options shiv shiv-dark shiv-left">
     <span class="hgroup-option-right">

@@ -1,12 +1,10 @@
-<?php echo $topbar ?>
-
 <div class="section">
 
   <h2 class="hgroup hgroup-single-line cf">
     <span class="hgroup-title"><?php _l('users.index.headline') ?></span>
     <?php if($admin): ?>
     <span class="hgroup-options shiv shiv-dark shiv-left">
-      <a title="+" data-shortcut="+" class="hgroup-option-right" href="#/users/add">
+      <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php _u('users/add') ?>">
         <?php i('plus-circle', 'left') . _l('users.index.add') ?>
       </a>
     </span>

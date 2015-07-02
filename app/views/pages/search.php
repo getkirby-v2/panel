@@ -1,5 +1,3 @@
-<?php echo $topbar ?>
-
 <div id="search" class="section">
   <div class="field search-field">
     <?php i('search') ?>
