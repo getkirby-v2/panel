@@ -1,233 +1,177 @@
-// cache the most relevant elements
-app.nav   = $('#menu-toggle');
-app.views = $('[data-view]');
+$(function() {
 
-// init all available views
-app.views.views(app, 'views');
+  // cache the most relevant elements
+  app.nav   = $('#menu-toggle');
+  app.views = $('[data-view]');
 
-// go to error page if a view could not be loaded
-app.views.on('view:error', function(r, response) {
+  // init all available views
+  app.views.views(app, 'views');
 
-  var message  = 'The view could not be loaded because of an unexpected PHP error.\n';
-      message += 'Please get in contact: support@getkirby.com and copy the following info.\n\n';
-      message += 'Error:\n';
-      message += response + '\n\n';
-      message += 'User Agent:\n';
-      message += navigator.userAgent + '\n\n';
-      message += 'Kirby Version:\n';
-      message += app.body.data('kirby-version') + '\n\n';
-      message += 'Panel Version:\n';
-      message += app.body.data('panel-version');
+  // storage for the loader interval
+  app.loader = false;
 
-      console.log(message);
+  // global blocking loader
+  app.isLoading = function(toggle) {
 
-      alert(message);
-
-});
-
-// storage for the loader interval
-app.loader = false;
-
-// global blocking loader
-app.isLoading = function(toggle) {
-
-  if(toggle) {
-    if(!app.loader) {
-      app.loader = setTimeout(function() {
-        app.body.addClass('loading');
-      }, 250);
-    }
-  } else {
-    clearTimeout(app.loader);
-    app.loader = false;
-    app.body.removeClass('loading');
-  }
-
-};
-
-app.doc.ajaxStart(function() {
-  app.isLoading(true);
-});
-
-app.doc.ajaxStop(function() {
-  app.isLoading(false);
-});
-
-app.doc.ajaxError(function() {
-  app.isLoading(false);
-});
-
-// init the modal view
-app.modal.hide();
-
-// a click on the modal background will close the modal
-app.modal.on('click', function() {
-  app.modal.trigger('view:close');
-});
-
-// a custom method to handle modal alerts
-app.modal.alert = function(message) {
-  app.modal.find('.modal-content').message('alert', message);
-};
-
-app.modal.close = function() {
-  app.modal.trigger('view:close');
-};
-
-// set some defaults when the modal is loaded
-app.modal.on('view:load', function() {
-
-  // show the modal container
-  app.modal.show();
-
-  $('body').css('overflow', 'hidden');
-
-  var $window  = $(window);
-  var $content = app.modal.find('.modal-content');
-  var $form    = $content.find('.form');
-  
-  $window.data('height', $form.outerHeight());
-
-  $(document).on('keyup.modal', function() {
-    $window.data('height', $form.outerHeight()).trigger('resize.modal');
-  });
-
-  $window.on('resize.modal', function() {
-    if($window.height() <= $window.data('height')) {
-      $content.addClass('modal-content-fixed');
+    if(toggle) {
+      if(!app.loader) {
+        app.loader = setTimeout(function() {
+          app.body.addClass('loading');
+        }, 250);
+      }
     } else {
-      $content.removeClass('modal-content-fixed');
+      clearTimeout(app.loader);
+      app.loader = false;
+      app.body.removeClass('loading');
     }
-  }).trigger('resize.modal');
 
-  // avoid closing clicks on modal content
-  $content.on('click', function(e) {
-    e.stopPropagation();
+  };
+
+  app.doc.ajaxStart(function() {
+    app.isLoading(true);
   });
 
-  // focus the first element in the modal as soon as it is loaded
-  $content.find('[autofocus]').focus();
+  app.doc.ajaxStop(function() {
+    app.isLoading(false);
+  });
 
-});
+  app.doc.ajaxError(function() {
+    app.isLoading(false);
+  });
 
-// make sure the modal is also hidden when it is being emptied
-app.modal.on('view:empty', function() {
+  // init the modal view
   app.modal.hide();
-  $(window).off('resize.modal');
-  $(document).off('keyup.modal');
-  $('body').css('overflow', 'initial');
-});
 
-// create a new close event, which can be triggered from anywhere
-app.modal.on('view:close', function() {
-  // find the cancel button and hit that
-  var url = app.modal.find('.btn-cancel').trigger('click').attr('href');
-  debugger
-  if(url) window.location.href = url;
-});
+  // a click on the modal background will close the modal
+  app.modal.on('click', function() {
+    app.modal.trigger('view:close');
+  });
 
-setTimeout(function() {
-  app.main.find('.loader').show();
-}, 250);
+  // a custom method to handle modal alerts
+  app.modal.alert = function(message) {
+    app.modal.find('.modal-content').message('alert', message);
+  };
 
-// init the main view
-app.main.on('view:beforeload', function() {
-  // make sure there's no open modal left
-  app.modal.trigger('view:empty');
-  // reset all old shortcuts
-  $.shortcuts.reset();
-});
+  app.modal.close = function() {
+    app.modal.trigger('view:close');
+  };
 
-// hook up some default events on load
-app.main.on('view:load', function() {
+  // set some defaults when the modal is loaded
+  app.modal.on('view:load', function() {
+
+    // show the modal container
+    app.modal.show();
+
+    $('body').css('overflow', 'hidden');
+
+    var $window  = $(window);
+    var $content = app.modal.find('.modal-content');
+    var $form    = $content.find('.form');
+    
+    $window.data('height', $form.outerHeight());
+
+    $(document).on('keyup.modal', function() {
+      $window.data('height', $form.outerHeight()).trigger('resize.modal');
+    });
+
+    $window.on('resize.modal', function() {
+      if($window.height() <= $window.data('height')) {
+        $content.addClass('modal-content-fixed');
+      } else {
+        $content.removeClass('modal-content-fixed');
+      }
+    }).trigger('resize.modal');
+
+    // avoid closing clicks on modal content
+    $content.on('click', function(e) {
+      e.stopPropagation();
+    });
+
+    // focus the first element in the modal as soon as it is loaded
+    $content.find('[autofocus]').focus();
+
+  });
+
+  // make sure the modal is also hidden when it is being emptied
+  app.modal.on('view:empty', function() {
+    app.modal.hide();
+    $(window).off('resize.modal');
+    $(document).off('keyup.modal');
+    $('body').css('overflow', 'initial');
+  });
+
+  // create a new close event, which can be triggered from anywhere
+  app.modal.on('view:close', function() {
+    // find the cancel button and hit that
+    var url = app.modal.find('.btn-cancel').trigger('click').attr('href');
+    debugger
+    if(url) window.location.href = url;
+  });
 
   // register all keyboard shortcuts
-  app.main.find('.breadcrumb').breadcrumb();
-  app.main.shortcuts();
+  app.doc.find('.breadcrumb').breadcrumb();
+  app.doc.shortcuts();
 
-  app.main.find('.languages .dropdown a').on('click', function() {
+  // init all global dropdowns
+  app.doc.dropdown();
 
-    $.ajaxSetup({
-      headers: {'language': $(this).data('lang')}
-    });
-
-    app.main.data('current', false);
-    routie.reload();
-    return false;
-
+  // esc key to hide the modal and clean everything
+  app.doc.on('keydown', function(e) {
+    if(e.keyCode == 27) {
+      app.modal.trigger('view:close');
+    }
   });
 
-  var title = $.trim(app.main.find('.breadcrumb-link:last .breadcrumb-label').text());
+  // popup helper
+  app.popup = {
 
-  if(!title) {
-    document.title = app.title;
-  } else {
-    document.title = app.title + ' | ' + title;
-  }
+    show : function(view, data, init, cancel) {
 
-});
+      app.modal.view(view, data, function(element) {
 
-// init all global dropdowns
-app.doc.dropdown();
+        element.find('.btn-cancel').on('click', function() {
+          app.popup.hide();
+          if(cancel) cancel();
+          return false;
+        });
 
-// esc key to hide the modal and clean everything
-app.doc.on('keydown', function(e) {
-  if(e.keyCode == 27) {
-    app.modal.trigger('view:close');
-  }
-});
+        if(init) init(element);
 
-// popup helper
-app.popup = {
-
-  show : function(view, data, init, cancel) {
-
-    app.modal.view(view, data, function(element) {
-
-      element.find('.btn-cancel').on('click', function() {
-        app.popup.hide();
-        if(cancel) cancel();
-        return false;
       });
 
-      if(init) init(element);
+    },
 
-    });
+    form : function(view, data, init, submit, cancel) {
 
-  },
+      app.popup.show(view, data, function(element) {
 
-  form : function(view, data, init, submit, cancel) {
+        element.find('.form').form().on('submit', function() {
+          var form = $(this);
+          submit(form, form.serializeObject());
+          app.popup.hide();
+          return false;
+        });
 
-    app.popup.show(view, data, function(element) {
+      }, cancel);
 
-      element.find('.form').form().on('submit', function() {
-        var form = $(this);
-        submit(form, form.serializeObject());
-        app.popup.hide();
-        return false;
-      });
+    },
 
-    }, cancel);
+    hide: function() {
+      app.modal.trigger('view:empty');
+    }
 
-  },
+  };
 
-  hide: function() {
-    app.modal.trigger('view:empty');
-  }
+  app.store = {
+    data: {},
+    set: function(id, value, fallback) {
+      if(!value && app.store.data[id]) value = app.store.data[id];
+      if(!value) value = fallback;
+      return app.store.data[id] = value;
+    },
+    get: function id(id, fallback) {
+      return app.store.data[id] || fallback;
+    }
+  };
 
-};
-
-app.store = {
-  data: {},
-  set: function(id, value, fallback) {
-    if(!value && app.store.data[id]) value = app.store.data[id];
-    if(!value) value = fallback;
-    return app.store.data[id] = value;
-  },
-  get: function id(id, fallback) {
-    return app.store.data[id] || fallback;
-  }
-};
-
-// start the router
-//routie(routes);
+});

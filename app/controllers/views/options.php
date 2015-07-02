@@ -26,7 +26,7 @@ class OptionsController extends Controller {
           'items' => array(
             array(
               'title' => l('metatags'),
-              'url'   => purl('metatags/')
+              'url'   => purl('options')
             )
           )
         )),

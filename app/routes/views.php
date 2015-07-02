@@ -66,8 +66,22 @@ return array(
 
   // Search
   array(
+    'pattern' => 'site/search',
+    'action'  => 'views/PagesController::search',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET'
+  ),
+  array(
     'pattern' => 'pages/(:all?)/search',
     'action'  => 'views/PagesController::search',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET'
+  ),
+
+  // New Page
+  array(
+    'pattern' => 'pages/(:all)/add/article',
+    'action'  => 'views/PagesController::add',
     'filter'  => 'auth',
     'method'  => 'POST|GET'
   ),

@@ -4,7 +4,7 @@
   </span>
   <span class="hgroup-options shiv shiv-dark shiv-left">
     <span class="hgroup-option-right">
-      <a title="<?php _l('pages.show.subpages.edit') ?>" href="<?php _u('subpages/index/' . $page->id()) ?>">
+      <a title="<?php _l('pages.show.subpages.edit') ?>" href="<?php _u($page, 'subpages') ?>">
         <?php i('pencil', 'left') ?><span><?php _l('pages.show.subpages.edit') ?></span>
       </a>
       <?php if($addbutton): ?>

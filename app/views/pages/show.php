@@ -49,3 +49,9 @@
   </div>
 
 </div>
+
+<script>
+
+var form = $('.form').form();
+
+</script>

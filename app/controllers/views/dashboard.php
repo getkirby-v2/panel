@@ -7,7 +7,7 @@ class DashboardController extends Controller {
     return layout('app', array(
       'topbar' => new Snippet('pages/topbar', array(
         'breadcrumb' => new Snippet('breadcrumb'),
-        'search'     => purl('pages/search/')
+        'search'     => purl(panel()->site(), 'search')
       )),
       'content' => view('dashboard/index', array(
         'widgets' => new Widgets()

@@ -8,8 +8,7 @@ class PagesController extends Controller {
       $page = $this->page($id);      
     } catch(Exception $e) {
       $page = $this->page(dirname($id));
-      // dirty work around to move to the parent page
-      die('<script>window.location.href = "#/pages/show/' . $page->id() . '"</script>');
+      go(purl($page->parent(), 'show'));
     }
 
     $blueprint = blueprint::find($page);
