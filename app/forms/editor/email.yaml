@@ -1,0 +1,10 @@
+address:
+  label: editor.email.address.label
+  type: email
+  placeholder: editor.email.address.placeholder
+  autofocus: true
+  required: true
+text: 
+  label: editor.email.text.label
+  type: text
+  help: editor.email.text.help

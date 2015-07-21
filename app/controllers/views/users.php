@@ -4,52 +4,59 @@ class UsersController extends Controller {
 
   public function index() {
 
-    return layout('app', array(
-      'topbar' => new Snippet('topbar', array(
-        'breadcrumb' => new Snippet('breadcrumb', array(
-          'items' => array(
-            array(
-              'title' => l('users'),
-              'url'   => purl('users')
-            )
-          )
-        ))
-      )),
-      'content' => view('users/index', array(
-        'users'  => site()->users(),
-        'admin'  => site()->user()->isAdmin(),
-      ))
+    $users = site()->users();
+    $admin = site()->user()->isAdmin();
+
+    return screen('users/index', $users, array(
+      'users'  => $users,
+      'admin'  => $admin,
     ));
 
   }
 
   public function add() {
 
-    if(!site()->user()->isAdmin()) go(purl('error'));
+    if(!site()->user()->isAdmin()) {
+      $this->redirect('users');
+    }
 
+    $self = $this;
     $form = $this->form();
-    $form->back = purl('users');
 
-    return layout('app', array(
-      'topbar' => new Snippet('topbar', array(
-        'breadcrumb' => new Snippet('breadcrumb', array(
-          'items' => array(
-            array(
-              'title' => l('users'),
-              'url'   => purl('users')
-            ),
-            array(
-              'title' => l('users.index.add'),
-              'url'   => purl('users/add')
-            )
-          )
-        ))
-      )),
-      'content' => view('users/edit', array(
-        'user'     => null,
-        'writable' => is_writable(kirby()->roots()->accounts()),
-        'form'     => $form,
-      ))
+    // make the password a requirement
+    $form->fields->password->required = true;
+
+    $form->on('submit', function($form) use($self) {
+      
+      $form->validate();
+
+      if(!$form->isValid()) {
+        return false;
+      }
+
+      $data = $form->serialize();
+
+      if($data['password'] !== $data['passwordconfirmation']) {
+        return $form->alert(l('users.form.error.password.confirm'));
+      }
+
+      unset($data['passwordconfirmation']);
+
+      try {
+        $user = site()->users()->create($data);
+        kirby()->trigger('panel.user.create', $user);
+        panel()->notify(l('saved'));
+        $self->redirect($user, 'edit');
+      } catch(Exception $e) {
+        $form->alert(l('users.form.error.create'));
+      }
+
+    });
+
+    return screen('users/edit', 'user', array(
+      'user'     => null,
+      'writable' => is_writable(kirby()->roots()->accounts()),
+      'form'     => $form,
     ));
 
   }
@@ -58,32 +65,47 @@ class UsersController extends Controller {
 
     $user = $this->user($username);
     $form = $this->form($user);
-    $form->back = purl('users');
+    $self = $this;
 
     if(!site()->user()->isAdmin() and !$user->isCurrent()) {
-      goToErrorView();
+      $this->redirect('users');
     }
 
-    return layout('app', array(
-      'topbar' => new Snippet('topbar', array(
-        'breadcrumb' => new Snippet('breadcrumb', array(
-          'items' => array(
-            array(
-              'title' => l('users'),
-              'url'   => purl('users')
-            ),
-            array(
-              'title' => $user->username(),
-              'url'   => purl($user, 'edit')
-            )
-          )
-        ))
-      )),
-      'content' => view('users/edit', array(
-        'form'     => $form,
-        'writable' => is_writable(kirby()->roots()->accounts()),
-        'user'     => $user,
-      ))
+    $form->on('submit', function($form) use($user, $self) {
+      
+      $form->validate();
+
+      if(!$form->isValid()) {
+        return false;
+      }
+
+      $data = $form->serialize();
+
+      if(str::length($data['password']) > 0) {
+        if($data['password'] !== $data['passwordconfirmation']) {
+          return $form->alert(l('users.form.error.password.confirm'));
+        }
+      } else {
+        unset($data['password']);
+      }
+
+      unset($data['passwordconfirmation']);
+
+      try {
+        $user->update($data);
+        kirby()->trigger('panel.user.update', $user);
+        panel()->notify(l('saved'));
+        $self->redirect($user, 'edit');
+      } catch(Exception $e) {
+        $form->alert($e->getMessage());
+      }
+        
+    });
+
+    return screen('users/edit', $user, array(
+      'form'     => $form,
+      'writable' => is_writable(kirby()->roots()->accounts()),
+      'user'     => $user,
     ));
 
   }
@@ -91,50 +113,131 @@ class UsersController extends Controller {
   public function delete($username) {
 
     $user = $this->user($username);
-    $back = array(
-      'users'     => purl('users'),
-      'user'      => purl($user, 'edit'),
-      'dashboard' => purl('')
-    );
+    $self = $this;
 
     if(!site()->user()->isAdmin() and !$user->isCurrent()) {
-      goToErrorView('modal');
-    }
+      return modal('error', array(
+        'headline' => 'Error',
+        'text'     => 'You are not allowed to delete this user'
+      ));
+    } else {
 
-    return view('users/delete', array(
-      'user' => $user,
-      'back' => a::get($back, get('to'))
-    ));
+      $form = panel()->form('users/delete');
+      $form->fields->username->value = $user->username();
+      $form->fields->username->help  = $user->email();
+
+      $form->on('submit', function($form) use($user, $self) {
+
+        try {
+          $user->delete();
+          kirby()->trigger('panel.user.delete', $user);
+          $self->redirect('users');
+        } catch(Exception $e) {
+          $form->alert(l('users.delete.error'));
+        }
+
+      });
+
+      $form->style('delete');
+      $form->cancel($user, 'edit');
+
+      return modal('users/delete', compact('form'));
+
+    }
 
   }
 
   public function avatar($username) {
 
     $user = $this->user($username);
-    $back = array(
-      'users'     => purl('users'),
-      'user'      => purl($user, 'edit'),
-      'dashboard' => purl('')
-    );
 
     if(!site()->user()->isAdmin() and !$user->isCurrent()) {
-      goToErrorView('modal');
+      return modal('error', array(
+        'headline' => 'Permission error',
+        'text'     => 'You are not allowed to change the avatar'
+      ));
     }
 
-    return view('users/avatar', array(
+    if(r::is('post')) {
+
+      $root = $user->avatar() ? $user->avatar()->root() : $user->avatarRoot('{safeExtension}');
+
+      $upload = new Upload($root, array(
+        'accept' => function($upload) {
+          if($upload->type() != 'image') {
+            throw new Error(l('users.avatar.error.type'));
+          }
+        }
+      ));
+
+      if($upload->file()) {
+
+        thumb::$defaults['root'] = dirname($upload->file()->root());
+
+        $thumb = new Thumb($upload->file(), array(
+          'filename'  => $upload->file()->filename(),
+          'overwrite' => true,
+          'width'     => 256,
+          'height'    => 256,
+          'crop'      => true
+        ));
+
+        kirby()->trigger('panel.avatar.upload', $user->avatar());
+
+      } else {
+        // TODO: handle error 
+        // return response::error($upload->error()->getMessage());
+      }
+
+      $this->redirect($user, 'edit');
+
+    }
+
+    return modal('users/avatar', array(
       'user'       => $user,
       'uploadable' => is_writable(kirby()->roots()->avatars()),
-      'back'       => a::get($back, get('to'))
+      'url'        => purl($user, 'avatar'),
+      'back'       => purl($user, 'edit')
     ));
 
   }
 
   public function deleteAvatar($username) {
 
-    $user = $this->user($username);
+    $self   = $this;
+    $user   = $this->user($username);
+    $form   = panel()->form('users/delete-avatar');
+    $avatar = $user->avatar();
 
-    return view('users/delete-avatar', array(
-      'user' => $user,
+    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+      return modal('error', array(
+        'headline' => 'Error',
+        'text'     => 'You are not allowed to delete the avatar of this user',
+      ));
+    } else if(!$avatar) {
+      return modal('error', array(
+        'headline' => 'Error',
+        'text'     => 'This user has no avatar',
+      ));
+    }
+
+    $form->on('submit', function($form) use($user, $avatar, $self) {
+
+      if(f::remove($avatar->root())) {
+        kirby()->trigger('panel.avatar.delete', $avatar);
+        $self->redirect($user, 'edit');
+      } else {
+        $form->alert(l('users.avatar.delete.error'));
+      }
+
+    });
+
+    $form->fields->image->text = '(image: ' . $user->avatar()->url() . '?' . $user->avatar()->modified() . ' class: avatar avatar-full avatar-centered)';
+    $form->centered = true;
+    $form->style('delete');
+
+    return modal('users/delete-avatar', array(
+      'form' => $form,
     ));
 
   }
@@ -150,34 +253,37 @@ class UsersController extends Controller {
   protected function form($user = null) {
 
     $mode    = $user ? 'edit' : 'add';
-    $fields  = data::read(panel()->roots()->forms() . DS . 'user.' . $mode . '.php', 'yaml');
     $content = $user ? $user->data() : array();
+    
+    // make sure the password is never shown in the form
+    unset($content['password']);
+
+    $defaults = array(
+      'language' => kirby()->option('panel.language', 'en'),
+      'role'     => site()->roles()->findDefault()->id()
+    );
+
+    // create the form
+    $form = panel()->form('users/' . $mode, array_merge($defaults, $content));
 
     // add all languages
-    $fields['language']['options'] = array();
-    $fields['language']['default'] = kirby()->option('panel.language', 'en');
-
     foreach(panel()->languages() as $code => $lang) {
-      $fields['language']['options'][$code] = $lang->title();
+      $form->fields->language->options[$code] = $lang->title();
     }
 
     // add all roles
-    $fields['role']['options'] = array();
-    $fields['role']['default'] = site()->roles()->findDefault()->id();
-
     foreach(site()->roles() as $role) {
-      $fields['role']['options'][$role->id()] = $role->name();
+      $form->fields->role->options[$role->id()] = $role->name();
     }
 
     // make the role selector readonly when the user is not an admin
     if(!site()->user()->isAdmin()) {
-      $fields['role']['readonly'] = true;
+      $form->fields->role->readonly = true;
     }
 
-    // make sure the password is never shown in the form
-    unset($content['password']);
+    $form->cancel('users');
 
-    return new Form($fields, $content);
+    return $form;
 
   }
 

@@ -16,6 +16,7 @@ return array(
     'delete' => 'Löschen',
     'insert' => 'Einfügen',
     'ok' => 'Ok',
+    'untitled' => 'Unbenannt',
 
     // options (sidebar)
     'options.show' => 'Optionen einblenden',
@@ -263,6 +264,7 @@ return array(
     'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Bearbeiten',
     'fields.structure.delete' => 'Löschen',
+    'fields.structure.delete.label' => 'Willst du diesen Eintrag wirklich löschen?',
     'fields.tags.label' => 'Tags',
     'fields.tel.label' => 'Telefon',
     'fields.textarea.buttons.bold.label' => 'Fetter Text',

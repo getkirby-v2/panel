@@ -23,6 +23,7 @@ class Roots extends Obj {
     $this->layouts     = $this->app . DS . 'layouts';
     $this->lib         = $this->app . DS . 'lib';
     $this->routes      = $this->app . DS . 'routes';
+    $this->topbars     = $this->app . DS . 'topbars';
     $this->snippets    = $this->app . DS . 'snippets';
     $this->views       = $this->app . DS . 'views';
 

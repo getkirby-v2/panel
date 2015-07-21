@@ -17,8 +17,18 @@ class PageStore {
 
   }
 
-  static public function fetch($page) {
-    return (array)a::get(static::data(), static::id($page));    
+  static public function fetch($page, $field = null) {
+    $data = (array)a::get(static::data(), static::id($page));      
+    if(!is_null($field)) {
+      return a::get($data, $field);
+    } else {
+      return $data;
+    }
+  }
+
+  static public function has($page, $field) {
+    $data = static::fetch($page);
+    return isset($data[$field]);
   }
 
   static public function keep($page) {

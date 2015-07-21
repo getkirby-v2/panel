@@ -4,7 +4,7 @@ class TextareaField extends InputField {
 
   static public $assets = array(
     'js' => array(
-      'autosize.min.js',
+      'autosize.js',
       'editor.js'
     )
   );
@@ -61,7 +61,7 @@ class TextareaField extends InputField {
 
   public function buttons() {
     require_once(__DIR__ . DS . 'buttons.php');
-    return new Buttons($this->buttons);
+    return new Buttons($this, $this->buttons);
   }
 
   public function validate() {

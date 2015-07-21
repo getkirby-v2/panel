@@ -1,0 +1,5 @@
+username: 
+  label: users.delete.headline
+  type: text
+  readonly: true
+  icon: false

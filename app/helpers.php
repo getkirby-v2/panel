@@ -41,10 +41,6 @@ function dragText($obj) {
 
 }
 
-function goToErrorView($type = 'index') {
-  go(panel()->urls()->index() . '/views/errors/' . $type);
-}
-
 function n($page) {
 
   if($page->isInvisible()) {
@@ -67,52 +63,56 @@ function n($page) {
 
 }
 
-function i($icon, $position = null) {
+function icon($icon, $position) {
 
   if(is_string($icon)) {
-    echo '<i class="icon' . r($position, ' icon-' . $position) . ' fa fa-' . $icon . '"></i>';
+    return '<i class="icon' . r($position, ' icon-' . $position) . ' fa fa-' . $icon . '"></i>';
   } else if(is_a($icon, 'Page')) {
     $icon = blueprint::find($icon)->icon();
-    i($icon, 'left');
+    return icon($icon, 'left');
   } else if(is_a($icon, 'File')) {
 
     switch($icon->type()) {
       case 'image':
-        i('file-image-o', 'left');
+        return icon('file-image-o', 'left');
         break;
       case 'document':
         switch($icon->extension()) {
           case 'pdf':
-            i('file-pdf-o', 'left');
+            return icon('file-pdf-o', 'left');
             break;
           case 'doc':
           case 'docx':
-            i('file-word-o', 'left');
+            return icon('file-word-o', 'left');
             break;
           case 'xls':
-            i('file-excel-o', 'left');
+            return icon('file-excel-o', 'left');
             break;
           default:
-            i('file-text-o', 'left');
+            return icon('file-text-o', 'left');
             break;
         }
         break;
       case 'code':
-        i('file-code-o', 'left');
+        return icon('file-code-o', 'left');
         break;
       case 'audio':
-        i('file-audio-o', 'left');
+        return icon('file-audio-o', 'left');
         break;
       case 'video':
-        i('file-video-o', 'left');
+        return icon('file-video-o', 'left');
         break;
       default:
-        i('file-archive-o', 'left');
+        return icon('file-archive-o', 'left');
         break;
     }
 
   }
 
+}
+
+function i($icon, $position = null) {
+  echo icon($icon, $position);
 }
 
 function __($var) {
@@ -127,17 +127,17 @@ function _u($obj = '', $action = false) {
   echo purl($obj, $action);
 }
 
-function purl($obj, $action = false) {
+function purl($obj = '/', $action = false) {
 
   $base = panel()->urls()->index();
 
   if(is_string($obj)) {
-    return $obj;
+    return rtrim($base . '/' . $obj, '/');
   } else if(is_a($obj, 'File')) {
     if($obj->page()->isSite()) {
-      return purl($obj->page(), 'file') . '/' . urlencode($obj->filename()) . '/show';
+      return purl($obj->page(), 'file') . '/' . urlencode($obj->filename()) . '/' . $action;
     } else {
-      return purl($obj->page(), 'file') . '/' . urlencode($obj->filename()) . '/show';
+      return purl($obj->page(), 'file') . '/' . urlencode($obj->filename()) . '/' . $action;
     }
   } else if(is_a($obj, 'Site')) {
 
@@ -180,5 +180,43 @@ function fileHasThumbnail($file) {
   }
 
   return true;
+
+}
+
+
+function topbar($view, $input) {
+  return new Topbar($view, $input);
+}
+
+function screen($view, $topbar = null, $data = array()) {
+  return layout('app', array(
+    'topbar'  => is_a($topbar, 'Topbar')  ? $topbar : topbar($view, $topbar),
+    'content' => is_a($data, 'View')      ? $data   : view($view, $data)
+  ));
+}
+
+function modal($view, $data = array()) {
+  if($view === 'error') $view = 'error/modal';  
+  return layout('app', array('content' => view($view, $data)));
+}
+
+function addbutton($page) {
+
+  $blueprint = blueprint::find($page);
+
+  if(!api::maxPages($page, $blueprint->pages()->max()) and $page->hasChildren()) {
+    $addbutton = new Obj;
+    if($blueprint->pages()->template()->count() > 1) {
+      $addbutton->url   = purl($page, 'add');
+      $addbutton->modal = true;
+    } else {
+      $addbutton->url   = purl($page, 'add/' . $blueprint->pages()->template()->first()->name());
+      $addbutton->modal = false;
+    }
+  } else {
+    $addbutton = false;
+  }
+
+  return $addbutton;
 
 }

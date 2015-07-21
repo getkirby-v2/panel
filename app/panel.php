@@ -110,7 +110,7 @@ class Panel {
   }
 
   public function form($id, $data = array()) {
-    $fields = data::read($this->roots->forms . DS . $id . '.php', 'yaml');
+    $fields = data::read($this->roots->forms . DS . $id . '.yaml', 'yaml');
     return new Form($fields, $data);
   }
 
@@ -125,17 +125,21 @@ class Panel {
       'snippet'      => $this->roots->lib . DS . 'snippet.php',
 
       // panel stuff
-      'api'          => $this->roots->lib . DS . 'api.php',
-      'assets'       => $this->roots->lib . DS . 'assets.php',
-      'fieldoptions' => $this->roots->lib . DS . 'fieldoptions.php',
-      'filedata'     => $this->roots->lib . DS . 'filedata.php',
-      'form'         => $this->roots->lib . DS . 'form.php',
-      'history'      => $this->roots->lib . DS . 'history.php',
-      'installation' => $this->roots->lib . DS . 'installation.php',
-      'pagedata'     => $this->roots->lib . DS . 'pagedata.php',
-      'pagestore'    => $this->roots->lib . DS . 'pagestore.php',
-      'subpages'     => $this->roots->lib . DS . 'subpages.php',
-      'widgets'      => $this->roots->lib . DS . 'widgets.php',
+      'api'            => $this->roots->lib . DS . 'api.php',
+      'assets'         => $this->roots->lib . DS . 'assets.php',
+      'fieldoptions'   => $this->roots->lib . DS . 'fieldoptions.php',
+      'filedata'       => $this->roots->lib . DS . 'filedata.php',
+      'form'           => $this->roots->lib . DS . 'form.php',
+      'history'        => $this->roots->lib . DS . 'history.php',
+      'installation'   => $this->roots->lib . DS . 'installation.php',
+      'pagedata'       => $this->roots->lib . DS . 'pagedata.php',
+      'pagestore'      => $this->roots->lib . DS . 'pagestore.php',
+      'pageeditor'     => $this->roots->lib . DS . 'pageeditor.php',
+      'pageuploader'   => $this->roots->lib . DS . 'pageuploader.php',
+      'structurestore' => $this->roots->lib . DS . 'structurestore.php',
+      'subpages'       => $this->roots->lib . DS . 'subpages.php',
+      'widgets'        => $this->roots->lib . DS . 'widgets.php',
+      'topbar'         => $this->roots->lib . DS . 'topbar.php',
 
       // blueprint stuff
       'blueprint'         => $this->roots->lib . DS . 'blueprint.php',
@@ -235,15 +239,31 @@ class Panel {
     $this->path  = $this->kirby->path();
     $this->route = $this->router->run($this->path);
 
-    // react on invalid routes
-    if(!$this->route) {
-      throw new Exception('Invalid route');
+    try {
+
+      // react on invalid routes
+      if(!$this->route) {
+        throw new Exception('Invalid Panel URL');
+      }
+
+      if(is_callable($this->route->action())) {
+        $response = call($this->route->action(), $this->route->arguments());
+      } else {
+        $response = $this->response();
+      }
+
+    } catch(Exception $e) {
+      require_once($this->roots->controllers . DS . 'views' . DS . 'error.php');
+      $controller = new ErrorController();
+      $response   = $controller->index($e->getMessage());
     }
 
-    if(is_callable($this->route->action())) {
-      $response = call($this->route->action(), $this->route->arguments());
-    } else {
-      $response = $this->response();
+    // send custom header for ajax requests
+    header('X-Panel-Location: ' . url::current());
+
+    // set the username of the current user
+    if($user = site()->user()) {
+      header('X-Panel-User: ' . $user->username());      
     }
 
     ob_start();
@@ -284,23 +304,8 @@ class Panel {
     // run the controller
     $controller = new $controllerName;
 
-    try {
-      // call the action and pass all arguments from the router
-      $response = call(array($controller, $controllerAction), $this->route->arguments());
-    } catch(Exception $e) {
-
-      $file = $this->roots->controllers . DS . substr($controllerUri, 0, strpos($controllerUri, '/') + 1) . 'errors.php';
-
-      require_once($file);
-
-      $action     = (isset($this->route->modal) and $this->route->modal) ? 'modal' : 'index';
-      $controller = new ErrorsController;
-      $message    = $e->getMessage() . ' in ' . $e->getFile() . ' on Line ' . $e->getLine();
-      $response   = call(array($controller, $action), array($message));
-
-    }
-
-    return $response;
+    // call the action and pass all arguments from the router
+    return call(array($controller, $controllerAction), $this->route->arguments());
 
   }
 
@@ -348,6 +353,20 @@ class Panel {
       'type'  => $type,
     ));
 
+  }
+
+  public function notify($text) {
+    s::set('message', array(
+      'type' => 'notification', 
+      'text' => $text,
+    ));
+  }
+
+  public function alert($text) {
+    s::set('message', array(
+      'type' => 'error', 
+      'text' => $text,
+    ));
   }
 
 }

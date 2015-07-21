@@ -57,13 +57,18 @@
 }
 @media screen and (min-width: 50em) {
   .sidebar {
+    position: absolute;
+    top: 0;
     width: 33.33%;
+    bottom: 0;
+    height: 100%;
     padding: 0;
+    overflow: auto;
     body.ltr & {
-      float: left;
+      left: 0;
     }
     body.rtl & {
-      float: right;
+      right: 0;
     }
   }
   .sidebar-toggle {
@@ -73,12 +78,16 @@
     display: block !important;
   }
   .mainbar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
     width: 66.66%;
+    overflow: auto;
     body.ltr & {
-      float: left;
+      right: 0;
     }
     body.rtl & {
-      float: right;
+      left: 0;
     }
   }
   .bars-with-sidebar-left:before {

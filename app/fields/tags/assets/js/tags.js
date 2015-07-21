@@ -40,7 +40,7 @@
     this.keys = function(element, keys) {
       element.on('keydown', function(e) {
         if(keys[e.keyCode]) {
-          return keys[e.keyCode]();
+          return keys[e.keyCode](e);
         }
       });
     };
@@ -93,7 +93,8 @@
 
     // store the tags array in the source field
     this.store = function() {
-      self.source.val(self.tags.join(self.separator));
+
+      self.source.val(self.tags.join(self.separator)).trigger('change');
     };
 
     // create a new tag element
@@ -309,9 +310,11 @@
       // input field keyboard shortcuts
       self.keys(self.input, {
         // enter
-        13 : function() {
-          self.add();
-          return false;
+        13 : function(e) {
+          if(self.input.val().length > 0 && !e.metaKey) {
+            self.add();
+            return false;
+          }
         },
         // tab
         9 : function() {

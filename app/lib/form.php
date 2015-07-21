@@ -8,11 +8,9 @@ class Form extends Brick {
   public $tag         = 'form';
   public $fields      = array();
   public $values      = array();
-  public $alert       = null;
-  public $save        = true;
-  public $cancel      = true;
+  public $message     = null;
+  public $buttons     = null;
   public $centered    = false;
-  public $back        = false;
   public $parentField = false;
 
   public function __construct($fields = array(), $values = array(), $parent = false) {
@@ -24,6 +22,7 @@ class Form extends Brick {
 
     $this->values($values);
     $this->fields($fields);
+    $this->buttons();
     $this->attr('method', 'post');
     $this->addClass('form');
     $this->on('submit', function($form) {
@@ -98,40 +97,37 @@ class Form extends Brick {
     return $this->fields()->filterBy('error', true)->count() == 0;
   }
 
-  public function alert($alert = null) {
+  public function message($type, $text) {
 
-    if(!is_null($alert)) {
-      $this->alert = $alert;
-      return $this;
+    $this->message = new Brick('div');
+    $this->message->addClass('message');
+
+    if($type == 'error') {
+      $this->message->addClass('message-is-alert');      
+    } else {
+      $this->message->addClass('message-is-notice');
     }
 
-    if(is_null($this->alert)) return null;
-
-    $message = $this->alert;
-
-    $alert = new Brick('div');
-    $alert->addClass('message message-is-alert');
-    $alert->append(function() use($message) {
+    $this->message->append(function() use($text) {
 
       $content = new Brick('span');
       $content->addClass('message-content');
-      $content->text($message);
+      $content->text($text);
 
       return $content;
 
     });
 
-    $alert->append(function() {
+    return $this->message;
 
-      $toggle = new Brick('span');
-      $toggle->addClass('message-toggle');
-      $toggle->html('<i>&times;</i>');
-      return $toggle;
+  }
 
-    });
+  public function alert($text) {
+    $this->message('error', $text);
+  }
 
-    return $alert;
-
+  public function notify($text) {
+    $this->message('success', $text);
   }
 
   public function serialize() {
@@ -185,24 +181,26 @@ class Form extends Brick {
 
   static public function assets($type, $compress = true) {
 
-    $files  = static::files();
-    $output = array();
+    $files    = static::files();
+    $output   = array();
 
     foreach(static::files() as $field => $file) {
-
       if(isset($field::$assets) and isset($field::$assets[$type])) {
         foreach($field::$assets[$type] as $f) {
           $output[] = f::read(dirname($file) . DS . 'assets' . DS . $type . DS . $f);
         }
       }
-
     }
 
     $output = implode(PHP_EOL . PHP_EOL, $output);
 
     if($compress) {
-      $output = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $output);
-      $output = trim(str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), ' ', $output));
+      if($type == 'css') {
+        $output = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $output);
+        $output = trim(str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), ' ', $output));        
+      } else {
+        $output = \JShrink\Minifier::minify($output, array('flaggedComments' => false));
+      }
     }
 
     return $output;
@@ -234,6 +232,35 @@ class Form extends Brick {
 
   }
 
+  public function style($style) {
+
+    switch($style) {
+      case 'centered':
+        $this->centered = true;
+        $this->buttons->cancel = '';
+        break;
+      case 'delete':
+        $this->buttons->submit->addClass('btn-negative');
+        $this->buttons->submit->attr('autofocus', true);
+        $this->buttons->submit->val(l('delete'));
+        break;
+      case 'editor':
+
+        $kirbytext = kirby()->option('panel.kirbytext', true);
+
+        $this->data('textarea', get('textarea'));    
+        $this->data('autosubmit', 'false');
+        $this->data('kirbytext', r($kirbytext, 'true', 'false'));
+        $this->buttons->submit->val(l('insert'));
+        break;
+    }
+
+  }
+
+  public function cancel() {
+    $this->buttons->cancel->href = call('purl', func_get_args());
+  }
+
   static public function field($type, $options = array()) {
 
     $class = $type . 'field';
@@ -249,52 +276,61 @@ class Form extends Brick {
 
   public function buttons() {
 
-    $fieldset = new Brick('fieldset');
-    $fieldset->addClass('fieldset buttons cf');
+    if(!is_null($this->buttons)) return $this->buttons;
 
-    if($this->centered) {
-      $fieldset->addClass('buttons-centered');
-    }
+    $this->buttons = new Collection();
 
     $button = new Brick('input', null);
     $button->addClass('btn btn-rounded');
 
-    if($this->cancel) {
+    $cancel = clone $button;
+    $cancel->tag('a');
+    $cancel->addClass('btn-cancel');
+    $cancel->attr('href', '#cancel');
+    $cancel->text(l('cancel'));
 
-      $cancel = clone $button;
-      $cancel->tag('a');
-      $cancel->addClass('btn-cancel');
-      $cancel->attr('href', $this->back);
-      $cancel->text($this->cancel === true ? l::get('cancel') : $this->cancel);
+    $this->buttons->append('cancel', $cancel);
 
-      $fieldset->append($cancel);
+    $submit = clone $button;
+    $submit->attr('type', 'submit');
+    $submit->addClass('btn-submit');
+    $submit->data('saved', l('saved'));
+    $submit->val(l('save'));        
 
-    }
+    $this->buttons->append('submit', $submit);
 
-    if($this->save) {
-
-      $submit = clone $button;
-      $submit->attr('type', 'submit');
-      $submit->addClass('btn-submit');
-      $submit->data('saved', l::get('saved'));
-      $submit->val($this->save === true ? l::get('save') : $this->save);
-
-      $fieldset->append($submit);
-
-    }
-
-    return ($this->save or $this->cancel) ? $fieldset : null;
+    return $this->buttons;
 
   }
 
-  public function __toString() {
+  public function activate() {
 
     // auto-trigger the submit event when the form is being echoed
-    if(get('_csfr') and csfr(get('_csfr'))) {
+    if(get('_csrf') and csrf(get('_csrf'))) {    
       $this->trigger('submit');
     }
 
-    $this->append($this->alert());
+  }
+
+  public function csrf() {
+
+    // make sure to send a csrf
+    $this->fields->append('_csrf', static::field('hidden', array(
+      'name'  => '_csrf',
+      'value' => csrf()
+    )));
+
+  }
+
+  public function toHTML() {
+
+    $this->activate();
+    
+    if($this->message) {
+      $this->append($this->message);      
+    }
+    
+    $this->csrf();
 
     $fieldset = new Brick('fieldset');
     $fieldset->addClass('fieldset field-grid cf');
@@ -302,13 +338,27 @@ class Form extends Brick {
     foreach($this->fields() as $field) $fieldset->append($field);
 
     $this->append($fieldset);
-    $this->append($this->buttons());
-    $this->append(static::field('hidden', array(
-      'name'  => '_csfr',
-      'value' => csfr()
-    )));
 
-    return parent::__toString();
+    $buttons = new Brick('fieldset');
+    $buttons->addClass('fieldset buttons');
+
+    if($this->centered) {
+      $buttons->addClass('buttons-centered');
+    }
+
+    foreach($this->buttons() as $button) $buttons->append($button);
+
+    $this->append($buttons);
+
+    return $this;
+
+  }
+
+  public function __toString() {
+    
+    $this->toHTML();
+    return parent::__toString();    
+
   }
 
 }

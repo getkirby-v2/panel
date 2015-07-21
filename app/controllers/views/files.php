@@ -2,7 +2,7 @@
 
 class FilesController extends Controller {
 
-  public function index($id = null) {
+  public function index($id) {
 
     $page      = $this->page($id);
     $blueprint = blueprint::find($page);
@@ -10,127 +10,57 @@ class FilesController extends Controller {
     $back      = purl($page, 'show');
 
     // don't create the view if the page is not allowed to have files
-    if($blueprint->files()->max() === 0) goToErrorView();
-
-
-    if($page->isSite()) {
-
-      // breadcrumb items
-      $items = array(
-        array(
-          'url'   => purl('options'),
-          'title' => l('metatags')
-        ),
-        array(
-          'url'   => purl($page, 'files'),
-          'title' => l('metatags.files')
-        )
-      );      
-
-      // modify the back url
-      $back = purl('options');
-
-    } else {
-      // breadcrumb items
-      $items = array(
-        array(
-          'url'   => purl($page, 'files'),
-          'title' => l('files')
-        )
-      );      
+    if($blueprint->files()->max() === 0) {
+      throw new Exception('The page is not allowed to have any files');
     }
 
-    return layout('app', array(
-      'topbar' => new Snippet('pages/topbar', array(
-        'menu'       => new Snippet('menu'),
-        'breadcrumb' => new Snippet('pages/breadcrumb', array(
-          'page'  => $page,
-          'items' => $items
-        )),
-        'search' => purl($page, 'search')
-      )),
-      'content' => view('files/index', array(
-        'page'     => $page,
-        'files'    => $files,
-        'back'     => $back,
-        'sortable' => $blueprint->files()->sortable(),
-      ))
+    // sort action
+    $this->sort($page);
+
+    return screen('files/index', $files, array(
+      'page'     => $page,
+      'files'    => $files,
+      'back'     => $back,
+      'sortable' => $blueprint->files()->sortable(),
     ));
 
   }
 
-  public function upload($id = null) {
+  public function upload($id) {
 
     $page = $this->page($id);
-    $back = array(
-      'files'    => purl($page, 'files'),
-      'metatags' => purl('options'),
-      'page'     => purl($page, 'show')
-    );
 
-    return view('files/upload', array(
-      'p'    => $page,
-      'back' => a::get($back, get('to'))
+    if(r::is('post')) {
+
+      try {
+        new PageUploader($page);        
+      } catch(Exception $e) {
+        panel()->alert($e->getMessage());
+      }
+
+      $this->redirect($page, 'show');
+
+    }
+
+    return modal('files/upload', array(
+      'mode' => 'upload',
+      'url'  => purl($page, 'upload'),
+      'back' => purl($page, 'show')
     ));
+
   }
 
-  public function show() {
-
-    $args = func_get_args();
-
-    // site file
-    if(count($args) == 1) {
-      $id       = null;
-      $filename = $args[0];
-
-    // page file
-    } else if(count($args) == 2) {
-      $id       = $args[0];
-      $filename = $args[1];
-
-    // what the fuck is that? 
-    } else {
-      throw new Exception('Invalid number of arguments');
-    }
+  public function show($id, $filename) {
 
     $page      = $this->page($id);
     $file      = $this->file($page, $filename);
     $blueprint = blueprint::find($page);
-    $fields    = $blueprint->files()->fields($page);
     $meta      = $file->meta()->toArray();
     $files     = api::files($page, $blueprint);
     $index     = $files->indexOf($file);
-    $next      = $files->nth($index + 1);
-    $prev      = $files->nth($index - 1);
 
-    // breadcrumb items
-    if($page->isSite()) {
-      $items = array(
-        array(
-          'url'   => purl('options'),
-          'title' => l('metatags')
-        ),
-        array(
-          'url'   => purl($page, 'files'),
-          'title' => l('metatags.files')
-        ),
-        array(
-          'url'   => purl($file, 'show'),
-          'title' => $file->filename()
-        ),
-      );      
-    } else {
-      $items = array(
-        array(
-          'url'   => purl($page, 'files'),
-          'title' => l('files')
-        ),
-        array(
-          'url'   => purl($file, 'show'),
-          'title' => $file->filename()
-        ),
-      );      
-    }
+    // returnTo after delete
+    $returnTo = url::last() == purl($page, 'files') ? purl($page, 'files') : purl($page, 'show');
 
     // file info display
     $info = array();
@@ -142,61 +72,192 @@ class FilesController extends Controller {
       $info[] = $file->dimensions();      
     }
 
-    return layout('app', array(
-      'topbar' => new Snippet('pages/topbar', array(
-        'menu'       => new Snippet('menu'),
-        'breadcrumb' => new Snippet('pages/breadcrumb', array(
-          'page'  => $page,
-          'items' => $items,
-        )),
-        'search' => purl($page, 'search')
-      )),
-      'content' => view('files/show', array(
-        'form' => new Form($fields->toArray(), $meta),
-        'p'    => $page,
-        'f'    => $file,
-        'next' => $next,
-        'prev' => $prev,
-        'info' => implode(' / ', $info)
-      ))
-    ));
-
-  }
-
-  public function replace($id = null) {
-
-    $filename = get('filename');
-    $page     = $this->page($id);
-    $file     = $this->file($page, $filename);
-
-    return view('files/replace', array(
-      'p' => $page,
-      'f' => $file
-    ));
-
-  }
-
-  public function delete($id = null) {
-
-    $filename = get('filename');
-    $page     = $this->page($id);
-    $file     = $this->file($page, $filename);
-    $back     = array(
-      'index' => purl('files/index/' . $page->id()),
-      'file'  => purl($file, 'show')
+    $fields = array(
+      '_name' => array(
+        'label'     => 'files.show.name.label',
+        'type'      => 'filename',
+        'extension' => $file->extension(), 
+        'required'  => true,
+      ),
+      '_info' => array(
+        'label'    => 'files.show.info.label',
+        'type'     => 'text',
+        'readonly' => true,
+        'icon'     => 'info'
+      ),
+      '_link' => array(
+        'label'    => 'files.show.link.label',
+        'type'     => 'text',
+        'readonly' => true,
+        'icon'     => 'chain'
+      )
     );
 
-    return view('files/delete', array(
-      'p'    => $page,
-      'f'    => $file,
-      'back' => a::get($back, get('to'))
+    // add the custom fields
+    $fields = array_merge($fields, $blueprint->files()->fields($page)->toArray());
+
+    // create the form
+    $form = new Form($fields, $meta);
+    $form->centered = true;
+
+    $form->fields->_name->value = $file->name();
+    $form->fields->_info->value = implode(' / ', $info);
+    $form->fields->_link->value = $file->url();
+
+    unset($form->buttons->cancel);
+
+    $self = $this;
+
+    // form action
+    $form->on('submit', function($form) use($file, $page, $self) {
+
+      $form->validate();
+
+      if(!$form->isValid()) {
+        return $form->alert(l('files.show.error.form'));
+      }
+
+      // fetch the form data
+      $data = filedata::createByInput($file, $form->serialize());
+
+      try {
+
+        if($data['_name'] != $file->name()) {
+
+          // rename and get the new filename          
+          $filename = $file->rename($data['_name']);
+          
+          // restore all page caches
+          $page->reset();
+
+          // search the new file
+          $file = $page->file($filename);
+
+          // missing file for some reason
+          if(!$file) {
+            throw new Exception('The file could not be properly renamed');
+          }
+
+          // trigger the rename hook
+          kirby()->trigger('panel.file.rename', $file);          
+
+        } else {
+          $filename = $file->filename();
+        }
+
+        // remove the name url and info
+        unset($data['_name']);
+        unset($data['_info']);
+        unset($data['_link']);
+
+        $file->update($data);
+
+        kirby()->trigger('panel.file.update', $file);
+
+        panel()->notify(l('saved'));
+
+        go(purl($page, 'file/' . urlencode($filename) . '/show'));
+
+      } catch(Exception $e) {
+        return $form->alert($e->getMessage());
+      }
+
+    });
+
+    return screen('files/show', $file, array(
+      'form'     => $form,
+      'p'        => $page,
+      'f'        => $file,
+      'returnTo' => $returnTo,
+      'next'     => $files->nth($index + 1),
+      'prev'     => $files->nth($index - 1),
     ));
+
+  }
+
+  public function replace($id, $filename) {
+
+    $page = $this->page($id);
+    $file = $this->file($page, $filename);
+
+    if(r::is('post')) {
+
+      try {
+        new PageUploader($page, $file);        
+      } catch(Exception $e) {
+        // TODO: error handling
+      }
+
+      $this->redirect($file, 'show');
+
+    }
+
+    return modal('files/upload', array(
+      'mode' => 'replace',
+      'url'  => purl($file, 'replace'),
+      'back' => purl($file, 'show')
+    ));
+
+  }
+
+  public function delete($id, $filename) {
+
+    $page = $this->page($id);
+    $file = $this->file($page, $filename);
+    $self = $this;
+
+    $form = panel()->form('files/delete');
+    $form->fields->file->value = $file->filename();
+    $form->style('delete');
+    $form->cancel($file, 'show');
+
+    $form->on('submit', function($form) use($file, $page, $self) {
+
+      try {
+        $file->delete();
+        kirby()->trigger('panel.file.delete', $file);
+        $self->redirect($page, 'show');
+      } catch(Exception $e) {
+        $form->alert($e->getMessage());
+      }
+
+    });
+
+    return modal('files/delete', compact('form'));
+
+  }
+
+  protected function sort($page) {
+
+    if(!r::is('post') or get('action') != 'sort') return;
+
+    $filenames = get('filenames');
+    $counter   = 0;
+
+    foreach($filenames as $filename) {
+
+      if($file = $page->file($filename)) {
+
+        $counter++;
+
+        try {
+          $file->update(array('sort' => $counter));
+          kirby()->trigger('panel.file.sort', $file);
+        } catch(Exception $e) {
+
+        }
+
+      }
+
+    }
+
+    $this->redirect($page, 'files');
 
   }
 
   protected function page($id) {
 
-    if(!$id) {
+    if($id == '/') {
       return site();
     } else if($page = page($id)) {
       return $page;

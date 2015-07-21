@@ -5,42 +5,44 @@ class AuthController extends Controller {
   public function login($welcome = null) {
 
     if($user = panel()->site()->user()) {
-      go(panel()->urls()->index());
+      $this->redirect();
     }
 
-    $message        = l('login.error');
-    $error          = false;
-    $form           = panel()->form('login');
-    $form->cancel   = false;
-    $form->save     = l('login.button');
-    $form->centered = true;
+    $self = $this;
+    $form = panel()->form('auth/login');
     
-    if(r::is('post') and get('_csfr') and csfr(get('_csfr'))) {
+    $form->data('autosubmit', 'native');
+    $form->style('centered');
+    
+    $form->buttons->submit->value = l('login.button');
+  
+    $form->on('submit', function($form) use($self) {
 
       $data = $form->serialize();
       $user = site()->user(str::lower($data['username']));
 
-      if(!$user) {
-        $error = true;
-      } else if(!$user->hasPanelAccess()) {
-        $error = true;
-      } else if(!$user->login(get('password'))) {
-        $error = true;
-      } else {
-        go(panel()->urls()->index());
+      if(!$user or !$user->hasPanelAccess() or !$user->login($data['password'])) {
+        $form->alert(l('login.error'));
+        $form->fields->username->error = true;
+        $form->fields->password->error = true;
+      } else {        
+        $self->redirect('/');
       }
 
-    }
+    });
 
     if($username = s::get('username')) {
       $form->fields->username->value = html($username, false);
     }
 
-    return layout('login', array(
-      'meta'    => new Snippet('meta'),
-      'welcome' => $welcome ? l('login.welcome') : '',
-      'form'    => $form,
-      'error'   => $error ? $message : false,
+    if($welcome) {
+      $form->notify(l('login.welcome'));
+    }
+
+    return layout('base', array(
+      'content' => view('auth/login', array(
+        'form' => $form
+      ))
     ));
 
   }
@@ -51,7 +53,7 @@ class AuthController extends Controller {
       $user->logout();
     }
 
-    go(panel()->urls()->login());
+    $this->redirect('login');
 
   }
 

@@ -10,7 +10,7 @@
       <?php endif ?>
 
       <div class="field">
-        <div class="dropzone dropzone-input" autofocus tabindex="0">
+        <div class="dropzone dropzone-input" autofocus tabindex="0" data-api="<?php __($url) ?>">
           <div class="dropzone-text section">
             <h2><?php _l('users.avatar.drop') ?></h2>
             <small class="marginalia"><?php _l('users.avatar.click') ?></small>

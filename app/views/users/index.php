@@ -17,13 +17,13 @@
 
     if($admin or $user->isCurrent()) {
       $urls = array(
-        'avatar' => purl($user, 'avatar') . '/via:index',
+        'avatar' => purl($user, 'avatar'),
         'edit'   => purl($user, 'edit')
       );
     } else {
       $urls = array(
-        'avatar' => '#/users',
-        'edit'   => '#/users'
+        'avatar' => '#',
+        'edit'   => '#'
       );
     }
 
@@ -31,7 +31,7 @@
     <div class="item item-with-image">
       <div class="item-content">
         <figure class="item-image">
-          <a class="item-image-container" href="<?php echo $urls['avatar'] ?>">
+          <a data-modal data-modal-return-to="<?php _u('users') ?>" class="item-image-container" href="<?php echo $urls['avatar'] ?>">
             <?php if($user->avatar()): ?>
             <img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>" alt="<?php __($user->username()) ?>">
             <?php else: ?>
@@ -59,7 +59,7 @@
             </a>
           </li>
           <li>
-            <a class="btn btn-with-icon" href="<?php echo purl($user, 'delete') ?>/via:index">
+            <a data-modal data-modal-return-to="<?php _u('users') ?>" class="btn btn-with-icon" href="<?php echo purl($user, 'delete') ?>">
               <?php i('trash-o', 'left') . _l('users.index.delete') ?>
             </a>
           </li>

@@ -1,33 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-  <?php echo new Snippet('meta') ?>
+<?php if(r::ajax()): ?>
 
   <title><?php __(site()->title()) ?> | Panel</title>
 
-  <?php echo assets::css() ?>
+  <?php if(isset($topbar))  echo $topbar ?>
+  <?php if(isset($content)) echo $content ?>
 
-  <style><?php echo form::css() ?></style>
+<?php else: ?>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
 
-  <!-- custom panel stylesheet -->
-  <?php if($stylesheet = kirby()->option('panel.stylesheet')): ?>
-  <?php echo css($stylesheet) ?>
-  <?php endif ?>
+    <?php echo new Snippet('meta') ?>
 
-  <?php echo assets::js() ?>
-  <?php echo js(panel()->urls()->js() . '/apps/main.js?v=' . panel()->version()) ?>
-  <script><?php echo form::js(false) ?></script>
+    <title><?php __(site()->title()) ?> | Panel</title>
 
-</head>
-<body class="app <?php echo panel()->direction() ?>" data-kirby-version="<?php echo kirby()->version() ?>" data-panel-version="<?php echo panel()->version() ?>">
+    <?php echo assets::css() ?>
+    <style><?php echo form::css() ?></style>
 
-  <div data-view="modal" class="modal"></div>
+    <!-- custom panel stylesheet -->
+    <?php if($stylesheet = kirby()->option('panel.stylesheet')): ?>
+    <?php echo css($stylesheet) ?>
+    <?php endif ?>
 
-  <div class="main">
-    <?php echo $topbar ?>
-    <?php echo $content ?>
-  </div>
+    <?php echo assets::js() ?>
+    <?php echo js(panel()->urls()->js() . '/app.js?v=' . panel()->version()) ?>
 
-</body>
-</html>
+    <script><?php echo form::js(false) ?></script>
+
+  </head>
+  <body class="app <?php echo panel()->direction() ?>">
+
+    <div class="main">
+      <?php if(isset($topbar))  echo $topbar ?>
+      <?php if(isset($content)) echo $content ?>
+    </div>
+
+  </body>
+  </html>
+<?php endif ?>

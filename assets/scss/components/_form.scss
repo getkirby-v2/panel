@@ -73,8 +73,11 @@ fieldset {
   border: 0;
   margin-left: .5em;
 }
-.field-with-error .input {
-  border-color: #b3000a;
+.field-with-error .label abbr {
+  color: #b3000a;
+}
+.field-with-error .input:focus {
+  border-color: #000;
 }
 .field-with-error .label {
   color: #b3000a;

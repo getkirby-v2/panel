@@ -20,7 +20,7 @@
       </a>
     </li>
     <li>
-      <a href="<?php echo panel()->urls()->logout() ?>">
+      <a href="<?php echo panel()->urls()->logout() ?>" target="_self">
         <?php i('power-off', 'left') . _l('logout') ?>
       </a>
     </li>

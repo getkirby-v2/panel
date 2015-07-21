@@ -105,3 +105,13 @@
 .hgroup-compressed {
   margin-bottom: .5em;
 }
+
+
+.hgroup .dropdown {
+  position: absolute;
+  z-index: 1;
+  margin-top: -2px;
+}
+.hgroup .dropdown a {
+  font-weight: 400
+}

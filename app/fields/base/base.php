@@ -104,7 +104,7 @@ class BaseField {
 
     if(empty($this->icon)) {
       return null;
-    } else if($this->readonly()) {
+    } else if($this->readonly() and empty($this->icon)) {
       $this->icon = 'lock';
     }
 

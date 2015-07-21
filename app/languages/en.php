@@ -16,6 +16,7 @@ return array(
     'delete' => 'Delete',
     'insert' => 'Insert',
     'ok' => 'Ok',
+    'untitled' => 'Untitled',
 
     // options (sidebar)
     'options.show' => 'Show options',
@@ -264,6 +265,7 @@ return array(
     'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Edit',
     'fields.structure.delete' => 'Delete',
+    'fields.structure.delete.label' => 'Do you really want to delete this entry?',
     'fields.tags.label' => 'Tags',
     'fields.tel.label' => 'Phone',
     'fields.textarea.buttons.bold.label' => 'Bold text',

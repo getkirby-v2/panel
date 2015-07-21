@@ -2,90 +2,38 @@
 
 class EditorController extends Controller {
 
-  public function link($uri) {
+  public function link($pageId, $textarea = null) {
 
-    return view('editor/link', array(
-      'text' => get('text'),
-      'url'  => get('url'),
-      'back' => purl($uri)
-    ));
+    $form = panel()->form('editor/link');
+    $form->data('textarea', 'form-field-' . $textarea);
+    $form->style('editor');
+    $form->cancel($this->page($pageId), 'show');
 
-  }
-
-  public function email($uri) {
-
-    return view('editor/email', array(
-      'text'    => get('text'),
-      'address' => get('address'),
-      'back'    => purl($uri)
-    ));
+    return modal('editor/link', compact('form'));
 
   }
 
-  public function image($uri) {
+  public function email($pageId, $textarea) {
 
-    return view('editor/image', array(
-      'p'      => $this->page($uri),
-      'back'   => purl($uri)
-    ));
+    $form = panel()->form('editor/email');
+    $form->data('textarea', 'form-field-' . $textarea);
+    $form->style('editor');
+    $form->cancel($this->page($pageId), 'show');
 
-  }
-
-  public function file($uri) {
-
-    return view('editor/file', array(
-      'p'    => $this->page($uri),
-      'back' => purl($uri)
-    ));
+    return modal('editor/email', compact('form'));
 
   }
 
-  public function structure($id, $fieldName, $context) {
+  protected function page($pageId) {
 
-    $page = empty($id) ? site() : page($id);
+    $page = $pageId == '/' ? site() : page($pageId);
 
-    if(!$page) throw new Exception('The page could not be found');
-
-    $blueprint  = blueprint::find($page);
-    $field      = null;
-    $fields     = ($context == 'file') ? $blueprint->files()->fields() : $blueprint->fields();
-
-    // make sure to get fields by case insensitive field names
-    foreach($fields as $f) {
-      if(strtolower($f->name) == strtolower($fieldName)) {
-        $field = $f;
-      }
-    }
-
-    if(!$field) throw new Exception('The field could not be found');
-
-    $fields     = new Blueprint\Fields($field->fields(), $page);
-    $fields     = $fields->toArray();
-
-    foreach($fields as $key => $field) {
-      if($field['type'] == 'textarea') $fields[$key]['buttons'] = false;
-    }
-
-    $form        = new Form($fields, null, $fieldName);
-    $form->save  = get('_id') ? l('fields.structure.save') : l('fields.structure.add');
-
-    return view('editor/structure', array(
-      'page' => $page,
-      'form' => $form
-    ));
-
-  }
-
-  protected function id($uri) {
-    return implode('/', array_slice(str::split(trim($uri, '/'), '/'), 2));
-  }
-
-  protected function page($uri) {
-    if($page = page($this->id($uri))) {
+    if($page) {
       return $page;
     } else {
       throw new Exception('The page could not be found');
     }
+
   }
 
 }

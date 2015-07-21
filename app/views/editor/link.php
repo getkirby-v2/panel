@@ -1,22 +1,45 @@
 <div class="modal-content">
-  <form class="form" method="post" autocomplete="off" data-kirbytext="<?php echo c::get('panel.kirbytext', true) ?>">
-
-    <fieldset class="fieldset">
-      <div class="field">
-        <label class="label"><?php _l('editor.link.url.label') ?></label>
-        <input class="input" type="text" name="url" placeholder="http://" autofocus value="<?php __($url) ?>" required>
-      </div>
-
-      <div class="field">
-        <label class="label"><?php _l('editor.link.text.label') ?></label>
-        <input class="input" type="text" name="text" value="<?php __($text) ?>">
-        <p class="field-help marginalia"><?php _l('editor.link.text.help') ?></p>
-      </div>
-
-      <div class="buttons cf">
-        <a class="btn btn-rounded btn-cancel" href="<?php __($back) ?>"><?php _l('cancel') ?></a>
-        <input class="btn btn-rounded btn-submit" type="submit" value="<?php _l('insert') ?>">
-      </div>
-    </fieldset>
-  </form>
+  <?php echo $form ?>
 </div>
+
+<script>
+
+var form      = $('.modal .form');
+var textarea  = $('#' + form.data('textarea'));
+var selection = textarea.getSelection();
+var urlField  = form.find('input[name=url]');
+var textField = form.find('input[name=text]');
+
+if(selection.length) {
+  if(selection.match(/^http|s\:\/\//)) {
+    urlField.val(selection);
+  } else {
+    textField.val(selection);
+  }
+}
+
+form.on('submit', function() {
+
+  var url  = urlField.val();
+  var text = textField.val();
+
+  if(!text.length) {
+    if(url.match(/^http|s\:\/\//)) {
+      var tag = '<' + url + '>';
+    } else if(form.data('kirbytext')) {
+      var tag = '(link: ' + url + ')';
+    } else {
+      var tag = '<' + url + '>';
+    }
+  } else if(form.data('kirbytext')) {
+    var tag = '(link: ' + url + ' text: ' + text + ')';
+  } else {
+    var tag = '[' + text + '](' + url + ')';
+  }
+
+  textarea.insertAtCursor(tag);
+  app.modal.close();
+
+});
+
+</script>

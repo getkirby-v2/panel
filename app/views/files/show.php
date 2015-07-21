@@ -1,5 +1,3 @@
-<?php echo $topbar ?>
-
 <div class="fileview">
 
   <figure class="fileview-image">
@@ -41,42 +39,8 @@
 
   <aside class="fileview-sidebar">
 
-    <form class="form section" method="post">
-      <div class="field field-with-icon">
-        <label class="label"><?php _l('files.show.name.label') ?></label>
-        <div class="field-content">
-          <input class="input" type="text" value="<?php __($f->name()) ?>" name="name" autofocus required>
-          <div class="field-icon">
-            <span>.<?php __($f->extension()) ?></span>
-          </div>
-        </div>
-      </div>
-      <div class="field field-is-readonly">
-        <label class="label"><?php _l('files.show.info.label') ?></label>
-        <div class="field-content">
-          <input class="input input-is-readonly" readonly type="text" value="<?php __($info) ?>">
-          <div class="field-icon">
-            <?php i('info') ?>
-          </div>
-        </div>
-      </div>
-      <div class="field field-is-readonly">
-        <label class="label"><?php _l('files.show.link.label') ?></label>
-        <div class="field-content">
-          <input data-element="public-link" readonly class="input input-is-readonly" type="text" value="<?php __($f->url()) ?>">
-          <div class="field-icon">
-            <?php i('chain') ?>
-          </div>
-        </div>
-      </div>
-
-      <fieldset class="fieldset field-grid cf">
-        <?php foreach($form->fields() as $field) echo $field ?>
-      </fieldset>
-
-      <div class="buttons buttons-centered cf">
-        <input class="btn btn-rounded btn-submit" type="submit" data-saved="<?php _l('saved') ?>" value="<?php _l('save') ?>">
-      </div>
+    <div class="section">
+      <?php echo $form ?>
 
       <nav class="fileview-options">
         <ul class="nav nav-bar nav-btn cf">
@@ -88,23 +52,37 @@
           </li>
 
           <li>
-            <a title="r" data-shortcut="r" href="<?php _u($f, 'replace') ?>" class="btn btn-with-icon">
+            <a data-modal title="r" data-shortcut="r" href="<?php _u($f, 'replace') ?>" class="btn btn-with-icon">
               <?php i('cloud-upload', 'left') ?>
               <?php _l('files.show.replace') ?>
             </a>
           </li>
 
           <li>
-            <a title="#" data-shortcut="#" href="<?php _u($f, 'delete') ?>" class="btn btn-with-icon">
+            <a data-modal data-modal-return-to="<?php echo $returnTo ?>" title="#" data-shortcut="#" href="<?php _u($f, 'delete') ?>" class="btn btn-with-icon">
               <?php i('trash-o', 'left') ?>
               <?php _l('files.show.delete') ?>
             </a>
           </li>
         </ul>
       </nav>
-
-    </form>
-
+    </div>
   </aside>
 
 </div>
+
+<script>
+
+$('#form-field-link').on('click', function() {
+
+  $(this).select();
+
+  try {
+    document.execCommand('copy');
+  } catch(err) {
+    // copy to clipboard is not supported yet
+  }
+
+});
+
+</script>

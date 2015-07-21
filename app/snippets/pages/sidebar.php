@@ -23,11 +23,11 @@
       <?php if(!$page->isErrorPage()): ?>
       <li>
         <?php if($page->isInvisible()): ?>
-        <a href="<?php echo purl($page, 'toggle') ?>">
+        <a data-modal href="<?php echo purl($page, 'toggle') ?>">
           <?php i('toggle-off', 'left') . _l('pages.show.invisible', 'Status: unsichtbar') ?>
         </a>
         <?php else: ?>
-        <a href="<?php echo purl($page, 'toggle') ?>">
+        <a data-modal href="<?php echo purl($page, 'toggle') ?>">
           <?php i('toggle-on', 'left') . _l('pages.show.visible', 'Status: sichtbar') ?>
         </a>
         <?php endif ?>
@@ -36,7 +36,7 @@
 
       <?php if(!$page->isHomePage() and !$page->isErrorPage()): ?>
       <li>
-        <a title="u" data-shortcut="u" href="<?php echo purl($page, 'url') ?>">
+        <a title="u" data-modal data-shortcut="u" href="<?php echo purl($page, 'url') ?>">
           <?php i('chain', 'left') . _l('pages.show.changeurl') ?>
         </a>
       </li>
@@ -44,7 +44,7 @@
 
       <?php if($deletable): ?>
       <li>
-        <a title="#" data-shortcut="#" href="<?php echo purl($page, 'delete') ?>">
+        <a title="#" data-modal data-shortcut="#" href="<?php echo purl($page, 'delete') ?>">
           <?php i('trash-o', 'left') . _l('pages.show.delete') ?>
         </a>
       </li>

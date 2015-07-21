@@ -1,22 +1,39 @@
 <div class="modal-content">
-  <form class="form" method="post" autocomplete="off" data-kirbytext="<?php echo c::get('panel.kirbytext', true) ?>">
+  <?php echo $form ?>
+</div> 
 
-    <fieldset class="fieldset">
-      <div class="field">
-        <label class="label"><?php _l('editor.email.address.label') ?></label>
-        <input class="input" data-field="autocomplete" data-url="api/autocomplete/emails" type="email" name="address" placeholder="<?php _l('editor.email.address.placeholder') ?>" value="<?php __($address) ?>" autofocus required>
-      </div>
+<script>
 
-      <div class="field">
-        <label class="label"><?php _l('editor.email.text.label') ?></label>
-        <input class="input" type="text" name="text" value="<?php __($text) ?>">
-        <p class="field-help marginalia"><?php _l('editor.email.text.help') ?></p>
-      </div>
+var form         = $('.modal .form');
+var textarea     = $('#' + form.data('textarea'));
+var selection    = textarea.getSelection();
+var addressField = form.find('input[name=address]');
+var textField    = form.find('input[name=text]');
 
-      <div class="buttons cf">
-        <a class="btn btn-rounded btn-cancel" href="<?php __($back) ?>"><?php _l('cancel') ?></a>
-        <input class="btn btn-rounded btn-submit" type="submit" value="<?php _l('insert') ?>">
-      </div>
-    </fieldset>
-  </form>
-</div>
+if(selection.length) {
+  if(selection.match(/\@/)) {
+    addressField.val(selection);
+  } else {
+    textField.val(selection);
+  }
+}
+
+form.on('submit', function() {
+
+  var address = addressField.val();
+  var text    = textField.val();
+
+  if(!text.length) {
+    var tag = '<' + address + '>';
+  } else if(form.data('kirbytext')) {
+    var tag = '(email: ' + address + ' text: ' + text + ')';
+  } else {
+    var tag = '[' + text + '](mailto:' + address + ')';
+  }
+
+  textarea.insertAtCursor(tag);
+  app.modal.close();
+
+});
+
+</script>

@@ -11,7 +11,7 @@
       <a title="<?php _l('pages.show.files.edit') ?>" href="<?php _u($page, 'files') ?>">
         <?php i('pencil', 'left') ?><span><?php _l('pages.show.files.edit') ?></span>
       </a>
-      <a title="f" data-shortcut="f" href="<?php $page->isSite() ? _u('metatags/upload') : _u($page, 'upload') ?>">
+      <a data-modal title="f" data-shortcut="f" href="<?php _u($page, 'upload') ?>">
         <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.files.add') ?></span>
       </a>
     </span>
@@ -29,5 +29,5 @@
   <?php endforeach ?>
 </ul>
 <?php else: ?>
-<p class="marginalia"><a href="<?php _u($page, 'upload') ?>" class="marginalia"><?php _l('pages.show.files.empty') ?></a></p>
+<p class="marginalia"><a data-modal href="<?php _u($page, 'upload') ?>" class="marginalia"><?php _l('pages.show.files.empty') ?></a></p>
 <?php endif ?>

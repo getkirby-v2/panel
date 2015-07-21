@@ -15,7 +15,7 @@
       </a>
 
       <?php if($page->hasFiles()): ?>
-      <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php echo purl('files/upload/' . $page->id()) ?>">
+      <a data-modal title="+" data-shortcut="+" class="hgroup-option-right" href="<?php echo purl($page, 'upload') ?>">
         <?php i('plus-circle', 'left') . _l('files.index.upload') ?>
       </a>
       <?php endif ?>
@@ -23,7 +23,7 @@
   </h2>
 
   <?php if($files->count()): ?>
-  <div class="files">
+  <div class="files" data-api="<?php _u($page, 'files') ?>">
 
     <div class="grid<?php e($sortable, ' sortable') ?>">
 
@@ -49,7 +49,7 @@
               <?php i('pencil', 'left') ?><span><?php _l('files.index.edit') ?></span>
             </a>
 
-            <a class="btn btn-with-icon" href="<?php echo purl($file, 'delete-from-index') ?>">
+            <a data-modal data-modal-return-to="<?php echo purl($page, 'files') ?>" class="btn btn-with-icon" href="<?php echo purl($file, 'delete') ?>">
               <?php i('trash-o', 'left') ?><span><?php _l('files.index.delete') ?></span>
             </a>
 
@@ -67,7 +67,7 @@
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php echo l('files.index.upload.first.text') ?></p>
-      <a data-shortcut="+" class="btn btn-rounded" href="<?php echo purl('files/upload/' . $page->id()) ?>">
+      <a data-modal data-shortcut="+" class="btn btn-rounded" href="<?php echo purl($page, 'upload') ?>">
         <?php echo l('files.index.upload.first.button') ?>
       </a>
     </div>
@@ -76,3 +76,23 @@
   <?php endif ?>
 
 </div>
+
+<script>
+
+var files    = $('.files');
+var sortable = files.find('.sortable');
+var items    = files.find('.grid-item');
+var api      = files.data('api');
+
+if(items.length) {
+  sortable.sortable({
+    helper: 'clone',
+    update: function() {
+      $.post(api, {filenames: sortable.sortable('toArray'), action: 'sort'}, function(data) {
+        app.content.replace(data, api);        
+      });
+    }
+  }).disableSelection();
+}
+
+</script>

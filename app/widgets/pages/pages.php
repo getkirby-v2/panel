@@ -3,7 +3,7 @@
 $site      = site();
 $blueprint = blueprint::find($site);
 $pages     = api::subpages($site->children(), $blueprint);
-$addbutton = !api::maxPages($site, $blueprint->pages()->max());
+$addbutton = addbutton($site);
 $options   = array(
   array(
     'text' => l('dashboard.index.pages.edit'),
@@ -14,10 +14,11 @@ $options   = array(
 
 if($addbutton) {
   $options[] = array(
-    'text' => l('dashboard.index.pages.add'),
-    'icon' => 'plus-circle',
-    'link' => '#/pages/add/',
-    'key'  => '+'
+    'text'  => l('dashboard.index.pages.add'),
+    'icon'  => 'plus-circle',
+    'link'  => $addbutton->url,
+    'key'   => '+',
+    'modal' => true,
   );
 }
 

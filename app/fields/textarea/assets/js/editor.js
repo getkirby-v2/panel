@@ -13,9 +13,7 @@
         var button = $(this);
 
         if(button.data('action')) {
-
-          EditorController[button.data('action')](textarea, button);
-
+          app.modal.open(button.data('action'), window.location.href);
         } else {
 
           var sel  = textarea.getSelection();

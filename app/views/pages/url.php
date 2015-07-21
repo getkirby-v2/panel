@@ -1,32 +1,33 @@
 <div class="modal-content">
-  <form class="form" method="post">
-    <fieldset class="fieldset">
-      <div class="field field-with-icon">
-        <label class="label">
-          <?php _l('pages.url.uid.label') ?>
-
-          <a data-element="toggle" data-title="<?php __($page->title()) ?>" class="btn btn-icon label-option" href="#">
-            <?php i('plus-circle', 'left') . _l('pages.url.uid.label.option') ?>
-          </a>
-
-        </label>
-        <div class="field-content">
-          <input data-element="input" class="input" id="page-add-title" type="text" name="uid" placeholder="appendix…" autofocus autocomplete="off" required value="<?php __($page->slug()) ?>">
-          <div class="field-icon">
-            <?php i('chain') ?>
-          </div>
-        </div>
-        <div class="field-help marginalia">
-          <div class="uid-preview">
-            <?php __(ltrim($page->parent()->uri() . '/', '/')) ?><span data-element="preview"><?php __($page->slug()) ?></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="buttons cf">
-        <a class="btn btn-rounded btn-cancel" href="<?php _u($page, 'show') ?>"><?php _l('cancel') ?></a>
-        <input class="btn btn-rounded btn-submit" type="submit" value="<?php _l('save') ?>">
-      </div>
-    </fieldset>
-  </form>
+  <?php echo $form ?>
 </div>
+
+<script>
+
+var toggle  = $('.modal-content .label a');
+var input   = $('.modal-content .input');
+var preview = $('.modal-content .uid-preview span');
+
+var toSlug = function(callback) {
+  $.get('api/slug', {string: input.val()}, callback);
+};
+
+toggle.on('click', function() {
+  input.val(toggle.data('title')).trigger('blur').focus();
+  return false;
+});
+
+input.on('keyup', function() {
+  toSlug(function(slug) {
+    preview.text(slug);
+  });
+});
+
+input.on('blur', function() {
+  toSlug(function(slug) {
+    input.val(slug);
+    preview.text(slug);
+  });  
+});
+
+</script>

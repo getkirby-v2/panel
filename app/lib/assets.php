@@ -3,24 +3,13 @@
 class Assets {
 
   static public function css() {
-
-    $files = array(
-      'app.css',
-      'fontawesome.css',
-      'autocomplete.css',
-      'hacks.css'
-    );
-
-    return static::combine('css', $files, true);
-
+    return css(panel()->urls()->css() . '/panel.css?v=' . panel()->version());
   }
 
   static public function js() {
 
     $files = array(
       // vendors
-      'vendors/handlebars.js',
-      'vendors/routie.js',
       'vendors/dropzone.js',
       'vendors/jquery.js',
       'vendors/jquery.hotkeys.js',
@@ -29,44 +18,22 @@ class Assets {
       'vendors/jquery.autocomplete.js',
       'vendors/jquery.editorHelpers.js',
       'vendors/jquery.passwordsuggestion.js',
-      'vendors/jquery.serializeObject.js',
-      'vendors/jquery.view.js',
-      'vendors/http.js',
-
-      // panel
-      'panel/views.js',
-      'panel/shortcuts.js',
-      'panel/slug.js',
 
       // components
+      'components/shortcuts.js',
+      'components/message.js',
+      'components/delay.js',
+      'components/content.js',
+      'components/modal.js',
       'components/breadcrumb.js',
       'components/dropdown.js',
       'components/dropzone.js',
       'components/form.js',
-      'components/message.js',
       'components/sidebar.js',
 
-      // controllers
-      'controllers/users.js',
-      'controllers/pages.js',
-      'controllers/metatags.js',
-      'controllers/dashboard.js',
-      'controllers/subpages.js',
-      'controllers/files.js',
-      'controllers/errors.js',
-      'controllers/editor.js',
-
-      // models
-      'models/page.js',
-      'models/file.js',
-      'models/user.js',
-
-      // config
-      'config/routes.js',
-      'config/config.js',
     );
 
-    return static::combine('js', $files);
+    return static::combine('js', $files, false);
 
   }
 
@@ -85,7 +52,7 @@ class Assets {
       $cache->remove();
       $content = '';
       foreach($media as $asset) $content .= $asset->read() . PHP_EOL;
-      if($compress) $content = static::compress($content);
+      if($compress) $content = static::compress($type, $content);
       f::write($root . DS . 'panel.' . $type, $content);
     }
 
@@ -99,10 +66,17 @@ class Assets {
 
   }
 
-  static public function compress($output) {
-    $output = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $output);
-    $output = trim(str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), ' ', $output));
-    return $output;
+  static public function compress($type, $output) {
+
+    if($type == 'css') {
+      $output = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $output);
+      $output = trim(str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), ' ', $output));
+    } else {
+      $output = \JShrink\Minifier::minify($output, array('flaggedComments' => false));
+    }
+
+    return $output;      
+
   }
 
 }

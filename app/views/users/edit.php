@@ -22,7 +22,7 @@
         <?php endif ?>
 
         <li>
-          <a title="#" data-shortcut="#" href="<?php echo purl($user, 'delete') ?>">
+          <a data-modal title="#" data-shortcut="#" href="<?php echo purl($user, 'delete') ?>">
             <?php i('trash-o', 'left') . _l('users.form.options.delete') ?>
           </a>
         </li>
@@ -35,7 +35,7 @@
 
       <?php if($user->avatar()): ?>
       <div class="field">
-        <a class="avatar avatar-large" href="<?php _u($user, 'avatar') ?>"><img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>"></a>
+        <a data-modal class="avatar avatar-large" href="<?php _u($user, 'avatar') ?>"><img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>"></a>
       </div>
       <?php endif ?>
 
@@ -43,19 +43,19 @@
 
         <?php if($user->avatar()): ?>
         <li>
-          <a href="<?php _u($user, 'avatar') ?>">
+          <a data-modal href="<?php _u($user, 'avatar') ?>">
             <?php i('pencil', 'left') . _l('users.form.avatar.replace') ?>
           </a>
         </li>
 
         <li>
-          <a href="<?php _u($user, 'delete-avatar') ?>">
+          <a data-modal href="<?php _u($user, 'avatar/delete') ?>">
             <?php i('trash-o', 'left') . _l('users.form.avatar.delete') ?>
           </a>
         </li>
         <?php else: ?>
         <li>
-          <a href="<?php _u($user, 'avatar') ?>">
+          <a data-modal href="<?php _u($user, 'avatar') ?>">
             <?php i('cloud-upload', 'left') . _l('users.form.avatar.upload') ?>
           </a>
         </li>
@@ -87,26 +87,19 @@
 
   <div class="mainbar">
     <div class="section">
-      <form class="form" method="post" autocomplete="off">
-
-        <?php if(!$writable): ?>
+      <?php if(!$writable): ?>
+      <div class="form">
         <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
           <span class="hgroup-title"><?php _l('users.form.error.permissions.title') ?></span>
         </h2>
         <div class="text">
           <p><?php _l('users.form.error.permissions.text') ?></p>
         </div>
-        <div><button type="button" data-element="retry-button" class="btn btn-rounded"><?php _l('pages.show.error.permissions.retry') ?></button></div>
-
-        <?php else: ?>
-        <fieldset class="fieldset field-grid cf">
-          <?php foreach($form->fields() as $field) echo $field ?>
-        </fieldset>
-
-        <?php echo $form->buttons() ?>
-        <?php endif ?>
-
-      </form>
+        <div><a href="<?php url::current() ?>" class="btn btn-rounded"><?php _l('pages.show.error.permissions.retry') ?></a></div>
+      </div>
+      <?php else: ?>
+      <?php echo $form ?>
+      <?php endif ?>
     </div>
   </div>
 

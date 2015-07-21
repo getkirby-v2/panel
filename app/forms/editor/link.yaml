@@ -1,0 +1,10 @@
+url:
+  label: editor.link.url.label
+  type: text
+  placeholder: http://
+  autofocus: true
+  required: true
+text: 
+  label: editor.link.text.label
+  type: text
+  help: editor.link.text.help

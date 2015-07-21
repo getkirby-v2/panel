@@ -47,21 +47,34 @@
   </aside>
 
   <div class="mainbar">
-
     <div class="section">
-      <form class="form" method="post" autocomplete="off">
-
-        <fieldset class="fieldset field-grid cf">
-          <?php foreach($form->fields() as $field) echo $field ?>
-        </fieldset>
-
-        <div class="buttons cf">
-          <a class="btn btn-rounded btn-cancel" href="<?php _u() ?>"><?php _l('cancel') ?></a>
-          <input class="btn btn-rounded btn-submit" type="submit" data-saved="<?php _l('saved') ?>" value="<?php echo l('save') ?>">
-        </div>
-
-      </form>
+      <?php echo $form ?>
     </div>
   </div>
 
 </div>
+
+<script>
+
+var element   = $('.main');
+var textareas = element.find('textarea');
+var draggable = element.find('.draggable');
+
+draggable.draggable({
+  helper: function(e, ui) {
+    return $('<div class="draggable-helper"></div>');
+  },
+  start: function(e, ui) {
+    ui.helper.text($(this).data('helper'));
+  }
+});
+
+textareas.droppable({
+  hoverClass: 'over',
+  accept: draggable,
+  drop: function(e, ui) {
+    $(this).insertAtCursor(ui.draggable.data('text'));
+  }
+});
+
+</script>

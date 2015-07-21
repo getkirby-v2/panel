@@ -2,210 +2,122 @@
 
 class PagesController extends Controller {
 
-  public function show($id) {
+  public function add($id, $template = null) {
 
-    try {
-      $page = $this->page($id);      
-    } catch(Exception $e) {
-      $page = $this->page(dirname($id));
-      go(purl($page->parent(), 'show'));
-    }
+    $parent = $this->page($id);
 
-    $blueprint = blueprint::find($page);
-    $fields    = $blueprint->fields($page);
-    $content   = $page->content()->toArray();
-    $files     = null;
-    $subpages  = null;
-    $preview   = null;
+    if(empty($template)) {
 
-    // create the preview link
-    if($previewSetting = $blueprint->preview()) {
+      $blueprint = blueprint::find($parent);
 
-      switch($previewSetting) {
-        case 'parent':
-          $preview = $page->parent() ? $page->parent()->url() : $page->url();
-          break;
-        case 'first-child':
-          $preview = $page->children()->first() ? $page->children()->first()->url() : false;
-          break;
-        case 'last-child':
-          $preview = $page->children()->last()  ? $page->children()->last()->url() : false;
-          break;
-        default:
-          $preview = $page->url();
-          break;
-      }
-
-    }
-
-    // make sure the title is always there
-    $content['title'] = $page->title();
-
-    // merge with the kept snapshot
-    $changes = PageStore::fetch($page);
-    $content = array_merge($content, $changes);
-
-    // create the form
-    $form = new Form($fields->toArray(), $content);
-
-    // check for untranslatable fields
-    if(site()->language() != site()->defaultLanguage()) {
-
-      foreach($form->fields() as $field) {
-        if($field->translate() == false) {
-          $field->readonly = true;
-          $field->disabled = true;
-        }
-      }
-
-    }
-
-    // create the subpages if they exist
-    if($blueprint->pages()->max() !== 0 and $blueprint->pages()->hide() == false) {
-
-      // fetch all subpages in the right order
-      $children = api::subpages($page->children(), $blueprint);
-
-      // add pagination to the subpages
-      if($limit = $blueprint->pages()->limit()) {
-        $children = $children->paginate($limit, array('page' => get('page')));
-      }
-
-      // create the snippet and fill it with all data
-      $subpages = new Snippet('pages/sidebar/subpages', array(
-        'title'      => l('pages.show.subpages.title'),
-        'page'       => $page,
-        'subpages'   => $children,
-        'addbutton'  => !api::maxPages($page, $blueprint->pages()->max()),
-        'pagination' => $children->pagination(),
+      return modal('pages/add', array(
+        'parent'    => $parent,
+        'templates' => $blueprint->pages()->template(),
+        'back'      => purl($parent, 'show')
       ));
 
-    }
+    } else {
 
-    // create the files
-    if($blueprint->files()->max() !== 0 and $blueprint->files()->hide() == false) {
-
-      $files = new Snippet('pages/sidebar/files', array(
-        'page'  => $page,
-        'files' => api::files($page, $blueprint),
+      $data = PageData::createByBlueprint($template, array(
+        'title' => '(Untitled)'
       ));
 
+      $page = $parent->children()->create(str::random(32), $template, $data);
+
+      s::set('draft', $page->id());
+
+      $this->redirect($page, 'show');
+
     }
-
-    // create the monster sidebar
-    $sidebar = new Snippet('pages/sidebar', array(
-      'page'      => $page,
-      'preview'   => $preview,
-      'deletable' => !$page->hasChildren() and $page->isDeletable() and $blueprint->deletable(),
-      'subpages'  => $subpages,
-      'files'     => $files,
-    ));
-
-
-    return layout('app', array(
-      'topbar' => new Snippet('pages/topbar', array(
-        'breadcrumb' => new Snippet('pages/breadcrumb', array('page' => $page)),
-        'search'     => purl($page, 'search')
-      )),
-      'content' => view('pages/show', array(
-        'sidebar' => $sidebar,
-        'form'    => $form,
-        'changes' => $changes,
-        'page'    => $page,
-        'notitle' => !$form->fields()->get('title')
-      ))
-    ));
 
   }
 
-  public function add($id = '/') {
+  public function show($id) {
 
-    $page      = $this->page($id);
-    $blueprint = blueprint::find($page);
-    $templates = $blueprint->pages()->template();
-    $options   = array();
-    $back      = array(
-      'subpages' => purl('subpages/index/' . $page->id()),
-      'page'     => purl($page, 'show')
-    );
+    $editor = new PageEditor($id);    
 
-    $form = panel()->form('pages.add');
-    $form->save = l('add');
-    $form->back = a::get($back, get('to'));
-
-    foreach($templates as $template) {
-      $options[$template->name()] = $template->title();
-    }
-
-    $select = form::field('select', array(
-      'name'     => 'template',
-      'label'    => l('pages.add.template.label'),
-      'options'  => $options,
-      'required' => true
-    ));
-
-    if($templates->count() == 1) {
-      $select->readonly = true;
-      $select->value    = $templates->first()->name();
-    }
-
-    $form->fields()->append('template', $select);
-
-    if(api::maxPages($page, $blueprint->pages()->max())) {
-      $form->fields = array(
-        'info' => form::field('info', array(
-          'label' => 'pages.add.error.max.headline',
-          'text'  => 'pages.add.error.max.text'
-        ))
-      );
-      $form->save     = false;
-      $form->centered = true;
-    }
-
-    return view('pages/add', array(
-      'page' => $page,
-      'form' => $form
-    ));
+    return screen('pages/show', $editor->page(), $editor->content());
 
   }
 
   public function delete($id) {
 
     $page      = $this->page($id);
-    $error     = null;
     $blueprint = blueprint::find($page);
-    $back      = array(
-      'subpages' => purl('subpages/index/' . $page->parent()->id()),
-      'page'     => purl($page, 'show')
-    );
 
     if($page->isHomePage()) {
-      $errortype = 'home';
+      return modal('error', array(
+        'headline' => l('pages.delete.error.home.headline'),
+        'text'     => l('pages.delete.error.home.text'),
+        'back'     => purl($page, 'show')
+      ));
     } else if($page->isErrorPage()) {
-      $errortype = 'error';
+      return modal('error', array(
+        'headline' => l('pages.delete.error.error.headline'),
+        'text'     => l('pages.delete.error.error.text'),
+        'back'     => purl($page, 'show')
+      ));
     } else if($page->hasChildren()) {
-      $errortype = 'children';
+      return modal('error', array(
+        'headline' => l('pages.delete.error.children.headline'),
+        'text'     => l('pages.delete.error.children.text'),
+        'back'     => purl($page, 'show')
+      ));
     } else if(!$blueprint->deletable()) {
-      $errortype = 'blocked';
+      return modal('error', array(
+        'headline' => l('pages.delete.error.blocked.headline'),
+        'text'     => l('pages.delete.error.blocked.text'),
+        'back'     => purl($page, 'show')
+      ));
     } else {
-      $errortype = null;
+
+      $page = $this->page($id);
+      $form = panel()->form('pages/delete');
+      $self = $this;
+
+      $form->on('submit', function($form) use($page, $self) {
+
+        $parent   = $page->parent();
+        $subpages = new Subpages($parent);
+
+        try {
+          $subpages->delete($page);
+
+          // remove unsaved changes
+          PageStore::discard($page);
+
+          $self->redirect($parent, 'show');
+
+        } catch(Exception $e) {
+          $form->alert($e->getMessage());
+        }
+
+      });
+
+      $form->fields->page->value = $page->title();
+      $form->fields->page->help  = $page->id();
+
+      $form->style('delete');
+      $form->cancel($page, 'show');
+
+      return modal('pages/delete', array(
+        'form' => $form
+      ));
+
     }
 
-    if($errortype) {
-      $error = array(
-        'headline' => l::get('pages.delete.error.' . $errortype . '.headline'),
-        'text'     => l::get('pages.delete.error.' . $errortype . '.text'),
-      );
-    } else {
-      $error = null;
-    }
+  }
 
-    return view('pages/delete', array(
-      'page'  => $this->page($id),
-      'back'  => a::get($back, get('to')),
-      'error' => $error
-    ));
+  public function keep($id) {
+    $page = $this->page($id);
+    PageStore::keep($page);
+    $this->redirect($page, 'show');
+  }
 
+  public function discard($id) {
+    $page = $this->page($id);
+    PageStore::discard($page);
+    $this->redirect($page, 'show');
   }
 
   public function url($id) {
@@ -213,12 +125,72 @@ class PagesController extends Controller {
     $page = $this->page($id);
 
     if($page->isHomePage() or $page->isErrorPage()) {
-      goToErrorView('modal');
+      return modal('error', array(
+        'headline' => 'Error',
+        'text'     => 'The URL for the home and error pages cannot be changed',
+      ));
+    } else {
+
+      $form = panel()->form('pages/url');
+      $self = $this;
+
+      // form action
+      $form->on('submit', function($form) use($page, $self) {
+
+        $changes = PageStore::fetch($page);
+        PageStore::discard($page);
+
+        try {
+
+          if(site()->multilang() and site()->language()->code() != site()->defaultLanguage()->code()) {
+            $page->update(array(
+              'URL-Key' => get('uid')
+            ));
+          } else {
+            $page->move(get('uid'));
+          }
+
+          PageStore::update($page, $changes);
+
+          // hit the hook
+          kirby()->trigger('panel.page.move', $page);
+          $self->redirect($page, 'show');
+
+        } catch(Exception $e) {
+          $form->alert($e->getMessage());
+        }
+
+      });
+
+      // label option
+      $option = new Brick('a', icon('plus-circle', 'left') . l('pages.url.uid.label.option'), array(
+        'class'      => 'btn btn-icon label-option',
+        'href'       => '#',
+        'data-title' => $page->title()
+      ));
+
+      // url preview
+      $preview = new Brick('div', '', array('class' => 'uid-preview'));
+      $preview->html(
+        ltrim($page->parent()->uri() . '/', '/') . 
+        '<span>' . $page->slug() . '</span>'
+      );
+
+      $form->fields->uid->label  = l('pages.url.uid.label');
+      $form->fields->uid->label .= $option;
+      $form->fields->uid->value  = $page->slug();
+      $form->fields->uid->help   = (string)$preview;
+
+      $form->buttons->submit->val(l('change'));
+
+      $form->cancel($page, 'show');
+
+      return modal('pages/url', array(
+        'form' => $form
+      ));
+
     }
 
-    return view('pages/url', array(
-      'page' => $page
-    ));
   }
 
   public function toggle($id) {
@@ -226,38 +198,86 @@ class PagesController extends Controller {
     $page = $this->page($id);
 
     if($page->isErrorPage()) {
-      goToErrorView('modal');
+      return modal('error', array(
+        'headline' => 'Error',
+        'text'     => 'The status of the error page cannot be changed',
+      ));
     }
 
-    $form = panel()->form('pages.toggle');
-    $form->save = l('change');
-    $form->back = purl($page, 'show');
+    $form = panel()->form('pages/toggle');
+    $self = $this;
+
+    $form->on('submit', function($form) use($page, $self) {
+
+      $parent   = $page->parent();
+      $subpages = new Subpages($parent);
+
+      try {
+
+        if($page->isVisible()) {
+          $subpages->hide($page);
+        } else {
+          $subpages->sort($page, get('position', 'last'));          
+        }
+
+        $self->redirect($page, 'show');
+
+      } catch(Exception $e) {
+        $form->alert($e->getMessage());
+      }
+
+    });
+
+    $form->buttons->submit->value     = l('change');
+    $form->buttons->submit->autofocus = true;
+
+    $form->cancel($page, 'show');
 
     if($page->isVisible()) {
       $form->fields->confirmation->text = l('pages.toggle.hide');      
     } else {
+      
       $form->fields->confirmation->text = l('pages.toggle.publish');      
+
+      $parent    = $page->parent();
+      $blueprint = blueprint::find($parent);
+
+      if($blueprint->pages()->num()->mode() == 'default') {
+
+        $siblings = api::subpages($parent->children()->visible(), $blueprint);
+        $position = new Brick('ul');
+        $position->addClass('position-list');
+
+        $n = 0;
+
+        foreach($siblings as $sibling) {
+          $n++;
+          $position->append('<li class="position-list-input"><label><input id="page-position-' . $n . '" name="position" value="' . $n . '" type="radio"></label></li>');
+          $position->append('<li class="position-list-label"><label for="page-position-' . $n . '"><small>' . $n . '.</small> ' . $sibling->title()->html() . '</label></li>');
+        }
+
+        $n++;
+        $position->append('<li class="position-list-input"><label><input checked name="position" value="' . $n . '" type="radio"></label></li>');
+        
+        $form->fields->confirmation->text .= $position;
+
+      }
+
     }
 
-    return view('pages/toggle', array(
+    return modal('pages/toggle', array(
       'page' => $page, 
       'form' => $form
     ));
+
   }
 
   public function search($id = '/') {
 
     $page = $this->page($id);
 
-    return layout('app', array(
-      'topbar' => new Snippet('pages/search/topbar', array(
-        'menu'       => new Snippet('menu'),
-        'breadcrumb' => new Snippet('pages/breadcrumb', array('page' => $page)),
-        'close'      => $page->isSite() ? purl('/') : purl($page, 'show')
-      )),
-      'content' => view('pages/search', array(
-        'page' => $page
-      ))
+    return screen('pages/search', $page, array(
+      'page' => $page
     ));
 
   }
