@@ -6,16 +6,21 @@ var Content = function() {
     return root.find(selector);
   };
 
-  var events = function() {
+  var focus = Focus();
 
-    // stop all delays
-    app.delay.stop();
+  var on = function() {
 
+    // make sure everything is nice and clean first
+    off();
+
+    // setup the breadcrumb mobile version
     element('.breadcrumb').breadcrumb();
+
+    // setup the sidebar toggle
     element('.sidebar').sidebar();
 
-    $(document).dropdown();
-    $(document).shortcuts();
+    // register all keyboard shortcuts within the main container
+    root.shortcuts();
 
     app.delay.start('message', function() {
       element('.message-is-notice').trigger('click');
@@ -31,9 +36,22 @@ var Content = function() {
     // hook up the main form
     Form('.main .form');
 
+    // recall the focus and caret position
+    focus.on('.main .form');
+
   };
 
-  var clean = function() {
+  // clean all registered events and remove generated elements
+  var off = function() {
+    
+    // stop all delays
+    app.delay.stop();
+
+    // stop caret recording
+    focus.off();
+
+    // remove all shortcuts
+    $(document).unbind('keydown.shortcuts');
 
     // remove all uncleaned elements
     $('body').children().not('.main').remove();
@@ -45,66 +63,65 @@ var Content = function() {
 
   var open = function(url, state) {
 
-    clean();
-
-    app.modal.close();
+    // start the loading indicator
+    app.isLoading(true);
 
     $.ajax({
       url: url,
-      dataType: 'html',
-      success: function(response, status, xhr) {
+    }).done(function(response, status, xhr) {
 
-        // check for the current user
-        var user = xhr.getResponseHeader('X-Panel-User');
+      // stop the loading indicator
+      app.isLoading(false);
 
-        // redirect to the login if the user is missing
-        if(!user) window.location.href = 'login';
+      // check for the current user
+      var user = xhr.getResponseHeader('Panel-User');
 
-        document.title = $(response).filter('title').first().text();
+      // // redirect to the login if the user is missing
+      if(!user) window.location.href = 'login';
 
-        if(!state || state == true) {            
-          // TODO: state without that stupid error
-          window.history.pushState({}, document.title, url);            
-        }
-
-        // check for the final url to handle redirects appropriately
-        var destination = xhr.getResponseHeader('X-Panel-Location');
-
-        if(window.location.href != destination) {
-          open(destination);
-        } else {
-          replace(response);
-        }
-
+      if($.type(response) == 'object' && response.url) {
+        open(response.url);        
+      } else {
+        replace(response, url);        
       }
+
     });
 
   };
 
-  var replace = function(html) {
+  var replace = function(html, url) {
+
+    app.modal.close();      
 
     var scrollSidebar = element('.sidebar').scrollTop();
     var scrollMainbar = element('.mainbar').scrollTop();
 
-    var focused = element('.input:focus');
-
-    if(focused.length > 0) {
-      var caret     = focused.caret().end;        
-      var focusedId = focused.attr('id');
-    } else {
-      var caret     = 0;
-      var focusedId = false
-    }
-    
     root.html(html);    
 
-    events();
+    // find the title element 
+    var title = root.find('title');
 
-    if(focusedId) {
-      focused = $('#' + focusedId);
-      focused.caret(caret);
-      focused.focus();
+    // set the document title
+    document.title = title.text();
+
+    // remove it, since it's actually invalid there
+    title.remove();
+
+    // change the history
+    if(url) {
+      focus.forget();            
+      if(window.location.href != url) {                
+        try {
+          path = url.replace(window.location.origin, '');
+          window.history.pushState({path: path}, document.title, path);                    
+        } catch(e) {
+          window.location.href = url;
+        }
+      }
     }
+
+    // switch on all events for the mainbar
+    on();
 
     if(element('.mainbar')[0]) element('.mainbar')[0].scrollTop = scrollMainbar;
     if(element('.sidebar')[0]) element('.sidebar')[0].scrollTop = scrollSidebar;
@@ -119,26 +136,31 @@ var Content = function() {
     root.shortcuts();
   };
 
+  var form = function() {
+    return $('.main .form');
+  };
+
   var setup = function() {
 
-    if(!$(window).data('history')) {
-      $(window).data('history', true).on('popstate', function(e) {      
-        open(document.location, false);
-      });
-    }
+    $(window).on('popstate', function(e) {      
+      open(document.location);
+    });
 
-    events();
+    on();
 
   };
 
   return {
     root : root,
     element: element,
-    events: events,
+    on: on,
+    off: off,
     open: open,
     replace: replace,
     reload: reload,
     shortcuts: shortcuts,
+    form: form,
+    focus: focus,
     setup: setup
   };
 

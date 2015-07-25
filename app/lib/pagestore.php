@@ -41,8 +41,11 @@ class PageStore {
 
     // fetch the data for the form
     $data = pagedata::createByInput($page, $form->serialize());
+    $old  = $page->content()->toArray();
 
-    static::update($page, $data);
+    if($data != $old) {
+      static::update($page, $data);      
+    }
 
   }
 

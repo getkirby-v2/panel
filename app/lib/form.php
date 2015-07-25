@@ -24,10 +24,8 @@ class Form extends Brick {
     $this->fields($fields);
     $this->buttons();
     $this->attr('method', 'post');
+    $this->attr('action', panel()->urls()->current());
     $this->addClass('form');
-    $this->on('submit', function($form) {
-      $form->validate();
-    });
 
   }
 
@@ -239,6 +237,11 @@ class Form extends Brick {
         $this->centered = true;
         $this->buttons->cancel = '';
         break;
+      case 'upload':
+        $this->centered = true;
+        $this->buttons->submit = '';
+        $this->attr('enctype', 'multipart/form-data');
+        break;
       case 'delete':
         $this->buttons->submit->addClass('btn-negative');
         $this->buttons->submit->attr('autofocus', true);
@@ -303,18 +306,13 @@ class Form extends Brick {
 
   }
 
-  public function activate() {
+  public function on($action, $callback) {
 
     // auto-trigger the submit event when the form is being echoed
     if(get('_csrf') and csrf(get('_csrf'))) {    
-      $this->trigger('submit');
-    }
+      $callback($this);
+    } 
 
-  }
-
-  public function csrf() {
-
-    // make sure to send a csrf
     $this->fields->append('_csrf', static::field('hidden', array(
       'name'  => '_csrf',
       'value' => csrf()
@@ -323,15 +321,11 @@ class Form extends Brick {
   }
 
   public function toHTML() {
-
-    $this->activate();
     
     if($this->message) {
       $this->append($this->message);      
     }
     
-    $this->csrf();
-
     $fieldset = new Brick('fieldset');
     $fieldset->addClass('fieldset field-grid cf');
 

@@ -3,4 +3,5 @@
     <?php i($subpage) ?><span><?php __($subpage->title()) ?></span>
     <small class="marginalia shiv shiv-left shiv-white"><?php __(n($subpage)) ?></small>
   </a>
+  <a class="option" data-context="<?php _u($subpage, 'context') ?>" href="#options"><?php i('pencil') ?></a>
 </li>

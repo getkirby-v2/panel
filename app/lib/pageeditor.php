@@ -18,7 +18,6 @@ class PageEditor {
     $this->setFields();
     $this->setChanges();
     $this->setContent();
-    $this->setPreview();
     $this->setForm();
 
   }
@@ -64,30 +63,6 @@ class PageEditor {
 
     // add the changes to the content array
     $this->content = array_merge($this->content, $this->changes);
-
-  }
-
-  public function setPreview() {
-
-    // create the preview link
-    if($previewSetting = $this->blueprint->preview()) {
-
-      switch($previewSetting) {
-        case 'parent':
-          $this->preview = $this->page->parent() ? $this->page->parent()->url() : $this->page->url();
-          break;
-        case 'first-child':
-          $this->preview = $this->page->children()->first() ? $this->page->children()->first()->url() : false;
-          break;
-        case 'last-child':
-          $this->preview = $this->page->children()->last()  ? $this->page->children()->last()->url() : false;
-          break;
-        default:
-          $this->preview = $this->page->url();
-          break;
-      }
-
-    }
 
   }
 
@@ -150,7 +125,7 @@ class PageEditor {
       }
 
     } catch(Exception $e) {
-      $form->alert($e->getMessage());
+      panel()->alert($e->getMessage());
     }
 
   }
@@ -201,20 +176,12 @@ class PageEditor {
     return $this->page;
   }
 
-  public function preview() {
-    return $this->preview;
-  }
-
   public function changes() {
     return $this->changes;
   }
 
   public function form() {
     return $this->form;
-  }
-
-  public function deletable() {
-    return (!$this->page->hasChildren() and $this->page->isDeletable() and $this->blueprint->deletable());
   }
 
   public function noTitle() {
@@ -268,8 +235,7 @@ class PageEditor {
     // create the monster sidebar
     return new Snippet('pages/sidebar', array(
       'page'      => $this->page(),
-      'preview'   => $this->preview(),
-      'deletable' => $this->deletable(),
+      'menu'      => new PageMenu($this->page(), 'sidebar'),
       'subpages'  => $this->subpages(),
       'files'     => $this->files(),
     ));

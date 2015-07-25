@@ -1,7 +1,7 @@
 var Modal = function(app) {
 
   // create a new modal root
-  var root = $('<div class="modal"></div>');
+  var root = $('<div class="modal" tabindex="0"></div>');
 
   var resize = function() {
 
@@ -24,9 +24,17 @@ var Modal = function(app) {
 
   };
 
+  // checks if the modal is opened in an overlay
+  var isOverlay = function() {
+    return $('.modal').length > 0;
+  };
+
   // initialize all modal events as soon 
   // as the modal content is loaded
-  var events = function(url, returnTo) {
+  var on = function(returnTo) {
+
+    // make sure everything is clean first
+    off();
 
     var content = $('.modal-content');
 
@@ -55,30 +63,26 @@ var Modal = function(app) {
       $(this).remove();
     });
 
-    // hook up dropzones
-    content.find('.dropzone').each(function() {
-      var dropzone = $(this);
-      dropzone.dropzone(dropzone.data('api'), function() {
-        app.content.reload();
-      }, function() {
-        // TODO: something went wrong
-      });
-    });
-
     // setup the form
-    Form('.modal-content .form', {
-      url: url,
-      redirect: function(destination, response) {
+    var form = content.find('.form');
 
-        if(url == destination) {
-          // replace the modal content
-          replace(url, response);          
-        } else if(returnTo) {
-          // load the returnTo url
-          app.content.open(returnTo);              
-        } else if(url != destination) {
-          // load the new url
-          app.content.open(destination);              
+    // switch to native form 
+    // submission on modal pages
+    if(!isOverlay()) {
+      form.data('autosubmit', 'native');      
+    }
+
+    Form(form, {
+      redirect: function(response) {
+
+        if($.type(response) == 'object' && response.url) {
+          if(returnTo) {
+            app.content.open(returnTo);                        
+          } else {
+            app.content.open(response.url);                        
+          }
+        } else {
+          replace(response);
         }
 
       }
@@ -86,25 +90,52 @@ var Modal = function(app) {
 
   };
 
+  var off = function() {
+
+    // stop all delays
+    app.delay.stop();
+
+    // make sure to properly remove modal events
+    $(document).off('keyup.modal');
+    $(window).off('resize.modal');
+
+    // remove all modal keyboard shorcuts
+    $.shortcuts.reset();
+
+  };
+
   // open a modal by url
   var open = function(url, returnTo, onLoad) {
 
-    // make sure there's no modal first
+    // make sure there's no modal
     close();
+
+    // switch off content events
+    // to avoid conflicts    
+    app.content.off();
+
+    // start the loading indicator
+    app.isLoading(true);
 
     $.ajax({
       url: url,
       headers : {modal : true}
     }).done(function(data, status, xhr) {
 
+      // stop the loading indicator
+      app.isLoading(false);
+
       // check for the current user
-      var user = xhr.getResponseHeader('X-Panel-User');
+      var user = xhr.getResponseHeader('Panel-User');
 
       // redirect to the login if the user is missing
       if(!user) window.location.href = 'login';
 
       // paste the html into the modal container
       root.html(data);
+
+      // remove the invalid title element
+      root.find('title').remove();
 
       // add the modal to the body
       $('body').append(root);
@@ -120,50 +151,49 @@ var Modal = function(app) {
       }
   
       // initialize all events
-      events(url, returnTo);
+      on(returnTo);
 
     });
 
   };
 
-  // replace the modal content for the given url
-  var replace = function(url, content) {
+  // replace the modal content
+  var replace = function(content) {
 
     // replace the html
     $('.modal-content').parent().html(content);
 
     // initialize all events
-    events(url);
+    on();
 
   };
 
   // removes the modal root
   var close = function() {
 
+    if(!app.hasModal()) return true;
+
+    // switch off all modal events
+    off();
+
     // kill the modal container
     $('.modal').remove();
 
-    // make sure to properly remove modal events
-    $(document).off('keyup.modal');
-    $(window).off('resize.modal');
+    // switch content events back on
+    app.content.on();
 
-    // restore the main shortcuts
-    app.content.shortcuts();
+  };
 
+  // return the modal form element
+  var form = function() {
+    return $('.modal-content form');
   };
 
   var setup = function() {
 
-    // activates the esc key to close the modal
-    $(document).on('keydown', function(e) {
-      if(e.keyCode == 27) {
-        close();
-      }
-    });
-
     // init an existing modal on load
-    if($('.modal-content').length > 0) {      
-      events(window.location.href, window.location.href);
+    if(app.hasModal()) {      
+      on();
     }
 
   };
@@ -173,6 +203,7 @@ var Modal = function(app) {
     open: open,  
     close: close,
     replace: replace,
+    form: form,
     setup: setup
   };
 

@@ -30,23 +30,16 @@ class FilesController extends Controller {
 
     $page = $this->page($id);
 
-    if(r::is('post')) {
-
-      try {
-        new PageUploader($page);        
-      } catch(Exception $e) {
-        panel()->alert($e->getMessage());
-      }
-
-      $this->redirect($page, 'show');
-
+    try {
+      new PageUploader($page);        
+      panel()->notify(':)');
+    } catch(Exception $e) {
+      panel()->alert($e->getMessage());
     }
 
-    return modal('files/upload', array(
-      'mode' => 'upload',
-      'url'  => purl($page, 'upload'),
-      'back' => purl($page, 'show')
-    ));
+    if(!r::ajax()) {
+      $this->redirect($page, 'show');
+    }
 
   }
 
@@ -114,7 +107,7 @@ class FilesController extends Controller {
       $form->validate();
 
       if(!$form->isValid()) {
-        return $form->alert(l('files.show.error.form'));
+        return panel()->alert(l('files.show.error.form'));
       }
 
       // fetch the form data
@@ -159,7 +152,7 @@ class FilesController extends Controller {
         go(purl($page, 'file/' . urlencode($filename) . '/show'));
 
       } catch(Exception $e) {
-        return $form->alert($e->getMessage());
+        return panel()->alert($e->getMessage());
       }
 
     });
@@ -185,7 +178,7 @@ class FilesController extends Controller {
       try {
         new PageUploader($page, $file);        
       } catch(Exception $e) {
-        // TODO: error handling
+        panel()->alert($e->getMessage());
       }
 
       $this->redirect($file, 'show');
@@ -197,6 +190,15 @@ class FilesController extends Controller {
       'url'  => purl($file, 'replace'),
       'back' => purl($file, 'show')
     ));
+
+  }
+
+  public function context($id, $filename) {
+
+    $page = $this->page($id);
+    $file = $this->file($page, $filename);
+
+    return new FileMenu($file);
 
   }
 
@@ -216,6 +218,7 @@ class FilesController extends Controller {
       try {
         $file->delete();
         kirby()->trigger('panel.file.delete', $file);
+        panel()->notify(':)');
         $self->redirect($page, 'show');
       } catch(Exception $e) {
         $form->alert($e->getMessage());

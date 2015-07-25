@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class="modal-content" data-api="<?php _u('api/slug') ?>">
   <?php echo $form ?>
 </div>
 
@@ -9,7 +9,7 @@ var input   = $('.modal-content .input');
 var preview = $('.modal-content .uid-preview span');
 
 var toSlug = function(callback) {
-  $.get('api/slug', {string: input.val()}, callback);
+  $.get($('.modal-content').data('api'), {string: input.val()}, callback);
 };
 
 toggle.on('click', function() {

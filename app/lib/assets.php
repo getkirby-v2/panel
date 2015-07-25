@@ -9,27 +9,36 @@ class Assets {
   static public function js() {
 
     $files = array(
-      // vendors
-      'vendors/dropzone.js',
+      // no-dependency vendors
+      'vendors/nprogress.js',
+      'vendors/layzr.js',
+
+      // jquery stuff
       'vendors/jquery.js',
+      'vendors/jquery.drop.js',
+      'vendors/jquery.filereader.js',
+      'vendors/jquery.upload.js',
+      'vendors/jquery.filedrop.js',
       'vendors/jquery.hotkeys.js',
       'vendors/jquery.ui.js',
       'vendors/jquery.ui.touch.js',
       'vendors/jquery.autocomplete.js',
       'vendors/jquery.editorHelpers.js',
       'vendors/jquery.passwordsuggestion.js',
+      'vendors/jquery.context.js',
 
-      // components
+      // custom components
       'components/shortcuts.js',
+      'components/focus.js',
+      'components/uploader.js',
       'components/message.js',
       'components/delay.js',
-      'components/content.js',
-      'components/modal.js',
       'components/breadcrumb.js',
       'components/dropdown.js',
-      'components/dropzone.js',
       'components/form.js',
       'components/sidebar.js',
+      'components/content.js',
+      'components/modal.js',
 
     );
 
@@ -57,11 +66,11 @@ class Assets {
     }
 
     if($cache->exists()) {
-      return $type(panel()->urls()->$type() . '/panel.' . $type . '?v=' . panel()->version());
+      return $type(panel()->urls()->$type() . '/panel.' . $type . '?v=' . time());
     }
 
     return $type(array_map(function($item) use($type) {
-      return 'panel/assets/' . $type . '/' . $item;
+      return 'panel/assets/' . $type . '/' . $item . '?v=' . time();
     }, $files));
 
   }

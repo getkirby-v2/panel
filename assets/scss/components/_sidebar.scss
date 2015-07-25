@@ -126,6 +126,25 @@
     padding: .25em 1.75em .25em 0;
   }
 }
+.sidebar-list > li > .option {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: red;
+  z-index: 100;
+  text-align: right;
+  padding: 0 !important;
+  width: 1em;
+  background: #fff;
+  display: none;
+}
+.sidebar-list > li:hover .option {
+  display: block;
+}
+.sidebar-list > li:hover .draggable .icon {
+  display: none;
+}
+
 .sidebar-list .icon {
   position: absolute;
   top: .4em;

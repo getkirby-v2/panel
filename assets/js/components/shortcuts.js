@@ -43,8 +43,10 @@ $.fn.shortcuts = function() {
         } else if(item.is('a')) {
           if(item.attr('target') == '_blank') {
             window.open(item.attr('href'));
-          } else if(item.data().hasOwnProperty('modal') && item.data('modal') !== false) {
+          } else if(item.is('[data-modal]')) {
             app.modal.open(item.attr('href'));
+          } else if(item.is('[data-upload]')) {          
+            return false;
           } else {
             app.content.open(item.attr('href'));
           }

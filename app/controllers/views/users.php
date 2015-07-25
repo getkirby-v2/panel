@@ -48,7 +48,7 @@ class UsersController extends Controller {
         panel()->notify(l('saved'));
         $self->redirect($user, 'edit');
       } catch(Exception $e) {
-        $form->alert(l('users.form.error.create'));
+        panel()->alert($e->getMessage());
       }
 
     });
@@ -97,7 +97,7 @@ class UsersController extends Controller {
         panel()->notify(l('saved'));
         $self->redirect($user, 'edit');
       } catch(Exception $e) {
-        $form->alert($e->getMessage());
+        panel()->alert($e->getMessage());
       }
         
     });
@@ -131,6 +131,7 @@ class UsersController extends Controller {
         try {
           $user->delete();
           kirby()->trigger('panel.user.delete', $user);
+          panel()->notify(':)');
           $self->redirect('users');
         } catch(Exception $e) {
           $form->alert(l('users.delete.error'));
@@ -150,17 +151,11 @@ class UsersController extends Controller {
   public function avatar($username) {
 
     $user = $this->user($username);
+    $root = $user->avatar() ? $user->avatar()->root() : $user->avatarRoot('{safeExtension}');
 
     if(!site()->user()->isAdmin() and !$user->isCurrent()) {
-      return modal('error', array(
-        'headline' => 'Permission error',
-        'text'     => 'You are not allowed to change the avatar'
-      ));
-    }
-
-    if(r::is('post')) {
-
-      $root = $user->avatar() ? $user->avatar()->root() : $user->avatarRoot('{safeExtension}');
+      panel()->alert('You are not allowed to change the avatar');
+    } else {
 
       $upload = new Upload($root, array(
         'accept' => function($upload) {
@@ -171,9 +166,7 @@ class UsersController extends Controller {
       ));
 
       if($upload->file()) {
-
         thumb::$defaults['root'] = dirname($upload->file()->root());
-
         $thumb = new Thumb($upload->file(), array(
           'filename'  => $upload->file()->filename(),
           'overwrite' => true,
@@ -181,24 +174,17 @@ class UsersController extends Controller {
           'height'    => 256,
           'crop'      => true
         ));
-
         kirby()->trigger('panel.avatar.upload', $user->avatar());
-
+        panel()->notify(':)');
       } else {
-        // TODO: handle error 
-        // return response::error($upload->error()->getMessage());
+        panel()->alert($upload->error()->getMessage());
       }
-
-      $this->redirect($user, 'edit');
 
     }
 
-    return modal('users/avatar', array(
-      'user'       => $user,
-      'uploadable' => is_writable(kirby()->roots()->avatars()),
-      'url'        => purl($user, 'avatar'),
-      'back'       => purl($user, 'edit')
-    ));
+    if(!r::ajax()) {
+      $this->redirect($user, 'edit');        
+    }
 
   }
 
@@ -280,6 +266,8 @@ class UsersController extends Controller {
     if(!site()->user()->isAdmin()) {
       $form->fields->role->readonly = true;
     }
+
+    $form->fields->email->autocomplete = false;
 
     $form->cancel('users');
 

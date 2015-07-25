@@ -17,8 +17,8 @@ if($addbutton) {
     'text'  => l('dashboard.index.pages.add'),
     'icon'  => 'plus-circle',
     'link'  => $addbutton->url,
+    'modal' => $addbutton->modal,
     'key'   => '+',
-    'modal' => true,
   );
 }
 

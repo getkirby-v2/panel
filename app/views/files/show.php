@@ -18,13 +18,9 @@
 
     </nav>
 
-    <?php if(in_array($f->extension(), array('jpg', 'jpeg', 'gif', 'png'))): ?>
+    <?php if(fileHasPreview($f)): ?>
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($f->url()) ?>">
-      <i style="background-image: url(<?php __($f->url() . '?' . $f->modified()) ?>); max-width: <?php echo $f->width() ?>px; max-height: <?php echo $f->height() ?>px;"></i>
-    </a>
-    <?php elseif($f->extension() == 'svg'): ?>
-    <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($f->url()) ?>">
-      <i style="background-image: url(<?php __($f->url() . '?' . $f->modified()) ?>); max-width: 100%; max-height: 100%"></i>
+      <img src="<?php __($f->url() . '?' . $f->modified()) ?>" alt="<?php __($f->filename()) ?>">
     </a>
     <?php else: ?>
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link" href="<?php __($f->url()) ?>">
@@ -52,7 +48,7 @@
           </li>
 
           <li>
-            <a data-modal title="r" data-shortcut="r" href="<?php _u($f, 'replace') ?>" class="btn btn-with-icon">
+            <a data-upload title="r" data-shortcut="r" href="#replay" class="btn btn-with-icon">
               <?php i('cloud-upload', 'left') ?>
               <?php _l('files.show.replace') ?>
             </a>
@@ -71,9 +67,13 @@
 
 </div>
 
+<form id="upload" class="hidden" action="<?php _u($f, 'replace') ?>" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" accept="<?php __($f->mime()) ?>">
+</form>
+
 <script>
 
-$('#form-field-link').on('click', function() {
+$('#form-field-_link').on('click', function() {
 
   $(this).select();
 
@@ -83,6 +83,10 @@ $('#form-field-link').on('click', function() {
     // copy to clipboard is not supported yet
   }
 
+});
+
+$('#upload').uploader(function() {
+  app.content.reload();
 });
 
 </script>

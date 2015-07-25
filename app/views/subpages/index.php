@@ -9,7 +9,7 @@
     </span>
     <span class="hgroup-options shiv shiv-dark shiv-left cf">
 
-      <a class="hgroup-option-left" href="<?php _u($page, 'show') ?>">
+      <a class="hgroup-option-left" href="<?php $page->isSite() ? _u() : _u($page, 'show') ?>">
         <?php i('arrow-circle-left', 'left') . _l('subpages.index.back') ?>
       </a>
 

@@ -1,23 +1,20 @@
 var Form = function(form, params) {
 
+  var form = $(form);
+
   var defaults = {
     returnTo : false,
-    url: window.location.href,
-    redirect: function(destination, response) {
-
-      if(options.returnTo) {
-        app.content.open(options.returnTo);                        
-      } else if(options.url != destination) {
-        app.content.open(destination);                        
+    url: form.attr('action'),
+    redirect: function(response) {
+      if($.type(response) == 'object' && response.url) {
+        app.content.open(response.url);                        
       } else {
         app.content.replace(response);
       }
-
     }
   };
 
-  var options = $.extend( {}, defaults, params);
-  var form    = $(form);
+  var options = $.extend({}, defaults, params);
 
   form.find('[data-focus=true]').on({
     'click' : function() {
@@ -38,30 +35,34 @@ var Form = function(form, params) {
     if(el[key]) el[key]();
   });
 
-  if(form.data('keep')) {
-    form.find('input, textarea').on('change', function() {
-      $.post(form.data('keep'), form.serialize());
-    });
-  }
-
+  // hook up the form submission
   form.on('submit', function(e) {
 
+    // auto submission can be switched off via a data attribute
+    // to setup your own submission action
     if(form.data('autosubmit') == false) {
       return false;
+
+    // if the autosubmit data attribute is set to native
+    // the form submission will not be intercepted
     } else if(form.data('autosubmit') == 'native') {
       return true;
     }
 
+    // on submit all errors should be removed. Looks weird otherwise
     form.find('.field-with-error').removeClass('field-with-error');
 
-    // handle the post request for the form and serialize all the data
-    $.post(options.url, form.serialize(), function(response, message, xhr) {
+    // show the loading indicator
+    app.isLoading(true);
 
-      // check for the final url to handle redirects appropriately
-      var destination = xhr.getResponseHeader('X-Panel-Location');
+    // handle the post request for the form and serialize all the data
+    $.post(form.attr('action'), form.serialize(), function(response, message, xhr) {
+
+      // hide the loading indicator
+      app.isLoading(false);
     
       // handle redirection and replacement of data
-      options.redirect(destination, response);
+      options.redirect(response);
 
     });
 

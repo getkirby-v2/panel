@@ -28,3 +28,14 @@ abbr {
 img {
   max-width: 100%;
 }
+
+img.lazy {
+  opacity: 0;
+  -webkit-transition: opacity .3s;
+  -moz-transition: opacity .3s;
+  -ms-transition: opacity .3s;
+  transition: opacity .3s;
+}
+img.lazy.has-loaded {
+  opacity: 1;
+}

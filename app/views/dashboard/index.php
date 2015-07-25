@@ -2,9 +2,9 @@
 
   <div class="dashboard">
 
-    <?php foreach($widgets as $widget): ?>
+    <?php foreach($widgets as $id => $widget): ?>
     <?php if(!$widget) continue; ?>
-    <div class="section white dashboard-section">
+    <div class="section white dashboard-section" id="<?php echo $id ?>-widget">
 
       <h2 class="hgroup<?php e(@$widget['title']['compressed'] == true, ' hgroup-compressed') ?> hgroup-single-line cf">
         <?php if(is_array($widget['title']) and $title = $widget['title']): ?>

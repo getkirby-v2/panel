@@ -5,7 +5,7 @@ class PagesController extends Controller {
   public function add($id, $template = null) {
 
     $parent = $this->page($id);
-
+  
     if(empty($template)) {
 
       $blueprint = blueprint::find($parent);
@@ -19,7 +19,7 @@ class PagesController extends Controller {
     } else {
 
       $data = PageData::createByBlueprint($template, array(
-        'title' => '(Untitled)'
+        'title' => '(' . l('untitled') . ')'
       ));
 
       $page = $parent->children()->create(str::random(32), $template, $data);
@@ -86,6 +86,7 @@ class PagesController extends Controller {
           // remove unsaved changes
           PageStore::discard($page);
 
+          panel()->notify(':)');
           $self->redirect($parent, 'show');
 
         } catch(Exception $e) {
@@ -154,10 +155,16 @@ class PagesController extends Controller {
 
           // hit the hook
           kirby()->trigger('panel.page.move', $page);
+
+          // send a notification
+          panel()->notify(':)');
+
+          // redirect to the form
           $self->redirect($page, 'show');
 
         } catch(Exception $e) {
           $form->alert($e->getMessage());
+          $form->fields->uid->error = true;
         }
 
       });
@@ -220,6 +227,8 @@ class PagesController extends Controller {
           $subpages->sort($page, get('position', 'last'));          
         }
 
+        panel()->notify(':)');
+
         $self->redirect($page, 'show');
 
       } catch(Exception $e) {
@@ -241,10 +250,10 @@ class PagesController extends Controller {
 
       $parent    = $page->parent();
       $blueprint = blueprint::find($parent);
+      $siblings  = api::subpages($parent->children()->visible(), $blueprint);
 
-      if($blueprint->pages()->num()->mode() == 'default') {
+      if($blueprint->pages()->num()->mode() == 'default' and $siblings->count() > 0) {
 
-        $siblings = api::subpages($parent->children()->visible(), $blueprint);
         $position = new Brick('ul');
         $position->addClass('position-list');
 
@@ -280,6 +289,10 @@ class PagesController extends Controller {
       'page' => $page
     ));
 
+  }
+
+  public function context($id) {
+    return new PageMenu($this->page($id), 'context');
   }
 
   protected function page($id = '/') {

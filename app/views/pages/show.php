@@ -41,27 +41,14 @@
 
 </div>
 
+<form id="upload" class="hidden" action="<?php _u($page, 'upload') ?>" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" multiple>
+</form>
+
 <script>
 
-var element   = $('.main');
-var textareas = element.find('textarea');
-var draggable = element.find('.draggable');
-
-draggable.draggable({
-  helper: function(e, ui) {
-    return $('<div class="draggable-helper"></div>');
-  },
-  start: function(e, ui) {
-    ui.helper.text($(this).data('helper'));
-  }
-});
-
-textareas.droppable({
-  hoverClass: 'over',
-  accept: draggable,
-  drop: function(e, ui) {
-    $(this).insertAtCursor(ui.draggable.data('text'));
-  }
+$('#upload').uploader(function() {
+  app.content.reload();
 });
 
 </script>

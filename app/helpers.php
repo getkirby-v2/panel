@@ -131,8 +131,8 @@ function purl($obj = '/', $action = false) {
 
   $base = panel()->urls()->index();
 
-  if(is_string($obj)) {
-    return rtrim($base . '/' . $obj, '/');
+  if(is_string($obj)) {    
+    return ($obj == '/' or empty($obj)) ? $base . '/' : rtrim($base . '/' . $obj, '/');
   } else if(is_a($obj, 'File')) {
     if($obj->page()->isSite()) {
       return purl($obj->page(), 'file') . '/' . urlencode($obj->filename()) . '/' . $action;
@@ -142,7 +142,7 @@ function purl($obj = '/', $action = false) {
   } else if(is_a($obj, 'Site')) {
 
     if($action == 'show') {
-      return $base;
+      return $base . '/options';
     } else {    
       return $base . '/site/' . $action;
     }
@@ -183,6 +183,10 @@ function fileHasThumbnail($file) {
 
 }
 
+function fileHasPreview($file) {
+  $images = array('image/jpeg', 'image/gif', 'image/png');
+  return (in_array($file->mime(), $images) or $file->extension() == 'svg');
+}
 
 function topbar($view, $input) {
   return new Topbar($view, $input);

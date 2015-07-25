@@ -24,6 +24,25 @@ $.fn.sidebar = function() {
 
     });
 
+    var draggable = sidebar.find('.draggable');
+
+    draggable.draggable({
+      helper: function(e, ui) {
+        return $('<div class="draggable-helper"></div>');
+      },
+      start: function(e, ui) {
+        ui.helper.text($(this).data('helper'));
+      }
+    });
+
+    $('.main textarea').droppable({
+      hoverClass: 'over',
+      accept: draggable,
+      drop: function(e, ui) {
+        $(this).insertAtCursor(ui.draggable.data('text'));
+      }
+    });
+
   });
 
 };

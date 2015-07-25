@@ -17,13 +17,18 @@
       });
     } else {
 
-      if(this[0].setSelectionRange) {
-        begin = this[0].selectionStart;
-        end = this[0].selectionEnd;
-      } else if (document.selection && document.selection.createRange) {
-        var range = document.selection.createRange();
-        begin = 0 - range.duplicate().moveStart('character', -100000);
-        end = begin + range.text.length;
+      try {
+        if(this[0].setSelectionRange) {
+          begin = this[0].selectionStart;
+          end = this[0].selectionEnd;
+        } else if (document.selection && document.selection.createRange) {
+          var range = document.selection.createRange();
+          begin = 0 - range.duplicate().moveStart('character', -100000);
+          end = begin + range.text.length;
+        }
+      } catch(e) {
+        begin = 0;
+        end = 0;
       }
 
       return { 

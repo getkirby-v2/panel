@@ -1,9 +1,0 @@
-{
-  "status": "success",
-  "code": 200,
-  "message": "success",
-  "data": {
-    "uid": "foo2",
-    "uri": "foo2"
-  }
-}

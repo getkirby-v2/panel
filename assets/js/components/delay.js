@@ -3,6 +3,7 @@ var Delay = function() {
   var delays = {};
 
   var start = function(id, callback, time) {
+    stop(id);
     delays[id] = setTimeout(callback, time);
   };
 
@@ -11,7 +12,7 @@ var Delay = function() {
       for(var id in delays) {
         if(delays.hasOwnProperty(id)) stop(id);
       }
-    } else {
+    } else if(delays[id]) {
       clearTimeout(delays[id]);      
     }
   };

@@ -15,7 +15,7 @@
       </a>
 
       <?php if($page->hasFiles()): ?>
-      <a data-modal title="+" data-shortcut="+" class="hgroup-option-right" href="<?php echo purl($page, 'upload') ?>">
+      <a data-upload class="hgroup-option-right" href="#upload">
         <?php i('plus-circle', 'left') . _l('files.index.upload') ?>
       </a>
       <?php endif ?>
@@ -23,7 +23,7 @@
   </h2>
 
   <?php if($files->count()): ?>
-  <div class="files" data-api="<?php _u($page, 'files') ?>">
+  <div class="files" data-sort-api="<?php _u($page, 'files') ?>">
 
     <div class="grid<?php e($sortable, ' sortable') ?>">
 
@@ -32,16 +32,18 @@
         <figure class="file">
           <a class="file-preview file-preview-is-<?php echo $file->type() ?>" href="<?php echo purl($file, 'show') ?>">
             <?php if(fileHasThumbnail($file)): ?>
-            <?php echo thumb($file, array('width' => 300, 'height' => '200', 'crop' => true)) ?>
-            <?php elseif($file->extension() == 'svg'): ?>
+            <img src="<?php echo thumb($file, array('width' => 300, 'height' => 200))->url() ?>" alt="<?php echo $file->filename() ?>">
+            <?php elseif(fileHasPreview($file)): ?>
             <img src="<?php echo $file->url() ?>" alt="<?php echo $file->filename() ?>">
             <?php else: ?>
             <span><?php __($file->extension()) ?></span>
             <?php endif ?>
           </a>
           <figcaption class="file-info">
-            <a class="file-name cut" href="<?php echo purl($file, 'show') ?>"><?php __($file->filename()) ?></a>
-            <a class="file-meta marginalia cut" href="<?php echo purl($file, 'show') ?>"><?php __($file->type() . ' / ' . $file->niceSize()) ?></a>
+            <a href="<?php echo purl($file, 'show') ?>">
+              <span class="file-name cut"><?php __($file->filename()) ?></span>
+              <span class="file-meta marginalia cut"><?php __($file->type() . ' / ' . $file->niceSize()) ?></span>
+            </a>
           </figcaption>
           <nav class="file-options cf">
 
@@ -67,7 +69,7 @@
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php echo l('files.index.upload.first.text') ?></p>
-      <a data-modal data-shortcut="+" class="btn btn-rounded" href="<?php echo purl($page, 'upload') ?>">
+      <a data-upload data-shortcut="+" class="btn btn-rounded" href="#upload">
         <?php echo l('files.index.upload.first.button') ?>
       </a>
     </div>
@@ -77,12 +79,16 @@
 
 </div>
 
+<form id="upload" class="hidden" action="<?php _u($page, 'upload') ?>" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" multiple>
+</form>
+
 <script>
 
 var files    = $('.files');
 var sortable = files.find('.sortable');
 var items    = files.find('.grid-item');
-var api      = files.data('api');
+var api      = files.data('sort-api');
 
 if(items.length) {
   sortable.sortable({
@@ -94,5 +100,9 @@ if(items.length) {
     }
   }).disableSelection();
 }
+
+$('#upload').uploader(function() {
+  app.content.reload();
+});
 
 </script>

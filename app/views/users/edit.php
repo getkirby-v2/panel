@@ -35,7 +35,7 @@
 
       <?php if($user->avatar()): ?>
       <div class="field">
-        <a data-modal class="avatar avatar-large" href="<?php _u($user, 'avatar') ?>"><img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>"></a>
+        <a data-upload class="avatar avatar-large" href="#upload"><img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>"></a>
       </div>
       <?php endif ?>
 
@@ -43,7 +43,7 @@
 
         <?php if($user->avatar()): ?>
         <li>
-          <a data-modal href="<?php _u($user, 'avatar') ?>">
+          <a data-upload href="#upload">
             <?php i('pencil', 'left') . _l('users.form.avatar.replace') ?>
           </a>
         </li>
@@ -55,7 +55,7 @@
         </li>
         <?php else: ?>
         <li>
-          <a data-modal href="<?php _u($user, 'avatar') ?>">
+          <a data-upload href="#upload">
             <?php i('cloud-upload', 'left') . _l('users.form.avatar.upload') ?>
           </a>
         </li>
@@ -104,3 +104,15 @@
   </div>
 
 </div>
+
+<form id="upload" class="hidden" action="<?php _u($user, 'avatar') ?>" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" accept="image/jpeg,image/png,image/gif">
+</form>
+
+<script>
+
+$('#upload').uploader(function() {
+  app.content.reload();
+});
+
+</script>

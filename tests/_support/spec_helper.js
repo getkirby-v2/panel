@@ -14,7 +14,7 @@ Cypress.addParentCommand("login", function(email, password){
   var email    = email || "bastian"
   var password = password || "test"
 
-  var command = Cypress.command({
+  var command = Cypress.Log.command({
     name: "login",
     message: [email, password],
     onConsole: function(){
@@ -26,7 +26,7 @@ Cypress.addParentCommand("login", function(email, password){
   })
 
   cy
-    .visit("http://sandbox.getkirby.com/panel/#/", {log: false})
+    .visit("http://sandbox.getkirby.com/panel", {log: false})
     .get("#form-field-username", {log: false}).type("bastian", {log: false})
     .get("#form-field-password", {log: false}).type("test", {log: false}).type("{enter}", {log: false})
     .get("header", {log: false}).contains("Dashboard", {log: false})
@@ -34,3 +34,24 @@ Cypress.addParentCommand("login", function(email, password){
       command.snapshot().end()
     })
 })
+
+Cypress.addParentCommand('testuser', function() {
+
+  var command = Cypress.Log.command({
+    name: 'add testuser',
+    message: 'add testuser'
+  })
+
+  cy
+    .visit('http://sandbox.getkirby.com/panel/users/add', {log: false})
+    .contains('Add a new user', {log: false})
+    .get('#form-field-username').type('testuser', {log: false})
+    .get('#form-field-email').type('mail@testuser.com', {log: false})
+    .get('#form-field-password').type('test', {log: false})
+    .get('#form-field-passwordconfirmation').type('test', {log: false}).type('{enter}', {log: false})
+    .then(function(){
+      command.snapshot().end()
+    })
+
+})
+

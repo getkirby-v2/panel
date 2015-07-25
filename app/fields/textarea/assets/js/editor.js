@@ -33,10 +33,6 @@
 
       });
 
-      textarea.bind('keydown', 'meta+return', function() {
-        textarea.parents('.form').trigger('submit');
-      });
-
       buttons.find('[data-editor-shortcut]').each(function(i, el) {
         var key = $(this).data('editor-shortcut');
         textarea.bind('keydown', key, function(e) {

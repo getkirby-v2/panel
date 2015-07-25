@@ -25,7 +25,7 @@
       <ul class="templates nav">
         <?php foreach($templates as $template): ?>
         <li>
-          <a href="<?php _u($parent, 'add/' . $template->name()) ?>">
+          <a tabindex="0" href="<?php _u($parent, 'add/' . $template->name()) ?>">
             <?php __($template->title()) ?>
             <?php i('plus-circle') ?>
           </a>

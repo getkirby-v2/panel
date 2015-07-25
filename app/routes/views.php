@@ -59,6 +59,15 @@ return array(
   ),
   array(
     'pattern' => array(
+      'site(/)file/(:any)/context',
+      'pages/(:all)/file/(:any)/context',
+    ),
+    'action'  => 'views/FilesController::context',
+    'filter'  => 'auth',
+    'method'  => 'GET',
+  ),
+  array(
+    'pattern' => array(
       'site(/)file/(:any)/delete',
       'pages/(:all)/file/(:any)/delete',
     ),
@@ -73,7 +82,7 @@ return array(
     ),
     'action'  => 'views/FilesController::replace',
     'filter'  => 'auth',
-    'method'  => 'POST|GET',
+    'method'  => 'POST',
   ),
   array(
     'pattern' => array(
@@ -219,6 +228,14 @@ return array(
     'filter'  => 'auth',
   ),
 
+  // Page context menu
+  array(
+    'pattern' => 'pages/(:all)/context',
+    'action'  => 'views/PagesController::context',
+    'method'  => 'GET',
+    'filter'  => 'auth',
+  ),
+
   // Upload a file
   array(
     'pattern' => array(
@@ -227,7 +244,7 @@ return array(
     ),
     'action'  => 'views/FilesController::upload',
     'filter'  => 'auth',
-    'method'  => 'POST|GET'
+    'method'  => 'POST'
   ),
 
   // Subpages
@@ -269,7 +286,7 @@ return array(
     'pattern' => 'users/(:any)/avatar',
     'action'  => 'views/UsersController::avatar',
     'filter'  => 'auth',
-    'method'  => 'POST|GET'
+    'method'  => 'POST'
   ),
   array(
     'pattern' => 'users/(:any)/avatar/delete',

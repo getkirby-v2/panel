@@ -2,6 +2,7 @@
 @import "components/reset";
 @import "components/misc";
 @import "components/shiv";
+@import "components/nprogress";
 @import "components/headlines";
 @import "components/typography";
 @import "components/text";
@@ -9,6 +10,7 @@
 @import "components/btn";
 @import "components/form";
 @import "components/dropzone";
+@import "components/dropload";
 @import "components/message";
 @import "components/tags";
 @import "components/modal";
@@ -34,3 +36,28 @@
 @import "components/main";
 @import "components/autocomplete";
 @import "components/fontawesome";
+
+
+body.loading:before {
+  position: fixed;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(30,30,30, .8);
+  z-index: 10000000;
+}
+body.loading:after {
+  position: fixed;
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 2em;
+  margin-left: -1em;
+  margin-top: -1em;
+  border-radius: 50%; 
+  background: #fff url(../images/loader.black.gif) no-repeat center center;
+  z-index: 10000000;
+}

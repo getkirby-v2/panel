@@ -11,7 +11,7 @@
       <a title="<?php _l('pages.show.files.edit') ?>" href="<?php _u($page, 'files') ?>">
         <?php i('pencil', 'left') ?><span><?php _l('pages.show.files.edit') ?></span>
       </a>
-      <a data-modal title="f" data-shortcut="f" href="<?php _u($page, 'upload') ?>">
+      <a data-upload href="#upload">
         <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.files.add') ?></span>
       </a>
     </span>
@@ -25,9 +25,10 @@
     <a class="draggable" data-helper="<?php __($file->filename()) ?>" data-text="<?php echo dragText($file) ?>" href="<?php _u($file, 'show') ?>">
       <?php i($file) . __($file->filename()) ?>
     </a>
+    <a class="option" data-context="<?php _u($file, 'context') ?>" href="#options"><?php i('pencil') ?></a>
   </li>
   <?php endforeach ?>
 </ul>
 <?php else: ?>
-<p class="marginalia"><a data-modal href="<?php _u($page, 'upload') ?>" class="marginalia"><?php _l('pages.show.files.empty') ?></a></p>
+<p class="marginalia"><a data-upload href="#upload" class="marginalia"><?php _l('pages.show.files.empty') ?></a></p>
 <?php endif ?>

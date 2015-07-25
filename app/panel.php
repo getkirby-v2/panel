@@ -129,6 +129,7 @@ class Panel {
       'assets'         => $this->roots->lib . DS . 'assets.php',
       'fieldoptions'   => $this->roots->lib . DS . 'fieldoptions.php',
       'filedata'       => $this->roots->lib . DS . 'filedata.php',
+      'filemenu'       => $this->roots->lib . DS . 'filemenu.php',
       'form'           => $this->roots->lib . DS . 'form.php',
       'history'        => $this->roots->lib . DS . 'history.php',
       'installation'   => $this->roots->lib . DS . 'installation.php',
@@ -136,6 +137,7 @@ class Panel {
       'pagestore'      => $this->roots->lib . DS . 'pagestore.php',
       'pageeditor'     => $this->roots->lib . DS . 'pageeditor.php',
       'pageuploader'   => $this->roots->lib . DS . 'pageuploader.php',
+      'pagemenu'       => $this->roots->lib . DS . 'pagemenu.php',
       'structurestore' => $this->roots->lib . DS . 'structurestore.php',
       'subpages'       => $this->roots->lib . DS . 'subpages.php',
       'widgets'        => $this->roots->lib . DS . 'widgets.php',
@@ -238,6 +240,11 @@ class Panel {
 
     $this->path  = $this->kirby->path();
     $this->route = $this->router->run($this->path);
+    
+    // set the current url
+    $this->urls->current = rtrim($this->urls->index() . '/' . $this->path, '/');
+
+    ob_start();
 
     try {
 
@@ -259,14 +266,12 @@ class Panel {
     }
 
     // send custom header for ajax requests
-    header('X-Panel-Location: ' . url::current());
+    header('Panel-Location: ' . url::current());
 
     // set the username of the current user
     if($user = site()->user()) {
-      header('X-Panel-User: ' . $user->username());      
+      header('Panel-User: ' . $user->username());      
     }
-
-    ob_start();
 
     // check for a valid response object
     if(is_a($response, 'Response')) {
