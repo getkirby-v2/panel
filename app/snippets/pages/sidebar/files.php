@@ -22,10 +22,10 @@
 <ul class="nav nav-list sidebar-list">
   <?php foreach($files as $file): ?>
   <li>
-    <a class="draggable" data-helper="<?php __($file->filename()) ?>" data-text="<?php echo dragText($file) ?>" href="<?php _u($file, 'show') ?>">
-      <?php i($file) . __($file->filename()) ?>
+    <a class="draggable" data-helper="<?php __($file->filename()) ?>" data-text="<?php __($file->dragText()) ?>" href="<?php __($file->url()) ?>">
+      <?php echo $file->icon() . __($file->filename()) ?>
     </a>
-    <a class="option" data-context="<?php _u($file, 'context') ?>" href="#options"><?php i('pencil') ?></a>
+    <a class="option" data-context="<?php __($file->url('context')) ?>" href="#options"><?php i('pencil') ?></a>
   </li>
   <?php endforeach ?>
 </ul>

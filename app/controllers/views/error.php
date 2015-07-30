@@ -2,7 +2,7 @@
 
 class ErrorController extends Controller {
 
-  public function index($text = null) {
+  public function index($text = null, $exception = null) {
 
     $this->auth();
 
@@ -17,7 +17,8 @@ class ErrorController extends Controller {
       ));
     } else {
       return screen('error/index', 'error', array(
-        'text' => $text
+        'text'      => $text, 
+        'exception' => $exception
       ));      
     }
 

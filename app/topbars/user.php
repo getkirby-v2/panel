@@ -7,7 +7,7 @@ return function($topbar, $user) {
   if($user === 'user') {
     $topbar->append(purl('users/add'), l('users.index.add'));    
   } else {
-    $topbar->append(purl($user, 'show'), $user->username());    
+    $topbar->append($user->url(), $user->username());    
   }
 
 };

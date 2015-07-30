@@ -2,24 +2,24 @@
 
 class View {
 
-  public $root = null;
-  public $file = null;
-  public $data = array();
+  protected $_root = null;
+  protected $_file = null;
+  protected $_data = array();
 
   public function __construct($file, $data = array()) {
-    $this->root = panel::instance()->roots()->views();
-    $this->file = $file;
-    $this->data = $data;
+    $this->_root = panel::instance()->roots()->views();
+    $this->_file = $file;
+    $this->_data = $data;
   }
 
   public function __set($key, $value) {
-    $this->data[$key] = $value;
+    $this->_data[$key] = $value;
   }
 
   public function render() {
-    $file = $this->root . DS . str_replace('.', DS, $this->file) . '.php';
-    if(!file_exists($file)) throw new Exception('Invalid view: ' . $this->file);
-    return tpl::load($file, $this->data);
+    $file = $this->_root . DS . str_replace('.', DS, $this->_file) . '.php';
+    if(!file_exists($file)) throw new Exception('Invalid view: ' . $this->_file);
+    return tpl::load($file, $this->_data);
   }
 
   public function __toString() {

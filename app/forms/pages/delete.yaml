@@ -1,5 +1,0 @@
-page: 
-  label: pages.delete.headline
-  type: text
-  readonly: true  
-  icon: false

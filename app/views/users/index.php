@@ -13,34 +13,15 @@
 
   <div class="items users">
     <?php foreach($users as $user): ?>
-    <?php
-
-    if($admin or $user->isCurrent()) {
-      $urls = array(
-        'avatar' => purl($user, 'edit'),
-        'edit'   => purl($user, 'edit')
-      );
-    } else {
-      $urls = array(
-        'avatar' => '#',
-        'edit'   => '#'
-      );
-    }
-
-    ?>
     <div class="item item-with-image">
       <div class="item-content">
         <figure class="item-image">
-          <a class="item-image-container" href="<?php echo $urls['avatar'] ?>">
-            <?php if($user->avatar()): ?>
-            <img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>" alt="<?php __($user->username()) ?>">
-            <?php else: ?>
-            <img src="<?php echo panel()->urls()->images() . '/avatar.png' ?>" alt="<?php __($user->username()) ?>">
-            <?php endif ?>
+          <a class="item-image-container" href="<?php __($user->url()) ?>">
+            <img src="<?php __($user->avatar()->url()) ?>" alt="<?php __($user->username()) ?>">
           </a>
         </figure>
         <div class="item-info">
-          <a href="<?php echo $urls['edit'] ?>">
+          <a href="<?php __($user->url()) ?>">
             <strong class="item-title"><?php __($user->username()) ?></strong>
             <small class="item-meta marginalia">
               <?php __($user->email()) ?>
@@ -54,12 +35,12 @@
 
         <ul class="nav nav-bar">
           <li>
-            <a class="btn btn-with-icon" href="<?php echo purl($user, 'edit') ?>">
+            <a class="btn btn-with-icon" href="<?php __($user->url()) ?>">
               <?php i('pencil', 'left') . _l('users.index.edit') ?>
             </a>
           </li>
           <li>
-            <a data-modal class="btn btn-with-icon" href="<?php echo purl($user, 'delete') ?>">
+            <a data-modal class="btn btn-with-icon" href="<?php __($user->url('delete')) ?>">
               <?php i('trash-o', 'left') . _l('users.index.delete') ?>
             </a>
           </li>

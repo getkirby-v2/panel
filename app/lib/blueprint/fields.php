@@ -14,7 +14,10 @@ class Fields extends Collection {
 
       // add the name to the field
       $field['name'] = $name;
-      $field['page'] = $page;
+
+      if($page) {
+        $field['page'] = is_a($page, 'PageModel') ? $page : new \PageModel($page);        
+      }
 
       // create the field object
       $field = new Field($field);

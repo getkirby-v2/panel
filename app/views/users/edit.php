@@ -13,7 +13,7 @@
 
       <ul class="nav nav-list sidebar-list">
 
-        <?php if(!$user->is(site()->user())): ?>
+        <?php if(!$user->isCurrent()): ?>
         <li>
           <a href="mailto:<?php echo $user->email() ?>">
             <?php i('envelope-square', 'left') . _l('users.form.options.message') ?>
@@ -22,26 +22,26 @@
         <?php endif ?>
 
         <li>
-          <a data-modal title="#" data-shortcut="#" href="<?php echo purl($user, 'delete') ?>">
+          <a data-modal title="#" data-shortcut="#" href="<?php __($user->url('delete')) ?>">
             <?php i('trash-o', 'left') . _l('users.form.options.delete') ?>
           </a>
         </li>
 
       </ul>
 
-      <h2 class="hgroup hgroup-single-line<?php e(!$user->avatar(), ' hgroup-compressed') ?> cf">
+      <h2 class="hgroup hgroup-single-line<?php e(!$user->avatar()->exists(), ' hgroup-compressed') ?> cf">
         <span class="hgroup-title"><?php _l('users.form.avatar.headline') ?></span>
       </h2>
 
-      <?php if($user->avatar()): ?>
+      <?php if($user->avatar()->exists()): ?>
       <div class="field">
-        <a data-upload class="avatar avatar-large" href="#upload"><img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>"></a>
+        <a data-upload class="avatar avatar-large" href="#upload"><img src="<?php echo $user->avatar()->url()  ?>"></a>
       </div>
       <?php endif ?>
 
       <ul class="nav nav-list sidebar-list">
 
-        <?php if($user->avatar()): ?>
+        <?php if($user->avatar()->exists()): ?>
         <li>
           <a data-upload href="#upload">
             <?php i('pencil', 'left') . _l('users.form.avatar.replace') ?>
@@ -49,7 +49,7 @@
         </li>
 
         <li>
-          <a data-modal href="<?php _u($user, 'avatar/delete') ?>">
+          <a data-modal href="<?php __($user->url('avatar/delete')) ?>">
             <?php i('trash-o', 'left') . _l('users.form.avatar.delete') ?>
           </a>
         </li>
@@ -68,7 +68,7 @@
         <span class="hgroup-title"><?php _l('users.form.options.headline') ?></span>
       </h2>
 
-      <a class="btn btn-with-icon" href="#/users">
+      <a class="btn btn-with-icon" href="<?php _u('users') ?>">
         <?php i('arrow-circle-left', 'left') . _l('users.form.back') ?>
       </a>
 
@@ -77,7 +77,7 @@
         <span class="hgroup-title"><?php _l('users.index.add') ?></span>
       </h2>
 
-      <a class="btn btn-with-icon" href="#/users">
+      <a class="btn btn-with-icon" href="<?php _u('users') ?>">
         <?php i('arrow-circle-left', 'left') . _l('users.form.back') ?>
       </a>
       <?php endif ?>
@@ -95,7 +95,7 @@
         <div class="text">
           <p><?php _l('users.form.error.permissions.text') ?></p>
         </div>
-        <div><a href="<?php url::current() ?>" class="btn btn-rounded"><?php _l('pages.show.error.permissions.retry') ?></a></div>
+        <div><a href="<?php __(url::current()) ?>" class="btn btn-rounded"><?php _l('pages.show.error.permissions.retry') ?></a></div>
       </div>
       <?php else: ?>
       <?php echo $form ?>
@@ -105,7 +105,8 @@
 
 </div>
 
-<form id="upload" class="hidden" action="<?php _u($user, 'avatar') ?>" method="post" enctype="multipart/form-data">
+<?php if($user): ?>
+<form id="upload" class="hidden" action="<?php __($user->url('avatar')) ?>" method="post" enctype="multipart/form-data">
   <input type="file" name="file" accept="image/jpeg,image/png,image/gif">
 </form>
 
@@ -116,3 +117,4 @@ $('#upload').uploader(function() {
 });
 
 </script>
+<?php endif ?>

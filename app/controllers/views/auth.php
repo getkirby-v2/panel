@@ -9,14 +9,7 @@ class AuthController extends Controller {
     }
 
     $self = $this;
-    $form = panel()->form('auth/login');
-    
-    $form->data('autosubmit', 'native');
-    $form->style('centered');
-    
-    $form->buttons->submit->value = l('login.button');
-  
-    $form->on('submit', function($form) use($self) {
+    $form = $this->form('auth/login', $welcome, function($form) use($self) {
 
       $data = $form->serialize();
       $user = site()->user(str::lower($data['username']));
@@ -31,18 +24,8 @@ class AuthController extends Controller {
 
     });
 
-    if($username = s::get('username')) {
-      $form->fields->username->value = html($username, false);
-    }
-
-    if($welcome) {
-      $form->notify(l('login.welcome'));
-    }
-
     return layout('base', array(
-      'content' => view('auth/login', array(
-        'form' => $form
-      ))
+      'content' => view('auth/login', compact('form'))
     ));
 
   }

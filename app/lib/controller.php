@@ -3,22 +3,31 @@
 class Controller extends Obj {
 
   public function redirect() {    
+    return call(array(panel(), 'redirect'), func_get_args());
+  }
 
-    $url = call('purl', func_get_args());
+  public function notify($message) {
+    panel()->notify($message);
+  }
 
-    if(r::ajax()) {
+  public function alert($message) {
+    panel()->alert($message);
+  }
 
-      // set the username of the current user
-      if($user = site()->user()) {
-        header('Panel-User: ' . $user->username());      
-      }
+  public function form($id, $data = array(), $submit = null) {
+    return panel()->form($id, $data, $submit);
+  }
 
-      die(response::json(array('url' => $url)));
+  public function page($id) {
+    return new PageModel($id);
+  }
 
+  public function user($username = null) {
+    if($user = panel()->user($username)) {
+      return $user;
     } else {
-      go($url);            
+      throw new Exception(l('users.error.missing'));
     }
-
   }
 
 }

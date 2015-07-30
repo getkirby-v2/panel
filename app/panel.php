@@ -93,7 +93,7 @@ class Panel {
   }
 
   public function site() {
-    return $this->site;
+    return new PageModel($this->site);
   }
 
   public function roots() {
@@ -109,9 +109,28 @@ class Panel {
     return $this->urls;
   }
 
-  public function form($id, $data = array()) {
-    $fields = data::read($this->roots->forms . DS . $id . '.yaml', 'yaml');
-    return new Form($fields, $data);
+  public function form($id, $data = array(), $submit = null) {
+
+    $file = $this->roots->forms . DS . $id . '.php';
+
+    if(!file_exists($file)) {
+      throw new Exception('The form cannot be found');
+    }
+
+    $callback = require($file);
+
+    if(!is_callable($callback)) {
+      throw new Exception('Invalid form construction method');
+    }
+
+    $form = call($callback, $data);
+
+    if(is_callable($submit)) {
+      $form->on('submit', $submit);
+    }
+
+    return $form;
+
   }
 
   public function load() {
@@ -133,15 +152,19 @@ class Panel {
       'form'           => $this->roots->lib . DS . 'form.php',
       'history'        => $this->roots->lib . DS . 'history.php',
       'installation'   => $this->roots->lib . DS . 'installation.php',
-      'pagedata'       => $this->roots->lib . DS . 'pagedata.php',
       'pagestore'      => $this->roots->lib . DS . 'pagestore.php',
       'pageeditor'     => $this->roots->lib . DS . 'pageeditor.php',
       'pageuploader'   => $this->roots->lib . DS . 'pageuploader.php',
       'pagemenu'       => $this->roots->lib . DS . 'pagemenu.php',
       'structurestore' => $this->roots->lib . DS . 'structurestore.php',
-      'subpages'       => $this->roots->lib . DS . 'subpages.php',
       'widgets'        => $this->roots->lib . DS . 'widgets.php',
       'topbar'         => $this->roots->lib . DS . 'topbar.php',
+
+      // models 
+      'pagemodel'   => $this->roots->models . DS . 'page.php',
+      'filemodel'   => $this->roots->models . DS . 'file.php',
+      'usermodel'   => $this->roots->models . DS . 'user.php',
+      'avatarmodel' => $this->roots->models . DS . 'avatar.php',
 
       // blueprint stuff
       'blueprint'         => $this->roots->lib . DS . 'blueprint.php',
@@ -262,7 +285,7 @@ class Panel {
     } catch(Exception $e) {
       require_once($this->roots->controllers . DS . 'views' . DS . 'error.php');
       $controller = new ErrorController();
-      $response   = $controller->index($e->getMessage());
+      $response   = $controller->index($e->getMessage(), $e);
     }
 
     // send custom header for ajax requests
@@ -372,6 +395,43 @@ class Panel {
       'type' => 'error', 
       'text' => $text,
     ));
+  }
+
+  public function redirect() {    
+
+    $url = call('purl', func_get_args());
+
+    if(r::ajax()) {
+
+      // set the username of the current user
+      if($user = site()->user()) {
+        header('Panel-User: ' . $user->username());      
+      }
+
+      die(response::json(array('url' => $url)));
+
+    } else {
+      go($url);            
+    }
+
+  }
+
+  public function users() {
+
+    return site()->users()->map(function($user) {
+      return new UserModel($user);
+    });
+
+  }
+
+  public function user($username = null) {
+
+    if($user = $this->site()->user($username)) {
+      return new UserModel($user);
+    } else {
+      return false;
+    }
+
   }
 
 }

@@ -7,6 +7,6 @@ return function($topbar, $file) {
   $filesbar = require(__DIR__ . DS . 'files.php');
   $filesbar($topbar, $files);
 
-  $topbar->append(purl($file, 'show'), $file->filename());
+  $topbar->append($file->url(), $file->filename());
  
 };

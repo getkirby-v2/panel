@@ -4,37 +4,36 @@ class SubpagesController extends Controller {
 
   public function index($id) {
 
-    $page      = $this->page($id);
-    $blueprint = blueprint::find($page);
+    $page = $this->page($id);
 
     // don't create the view if the page is not allowed to have subpages
-    if($blueprint->pages()->max() === 0) {
+    if(!$page->canHaveSubpages()) {
       throw new Exception('This page is not allowed to have subpages');
     }
 
     // get the subpages
-    $visible   = $this->visible($page, $blueprint);
-    $invisible = $this->invisible($page, $blueprint);
+    $visible   = $this->visible($page);
+    $invisible = $this->invisible($page);
 
     // activate the sorting
     $this->sort($page);
 
     return screen('subpages/index', $page, array(
-        'page'                => $page,
-        'addbutton'           => addbutton($page),
-        'sortable'            => $blueprint->pages()->sortable(),
-        'flip'                => $blueprint->pages()->sort() == 'flip',
-        'visible'             => $visible,
-        'invisible'           => $invisible,
+      'page'      => $page,
+      'addbutton' => $page->addbutton(),
+      'sortable'  => $page->blueprint()->pages()->sortable(),
+      'flip'      => $page->blueprint()->pages()->sort() == 'flip',
+      'visible'   => $visible,
+      'invisible' => $invisible,
     ));
 
   }
 
-  protected function subpages($page, $blueprint, $type) {
+  protected function subpages($page, $type) {
 
-    $pages = api::subpages($page->children()->$type(), $blueprint);    
+    $pages = $page->subpages($type);
 
-    if($limit = $blueprint->pages()->limit()) {
+    if($limit = $page->blueprint()->pages()->limit()) {
 
       // create a session id to store the page
       $sessionId = 'subpages.' . $type . '.' . $page->cacheId();
@@ -67,12 +66,12 @@ class SubpagesController extends Controller {
 
   }
 
-  protected function visible($page, $blueprint) {
-    return $this->subpages($page, $blueprint, 'visible');
+  protected function visible($page) {
+    return $this->subpages($page, 'visible');
   }
 
-  protected function invisible($page, $blueprint) {
-    return $this->subpages($page, $blueprint, 'invisible');
+  protected function invisible($page) {
+    return $this->subpages($page, 'invisible');
   }
 
   protected function sort($page) {
@@ -80,13 +79,12 @@ class SubpagesController extends Controller {
     // handle sorting
     if(r::is('post') and $action = get('action') and $id = get('id')) {
 
-      $subpages = new Subpages($page);
-      $subpage  = $subpages->find($id);
+      $subpage = $this->page($page->id() . '/' . $id);
 
       switch($action) {
         case 'sort':
           try {
-            $subpages->sort($subpage, get('to'));
+            $subpage->sort(get('to'));
           } catch(Exception $e) {
             // no error handling, because if sorting 
             // breaks, the refresh will fix it.
@@ -94,7 +92,7 @@ class SubpagesController extends Controller {
           break;
         case 'hide':
           try {
-            $subpages->hide($subpage);
+            $subpage->hide();
           } catch(Exception $e) {
             // no error handling, because if sorting 
             // breaks, the refresh will fix it.
@@ -104,19 +102,6 @@ class SubpagesController extends Controller {
 
       $this->redirect($page, 'subpages');
 
-    }
-
-  }
-
-
-  protected function page($id) {
-
-    $page = $id == '/' ? site() : page($id);
-
-    if(!$page) {
-      throw new Exception(l('subpages.error.missing'));
-    } else {
-      return $page;      
     }
 
   }

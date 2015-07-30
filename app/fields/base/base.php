@@ -92,7 +92,7 @@ class BaseField {
       return null;
     } else if(is_array($value)) {
       return a::get($value, panel()->language(), $this->name());
-    } else if($translation = l::get($value)) {
+    } else if(is_string($value) and $translation = l::get($value)) {
       return $translation;
     } else {
       return $value;
@@ -185,7 +185,11 @@ class BaseField {
   }
 
   public function __toString() {
-    return (string)$this->template();
+    try {
+      return (string)$this->template();
+    } catch(Exception $e) {
+      die($e);
+    }
   }
 
 }

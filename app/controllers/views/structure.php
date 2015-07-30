@@ -7,15 +7,10 @@ class StructureController extends Controller {
     $self  = $this;
     $page  = $this->page($pageId);
     $store = $this->store($page, $fieldname);
-    $form  = new Form($store->fields());
-
-    $form->on('submit', function($form) use($page, $store, $self) {
+    $form  = $this->form('structure/add', array($page, $store), function($form) use($page, $store, $self) {
       $store->add($form->serialize());
       $self->redirect($page, 'show');
     });
-
-    $form->cancel($page, 'show');
-    $form->buttons->submit->value = l('add');
 
     return modal('structure/add', compact('form'));
 
@@ -27,15 +22,10 @@ class StructureController extends Controller {
     $page  = $this->page($pageId);
     $store = $this->store($page, $fieldname);
     $entry = $store->find($entryId);
-    $form  = new Form($store->fields(), $entry->toArray());
-
-    $form->on('submit', function($form) use($page, $store, $self, $entryId) {
+    $form  = $this->form('structure/update', array($page, $store, $entry), function($form) use($page, $store, $self, $entryId) {
       $store->update($entryId, $form->serialize());
       $self->redirect($page, 'show');
     });
-
-    $form->cancel($page, 'show');
-    $form->buttons->submit->value = l('add');
 
     return modal('structure/update', compact('form'));
         
@@ -47,17 +37,11 @@ class StructureController extends Controller {
     $page  = $this->page($pageId);
     $store = $this->store($page, $fieldname);
     $entry = $store->find($entryId);
-
-    $form = panel()->form('structure/delete');
-    
-    $form->on('submit', function() use($self, $page, $store, $entryId) {
+    $form  = $this->form('structure/delete', $page, function() use($self, $page, $store, $entryId) {
       $store->delete($entryId);
       $self->redirect($page, 'show');
     });
     
-    $form->style('delete');
-    $form->cancel($page, 'show');
-
     return modal('structure/delete', compact('form'));
 
   }
@@ -69,18 +53,6 @@ class StructureController extends Controller {
     $store->sort(get('ids'));
 
     $this->redirect($page, 'show');
-
-  }
-
-  protected function page($pageId) {
-
-    $page = $pageId == '/' ? site() : page($pageId);
-
-    if($page) {
-      return $page;
-    } else {
-      throw new Exception('The page could not be found');
-    }
 
   }
 

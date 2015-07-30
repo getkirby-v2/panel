@@ -5,12 +5,12 @@
       <?php if($page->isSite()): ?>
       <?php _l('metatags.files') ?>
       <?php else: ?>
-      <?php _l('files.index.headline') ?> <a href="<?php echo $back ?>"><?php __($page->title()) ?></a>
+      <?php _l('files.index.headline') ?> <a href="<?php __($back) ?>"><?php __($page->title()) ?></a>
       <?php endif ?>
     </span>
     <span class="hgroup-options shiv shiv-dark shiv-left cf">
 
-      <a class="hgroup-option-left" href="<?php echo $back ?>">
+      <a class="hgroup-option-left" href="<?php __($back) ?>">
         <?php i('arrow-circle-left', 'left') . _l('files.index.back') ?>
       </a>
 
@@ -30,28 +30,28 @@
       <?php foreach($files as $file): ?><!--
    --><div class="grid-item" id="<?php __($file->filename()) ?>">
         <figure class="file">
-          <a class="file-preview file-preview-is-<?php echo $file->type() ?>" href="<?php echo purl($file, 'show') ?>">
-            <?php if(fileHasThumbnail($file)): ?>
-            <img src="<?php echo thumb($file, array('width' => 300, 'height' => 200))->url() ?>" alt="<?php echo $file->filename() ?>">
-            <?php elseif(fileHasPreview($file)): ?>
-            <img src="<?php echo $file->url() ?>" alt="<?php echo $file->filename() ?>">
+          <a class="file-preview file-preview-is-<?php __($file->type()) ?>" href="<?php __($file->url()) ?>">
+            <?php if($file->canHaveThumb()): ?>
+            <img src="<?php __($file->thumb()) ?>" alt="<?php __($file->filename()) ?>">
+            <?php elseif($file->canHavePreview()): ?>
+            <img src="<?php __($file->previewUrl()) ?>" alt="<?php __($file->filename()) ?>">
             <?php else: ?>
             <span><?php __($file->extension()) ?></span>
             <?php endif ?>
           </a>
           <figcaption class="file-info">
-            <a href="<?php echo purl($file, 'show') ?>">
+            <a href="<?php __($file->url()) ?>">
               <span class="file-name cut"><?php __($file->filename()) ?></span>
               <span class="file-meta marginalia cut"><?php __($file->type() . ' / ' . $file->niceSize()) ?></span>
             </a>
           </figcaption>
           <nav class="file-options cf">
 
-            <a class="btn btn-with-icon" href="<?php echo purl($file, 'show') ?>">
+            <a class="btn btn-with-icon" href="<?php __($file->url()) ?>">
               <?php i('pencil', 'left') ?><span><?php _l('files.index.edit') ?></span>
             </a>
 
-            <a data-modal data-modal-return-to="<?php echo purl($page, 'files') ?>" class="btn btn-with-icon" href="<?php echo purl($file, 'delete') ?>">
+            <a data-modal data-modal-return-to="<?php __($page->url('files')) ?>" class="btn btn-with-icon" href="<?php __($file->url('delete')) ?>">
               <?php i('trash-o', 'left') ?><span><?php _l('files.index.delete') ?></span>
             </a>
 
@@ -68,9 +68,9 @@
 
   <div class="instruction">
     <div class="instruction-content">
-      <p class="instruction-text"><?php echo l('files.index.upload.first.text') ?></p>
+      <p class="instruction-text"><?php _l('files.index.upload.first.text') ?></p>
       <a data-upload data-shortcut="+" class="btn btn-rounded" href="#upload">
-        <?php echo l('files.index.upload.first.button') ?>
+        <?php _l('files.index.upload.first.button') ?>
       </a>
     </div>
   </div>
@@ -79,7 +79,7 @@
 
 </div>
 
-<form id="upload" class="hidden" action="<?php _u($page, 'upload') ?>" method="post" enctype="multipart/form-data">
+<form id="upload" class="hidden" action="<?php __($page->url('upload')) ?>" method="post" enctype="multipart/form-data">
   <input type="file" name="file" multiple>
 </form>
 
@@ -95,7 +95,7 @@ if(items.length) {
     helper: 'clone',
     update: function() {
       $.post(api, {filenames: sortable.sortable('toArray'), action: 'sort'}, function(data) {
-        app.content.replace(data, api);        
+        app.content.reload();        
       });
     }
   }).disableSelection();

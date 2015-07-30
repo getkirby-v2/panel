@@ -8,13 +8,9 @@
         <?php i('pencil', 'left') ?><span><?php _l('pages.show.subpages.edit') ?></span>
       </a>
       <?php if($addbutton): ?>
-        <?php if($templates->count() > 1): ?>
-        <a title="+" data-shortcut="+" data-modal href="<?php _u($page, 'add') ?>">
-        <?php else: ?>
-        <a title="+" data-shortcut="+" href="<?php _u($page, 'add/' . $templates->first()->name()) ?>">
-        <?php endif ?>
-          <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.subpages.add') ?></span>
-        </a>
+      <a title="+" data-shortcut="+"<?php e($addbutton->modal(), ' data-modal') ?> href="<?php __($addbutton->url()) ?>">
+        <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.subpages.add') ?></span>
+      </a>
       <?php endif ?>
     </span>
 
@@ -39,12 +35,14 @@
 
 <?php else: ?>
 <p class="marginalia">
-  <?php if($templates->count() > 1): ?>
-  <a class="marginalia" title="+" data-modal href="<?php _u($page, 'add') ?>">
-  <?php else: ?>
-  <a class="marginalia" title="+" href="<?php _u($page, 'add/' . $templates->first()->name()) ?>">
-  <?php endif ?>
+
+  <?php if($addbutton): ?>
+  <a class="marginalia" title="+"<?php e($addbutton->modal(), ' data-modal') ?> href="<?php __($addbutton->url()) ?>">
     <?php _l('pages.show.subpages.empty') ?>
   </a>
+  <?php else: ?>
+    <?php _l('pages.show.subpages.empty') ?>
+  <?php endif ?>
+
 </p>
 <?php endif ?>

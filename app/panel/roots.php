@@ -16,6 +16,7 @@ class Roots extends Obj {
     $this->assets      = $root . DS . 'assets';
 
     $this->controllers = $this->app . DS . 'controllers';
+    $this->models      = $this->app . DS . 'models';
     $this->fields      = $this->app . DS . 'fields';
     $this->forms       = $this->app . DS . 'forms';
     $this->languages   = $this->app . DS . 'languages';

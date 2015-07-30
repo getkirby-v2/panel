@@ -5,7 +5,7 @@ class FileMenu {
   public $page;
   public $file;
 
-  public function __construct($file) {
+  public function __construct(FileModel $file) {
     $this->page = $file->page();
     $this->file = $file;
   }
@@ -15,7 +15,7 @@ class FileMenu {
     $a = new Brick('a', '', $attr);
     $a->append(icon($icon, 'left'));
     $a->append(l($label));
-    $a->data('modal-return-to', purl($this->page, 'show'));
+    $a->data('modal-return-to', $this->page->url());
 
     $li = new Brick('li');
     $li->append($a);
@@ -26,20 +26,20 @@ class FileMenu {
 
   public function previewOption() {  
     return $this->item('play-circle-o', 'files.show.open', array(
-      'href'   => $this->file->url(),
+      'href'   => $this->file->previewUrl(),
       'target' => '_blank'
     ));
   }
 
   public function editOption() {
     return $this->item('pencil', 'files.index.edit', array(
-      'href' => purl($this->file, 'show'),
+      'href' => $this->file->url(),
     ));
   }
 
   public function deleteOption() {
     return $this->item('trash-o', 'files.show.delete', array(
-      'href'       => purl($this->file, 'delete'),
+      'href'       => $this->file->url('delete'),
       'data-modal' => true,
     ));
   }

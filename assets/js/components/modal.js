@@ -129,7 +129,7 @@ var Modal = function(app) {
       var user = xhr.getResponseHeader('Panel-User');
 
       // redirect to the login if the user is missing
-      if(!user) window.location.href = 'login';
+      if(!user) window.location.reload();
 
       // paste the html into the modal container
       root.html(data);

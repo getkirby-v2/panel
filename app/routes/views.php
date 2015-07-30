@@ -50,10 +50,10 @@ return array(
   // Files
   array(
     'pattern' => array(
-      'site(/)file/(:any)/show',
-      'pages/(:all)/file/(:any)/show',
+      'site(/)file/(:any)/edit',
+      'pages/(:all)/file/(:any)/edit',
     ),
-    'action'  => 'views/FilesController::show',
+    'action'  => 'views/FilesController::edit',
     'filter'  => 'auth',
     'method'  => 'POST|GET',
   ),
@@ -176,8 +176,8 @@ return array(
 
   // Page
   array(
-    'pattern' => 'pages/(:all)/show',
-    'action'  => 'views/PagesController::show',
+    'pattern' => 'pages/(:all)/edit',
+    'action'  => 'views/PagesController::edit',
     'filter'  => 'auth',
     'method'  => 'POST|GET'
   ),
@@ -282,15 +282,17 @@ return array(
     'filter'  => 'auth',
     'method'  => 'POST|GET'
   ),
+
+  // Avatars
   array(
     'pattern' => 'users/(:any)/avatar',
-    'action'  => 'views/UsersController::avatar',
+    'action'  => 'views/AvatarsController::upload',
     'filter'  => 'auth',
     'method'  => 'POST'
   ),
   array(
     'pattern' => 'users/(:any)/avatar/delete',
-    'action'  => 'views/UsersController::deleteAvatar',
+    'action'  => 'views/AvatarsController::delete',
     'filter'  => 'auth',
     'method'  => 'POST|GET'
   ),

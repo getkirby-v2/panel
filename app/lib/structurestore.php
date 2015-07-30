@@ -8,7 +8,7 @@ class StructureStore {
   protected $data;
   protected $config;
 
-  public function __construct(Page $page, $field) {
+  public function __construct(PageModel $page, $field) {
 
     $this->page = $page;
 
@@ -17,7 +17,7 @@ class StructureStore {
     }
 
     $this->field     = $field;
-    $this->blueprint = blueprint::find($this->page);
+    $this->blueprint = $this->page->blueprint();
     $this->config    = $this->blueprint->fields()->get($this->field);
 
     $this->data();    

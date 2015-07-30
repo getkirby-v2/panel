@@ -77,7 +77,7 @@ var Content = function() {
       var user = xhr.getResponseHeader('Panel-User');
 
       // // redirect to the login if the user is missing
-      if(!user) window.location.href = 'login';
+      if(!user) window.location.href = url;
 
       if($.type(response) == 'object' && response.url) {
         open(response.url);        

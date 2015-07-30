@@ -11,7 +11,6 @@ class Assets {
     $files = array(
       // no-dependency vendors
       'vendors/nprogress.js',
-      'vendors/layzr.js',
 
       // jquery stuff
       'vendors/jquery.js',

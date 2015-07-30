@@ -10,7 +10,7 @@ class Topbar {
 
     $this->view = $view;
 
-    $class = is_object($input) ? get_class($input) : (string)$input;
+    $class = is_object($input) ? str_replace('model', '', strtolower(get_class($input))) : (string)$input;
     $file  = panel()->roots()->topbars() . DS . str::lower($class) . '.php';
 
     if(file_exists($file)) {
@@ -19,7 +19,7 @@ class Topbar {
       $callback($this, $input);
 
     } else {
-      throw new Exception('Missing topbar definition');
+      throw new Exception('Missing topbar definition for class: ' . $class);
     }
 
   }

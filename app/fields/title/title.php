@@ -23,7 +23,7 @@ class TitleField extends InputField {
         $this->help .= '<br />';
       }
 
-      $this->help .= '&rarr;&nbsp;&nbsp;<a style="color: #777; border:none" data-modal title="' . $this->page->url() . '" href="' . purl($this->page, 'url') . '">' . ltrim($this->page->parent()->slug() . '/', '/') . $this->page->slug() . '</a>';      
+      $this->help .= '&rarr;&nbsp;&nbsp;<a style="color: #777; border:none" data-modal title="' . $this->page->previewUrl() . '" href="' . $this->page->url('url') . '">' . ltrim($this->page->parent()->slug() . '/', '/') . $this->page->slug() . '</a>';      
 
     }
 

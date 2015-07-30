@@ -15,44 +15,14 @@ class InstallationController extends Controller {
   }
 
   protected function problems($problems) {
-
-    $info = new Brick('ol');
-
-    foreach($problems as $problem) {
-      $info->append('<li>' . $problem . '</li>');        
-    }
-
-    $form = panel()->form('installation/check');    
-    
-    // add the list of problems to the info field
-    $form->fields->info->text = (string)$info;
-
-    // setup the retry button
-    $form->buttons->submit->value     = l('installation.check.retry');
-    $form->buttons->submit->autofocus = true;
-
-    $form->style('centered');
-    $form->alert(l('installation.check.text'));
-
+    $form = $this->form('installation/check', $problems);        
     return modal('installation/index', compact('form'));
-
   }
 
   protected function signup() {
 
     $self = $this;
-    $form = panel()->form('installation/signup', array('language' => kirby()->option('panel.language', 'en')));
-
-    $form->data('autosubmit', 'native');
-    $form->style('centered');
-
-    $form->buttons->submit->value = l('installation.signup.button');
-
-    foreach(panel()->languages() as $lang) {
-      $form->fields()->get('language')->options[$lang->code()] = $lang->title();
-    }
-
-    $form->on('submit', function($form) use($self) {
+    $form = $this->form('installation/signup', null, function($form) use($self) {
 
       $form->validate();
 

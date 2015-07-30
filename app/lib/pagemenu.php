@@ -8,34 +8,8 @@ class PageMenu {
 
   public function __construct($page, $position = 'sidebar') {
     $this->page      = $page;
-    $this->blueprint = blueprint::find($page);
+    $this->blueprint = $page->blueprint();
     $this->position  = $position;
-  }
-
-  public function isDeletable() {
-    return (!$this->page->hasChildren() and $this->page->isDeletable() and $this->blueprint->deletable());
-  }
-
-  public function previewUrl() {
-    // create the preview link
-    if($previewSetting = $this->blueprint->preview()) {
-      switch($previewSetting) {
-        case 'parent':
-          return $this->page->parent() ? $this->page->parent()->url() : $this->page->url();
-          break;
-        case 'first-child':
-          return $this->page->children()->first() ? $this->page->children()->first()->url() : false;
-          break;
-        case 'last-child':
-          return $this->page->children()->last()  ? $this->page->children()->last()->url() : false;
-          break;
-        default:
-          return $this->page->url();
-          break;
-      }
-    } else {
-      return false;
-    }
   }
 
   public function item($icon, $label, $attr = array()) {
@@ -47,11 +21,13 @@ class PageMenu {
     $parent = $this->page->parent();
 
     if($this->position == 'context') {    
+      
       if($parent->isSite()) {
-        $a->data('modal-return-to', purl('/'));
+        $a->data('modal-return-to', purl('/'));        
       } else {
-        $a->data('modal-return-to', purl($parent, 'show'));
+        $a->data('modal-return-to', $parent->url());        
       }
+
     }
 
     $li = new Brick('li');
@@ -62,7 +38,7 @@ class PageMenu {
   }
 
   public function previewOption() {  
-    if($previewUrl = $this->previewUrl()) {
+    if($previewUrl = $this->page->previewUrl()) {
       return $this->item('play-circle-o', 'pages.show.preview', array(
         'href'          => $previewUrl,
         'target'        => '_blank',
@@ -77,7 +53,7 @@ class PageMenu {
   public function editOption() {  
     if($this->position == 'context') {
       return $this->item('pencil', 'pages.show.subpages.edit', array(
-        'href' => purl($this->page, 'show'),
+        'href' => $this->page->url(),
       ));      
     }
   }
@@ -95,7 +71,7 @@ class PageMenu {
       }
 
       return $this->item($icon, $label, array(
-        'href'       => purl($this->page, 'toggle'),
+        'href'       => $this->page->url('toggle'),
         'data-modal' => true,
       ));
 
@@ -109,7 +85,7 @@ class PageMenu {
   public function urlOption() {
     if(!$this->page->isHomePage() and !$this->page->isErrorPage()) {
       return $this->item('chain', 'pages.show.changeurl', array(
-        'href'          => purl($this->page, 'url'),
+        'href'          => $this->page->url('url'),
         'title'         => 'u',
         'data-shortcut' => 'u',
         'data-modal'    => true,
@@ -120,9 +96,9 @@ class PageMenu {
   }
 
   public function deleteOption() {
-    if($this->isDeletable()) {
+    if($this->page->isDeletable()) {
       return $this->item('trash-o', 'pages.show.delete', array(
-        'href'                 => purl($this->page, 'delete'),
+        'href'                 => $this->page->url('delete'),
         'title'                => '#',
         'data-shortcut'        => '#',
         'data-modal'           => true,

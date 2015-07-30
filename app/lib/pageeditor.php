@@ -2,173 +2,52 @@
 
 class PageEditor {
 
-  public $draft = false;
   public $page;
   public $blueprint;
-  public $fields;
-  public $changes;
-  public $content;
-  public $preview = false;
   public $form;
 
   public function __construct($id = '/') {
-
     $this->setPage($id);
-    $this->setBlueprint();
-    $this->setFields();
-    $this->setChanges();
-    $this->setContent();
     $this->setForm();
-
   }
 
   public function setPage($id) {
-
-    $this->page = $id == '/' ? site() : page($id);
-
-    if(!$this->page) {
-      throw new Exception('The page could not be found');
-    }
-
-    if($this->page->isSite()) {
-      $this->draft = false;
-    } else {
-      $this->draft = s::get('draft') == $this->page->uri();      
-    }
-
-  }
-
-  public function setBlueprint() {
-    $this->blueprint = blueprint::find($this->page);      
-  }
-
-  public function setFields() {
-    $this->fields = $this->blueprint->fields($this->page);
-  }
-
-  public function setChanges() {
-    $this->changes = PageStore::fetch($this->page);          
-  }
-
-  public function setContent() {
-
-    if($this->draft) {
-      return $this->content = array();
-    }
-
-    $this->content = $this->page->content()->toArray();
-
-    // make sure the title is always there
-    $this->content['title'] = $this->page->title();
-
-    // add the changes to the content array
-    $this->content = array_merge($this->content, $this->changes);
-
-  }
-
-  public function update($form) {
-
-    $page = $this->page();
-
-    // validate all fields
-    $form->validate();
-
-    // fetch the data for the form
-    $data = pagedata::createByInput($page, $form->serialize());
-
-    // stop at invalid fields
-    if(!$form->isValid()) {
-      panel()->alert(l('pages.show.error.form'));
-    }
-
-    try {
-
-      PageStore::discard($page);
-
-      $page->update($data);
-
-      // move the page if this is still a draft
-      if($this->draft) {
-        $page->move($data['title']);
-        s::set('draft', false);
-      }
-
-      // make sure that the sorting number is correct
-      if($page->isVisible()) {
-        $num = api::createPageNum($page);
-        if($num !== $page->num()) {
-          if($num > 0) {
-            $page->sort($num);
-          } 
-        }
-      }
-
-      // get the blueprint of the parent page to find the 
-      // correct sorting mode for this page
-      $parentBlueprint = blueprint::find($page->parent());
-
-      // auto-update the uid if the sorting mode is set to zero
-      if($parentBlueprint->pages()->num()->mode() == 'zero') {
-        $uid = str::slug($page->title());
-        $page->move($uid);
-      }
-
-      history::visit($page->id());
-
-      kirby()->trigger('panel.page.update', $page);
-      panel()->notify(l('saved'));
-
-      if($page->isSite()) {
-        go(purl('options'));
-      } else {
-        go(purl($page, 'show'));
-      }
-
-    } catch(Exception $e) {
-      panel()->alert($e->getMessage());
-    }
-
+    $this->page      = new PageModel($id);
+    $this->blueprint = $this->page->blueprint();
   }
 
   public function setForm() {
 
-    // create the form
-    $this->form = new Form($this->fields->toArray(), $this->content);
+    $page = $this->page;
+    $form = panel()->form('pages/edit', $this->page, function($form) use($page) {
 
-    $this->form->centered = true;
-  
-    // set the keep api    
-    $this->form->data('keep', purl($this->page, 'keep'));
+      // validate all fields
+      $form->validate();
 
-    // remove the cancel button
-    $this->form->buttons->cancel = '';
-
-    // set the autofocus on the title field
-    $this->form->fields->title->autofocus = true;
-
-    // add the changes alert
-    if(!empty($this->changes)) {
-      $this->form->buttons->append('changes', $this->changesAlert());      
-    }
-
-    // set the form action
-    $this->form->on('submit', function($form) {
-      $this->update($form);
-    });
-
-    // check for untranslatable fields
-    if(site()->language() != site()->defaultLanguage()) {
-
-      foreach($this->form->fields() as $field) {
-        if($field->translate() == false) {
-          $field->readonly = true;
-          $field->disabled = true;
-        }
+      // stop at invalid fields
+      if(!$form->isValid()) {
+        return panel()->alert(l('pages.show.error.form'));
       }
 
-    }
+      try {
 
-    return $this->form;
+        $page->update($form->serialize());
+
+        panel()->notify(l('saved'));
+
+        if($page->isSite()) {
+          return panel()->redirect('options');
+        } else {
+          return panel()->redirect($page);
+        }
+
+      } catch(Exception $e) {
+        return panel()->alert($e->getMessage());
+      }
+
+    });
+  
+    return $this->form = $form;
 
   }
 
@@ -176,26 +55,18 @@ class PageEditor {
     return $this->page;
   }
 
-  public function changes() {
-    return $this->changes;
-  }
-
   public function form() {
     return $this->form;
   }
 
-  public function noTitle() {
-    return !$this->form->fields()->get('title');
-  }
-
   public function subpages() {
 
-    if($this->blueprint->pages()->max() === 0 or $this->blueprint->pages()->hide() === true) {
+    if(!$this->page->canShowSubpages()) {
       return null;
     }
 
     // fetch all subpages in the right order
-    $children = api::subpages($this->page->children(), $this->blueprint);
+    $children = $this->page->subpages();
 
     // add pagination to the subpages
     if($limit = $this->blueprint->pages()->limit()) {
@@ -211,7 +82,7 @@ class PageEditor {
       'page'       => $this->page,
       'subpages'   => $children,
       'templates'  => $this->blueprint->pages()->template(),
-      'addbutton'  => !api::maxPages($this->page, $this->blueprint->pages()->max()),
+      'addbutton'  => $this->page->addButton(),
       'pagination' => $children->pagination(),
     ));
 
@@ -219,13 +90,13 @@ class PageEditor {
 
   public function files() {
 
-    if($this->blueprint->files()->max() === 0 or $this->blueprint->files()->hide() === true) {
+    if(!$this->page->canShowFiles()) {
       return null;
     }
 
     return new Snippet('pages/sidebar/files', array(
       'page'  => $this->page,
-      'files' => api::files($this->page, $this->blueprint),
+      'files' => $this->page->files(),
     ));
 
   }
@@ -234,24 +105,11 @@ class PageEditor {
 
     // create the monster sidebar
     return new Snippet('pages/sidebar', array(
-      'page'      => $this->page(),
-      'menu'      => new PageMenu($this->page(), 'sidebar'),
+      'page'      => $this->page,
+      'menu'      => $this->page->menu('sidebar'),
       'subpages'  => $this->subpages(),
       'files'     => $this->files(),
     ));
-
-  }
-
-  public function changesAlert() {
-
-    // display unsaved changes
-    $changes = new Brick('div');
-    $changes->addClass('text marginalia');
-    $changes->attr('style', 'margin-top: 1.5rem');
-    $changes->append(l('pages.show.changes.text') . '<br>');
-    $changes->append('<a href="' . purl($this->page, 'discard') . '">' . l('pages.show.changes.button') . '</a>');
-
-    return $changes;
 
   }
 
@@ -263,22 +121,18 @@ class PageEditor {
 
     return new Snippet('pages/topbar', array(
       'breadcrumb' => $this->breadcrumb(),
-      'search'     => purl($this->page, 'search')
+      'search'     => $this->page->url('search'),
     ));
 
   }
 
   public function content() {
 
-    $form = $this->form();
-
-    return view('pages/show', array(
+    return view('pages/edit', array(
       'sidebar' => $this->sidebar(),
-      'form'    => $form,
-      'changes' => $this->changes(),
-      'page'    => $this->page(),
-      'notitle' => $this->noTitle(),
-      'draft'   => $this->draft,
+      'form'    => $this->form(),
+      'page'    => $this->page,
+      'notitle' => $this->page->hasNoTitleField(),
     ));
 
   }

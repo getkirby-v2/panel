@@ -14,7 +14,7 @@
       </a>
 
       <?php if($addbutton): ?>
-      <a title="+"<?php e($addbutton->modal, ' data-modal') ?> data-shortcut="+" class="hgroup-option-right" href="<?php __($addbutton->url) ?>">
+      <a title="+"<?php e($addbutton->modal(), ' data-modal') ?> class="hgroup-option-right" href="<?php __($addbutton->url()) ?>">
         <?php i('plus-circle', 'left') ?>
         <?php _l('subpages.index.add') ?>
       </a>
@@ -32,7 +32,7 @@
       <div class="dropzone subpages">
         <div class="items<?php e($sortable, ' sortable') ?>" id="visible-children" data-flip="<?php echo $flip ?>" data-start="<?php echo $visible->start() ?>" data-total="<?php echo $visible->total() ?>">
           <?php foreach($visible->pages() as $subpage): ?>
-          <?php echo new Snippet('subpages/subpage', array('subpage' => $subpage)) ?>
+          <?php echo new Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
           <?php endforeach ?>
         </div>
       </div>
@@ -54,7 +54,7 @@
         <div class="items<?php e($sortable, ' sortable') ?>" id="invisible-children">
 
           <?php foreach($invisible->pages() as $subpage): ?>
-          <?php echo new Snippet('subpages/subpage', array('subpage' => $subpage)) ?>
+          <?php echo new Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
           <?php endforeach ?>
 
         </div>
@@ -74,14 +74,17 @@
 
   <?php else: ?>
 
+
+  <?php if($addbutton): ?>
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php _l('subpages.index.add.first.text') ?></p>
-      <a data-shortcut="+" data-modal class="btn btn-rounded" href="<?php echo purl($page, 'add') ?>">
+      <a data-shortcut="+"<?php e($addbutton->modal(), ' data-modal') ?> class="btn btn-rounded" href="<?php __($addbutton->url()) ?>">
         <?php _l('subpages.index.add.first.button') ?>
       </a>
     </div>
   </div>
+  <?php endif ?>
 
   <?php endif ?>
 
@@ -119,7 +122,7 @@ $('.main .sortable').sortable({
       if(ui.item.parent().attr('id') !== 'invisible-children') {
 
         $.post(window.location.href, {action: 'sort', id: id, to: to}, function(data) {
-          app.content.replace(data);
+          app.content.reload();
         });
 
       }
@@ -131,7 +134,7 @@ $('.main .sortable').sortable({
     if($(this).attr('id') == 'invisible-children') {
 
       $.post(window.location.href, {action: 'hide', id: ui.item.attr('id')}, function(data) {
-        app.content.replace(data);
+        app.content.reload();
       });
 
     }

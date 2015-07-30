@@ -23,6 +23,7 @@
     <?php endif ?>
 
     <?php echo assets::js() ?>
+
     <?php echo js(panel()->urls()->js() . '/app.js?v=' . panel()->version()) ?>
 
     <script><?php echo form::js(false) ?></script>
