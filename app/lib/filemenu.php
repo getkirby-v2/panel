@@ -26,14 +26,14 @@ class FileMenu {
 
   public function previewOption() {  
     return $this->item('play-circle-o', 'files.show.open', array(
-      'href'   => $this->file->previewUrl(),
+      'href'   => $this->file->url('preview'),
       'target' => '_blank'
     ));
   }
 
   public function editOption() {
     return $this->item('pencil', 'files.index.edit', array(
-      'href' => $this->file->url(),
+      'href' => $this->file->url('edit'),
     ));
   }
 

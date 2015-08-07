@@ -1,36 +1,12 @@
 <?php
 
-class PageModel {
+class PageModel extends Page {
 
-  public $source;
   public $blueprint;
 
-  public function __construct($id) {
-
-    if(is_a($id, 'Page')) {
-      $this->source = $id;
-    } else if(empty($id) or $id == '/') {
-      $this->source = site();
-    } else if(is_string($id)) {
-      $this->source = page($id);      
-    } else {
-      throw new Exception('Invalid page model source');
-    }
-
-    if(!$this->source) {
-      throw new Exception('The page could not be found: ' . $id);
-    }
-
-    $this->blueprint = blueprint::find($this->source);
-
-  }
-
-  public function source() {
-    return $this->source;
-  }
-
-  public function parent() {
-    return new PageModel($this->source->parent());
+  public function __construct($parent, $dirname) {
+    parent::__construct($parent, $dirname);
+    $this->blueprint = blueprint::find($this);
   }
 
   public function blueprint() {
@@ -45,8 +21,10 @@ class PageModel {
 
     if($to == 'last') {
       $to = $visible->count() + 1;
+    } else if($to == 'first') {
+      $to = 1;
     } else if(is_null($to)) {
-      $to = $this->source->num();
+      $to = $this->num();
     }
 
     switch($params->mode()) {
@@ -54,7 +32,7 @@ class PageModel {
         return 0;
         break;
       case 'date':
-        if($to = $this->source->date($params->format(), $params->field())) {
+        if($to = $this->date($params->format(), $params->field())) {
           return $to;
         } else {
           return date($params->format());
@@ -66,7 +44,7 @@ class PageModel {
 
         if($to <= 0) return 1;
 
-        if($this->source->isInvisible()) {
+        if($this->isInvisible()) {
           $limit = $visible->count() + 1;
         } else {
           $limit = $visible->count();
@@ -82,41 +60,30 @@ class PageModel {
 
   }
 
-  public function url($action = 'edit') {
-
-    if(empty($action)) $action = 'edit';
-
-    if($this->source->isSite()) {
-      if($action == 'edit') {
-        return panel()->urls()->index() . '/options';
-      } else {    
-        return panel()->urls()->index() . '/site/' . $action;
+  public function url($action = null) {
+    if(empty($action)) {
+      return parent::url();
+    } else if($action == 'preview') {
+      if($previewSetting = $this->blueprint->preview()) {
+        switch($previewSetting) {
+          case 'parent':
+            return $this->parent() ? $this->parent()->url() : $this->url();
+            break;
+          case 'first-child':
+            return $this->children()->first() ? $this->children()->first()->url() : false;
+            break;
+          case 'last-child':
+            return $this->children()->last()  ? $this->children()->last()->url() : false;
+            break;
+          default:
+            return $this->url();
+            break;
+        }
+      } else {
+        return false;
       }
     } else {
-      return panel()->urls()->index() . '/pages/' . $this->source->id() .  '/' . $action;      
-    }
-
-  }
-
-  public function previewUrl() {
-    // create the preview link
-    if($previewSetting = $this->blueprint->preview()) {
-      switch($previewSetting) {
-        case 'parent':
-          return $this->source->parent() ? $this->source->parent()->url() : $this->source->url();
-          break;
-        case 'first-child':
-          return $this->source->children()->first() ? $this->source->children()->first()->url() : false;
-          break;
-        case 'last-child':
-          return $this->source->children()->last()  ? $this->source->children()->last()->url() : false;
-          break;
-        default:
-          return $this->source->url();
-          break;
-      }
-    } else {
-      return false;
+      return panel()->urls()->index() . '/pages/' . $this->id() .  '/' . $action;            
     }
   }
 
@@ -131,83 +98,32 @@ class PageModel {
     }
 
     // get the latest content from the text file
-    $data = $this->source->content()->toArray();
+    $data = $this->content()->toArray();
 
     // make sure the title is always there
-    $data['title'] = $this->source->title();
+    $data['title'] = $this->title();
 
     // add the changes to the content array
-    $data = array_merge($data, $this->getChanges());
+    $data = array_merge($data, $this->changes()->get());
 
     return $data;
 
   }
 
   public function getFormFields() {
-    return $this->blueprint->fields($this->source)->toArray();
+    return $this->blueprint->fields($this)->toArray();
   }
 
-  public function breadcrumb() {
-    return $this->source->parents()->flip()->map(function($page) {
-      return new static($page);
-    });
-  }
-
-  public function subpages($type = null) {
-
-    $pages     = $this->children();
-    $blueprint = $this->blueprint();
-    $sort      = $blueprint->pages()->sort();
-
-    if($type) {
-      $pages = $pages->$type();
-    }
-
-    switch($sort) {
-      case 'flip':
-        $pages = $pages->flip();
-        break;
-      default;
-        $parts = str::split($sort, ' ');
-        if(count($parts) > 0) {
-          $pages = call(array($pages, 'sortBy'), $parts);
-        }
-        break;
-    }
-
-    // convert all files to file models
-    return $pages->map(function($page) {
-      return new PageModel($page);
-    });
-
+  public function children() {
+    return new ChildrenCollection($this);
   }
 
   public function canSortFiles() {
     return $this->blueprint->files()->sortable();
   }
 
-  public function file($filename) {
-    return new FileModel($this, $filename);
-  }
-
   public function files() {
-
-    $page  = $this;
-    $files = $this->source->files();
-
-    if($this->canSortFiles()) {
-      $files = $files->sortBy('sort', 'asc');
-    } 
-
-    if($this->blueprint->files()->sort() == 'flip') {
-      $files = $files->flip();
-    }
-
-    // convert all files to file models
-    return $files->map(function($file) use($page) {
-      return new FileModel($page, $file);
-    });
-
+    return new FilesCollection($this);
   }
 
   public function addButton() {
@@ -232,48 +148,11 @@ class PageModel {
     return new PageMenu($this, $position);
   }
 
-  public function createSubpage($template, $uid = null, $title = null) {
-
-    if(empty($template)) {
-      throw new Exception(l('pages.add.error.template'));
-    }
-
-    $uid       = empty($uid) ? str::random(32) : $uid;
-    $blueprint = blueprint::find($template);
-    $data      = array();
-
-    foreach($blueprint->fields() as $key => $field) {
-      $data[$key] = $field->default();        
-    }
-
-    // make sure to fill the title field properly
-    if(!empty($title)) {
-      $data['title'] = $title;
-    } else if(empty($data['title'])) {
-      $data['title'] = '(' . l('untitled') . ')';
-    }
-
-    // create the new page and convert it to a page model
-    $page = new PageModel($this->source->children()->create($uid, $template, $data));
-
-    // subpage builder
-    foreach((array)$page->blueprint()->pages()->build() as $build) {
-      $missing = a::missing($build, array('title', 'template', 'uid'));
-      if(!empty($missing)) continue;
-      $page->createSubpage($build['template'], $build['uid'], $build['title']);
-    }
-
-    s::set('draft', $page->id());
-
-    return $page;
-
-  }
-
   public function filterInput($input) {
 
     $data = array();
 
-    foreach($this->source->content()->toArray() as $key => $value) {
+    foreach($this->content()->toArray() as $key => $value) {
       if(strtolower($key) == 'url_key') {
         // don't erase the url key
         continue;
@@ -286,20 +165,8 @@ class PageModel {
 
   }
 
-  public function getChanges() {
-    return PageStore::fetch($this->source);
-  }
-
-  public function keepChanges() {
-    return PageStore::keep($this->source);
-  }
-
-  public function updateChanges($changes) {
-    PageStore::update($this->source, $changes);    
-  }
-
-  public function discardChanges() {
-    return PageStore::discard($this->source);
+  public function changes() {
+    return new Changes($this);
   }
 
   public function maxSubpages() {
@@ -320,7 +187,7 @@ class PageModel {
   }
 
   public function canShowSubpages() {
-    return ($this->source->pages()->hide() !== true and $this->canHaveSubpages());    
+    return ($this->pages()->hide() !== true and $this->canHaveSubpages());    
   }
 
   public function canHaveFiles() {
@@ -328,13 +195,13 @@ class PageModel {
   }
 
   public function canShowFiles() {
-    return ($this->source->files()->hide() !== true and $this->canHaveFiles());    
+    return ($this->files()->hide() !== true and $this->canHaveFiles());    
   }
 
   public function canHaveMoreSubpages() {
     if(!$this->canHaveSubpages()) {
       return false;
-    } else if($this->source->children()->count() >= $this->maxSubpages()) {
+    } else if($this->children()->count() >= $this->maxSubpages()) {
       return false;
     } else {
       return true;
@@ -344,7 +211,7 @@ class PageModel {
   public function canHaveMoreFiles() {
     if(!$this->canHaveFiles()) {
       return false;
-    } else if($this->source->files()->count() >= $this->maxFiles()) {
+    } else if($this->files()->count() >= $this->maxFiles()) {
       return false;
     } else {
       return true;
@@ -359,63 +226,70 @@ class PageModel {
     }
   }
 
-  public function changeUrl($uid) {
+  public function move($uid) {
 
-    $changes = $this->getChanges();
+    if(!$this->canChangeUrl()) {
+      throw new Exception('You cannot change the URL of this page');
+    }
 
-    $this->discardChanges();
+    $site    = panel()->site();
+    $changes = $this->changes()->get();
 
-    if(site()->multilang() and site()->language()->code() != site()->defaultLanguage()->code()) {
-      $this->source->update(array(
+    $this->changes()->discard();
+
+    if($site->multilang() and $site->language()->code() != $site->defaultLanguage()->code()) {
+      parent::update(array(
         'URL-Key' => $uid
       ));
     } else {
-      $this->source->move($uid);
+      parent::move($uid);
     }
 
-    $this->updateChanges($changes);
+    $this->changes()->update($changes);
 
     // hit the hook
-    kirby()->trigger('panel.page.move', $this->source);
+    kirby()->trigger('panel.page.move', $this);
   
   }
 
-  public function sort($to) {
+  public function sort($to, $sibling = false) {
 
     if($this->isErrorPage()) {
-      return $this->source->num();
+      return $this->num();
     }
 
     // create a new valid sorting num
     $num = $this->createNum($to);
 
     // sort the page
-    $this->source->sort($num);
+    parent::sort($num);
 
     // clean the other page numbers
-    $this->sortSiblings($num);
+    if(!$sibling) {
 
-    // hit the hook
-    kirby()->trigger('panel.page.sort', $this->source);
+      $this->sortSiblings($num);      
+
+      // hit the hook
+      kirby()->trigger('panel.page.sort', $this);
+
+    }
 
     return $num;
 
   }
 
   public function hide() {
-    $this->source->hide();
+    parent::hide();
     $this->sortSiblings();
-    kirby()->trigger('panel.page.hide', $this->source);
+    kirby()->trigger('panel.page.hide', $this);
   }
 
   public function toggle($position) {
-
-    if($this->source->isVisible()) {
+    if($this->isVisible()) {
       $this->hide();
     } else {
       $this->sort($position);          
     }
-
   }
 
   public function hasNoTitleField() {
@@ -425,11 +299,11 @@ class PageModel {
 
   public function isDeletable($exception = false) {
 
-    if($this->source->isHomePage()) {
+    if($this->isHomePage()) {
       $error = 'pages.delete.error.home';
-    } else if($this->source->isErrorPage()) {
+    } else if($this->isErrorPage()) {
       $error = 'pages.delete.error.error';
-    } else if($this->source->hasChildren()) {
+    } else if($this->hasChildren()) {
       $error = 'pages.delete.error.children';
     } else if(!$this->blueprint()->deletable()) {
       $error = 'pages.delete.error.blocked';
@@ -446,64 +320,65 @@ class PageModel {
   }
 
   public function editor() {
-    return new PageEditor($this->source->id());    
+    return new PageEditor($this);    
   }
 
   public function sortSiblings($skip = null) {
     $to = 1;
-    foreach($this->source->siblings()->visible()->not($this->source) as $page) {
+    foreach(parent::siblings()->visible()->not($this) as $page) {
       if($to === $skip) $to++;
-      $pagemodel = new PageModel($page);
-      $page->sort($pagemodel->createNum($to));
+      $page->sort($to, true);
       $to++;
     }
   }
 
   public function isDraft() {
-    if($this->source->isSite()) {
+    if($this->isSite()) {
       return false;
     } else {
-      return s::get('draft') == $this->source->id();      
+      return s::get('draft') == $this->id();      
     }
   }
 
   public function addToHistory() {
-    history::visit($this->source->id());    
+    history::visit($this->id());    
   }
 
   public function updateNum() {
 
     // make sure that the sorting number is correct
-    if($this->source->isVisible()) {
+    if($this->isVisible()) {
       $num = $this->createNum();
-      if($num !== $this->source->num()) {
+      if($num !== $this->num()) {
         $this->sort($num);
       }
     }
 
-    return $this->source->num();
+    return $this->num();
 
   }
 
   public function updateUid() {
+
     // auto-update the uid if the sorting mode is set to zero
     if($this->parent()->blueprint()->pages()->num()->mode() == 'zero') {
-      $uid = str::slug($this->source->title());
-      $this->source->move($uid);
+      $uid = str::slug($this->title());
+      $this->move($uid);
     }
-    return $this->source->uid();
+    return $this->uid();
+
   }
 
-  public function update($input) {
+  public function update($input = array()) {
 
     $data = $this->filterInput($input);
 
     $this->discardChanges();
-    $this->source->update($data);
+    parent::update($data);
 
     // move the page if this is still a draft
     if($this->isDraft()) {
-      $this->source->move($data['title']);
+      parent::move($data['title']);
       s::set('draft', false);
     }
 
@@ -511,27 +386,27 @@ class PageModel {
     $this->updateUid();
     $this->addToHistory();
 
-    kirby()->trigger('panel.page.update', $this->source);
+    kirby()->trigger('panel.page.update', $this);
 
   }
 
   public function upload() {
-    new PageUploader($this->source);        
+    new PageUploader($this);        
   }
 
-  public function delete() {
+  public function delete($force = false) {
 
     // delete the page
-    $this->source->delete();
+    parent::delete();
 
     // resort the siblings
     $this->sortSiblings();
 
     // remove unsaved changes
-    $this->discardChanges();
+    $this->changes()->discard();
 
     // hit the hook
-    kirby()->trigger('panel.page.delete', $this->source);
+    kirby()->trigger('panel.page.delete', $this);
 
   }
 
@@ -541,34 +416,50 @@ class PageModel {
 
   public function dragText() {
     if(c::get('panel.kirbytext') === false) {
-      return '[' . $this->source->title() . '](' . $this->source->url() . ')';
+      return '[' . $this->title() . '](' . $this->url() . ')';
     } else {
-      return '(link: ' . $this->source->uri() . ' text: ' . $this->source->title() . ')';
+      return '(link: ' . $this->uri() . ' text: ' . $this->title() . ')';
     }
   }
 
   public function displayNum() {
 
-    if($this->source->isInvisible()) {
+    if($this->isInvisible()) {
       return '—';
     } else {
       switch($this->parent()->blueprint()->pages()->num()->mode()) {
         case 'zero':
-          return str::substr($this->source->title(), 0, 1);
+          return str::substr($this->title(), 0, 1);
           break;
         case 'date':
-          return date('Y/m/d', strtotime($this->source->num()));
+          return date('Y/m/d', strtotime($this->num()));
           break;
         default:
-          return intval($this->source->num());
+          return intval($this->num());
           break;
       }
     }
 
   }
 
-  public function __call($method, $args = null) {
-    return call(array($this->source, $method), $args);
+  public function topbar(Topbar $topbar) {
+
+    foreach($this->parents() as $item) {
+      $topbar->append($item->url('edit'), $item->title());
+    }
+
+    $topbar->append($this->url('edit'), $this->title());
+
+    if($topbar->view == 'subpages/index') {
+      $topbar->append($this->url('subpages'), l('subpages'));    
+    }
+   
+    $topbar->html .= new Snippet('languages');
+    $topbar->html .= new Snippet('searchtoggle', array(
+      'search' => $this->url('search'),
+      'close'  => $topbar->view == 'pages/search' ? $this->url() : false
+    ));    
+
   }
 
 }

@@ -62,8 +62,7 @@ class Panel {
     form::setup($this->roots->fields, $this->kirby->roots()->fields());
 
     // load all available routes
-    $this->routes = array_merge($this->routes, require($this->roots->routes . DS . 'api.php'));
-    $this->routes = array_merge($this->routes, require($this->roots->routes . DS . 'views.php'));
+    $this->routes = array_merge($this->routes, require($this->roots->app . DS . 'routes.php'));
 
     // start the router
     $this->router = new Router($this->routes);
@@ -71,18 +70,25 @@ class Panel {
     // register router filters
     $this->router->filter('auth', function() use($kirby) {
 
-      $user = $kirby->site()->user();
+      try {
 
-      if(!$user or !$user->hasPanelAccess()) {
-        if($user) $user->logout();
-        go('panel/login');
+        $user = panel()->user();
+
+        if(!$user->hasPanelAccess()) {
+          $user->logout();
+          throw new Exception('Unallowed panel access');
+        }
+
+      } catch(Exception $e) {
+        panel()->redirect('login');
       }
+
     });
 
     // check for a completed installation
     $this->router->filter('isInstalled', function() use($kirby) {
       if($kirby->site()->users()->count() == 0) {
-        go('panel/install');
+        panel()->redirect('install');
       }
     });
 
@@ -93,7 +99,15 @@ class Panel {
   }
 
   public function site() {
-    return new PageModel($this->site);
+    return new SiteModel(kirby());
+  }
+
+  public function page($id) {
+    if($page = (empty($id) or $id == '/') ? $this->site() : $this->site()->find($id)) {
+      return $page;
+    } else {
+      throw new Exception('The page could not be found');
+    }
   }
 
   public function roots() {
@@ -152,7 +166,7 @@ class Panel {
       'form'           => $this->roots->lib . DS . 'form.php',
       'history'        => $this->roots->lib . DS . 'history.php',
       'installation'   => $this->roots->lib . DS . 'installation.php',
-      'pagestore'      => $this->roots->lib . DS . 'pagestore.php',
+      'changes'        => $this->roots->lib . DS . 'changes.php',
       'pageeditor'     => $this->roots->lib . DS . 'pageeditor.php',
       'pageuploader'   => $this->roots->lib . DS . 'pageuploader.php',
       'pagemenu'       => $this->roots->lib . DS . 'pagemenu.php',
@@ -160,7 +174,13 @@ class Panel {
       'widgets'        => $this->roots->lib . DS . 'widgets.php',
       'topbar'         => $this->roots->lib . DS . 'topbar.php',
 
+      // collections
+      'userscollection'    => $this->roots->collections . DS . 'users.php',
+      'filescollection'    => $this->roots->collections . DS . 'files.php',
+      'childrencollection' => $this->roots->collections . DS . 'children.php',
+
       // models 
+      'sitemodel'   => $this->roots->models . DS . 'site.php',
       'pagemodel'   => $this->roots->models . DS . 'page.php',
       'filemodel'   => $this->roots->models . DS . 'file.php',
       'usermodel'   => $this->roots->models . DS . 'user.php',
@@ -283,7 +303,7 @@ class Panel {
       }
 
     } catch(Exception $e) {
-      require_once($this->roots->controllers . DS . 'views' . DS . 'error.php');
+      require_once($this->roots->controllers . DS . 'error.php');
       $controller = new ErrorController();
       $response   = $controller->index($e->getMessage(), $e);
     }
@@ -417,19 +437,15 @@ class Panel {
   }
 
   public function users() {
-
-    return site()->users()->map(function($user) {
-      return new UserModel($user);
-    });
-
+    return $this->site()->users();
   }
 
   public function user($username = null) {
 
     if($user = $this->site()->user($username)) {
-      return new UserModel($user);
+      return $user;
     } else {
-      return false;
+      throw new Exception('The user could not be found');
     }
 
   }

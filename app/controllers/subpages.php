@@ -31,7 +31,7 @@ class SubpagesController extends Controller {
 
   protected function subpages($page, $type) {
 
-    $pages = $page->subpages($type);
+    $pages = $page->children()->$type();
 
     if($limit = $page->blueprint()->pages()->limit()) {
 

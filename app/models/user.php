@@ -1,40 +1,24 @@
 <?php
 
-class UserModel {
-
-  public $source;
-
-  public function __construct($username) {
-
-    if(is_a($username, 'User')) {
-      $this->source = $username;
-    } else {
-      $this->source = panel()->site()->user($username);
-    }
-
-    if(!$this->source) {
-      throw new Exception('The user could not be found');
-    }
-
-  }
-
-  public function source() {
-    return $this->source;
-  }
+class UserModel extends User {
 
   public function url($action = 'edit') {
     if(empty($action)) $action = 'edit';
-    return panel()->urls()->index() . '/users/' . $this->source->username() . '/' . $action;
+    return panel()->urls()->index() . '/users/' . $this->username() . '/' . $action;
   }
 
   public function form($action, $callback) {    
     return panel()->form('users/' . $action, $this, $callback);
   }
 
-  public function update($data) {
+  public function update($data = array()) {
 
-    if(str::length($data['password']) > 0) {
-      if($data['password'] !== $data['passwordconfirmation']) {
+    if(!panel()->user()->isAdmin() and !$this->isCurrent()) {
+      throw new Exception('You are not allowed to update this user');
+    }
+
+    if(str::length(a::get($data, 'password')) > 0) {
+      if(a::get($data, 'password') !== a::get($data, 'passwordconfirmation')) {
         throw new Exception(l('users.form.error.password.confirm'));
       }
     } else {
@@ -43,8 +27,10 @@ class UserModel {
 
     unset($data['passwordconfirmation']);
 
-    $this->source->update($data);
-    kirby()->trigger('panel.user.update', $this->source);
+    parent::update($data);
+    kirby()->trigger('panel.user.update', $this);
+
+    return $this;
 
   }
 
@@ -61,35 +47,28 @@ class UserModel {
       }
     }
 
-    $this->source->delete();
+    parent::delete();
 
-    kirby()->trigger('panel.user.delete', $this->source);
+    kirby()->trigger('panel.user.delete', $this);
 
   }
 
   public function avatar() {
-    return new AvatarModel($this);
-  }
-
-  public function __call($method, $args = null) {
-    return call(array($this->source, $method), $args);
+    return new AvatarModel($this, parent::avatar());
   }
 
   public function isCurrent() {
-    return $this->source()->is(panel()->user()->source());
+    return $this->is(panel()->user());
   }
 
-  static public function create($data) {
+  public function topbar($topbar) {
 
-    if($data['password'] !== $data['passwordconfirmation']) {
-      throw new Exception(l('users.form.error.password.confirm'));
-    }
+    $topbar->append(purl('users'), l('users'));
+    $topbar->append($this->url(), $this->username());    
 
-    unset($data['passwordconfirmation']);
-
-    $user = panel()->site()->users()->create($data);
-    kirby()->trigger('panel.user.create', $user);
-    return new static($user);
+    // if($user === 'user') {
+    //   $topbar->append(purl('users/add'), l('users.index.add'));    
+    // }
 
   }
 

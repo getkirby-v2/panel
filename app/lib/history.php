@@ -6,7 +6,7 @@ class History {
 
     if(empty($uri)) return;
 
-    $history = site()->user()->history();
+    $history = panel()->user()->history();
 
     if(empty($history) or !is_array($history)) {
       $history = array();
@@ -21,7 +21,7 @@ class History {
     $history = array_slice($history, 0, 5);
 
     try {
-      site()->user()->update(array(
+      panel()->user()->update(array(
         'history' => $history
       ));
     } catch(Exception $e) {
@@ -32,7 +32,7 @@ class History {
 
   static public function get() {
 
-    $history = site()->user()->history();
+    $history = panel()->user()->history();
 
     if(empty($history) or !is_array($history)) {
       return array();
@@ -43,12 +43,10 @@ class History {
 
     foreach($history as $item) {
 
-      $page = page($item);
-
-      if(!$page) {
+      try {
+        $result[] = panel()->page($item);        
+      } catch(Exception $e) {
         $update = true;
-      } else {
-        $result[] = $page;
       }
 
     }
@@ -60,7 +58,7 @@ class History {
       }, $result);
 
       try {
-        site()->user()->update(array(
+        panel()->user()->update(array(
           'history' => $history
         ));
       } catch(Exception $e) {

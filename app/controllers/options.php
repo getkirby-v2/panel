@@ -4,9 +4,11 @@ class OptionsController extends Controller {
 
   public function index() {
 
-    $editor = new PageEditor();    
+    $site   = panel()->site();
+    $editor = $site->editor();
 
-    return screen('options/index', $editor->page(), array(
+    return screen('options/index', $site, array(
+      'site'    => $site,
       'form'    => $editor->form(),
       'files'   => $editor->files(),
       'license' => panel()->license()

@@ -38,9 +38,9 @@ class PageMenu {
   }
 
   public function previewOption() {  
-    if($previewUrl = $this->page->previewUrl()) {
+    if($preview = $this->page->url('preview')) {
       return $this->item('play-circle-o', 'pages.show.preview', array(
-        'href'          => $previewUrl,
+        'href'          => $preview,
         'target'        => '_blank',
         'title'         => 'p',
         'data-shortcut' => 'p',
@@ -53,7 +53,7 @@ class PageMenu {
   public function editOption() {  
     if($this->position == 'context') {
       return $this->item('pencil', 'pages.show.subpages.edit', array(
-        'href' => $this->page->url(),
+        'href' => $this->page->url('edit'),
       ));      
     }
   }
@@ -135,7 +135,11 @@ class PageMenu {
   }
 
   public function __toString() {
-    return (string)$this->html();
+    try {
+      return (string)$this->html();      
+    } catch(Exception $e) {
+      return (string)$e->getMessage();
+    }
   }
 
 }

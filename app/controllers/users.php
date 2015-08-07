@@ -16,7 +16,7 @@ class UsersController extends Controller {
 
   public function add() {
 
-    if(!site()->user()->isAdmin()) {
+    if(!panel()->user()->isAdmin()) {
       $this->redirect('users');
     }
 
@@ -54,7 +54,7 @@ class UsersController extends Controller {
     $self = $this;
     $user = $this->user($username);
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!panel()->user()->isAdmin() and !$user->isCurrent()) {
       $this->redirect('users');
     }
 
@@ -91,10 +91,11 @@ class UsersController extends Controller {
     $user = $this->user($username);
     $self = $this;
 
-    if(!site()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!panel()->user()->isAdmin() and !$user->isCurrent()) {
       return modal('error', array(
         'headline' => 'Error',
-        'text'     => 'You are not allowed to delete this user'
+        'text'     => 'You are not allowed to delete this user', 
+        'back'     => purl('users')
       ));
     } else {
 

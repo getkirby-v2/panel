@@ -16,12 +16,12 @@
     <div class="item item-with-image">
       <div class="item-content">
         <figure class="item-image">
-          <a class="item-image-container" href="<?php __($user->url()) ?>">
+          <a class="item-image-container" href="<?php __($user->url('edit')) ?>">
             <img src="<?php __($user->avatar()->url()) ?>" alt="<?php __($user->username()) ?>">
           </a>
         </figure>
         <div class="item-info">
-          <a href="<?php __($user->url()) ?>">
+          <a href="<?php __($user->url('edit')) ?>">
             <strong class="item-title"><?php __($user->username()) ?></strong>
             <small class="item-meta marginalia">
               <?php __($user->email()) ?>
@@ -35,7 +35,7 @@
 
         <ul class="nav nav-bar">
           <li>
-            <a class="btn btn-with-icon" href="<?php __($user->url()) ?>">
+            <a class="btn btn-with-icon" href="<?php __($user->url('edit')) ?>">
               <?php i('pencil', 'left') . _l('users.index.edit') ?>
             </a>
           </li>

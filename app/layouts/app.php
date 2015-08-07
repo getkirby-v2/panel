@@ -29,7 +29,7 @@
     <script><?php echo form::js(false) ?></script>
 
   </head>
-  <body class="app <?php echo panel()->direction() ?>" data-base="<?php echo panel()->urls()->index() ?>/">
+  <body class="app <?php echo panel()->direction() ?>">
 
     <div class="main">
       <?php if(isset($topbar))  echo $topbar ?>

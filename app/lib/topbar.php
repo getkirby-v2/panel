@@ -10,16 +10,22 @@ class Topbar {
 
     $this->view = $view;
 
-    $class = is_object($input) ? str_replace('model', '', strtolower(get_class($input))) : (string)$input;
-    $file  = panel()->roots()->topbars() . DS . str::lower($class) . '.php';
-
-    if(file_exists($file)) {
-
-      $callback = require($file);
-      $callback($this, $input);
-
+    if(is_object($input) and method_exists($input, 'topbar')) {
+      $input->topbar($this);
     } else {
-      throw new Exception('Missing topbar definition for class: ' . $class);
+
+      $class = is_object($input) ? str_replace('model', '', strtolower(get_class($input))) : (string)$input;
+      $file  = panel()->roots()->topbars() . DS . str::lower($class) . '.php';
+
+      if(file_exists($file)) {
+
+        $callback = require($file);
+        $callback($this, $input);
+
+      } else {
+        throw new Exception('Missing topbar definition for class: ' . $class);
+      }
+
     }
 
   }

@@ -4,12 +4,12 @@
       <?php if($page->isSite()): ?>
       <?php _l('subpages') ?>
       <?php else: ?>
-      <?php _l('subpages.index.headline') ?> <a href="<?php echo purl($page, 'show') ?>"><?php __($page->title()) ?></a>
+      <?php _l('subpages.index.headline') ?> <a href="<?php __($page->url('edit')) ?>"><?php __($page->title()) ?></a>
       <?php endif ?>
     </span>
     <span class="hgroup-options shiv shiv-dark shiv-left cf">
 
-      <a class="hgroup-option-left" href="<?php $page->isSite() ? _u() : _u($page, 'show') ?>">
+      <a class="hgroup-option-left" href="<?php $page->isSite() ? _u() : __($page->url('edit')) ?>">
         <?php i('arrow-circle-left', 'left') . _l('subpages.index.back') ?>
       </a>
 

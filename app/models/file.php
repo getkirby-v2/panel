@@ -1,41 +1,15 @@
 <?php
 
-class FileModel {
+class FileModel extends File {
 
-  public $page;
-  public $source;
-
-  public function __construct($page, $filename) {
-
-    $this->page = is_a($page, 'PageModel') ? $page : new PageModel($page);
-
-    if(is_a($filename, 'File')) {
-      $this->source = $filename;
+  public function url($action = null) {
+    if(empty($action)) {
+      return parent::url();
+    } else if($action == 'preview') {
+      return parent::url() . '?' . $this->modified();    
     } else {
-      $this->source = $this->page->source->file($filename);      
+      return $this->page()->url('file') . '/' . urlencode($this->filename()) . '/' . $action;      
     }
-
-    if(!$this->source) {
-      throw new Exception('The file could not be found: ' . $filename);
-    }
-
-  }
-
-  public function source() {
-    return $this->source;
-  }
-
-  public function page() {
-    return $this->page;
-  }
-
-  public function url($action = 'edit') {
-    if(empty($action)) $action = 'edit';
-    return $this->page()->url('file') . '/' . urlencode($this->source->filename()) . '/' . $action;
-  }
-
-  public function previewUrl() {
-    return $this->source->url() . '?' . $this->source->modified();    
   }
 
   public function menu() {
@@ -48,7 +22,7 @@ class FileModel {
 
   public function filterInput($input) {
     $data = array();
-    foreach($this->source->meta()->toArray() as $key => $value) {
+    foreach($this->meta()->toArray() as $key => $value) {
       if(strtolower($key) == 'sort') continue;
       $data[$key] = null;
     }
@@ -57,23 +31,23 @@ class FileModel {
 
 
   public function getFormFields() {
-    return $this->page()->blueprint()->files()->fields($this->page()->source())->toArray();
+    return $this->page()->blueprint()->files()->fields($this->page())->toArray();
   }
 
   public function getFormData() {
-    return $this->source()->meta()->toArray();    
+    return $this->meta()->toArray();    
   }
 
   public function canHavePreview() {
     $images = array('image/jpeg', 'image/gif', 'image/png');
-    return (in_array($this->source->mime(), $images) or $this->source->extension() == 'svg');    
+    return (in_array($this->mime(), $images) or $this->extension() == 'svg');    
   }  
 
   public function canHaveThumb() {
     if(!$this->canHavePreview()) {
       return false;
     } else if(kirby()->option('thumbs.driver') == 'gd') {
-      if($this->source->width() > 2048 or $this->source->height() > 2048) {
+      if($this->width() > 2048 or $this->height() > 2048) {
         return false;
       } else {
         return true;
@@ -85,33 +59,34 @@ class FileModel {
 
   public function rename($name) {
 
-    if($name == $this->source->name()) return true;
+    if($name == $this->name()) return true;
 
     // rename and get the new filename          
-    $filename = $this->source->rename($name);
-    
-    // restore all page caches
-    $this->page->reset();
-
-    // search the new file
-    $this->source = $this->page->source->file($filename);
-
-    // missing file for some reason
-    if(!$this->source) {
-      throw new Exception('The file could not be properly renamed');
-    }
+    $filename = parent::rename($name);
 
     // trigger the rename hook
-    kirby()->trigger('panel.file.rename', $this->source);          
+    kirby()->trigger('panel.file.rename', $this);          
 
   }
 
-  public function update($input) {  
+  public function update($input = array(), $sort = null) {  
+
+    if($input == 'sort') {
+
+      parent::update(array('sort' => $sort));
+
+      kirby()->trigger('panel.file.sort', $this);
+
+      return true;
+
+    }
 
     $data = $this->filterInput($input);
 
     // rename the file if necessary
-    $this->rename($data['_name']);
+    if(!empty($data['_name'])) {
+      $this->rename($data['_name']);      
+    }
 
     // remove the name url and info
     unset($data['_name']);
@@ -119,57 +94,34 @@ class FileModel {
     unset($data['_link']);
 
     if(!empty($data)) {
-      $this->source->update($data);          
+      parent::update($data);          
     }
 
-    kirby()->trigger('panel.file.update', $this->source);
+    kirby()->trigger('panel.file.update', $this);
 
   }
 
   public function replace() {
-    new PageUploader($this->page, $this->source);    
-  }
-
-  public function sort($sort) {
-    $this->source->update(array('sort' => $sort));
-    kirby()->trigger('panel.file.sort', $this->source);
+    new PageUploader($this->page, $this);    
   }
 
   public function delete() {
-    $this->source->delete();
-    kirby()->trigger('panel.file.delete', $this->source);    
-  }
-
-  public function siblings() {
-    return $this->page->source->files();    
-  }
-
-  public function index() {
-    return $this->siblings()->indexOf($this->source);
-  }
-
-  public function next() {
-    $next = $this->siblings()->nth($this->index() + 1);
-    return $next ? new static($this->page, $next) : false;
-  }
-
-  public function prev() {
-    $prev = $this->siblings()->nth($this->index() - 1);
-    return $prev ? new static($this->page, $prev) : false;
+    parent::delete();
+    kirby()->trigger('panel.file.delete', $this);    
   }
 
   public function thumb() {
-    return $this->source->resize(300, 200)->url();
+    return $this->resize(300, 200)->url();
   }
 
   public function icon($position = 'left') {
 
-    switch($this->source->type()) {
+    switch($this->type()) {
       case 'image':
         return icon('file-image-o', $position);
         break;
       case 'document':
-        switch($this->source->extension()) {
+        switch($this->extension()) {
           case 'pdf':
             return icon('file-pdf-o', $position);
             break;
@@ -203,28 +155,32 @@ class FileModel {
 
   public function dragText() {
     if(c::get('panel.kirbytext') === false) {
-      switch($this->source->type()) {
+      switch($this->type()) {
         case 'image':
-          return '![' . $this->source->name() . '](' . $this->source->url() . ')';
+          return '![' . $this->name() . '](' . parent::url() . ')';
           break;
         default:
-          return '[' . $this->source->filename() . '](' . $this->source->url() . ')';
+          return '[' . $this->filename() . '](' . parent::url() . ')';
           break;
       }    
     } else {
-      switch($this->source->type()) {
+      switch($this->type()) {
         case 'image':
-          return '(image: ' . $this->source->filename() . ')';
+          return '(image: ' . $this->filename() . ')';
           break;
         default:
-          return '(file: ' . $this->source->filename() . ')';
+          return '(file: ' . $this->filename() . ')';
           break;
       }
     }
   }
 
-  public function __call($method, $args = null) {
-    return call(array($this->source, $method), $args);
+  public function topbar($topbar) {
+
+    $this->files()->topbar($topbar);
+
+    $topbar->append($this->url(), $this->filename());
+   
   }
 
 }

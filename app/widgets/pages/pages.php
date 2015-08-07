@@ -29,7 +29,7 @@ return array(
   'options' => $options,
   'html'  => function() use($site) {
     return tpl::load(__DIR__ . DS . 'pages.html.php', array(
-      'pages' => $site->subpages()
+      'pages' => $site->children()
     ));
   }
 );

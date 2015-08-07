@@ -18,7 +18,7 @@ return function($page) {
   $form->fields->title->autofocus = true;
 
   // add the changes alert
-  if($changes = $page->getChanges() and !empty($changes)) {
+  if($changes = $page->changes()->get() and !empty($changes)) {
 
     // display unsaved changes
     $alert = new Brick('div');

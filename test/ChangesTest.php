@@ -1,0 +1,99 @@
+<?php
+
+require_once(__DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'bootstrap.php');
+
+class ChangesTest extends PanelTestCase {
+
+  public function __construct() {
+
+    parent::__construct();
+
+    $this->removeAccounts();
+    $this->removeContent();
+
+    $this->user    = $this->createAdmin();
+    $this->page    = $this->site->children()->create('test', 'test');
+    $this->changes = $this->page->changes();
+
+  }
+
+  public function testConstruct() {
+    $this->assertInstanceOf('Changes', $this->changes);
+    $this->assertEquals($this->changes->id(), sha1($this->page->id()));
+    $this->assertEquals(array(), $this->changes->data());
+  }
+
+  public function testUpdate() {
+
+    $updates = array(
+      'a' => 'test-1',
+      'b' => 'test-2'
+    );
+
+    $this->changes->update($updates);
+
+    $this->assertEquals('test-1', $this->changes->get('a'));
+    $this->assertEquals('test-2', $this->changes->get('b'));
+
+    $this->assertEquals($updates, $this->changes->get());
+
+  }
+
+  public function testDiscard() {
+
+    $updates = array(
+      'a' => 'test-1',
+      'b' => 'test-2'
+    );
+
+    $this->changes->update($updates);
+
+    $this->assertEquals('test-1', $this->changes->get('a'));
+    $this->assertEquals('test-2', $this->changes->get('b'));
+
+    $this->changes->discard('a');
+
+    $this->assertEquals(false, $this->changes->get('a'));
+    $this->assertEquals('test-2', $this->changes->get('b'));
+
+    $this->changes->discard();
+
+    $this->assertEquals(false, $this->changes->get('a'));
+    $this->assertEquals(false, $this->changes->get('b'));
+
+  }
+
+  public function testExists() {
+
+    $updates = array(
+      'a' => 'test-1',
+      'b' => false
+    );
+
+    $this->changes->update($updates);
+
+    $this->assertTrue($this->changes->exist('a'));
+    $this->assertTrue($this->changes->exist('b'));
+    $this->assertFalse($this->changes->exist('c'));
+
+  }
+
+  public function testFlush() {
+
+    $updates = array(
+      'a' => 'test-1',
+      'b' => 'test-2'
+    );
+
+    $this->changes->update($updates);
+
+    $this->assertEquals('test-1', $this->changes->get('a'));
+    $this->assertEquals('test-2', $this->changes->get('b'));
+
+    $this->changes->flush();
+
+    $this->assertEquals(array(), $this->changes->data());
+
+  }
+
+}

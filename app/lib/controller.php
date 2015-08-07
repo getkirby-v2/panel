@@ -19,15 +19,11 @@ class Controller extends Obj {
   }
 
   public function page($id) {
-    return new PageModel($id);
+    return panel()->page($id);
   }
 
   public function user($username = null) {
-    if($user = panel()->user($username)) {
-      return $user;
-    } else {
-      throw new Exception(l('users.error.missing'));
-    }
+    return panel()->user($username);
   }
 
 }

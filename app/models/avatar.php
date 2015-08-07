@@ -1,13 +1,19 @@
 <?php
 
-class AvatarModel {
+class AvatarModel extends Media {
 
   public $user;
-  public $source;
 
-  public function __construct(UserModel $user) {
-    $this->user   = $user;
-    $this->source = $user->source()->avatar();
+  public function __construct(UserModel $user, $avatar) {
+
+    $this->user = $user;
+
+    if($avatar) {
+      parent::__construct($avatar->root(), $avatar->url());
+    } else {
+      parent::__construct($this->user->avatarRoot('{safeExtension}'));
+    }
+
   }
 
   public function form($action, $callback) {
@@ -15,11 +21,7 @@ class AvatarModel {
   }
 
   public function url() {
-    return $this->exists() ? $this->source->url() . '?' . $this->source->modified() : purl('assets/images/avatar.png');
-  }
-
-  public function exists() {
-    return $this->source;
+    return $this->exists() ? parent::url() . '?' . $this->modified() : purl('assets/images/avatar.png');
   }
 
   public function upload() {
@@ -28,7 +30,7 @@ class AvatarModel {
       throw new Exception('You are not allowed to change the avatar');
     }
 
-    $root = $this->source ? $user->source->root() : $this->user->avatarRoot('{safeExtension}');
+    $root = $this->exists() ? $this->root() : $this->user->avatarRoot('{safeExtension}');
 
     $upload = new Upload($root, array(
       'accept' => function($upload) {
@@ -52,7 +54,7 @@ class AvatarModel {
       'crop'      => true
     ));
 
-    kirby()->trigger('panel.avatar.upload', $this->user->avatar());
+    kirby()->trigger('panel.avatar.upload', $this);
 
   }
 
@@ -61,21 +63,15 @@ class AvatarModel {
     if(!panel()->user()->isAdmin() and !$this->user->isCurrent()) {
       throw new Exception('You are not allowed to delete the avatar of this user');
     } else if(!$this->exists()) {
-      throw new Exception('This user has no avatar');
+      return true;
     }
 
-    if(!$this->source->delete()) {
+    if(!parent::delete()) {
       throw new Exception(l('users.avatar.delete.error'));
     } 
 
-    kirby()->trigger('panel.avatar.delete', $this->source);
+    kirby()->trigger('panel.avatar.delete', $this);
 
-  }
-
-  public function __call($method, $args = null) {
-    if($this->source) {
-      return call(array($this->source, $method), $args);      
-    }
   }
 
 }

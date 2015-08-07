@@ -7,19 +7,19 @@
   <nav class="item-options item-options-three">
     <ul class="nav nav-bar">
       <li>
-        <a class="btn btn-with-icon" href="<?php __($subpage->url()) ?>">
+        <a class="btn btn-with-icon" href="<?php __($subpage->url('edit')) ?>">
           <i class="icon icon-left marginalia"><?php __($subpage->displayNum()) ?></i>
           <span>Move</span>
         </a>
       </li>
       <li>
-        <a class="btn btn-with-icon" href="<?php __($subpage->url()) ?>">
+        <a class="btn btn-with-icon" href="<?php __($subpage->url('edit')) ?>">
           <?php i('pencil', 'left') ?>
           <span>Edit</span>
         </a>
       </li>
       <li>
-        <a data-modal data-modal-return-to="<?php echo __($page->url('subpages')) ?>" class="btn btn-with-icon" href="<?php _u($subpage, 'delete') ?>">
+        <a data-modal data-modal-return-to="<?php echo __($page->url('subpages')) ?>" class="btn btn-with-icon" href="<?php __($subpage->url('delete')) ?>">
           <?php i('trash-o', 'left') ?>
           <span>Delete</span>
         </a>

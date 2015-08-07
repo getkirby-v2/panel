@@ -5,13 +5,13 @@
     <nav class="fileview-nav">
 
       <?php if($prev = $file->prev()): ?>
-      <a title="&lsaquo;" data-shortcut="left" class="fileview-nav-prev" href="<?php __($prev->url()) ?>">
+      <a title="&lsaquo;" data-shortcut="left" class="fileview-nav-prev" href="<?php __($prev->url('edit')) ?>">
         <?php i('chevron-left fa-lg') ?>
       </a>
       <?php endif ?>
 
       <?php if($next = $file->next()): ?>
-      <a title="&rsaquo;" data-shortcut="right" class="fileview-nav-next" href="<?php __($next->url()) ?>">
+      <a title="&rsaquo;" data-shortcut="right" class="fileview-nav-next" href="<?php __($next->url('edit')) ?>">
         <?php i('chevron-right fa-lg') ?>
       </a>
       <?php endif ?>
@@ -19,8 +19,8 @@
     </nav>
 
     <?php if($file->canHavePreview()): ?>
-    <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($file->previewUrl()) ?>">
-      <img src="<?php __($file->previewUrl()) ?>" alt="<?php __($file->filename()) ?>">
+    <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($file->url('preview')) ?>">
+      <img src="<?php __($file->url('preview')) ?>" alt="<?php __($file->filename()) ?>">
     </a>
     <?php else: ?>
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link" href="<?php __($file->previewUrl()) ?>">
@@ -41,7 +41,7 @@
       <nav class="fileview-options">
         <ul class="nav nav-bar nav-btn cf">
           <li>
-            <a href="<?php __($page->url()) ?>" class="btn btn-with-icon">
+            <a href="<?php __($page->url('edit')) ?>" class="btn btn-with-icon">
               <?php i('arrow-circle-left', 'left') ?>
               <?php _l('files.show.back') ?>
             </a>

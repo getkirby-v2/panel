@@ -30,24 +30,24 @@
       <?php foreach($files as $file): ?><!--
    --><div class="grid-item" id="<?php __($file->filename()) ?>">
         <figure class="file">
-          <a class="file-preview file-preview-is-<?php __($file->type()) ?>" href="<?php __($file->url()) ?>">
+          <a class="file-preview file-preview-is-<?php __($file->type()) ?>" href="<?php __($file->url('edit')) ?>">
             <?php if($file->canHaveThumb()): ?>
             <img src="<?php __($file->thumb()) ?>" alt="<?php __($file->filename()) ?>">
             <?php elseif($file->canHavePreview()): ?>
-            <img src="<?php __($file->previewUrl()) ?>" alt="<?php __($file->filename()) ?>">
+            <img src="<?php __($file->url('preview')) ?>" alt="<?php __($file->filename()) ?>">
             <?php else: ?>
             <span><?php __($file->extension()) ?></span>
             <?php endif ?>
           </a>
           <figcaption class="file-info">
-            <a href="<?php __($file->url()) ?>">
+            <a href="<?php __($file->url('edit')) ?>">
               <span class="file-name cut"><?php __($file->filename()) ?></span>
               <span class="file-meta marginalia cut"><?php __($file->type() . ' / ' . $file->niceSize()) ?></span>
             </a>
           </figcaption>
           <nav class="file-options cf">
 
-            <a class="btn btn-with-icon" href="<?php __($file->url()) ?>">
+            <a class="btn btn-with-icon" href="<?php __($file->url('edit')) ?>">
               <?php i('pencil', 'left') ?><span><?php _l('files.index.edit') ?></span>
             </a>
 

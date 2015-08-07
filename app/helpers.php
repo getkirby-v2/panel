@@ -29,14 +29,7 @@ function purl($obj = '/', $action = false) {
   if(is_string($obj)) {    
     return ($obj == '/' or empty($obj)) ? $base . '/' : rtrim($base . '/' . $obj, '/');
   } else if(is_a($obj, 'PageModel') or is_a($obj, 'FileModel') or is_a($obj, 'UserModel')) {
-    return $obj->url($action);
-  } else if(is_a($obj, 'Page')) {
-    return purl(new PageModel($obj), $action);
-  } else if(is_a($obj, 'File')) {
-    $page = new PageModel($obj->page());
-    return purl(new FileModel($page, $obj), $action);
-  } else if(is_a($obj, 'User')) {
-    return purl(new UserModel($obj), $action);
+    return $obj->url($action ? $action : 'edit');
   }
 }
 

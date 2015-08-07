@@ -13,7 +13,7 @@ class PagesController extends Controller {
         'back'      => $parent->url()
       ));
     } else {
-      $this->redirect($parent->createSubpage($template));
+      $this->redirect($parent->children()->create(null, $template));
     }
 
   }
@@ -54,13 +54,13 @@ class PagesController extends Controller {
 
   public function keep($id) {
     $page = $this->page($id);
-    $page->keepChanges();
+    $page->changes()->keep();
     $this->redirect($page);
   }
 
   public function discard($id) {
     $page = $this->page($id);
-    $page->discardChanges();
+    $page->changes()->discard();
     $this->redirect($page);
   }
 
@@ -79,7 +79,7 @@ class PagesController extends Controller {
     $form = $page->form('url', function($form) use($page, $self) {
 
       try {
-        $page->changeUrl(get('uid'));              
+        $page->move(get('uid'));              
         $self->notify(':)');
         $self->redirect($page);
       } catch(Exception $e) {

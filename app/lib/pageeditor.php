@@ -6,14 +6,16 @@ class PageEditor {
   public $blueprint;
   public $form;
 
-  public function __construct($id = '/') {
-    $this->setPage($id);
+  public function __construct(Page $page) {
+
+    $this->page      = $page;
+    $this->blueprint = $page->blueprint();
+
     $this->setForm();
+
   }
 
   public function setPage($id) {
-    $this->page      = new PageModel($id);
-    $this->blueprint = $this->page->blueprint();
   }
 
   public function setForm() {
@@ -66,7 +68,7 @@ class PageEditor {
     }
 
     // fetch all subpages in the right order
-    $children = $this->page->subpages();
+    $children = $this->page->children();
 
     // add pagination to the subpages
     if($limit = $this->blueprint->pages()->limit()) {

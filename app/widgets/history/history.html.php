@@ -7,7 +7,7 @@
     <ul>
       <?php foreach($history as $item): ?>
       <li>
-        <a title="<?php __($item->title()) ?>" href="<?php __($item->url()) ?>">
+        <a title="<?php __($item->title()) ?>" href="<?php __($item->url('edit')) ?>">
           <?php echo $item->icon() ?><?php __($item->title()) ?>
         </a>
       </li>

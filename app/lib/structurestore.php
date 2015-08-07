@@ -38,15 +38,13 @@ class StructureStore {
     $fromTextFile = (array)$this->page->content()->get($this->field)->yaml();
 
     // incoming from the page store
-    $fromPageStore = (array)yaml::decode(PageStore::fetch($this->page, $this->field));
+    $fromPageStore = (array)yaml::decode($this->page->changes()->get($this->field));
 
     // create a merged array out of both
-    $raw = !PageStore::has($this->page, $this->field) ? $fromTextFile : $fromPageStore;
+    $raw = !$this->page->changes()->exist($this->field) ? $fromTextFile : $fromPageStore;
 
     foreach($raw as $row) {      
-      $this->append
-
-    ($row);
+      $this->append($row);
     }
 
     return $this->data;
@@ -122,9 +120,7 @@ class StructureStore {
   }
 
   public function store() {
-    $pagestore = pagestore::fetch($this->page);
-    $pagestore[$this->field] = $this->toYaml();
-    pagestore::update($this->page, $pagestore);
+    $this->page->changes()->update($this->field, $this->toYaml());
   }
 
   public function toArray() {

@@ -21,14 +21,6 @@ var app = {
     // enable context menus
     new Context();  
 
-    // base url
-    app.base = $('body').data('base');
-
-    $.ajaxPrefilter(function(options) {
-      // convert everything to relative urls      
-      options.url = options.url.replace(app.base, '/panel/');
-    });
-
     // event delegation for all clicks on links
     $(document).on('click', 'a', function(e) {      
 

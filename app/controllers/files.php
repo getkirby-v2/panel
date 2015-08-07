@@ -18,7 +18,7 @@ class FilesController extends Controller {
     return screen('files/index', $files, array(
       'page'     => $page,
       'files'    => $files,
-      'back'     => $page->url(),
+      'back'     => $page->url('edit'),
       'sortable' => $page->canSortFiles(),
     ));
 
@@ -46,7 +46,6 @@ class FilesController extends Controller {
       } catch(Exception $e) {
         $self->alert($e->getMessage());
       }
-
 
     });
 
@@ -125,7 +124,7 @@ class FilesController extends Controller {
       if($file = $page->file($filename)) {
         $counter++;
         try {
-          $file->sort($counter);
+          $file->update('sort', $counter);
         } catch(Exception $e) {
 
         }

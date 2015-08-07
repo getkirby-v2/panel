@@ -1,17 +1,17 @@
 <?php 
 
-$user = site()->user();
+$user = panel()->user();
 
 return array(
   'title' => array(
     'text'   => l('dashboard.index.account.title'),
-    'link'   => purl($user, 'edit'),
+    'link'   => $user->url('edit'),
   ),
   'options' => array(
     array(
       'text' => l('dashboard.index.account.edit'),
       'icon' => 'pencil',
-      'link' => purl($user, 'edit')
+      'link' => $user->url('edit')
     )
   ),
   'html'  => function() use($user) {
