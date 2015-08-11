@@ -1,13 +1,13 @@
 <?php
 
-class UsersController extends Controller {
+class UsersController extends Kirby\Panel\Controller {
 
   public function index() {
 
     $users = panel()->users();
     $admin = panel()->user()->isAdmin();
 
-    return screen('users/index', $users, array(
+    return $this->screen('users/index', $users, array(
       'users'  => $users,
       'admin'  => $admin,
     ));
@@ -41,7 +41,7 @@ class UsersController extends Controller {
 
     });
 
-    return screen('users/edit', 'user', array(
+    return $this->screen('users/edit', 'user', array(
       'user'     => null,
       'form'     => $form,
       'writable' => is_writable(kirby()->roots()->accounts()),
@@ -78,7 +78,7 @@ class UsersController extends Controller {
         
     });
 
-    return screen('users/edit', $user, array(
+    return $this->screen('users/edit', $user, array(
       'user'     => $user,
       'form'     => $form,
       'writable' => is_writable(kirby()->roots()->accounts()),
@@ -92,7 +92,7 @@ class UsersController extends Controller {
     $self = $this;
 
     if(!panel()->user()->isAdmin() and !$user->isCurrent()) {
-      return modal('error', array(
+      return $this->modal('error', array(
         'headline' => 'Error',
         'text'     => 'You are not allowed to delete this user', 
         'back'     => purl('users')
@@ -111,7 +111,7 @@ class UsersController extends Controller {
 
       });
 
-      return modal('users/delete', compact('form'));
+      return $this->modal('users/delete', compact('form'));
 
     }
 

@@ -3,7 +3,7 @@
 return function($page) {
 
   // create the form
-  $form = new Form($page->getFormFields(), $page->getFormData());
+  $form = new Kirby\Panel\Form($page->getFormFields(), $page->getFormData());
 
   // center the submit button
   $form->centered = true;

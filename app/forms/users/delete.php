@@ -2,7 +2,7 @@
 
 return function($user) {
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'username' => array(
       'label'    => 'users.delete.headline',
       'type'     => 'text',

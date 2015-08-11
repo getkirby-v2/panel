@@ -2,7 +2,7 @@
 
 return function($problems) {
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'info' => array(
       'type' => 'info'
     )

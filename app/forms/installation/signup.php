@@ -8,7 +8,7 @@ return function() {
     $languages[$lang->code()] = $lang->title();
   }
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
 
     'username' => array(
       'label'        => 'installation.signup.username.label',

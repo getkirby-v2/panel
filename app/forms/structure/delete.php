@@ -2,7 +2,7 @@
 
 return function($page) {
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'entry' => array(
       'label' => 'fields.structure.delete.label',
       'type'  => 'info',

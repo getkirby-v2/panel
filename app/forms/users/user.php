@@ -21,7 +21,7 @@ return function($user) {
   }
 
   // setup the form with all fields
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
 
     'username' => array(
       'label'     => 'users.form.username.label',

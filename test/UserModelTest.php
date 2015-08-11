@@ -25,7 +25,7 @@ class UserModelTest extends PanelTestCase {
 
     $user = $this->panel->user('admin');
 
-    $this->assertInstanceOf('AvatarModel', $user->avatar());
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\User\\Avatar', $user->avatar());
     $this->assertFalse($user->avatar()->exists());
 
   }

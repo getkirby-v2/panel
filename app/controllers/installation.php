@@ -1,6 +1,6 @@
 <?php
 
-class InstallationController extends Controller {
+class InstallationController extends Kirby\Panel\Controller {
 
   public function index() {
 
@@ -16,7 +16,7 @@ class InstallationController extends Controller {
 
   protected function problems($problems) {
     $form = $this->form('installation/check', $problems);        
-    return modal('installation/index', compact('form'));
+    return $this->modal('installation/index', compact('form'));
   }
 
   protected function signup() {
@@ -58,7 +58,7 @@ class InstallationController extends Controller {
 
     });
 
-    return modal('installation/index', compact('form'));
+    return $this->modal('installation/index', compact('form'));
 
   }
 

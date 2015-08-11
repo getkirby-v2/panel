@@ -1,6 +1,6 @@
 <?php
 
-class HelpersController extends Controller {
+class HelpersController extends Kirby\Panel\Controller {
 
   public function slug() {
     return str::slug(get('string'));

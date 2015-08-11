@@ -2,7 +2,7 @@
 
 return function($avatar) {
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'image' => array(
       'type' => 'info'
     )

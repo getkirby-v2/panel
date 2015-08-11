@@ -1,11 +1,11 @@
 <?php
 
-class DashboardController extends Controller {
+class DashboardController extends Kirby\Panel\Controller {
 
   public function index() {
 
-    return screen('dashboard/index', panel()->site(), array(
-      'widgets' => new Widgets()
+    return $this->screen('dashboard/index', panel()->site(), array(
+      'widgets' => new Kirby\Panel\Widgets()
     ));
 
   }

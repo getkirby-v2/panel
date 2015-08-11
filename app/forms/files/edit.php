@@ -37,7 +37,7 @@ return function($file) {
     )
   );
 
-  $form = new Form(array_merge($fields, $file->getFormFields()), $file->getFormData());
+  $form = new Kirby\Panel\Form(array_merge($fields, $file->getFormFields()), $file->getFormData());
 
   $form->centered = true;
   $form->buttons->cancel = '';

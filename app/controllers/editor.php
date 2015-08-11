@@ -1,13 +1,13 @@
 <?php
 
-class EditorController extends Controller {
+class EditorController extends Kirby\Panel\Controller {
 
   public function link($pageId, $textarea = null) {
 
     $page = $this->page($pageId);
     $form = $this->form('editor/link', array($page, $textarea));
 
-    return modal('editor/link', compact('form'));
+    return $this->modal('editor/link', compact('form'));
 
   }
 
@@ -16,7 +16,7 @@ class EditorController extends Controller {
     $page = $this->page($pageId);
     $form = $this->form('editor/email', array($page, $textarea));
 
-    return modal('editor/email', compact('form'));
+    return $this->modal('editor/email', compact('form'));
 
   }
 

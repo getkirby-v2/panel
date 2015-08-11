@@ -1,6 +1,6 @@
 <?php
 
-class SandboxController extends Controller {
+class SandboxController extends Kirby\Panel\Controller {
 
   public function index() {
 

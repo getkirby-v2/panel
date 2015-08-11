@@ -2,7 +2,7 @@
 
 return function($welcome) {
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'username' => array(
       'label'     => 'login.username.label',
       'type'      => 'text',

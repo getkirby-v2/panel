@@ -2,7 +2,7 @@
 
 return function($page, $textarea) {
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'url' => array(
       'label' => 'editor.link.url.label',
       'type' => 'text',

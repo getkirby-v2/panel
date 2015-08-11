@@ -1,6 +1,6 @@
 <?php
 
-class FilesController extends Controller {
+class FilesController extends Kirby\Panel\Controller {
 
   public function index($id) {
 
@@ -15,7 +15,7 @@ class FilesController extends Controller {
     // sort action
     $this->sort($page);
 
-    return screen('files/index', $files, array(
+    return $this->screen('files/index', $files, array(
       'page'     => $page,
       'files'    => $files,
       'back'     => $page->url('edit'),
@@ -49,7 +49,7 @@ class FilesController extends Controller {
 
     });
 
-    return screen('files/edit', $file, array(
+    return $this->screen('files/edit', $file, array(
       'form'     => $form,
       'page'     => $page,
       'file'     => $file,
@@ -109,7 +109,7 @@ class FilesController extends Controller {
 
     });
 
-    return modal('files/delete', compact('form'));
+    return $this->modal('files/delete', compact('form'));
 
   }
 

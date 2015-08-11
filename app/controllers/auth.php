@@ -1,6 +1,6 @@
 <?php
 
-class AuthController extends Controller {
+class AuthController extends Kirby\Panel\Controller {
 
   public function login($welcome = null) {
 
@@ -27,8 +27,8 @@ class AuthController extends Controller {
 
     });
 
-    return layout('base', array(
-      'content' => view('auth/login', compact('form'))
+    return $this->layout('base', array(
+      'content' => $this->view('auth/login', compact('form'))
     ));
 
   }

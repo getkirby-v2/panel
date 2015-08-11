@@ -1,13 +1,13 @@
 <?php
 
-class OptionsController extends Controller {
+class OptionsController extends Kirby\Panel\Controller {
 
   public function index() {
 
     $site   = panel()->site();
     $editor = $site->editor();
 
-    return screen('options/index', $site, array(
+    return $this->screen('options/index', $site, array(
       'site'    => $site,
       'form'    => $editor->form(),
       'files'   => $editor->files(),

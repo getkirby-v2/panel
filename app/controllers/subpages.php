@@ -1,6 +1,6 @@
 <?php
 
-class SubpagesController extends Controller {
+class SubpagesController extends Kirby\Panel\Controller {
 
   public function index($id) {
 
@@ -18,7 +18,7 @@ class SubpagesController extends Controller {
     // activate the sorting
     $this->sort($page);
 
-    return screen('subpages/index', $page, array(
+    return $this->screen('subpages/index', $page, array(
       'page'      => $page,
       'addbutton' => $page->addbutton(),
       'sortable'  => $page->blueprint()->pages()->sortable(),
@@ -49,14 +49,14 @@ class SubpagesController extends Controller {
       // store the last page
       s::set($sessionId, $pages->pagination()->page());
       
-      $pagination = new Snippet('subpages/pagination', array(
+      $pagination = $this->snippet('subpages/pagination', array(
         'pagination' => $pages->pagination(),
         'nextUrl'    => $pages->pagination()->nextPageUrl(),
         'prevUrl'    => $pages->pagination()->prevPageUrl(),
       ));
     }
 
-    return new obj(array(
+    return new Obj(array(
       'pages'      => $pages, 
       'pagination' => $pagination,
       'start'      => $pages->pagination()->numStart(),

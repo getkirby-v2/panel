@@ -1,6 +1,6 @@
 <?php if(r::ajax()): ?>
 
-  <title><?php __(site()->title()) ?> | Panel</title>
+  <title><?php __($title) ?></title>
 
   <?php if(isset($topbar))  echo $topbar ?>
   <?php if(isset($content)) echo $content ?>
@@ -10,26 +10,25 @@
   <html lang="en">
   <head>
 
-    <?php echo new Snippet('meta') ?>
+    <?php echo $meta ?>
 
-    <title><?php __(site()->title()) ?> | Panel</title>
+    <title><?php __($title) ?></title>
 
-    <?php echo assets::css() ?>
-    <style><?php echo form::css() ?></style>
+    <?php echo $css ?>
+    <style><?php echo $formcss ?></style>
 
     <!-- custom panel stylesheet -->
     <?php if($stylesheet = kirby()->option('panel.stylesheet')): ?>
     <?php echo css($stylesheet) ?>
     <?php endif ?>
 
-    <?php echo assets::js() ?>
+    <?php echo $js ?>
+    <?php echo $appjs ?>
 
-    <?php echo js(panel()->urls()->js() . '/app.js?v=' . panel()->version()) ?>
-
-    <script><?php echo form::js(false) ?></script>
+    <script><?php echo $formjs ?></script>
 
   </head>
-  <body class="app <?php echo panel()->direction() ?>">
+  <body class="app <?php __($direction) ?>">
 
     <div class="main">
       <?php if(isset($topbar))  echo $topbar ?>

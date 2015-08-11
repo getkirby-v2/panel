@@ -2,7 +2,7 @@
 
 return function($page) {
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'confirmation' => array(
       'type' => 'info'
     )

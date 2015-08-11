@@ -1,13 +1,13 @@
 <?php
 
-class PagesController extends Controller {
+class PagesController extends Kirby\Panel\Controller {
 
   public function add($id, $template = null) {
 
     $parent = $this->page($id);
   
     if(empty($template)) {
-      return view('pages/add', array(
+      return $this->view('pages/add', array(
         'parent'    => $parent,
         'templates' => $parent->blueprint()->pages()->template(),
         'back'      => $parent->url()
@@ -20,7 +20,7 @@ class PagesController extends Controller {
 
   public function edit($id) {
     $editor = $this->page($id)->editor();
-    return screen('pages/edit', $editor->page(), $editor->content());
+    return $this->screen('pages/edit', $editor->page(), $editor->content());
   }
 
   public function delete($id) {
@@ -31,7 +31,7 @@ class PagesController extends Controller {
     try {
       $page->isDeletable(true);
     } catch(Exception $e) {
-      return modal('error', array(
+      return $this->modal('error', array(
         'headline' => l($e->getMessage() . '.headline'),
         'text'     => l($e->getMessage() . '.text'),
         'back'     => $page->url()
@@ -48,7 +48,7 @@ class PagesController extends Controller {
       }
     });
 
-    return modal('pages/delete', compact('form'));
+    return $this->modal('pages/delete', compact('form'));
 
   }
 
@@ -70,7 +70,7 @@ class PagesController extends Controller {
     $page = $this->page($id);
 
     if(!$page->canChangeUrl()) {
-      return modal('error', array(
+      return $this->modal('error', array(
         'headline' => 'Error',
         'text'     => 'The URL for the home and error pages cannot be changed',
       ));      
@@ -89,7 +89,7 @@ class PagesController extends Controller {
 
     });
 
-    return modal('pages/url', compact('form'));
+    return $this->modal('pages/url', compact('form'));
 
   }
 
@@ -99,7 +99,7 @@ class PagesController extends Controller {
     $page = $this->page($id);
 
     if($page->isErrorPage()) {
-      return modal('error', array(
+      return $this->modal('error', array(
         'headline' => 'Error',
         'text'     => 'The status of the error page cannot be changed',
       ));
@@ -117,13 +117,13 @@ class PagesController extends Controller {
 
     });
 
-    return modal('pages/toggle', compact('form'));
+    return $this->modal('pages/toggle', compact('form'));
 
   }
 
   public function search($id = '/') {
     $page = $this->page($id);
-    return screen('pages/search', $page, compact('page'));
+    return $this->screen('pages/search', $page, compact('page'));
   }
 
   public function context($id) {

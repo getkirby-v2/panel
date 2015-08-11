@@ -2,7 +2,7 @@
 
 return function($file) {
 
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'file' => array(
       'label'    => 'files.delete.headline',
       'type'     => 'text',

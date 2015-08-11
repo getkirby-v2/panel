@@ -1,6 +1,6 @@
 <?php
 
-class AvatarsController extends Controller {
+class AvatarsController extends Kirby\Panel\Controller {
 
   public function upload($username) {
 
@@ -24,7 +24,7 @@ class AvatarsController extends Controller {
     $avatar = $user->avatar();
 
     if(!$avatar->exists()) {
-      return modal('error', array(
+      return $this->modal('error', array(
         'text' => 'This user has no avatar',
         'back' => $user->url()
       ));
@@ -42,7 +42,7 @@ class AvatarsController extends Controller {
 
     });
 
-    return modal('avatars/delete', compact('form'));
+    return $this->modal('avatars/delete', compact('form'));
 
   }
 

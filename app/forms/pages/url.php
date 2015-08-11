@@ -15,7 +15,7 @@ return function($page) {
   $preview->append('<span>' . $page->slug() . '</span>');
 
   // create the form
-  $form = new Form(array(
+  $form = new Kirby\Panel\Form(array(
     'uid' => array(
       'label'     => l('pages.url.uid.label') . $option,
       'type'      => 'text',

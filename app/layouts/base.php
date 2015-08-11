@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
 
-  <?php echo new Snippet('meta') ?>
+  <?php echo $meta ?>
 
-  <title><?php __(site()->title()) ?> | Panel</title>
+  <title><?php __($title) ?></title>
 
-  <?php echo assets::css() ?>
+  <?php echo $css ?>
 
   <?php if($stylesheet = kirby()->option('panel.stylesheet')): ?>
   <?php echo css($stylesheet) ?>
   <?php endif ?>
-
-  <?php echo assets::js() ?>
+  
+  <?php echo $js ?>
 
 </head>
-<body class="app <?php echo panel()->direction() ?>">
+<body class="app <?php __($direction) ?>">
   <?php echo $content ?>
 </body>
 </html>

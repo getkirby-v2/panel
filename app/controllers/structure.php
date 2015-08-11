@@ -1,6 +1,6 @@
 <?php
 
-class StructureController extends Controller {
+class StructureController extends Kirby\Panel\Controller {
 
   public function add($pageId, $fieldname) {
 
@@ -12,7 +12,7 @@ class StructureController extends Controller {
       $self->redirect($page, 'show');
     });
 
-    return modal('structure/add', compact('form'));
+    return $this->modal('structure/add', compact('form'));
 
   }
 
@@ -27,7 +27,7 @@ class StructureController extends Controller {
       $self->redirect($page, 'show');
     });
 
-    return modal('structure/update', compact('form'));
+    return $this->modal('structure/update', compact('form'));
         
   }
 
@@ -42,7 +42,7 @@ class StructureController extends Controller {
       $self->redirect($page, 'show');
     });
     
-    return modal('structure/delete', compact('form'));
+    return $this->modal('structure/delete', compact('form'));
 
   }
 

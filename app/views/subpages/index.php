@@ -32,7 +32,7 @@
       <div class="dropzone subpages">
         <div class="items<?php e($sortable, ' sortable') ?>" id="visible-children" data-flip="<?php echo $flip ?>" data-start="<?php echo $visible->start() ?>" data-total="<?php echo $visible->total() ?>">
           <?php foreach($visible->pages() as $subpage): ?>
-          <?php echo new Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
+          <?php echo new Kirby\Panel\Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
           <?php endforeach ?>
         </div>
       </div>
@@ -54,7 +54,7 @@
         <div class="items<?php e($sortable, ' sortable') ?>" id="invisible-children">
 
           <?php foreach($invisible->pages() as $subpage): ?>
-          <?php echo new Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
+          <?php echo new Kirby\Panel\Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
           <?php endforeach ?>
 
         </div>
