@@ -47,6 +47,8 @@ class AuthController extends Controller {
 
   public function logout() {
 
+    s::restart();
+
     if($user = panel()->site()->user()) {
       $user->logout();
     }

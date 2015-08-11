@@ -1,7 +1,7 @@
 <div class="modal-content">
   <div class="form">
     <div class="field">
-      <div class="dropzone dropzone-input" autofocus tabindex="0">
+      <div class="dropzone dropzone-input" autofocus tabindex="0" data-csrf="<?php echo csrf() ?>">
         <div class="dropzone-text section">
           <h2><?php _l('files.upload.drop') ?></h2>
           <small class="marginalia"><?php _l('files.upload.click') ?></small>

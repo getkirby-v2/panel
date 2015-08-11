@@ -4,6 +4,10 @@ class AvatarsController extends Controller {
 
   public function upload($username) {
 
+    if(!get('_csrf') or !csrf(get('_csrf'))) {
+      return response::error('unauthenticated access');      
+    }
+
     $user = $this->user($username);
 
     if(!$user) {
