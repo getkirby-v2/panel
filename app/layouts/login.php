@@ -39,6 +39,10 @@
 
       <?php echo $form ?>
 
+      <center>
+        <a href="<?php echo url('home'); ?>" class="btn btn-rounded" style="margin-left: auto; margin-right: auto;margin-bottom: 40px;">Back to Homepage</a>
+      </center>
+
     </div>
 
     <?php echo assets::js() ?>
