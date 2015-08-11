@@ -84,7 +84,10 @@ var UsersController = {
 
     app.modal.view('users/avatar/' + username, {to: to}, function(element) {
 
-      element.find('.dropzone').dropzone($http.endpoint + '/avatars/upload/' + username, function() {
+      var dropzone = element.find('.dropzone');
+      var url      = $http.endpoint + '/avatars/upload/' + username + '?_csrf=' + dropzone.data('csrf');
+
+      dropzone.dropzone(url, function() {
         app.main.data('current', false);
         app.modal.close();
       });

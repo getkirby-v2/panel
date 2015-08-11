@@ -24,6 +24,7 @@
   border-bottom: 1px solid rgba(255,255,255, .2);
   color: #fff;
   background: #000;
+  cursor: pointer;
 
   body.ltr & { text-align: left; }
   body.rtl & { text-align: right; }

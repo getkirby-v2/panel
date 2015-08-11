@@ -4,6 +4,10 @@ class FilesController extends Controller {
 
   public function upload($id = null) {
 
+    if(!get('_csrf') or !csrf(get('_csrf'))) {
+      return response::error('unauthenticated access');      
+    }
+
     $page      = $this->page($id);
     $blueprint = blueprint::find($page);
     $filename  = $blueprint->files()->sanitize() ? '{safeFilename}' : '{filename}';
@@ -25,9 +29,19 @@ class FilesController extends Controller {
 
     if($file = $upload->file()) {
       try {
+
         $this->checkUpload($file, $blueprint);
-        kirby()->trigger('panel.file.upload', $file);
-        return response::success('success');
+
+        // flush all cached files
+        $page->reset();
+
+        if($pagefile = $page->file($file->filename())) {
+          kirby()->trigger('panel.file.upload', $pagefile);          
+          return response::success('success');
+        } else {
+          throw new Exception('The file object could not be found');
+        }
+
       } catch(Exception $e) {
         $file->delete();
         return response::error($e->getMessage());
@@ -39,6 +53,10 @@ class FilesController extends Controller {
   }
 
   public function replace($id = null) {
+
+    if(!get('_csrf') or !csrf(get('_csrf'))) {
+      return response::error('unauthenticated access');      
+    }
 
     $filename  = get('filename');
     $file      = $this->file($id, $filename);
@@ -199,7 +217,7 @@ class FilesController extends Controller {
 
     if(strtolower($file->extension()) == kirby()->option('content.file.extension', 'txt')) {
       throw new Exception('Content files cannot be uploaded');
-    } else if(strtolower($file->extension()) == 'php' or
+    } else if(strtolower($file->extension()) == 'php' or str::contains($file->extension(), 'php') or
               in_array($file->mime(), f::$mimes['php'])) {
       throw new Exception('PHP files cannot be uploaded');
     } else if(strtolower($file->extension()) == 'html' or

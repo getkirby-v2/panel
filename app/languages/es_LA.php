@@ -4,7 +4,7 @@ return array(
   'title' => 'Español (América Latina)&lrm;',
   'direction' => 'ltr',
   'author' => 'Iván Soria <invasoria@gmail.com>',
-  'version' => '1.0.2',
+  'version' => '1.0.3',
   'data' => array(
 
     // global
@@ -12,6 +12,7 @@ return array(
     'add' => 'Agregar',
     'save' => 'Guardar',
     'saved' => '¡Guardado!',
+    'change' => 'Cambiar',
     'delete' => 'Eliminar',
     'insert' => 'Insertar',
     'ok' => 'OK',
@@ -62,15 +63,26 @@ return array(
     'dashboard.index.metatags.edit' => 'Editar',
     'dashboard.index.history.title' => 'Actualizaciones recientes',
     'dashboard.index.history.text' => 'Las últimas páginas modificadas serán desplegadas aquí para facilitar su acceso en el futuro.',
+    'dashboard.index.license.title' => 'Licencia Kirby',
 
     // metatags
     'metatags' => 'Variables del sitio',
+    'metatags.info' => 'Información de Kirby',
+    'metatags.license' => 'Licencia Kirby',
+    'metatags.version.toolkit' => 'Versión del Toolkit',
+    'metatags.version.kirby' => 'Versión de Kirby',
+    'metatags.version.panel' => 'Versión del Panel',
     'metatags.back' => 'Regresar al Inicio',
+    'metatags.files' => 'Archivos del sitio',
 
     // pages
     'pages.show.settings' => 'Opciones de Página',
     'pages.show.preview' => 'Abrir previsualización',
     'pages.show.changeurl' => 'Cambiar URL',
+    'pages.show.invisible' => 'Estatus: invisible',
+    'pages.show.visible' => 'Estatus: visible',
+    'pages.show.changes.text' => '¡Tienes cambios sin guardar!',
+    'pages.show.changes.button' => 'Descartar',
     'pages.show.delete' => 'Eliminar esta página',
     'pages.show.subpages.title' => 'Páginas',
     'pages.show.subpages.edit' => 'Editar',
@@ -103,6 +115,8 @@ return array(
     'pages.url.uid.label.option' => 'Crear a partir del título',
     'pages.url.error.exists' => 'Una página con el mismo apéndice-url ya existe',
     'pages.url.error.move' => 'El apéndice-url no pudo ser cambiado',
+    'pages.toggle.publish' => '¿En realidad deseas cambiar el estatus de esta página a **visible?**',
+    'pages.toggle.hide' => '¿En realidad deseas cambiar el estatus de esta página a **invisible?**',
     'pages.delete.headline' => '¿Estás seguro que deseas eliminar esta página?',
     'pages.delete.error.home.headline' => 'La página "Home" no puede ser eliminada',
     'pages.delete.error.home.text' => 'Estás intentando eliminar la página "Home". Esto no es posible y podría causar efectos indeseados.',

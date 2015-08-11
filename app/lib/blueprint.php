@@ -12,6 +12,7 @@ class Blueprint extends Obj {
   public $pages     = null;
   public $files     = null;
   public $deletable = true;
+  public $icon      = 'file-o';
   public $fields    = array();
 
   public function __construct($name) {
@@ -26,6 +27,7 @@ class Blueprint extends Obj {
     $this->title     = a::get($this->yaml, 'title', 'Page');
     $this->preview   = a::get($this->yaml, 'preview', 'page');
     $this->deletable = a::get($this->yaml, 'deletable', true);
+    $this->icon      = a::get($this->yaml, 'icon', 'file-o');
     $this->pages     = new Blueprint\Pages(a::get($this->yaml, 'pages', true));
     $this->files     = new Blueprint\Files(a::get($this->yaml, 'files', true));
 
