@@ -24,6 +24,10 @@
   <?php echo assets::js() ?>
   <?php echo js(panel()->urls()->js() . '/apps/main.js?v=' . panel()->version()) ?>
   <script><?php echo form::js(false) ?></script>
+  <!-- custom panel javascript -->
+  <?php if($javascript = kirby()->option('panel.javascript')): ?>
+  <?php echo js($javascript) ?>
+  <?php endif ?>
 
 </body>
 </html>
