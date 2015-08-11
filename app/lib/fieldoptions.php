@@ -58,6 +58,10 @@ class FieldOptions {
           $path = str::substr($path, 3);
         }
         $page = $currentPage;
+
+        if ($path && $currentPage->find($path)) {
+          $page = $currentPage->find($path);
+        }
       } else {
         $page = page($query['page']);        
       }
