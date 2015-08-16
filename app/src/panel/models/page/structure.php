@@ -1,6 +1,14 @@
 <?php 
 
-class StructureStore {
+namespace Kirby\Panel\Models\Page;
+
+use Exception;
+use Collection;
+use Obj;
+use Str;
+use Yaml;
+
+class Structure {
 
   protected $page;
   protected $blueprint;
@@ -8,7 +16,7 @@ class StructureStore {
   protected $data;
   protected $config;
 
-  public function __construct(PageModel $page, $field) {
+  public function __construct($page, $field) {
 
     $this->page = $page;
 
@@ -22,6 +30,10 @@ class StructureStore {
 
     $this->data();    
 
+  }
+
+  public function page() {
+    return $this->page;
   }
 
   public function fields() {
@@ -78,13 +90,15 @@ class StructureStore {
 
     $this->data->append($data->id, $data);
 
+    return $data->id;
+
   }
 
   public function add($data = array()) {
-    $this->append($data);
+    $id = $this->append($data);
     $this->store();
+    return $id;
   }
-
 
   public function update($id, $data = array()) {
 

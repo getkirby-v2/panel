@@ -6,26 +6,38 @@ use Exception;
 
 class History {
 
-  static public function visit($uri) {
+  public $user;
 
-    if(empty($uri)) return;
+  public function __construct($user) {
+    $this->user = $user;
+  }
 
-    $history = panel()->user()->history();
+  public function add($id) {
 
-    if(empty($history) or !is_array($history)) {
-      $history = array();
+    if(is_a('Kirby\\Panel\\Models\\Page', $id)) {
+      $page = $id;
+    } else {
+      if(empty($id)) return false;
+
+      try {
+        $page = panel()->page($id);
+      } catch(Exception $e) {
+        return false;
+      }      
     }
+
+    $history = $this->get();
 
     // remove existing entries
     foreach($history as $key => $val) {
-      if($val == $uri) unset($history[$key]);
+      if($val->id() == $page->id()) unset($history[$key]);
     }
 
-    array_unshift($history, $uri);
+    array_unshift($history, $page->id());
     $history = array_slice($history, 0, 5);
 
     try {
-      panel()->user()->update(array(
+      $this->user->update(array(
         'history' => $history
       ));
     } catch(Exception $e) {
@@ -34,9 +46,9 @@ class History {
 
   }
 
-  static public function get() {
+  public function get() {
 
-    $history = panel()->user()->history();
+    $history = $this->user->__get('history');
 
     if(empty($history) or !is_array($history)) {
       return array();
@@ -62,7 +74,7 @@ class History {
       }, $result);
 
       try {
-        panel()->user()->update(array(
+        $this->user->update(array(
           'history' => $history
         ));
       } catch(Exception $e) {

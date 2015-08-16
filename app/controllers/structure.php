@@ -9,7 +9,7 @@ class StructureController extends Kirby\Panel\Controller {
     $store = $this->store($page, $fieldname);
     $form  = $this->form('structure/add', array($page, $store), function($form) use($page, $store, $self) {
       $store->add($form->serialize());
-      $self->redirect($page, 'show');
+      $self->redirect($page);
     });
 
     return $this->modal('structure/add', compact('form'));
@@ -24,7 +24,7 @@ class StructureController extends Kirby\Panel\Controller {
     $entry = $store->find($entryId);
     $form  = $this->form('structure/update', array($page, $store, $entry), function($form) use($page, $store, $self, $entryId) {
       $store->update($entryId, $form->serialize());
-      $self->redirect($page, 'show');
+      $self->redirect($page);
     });
 
     return $this->modal('structure/update', compact('form'));
@@ -39,7 +39,7 @@ class StructureController extends Kirby\Panel\Controller {
     $entry = $store->find($entryId);
     $form  = $this->form('structure/delete', $page, function() use($self, $page, $store, $entryId) {
       $store->delete($entryId);
-      $self->redirect($page, 'show');
+      $self->redirect($page);
     });
     
     return $this->modal('structure/delete', compact('form'));
@@ -52,12 +52,12 @@ class StructureController extends Kirby\Panel\Controller {
     $store = $this->store($page, $fieldname);
     $store->sort(get('ids'));
 
-    $this->redirect($page, 'show');
+    $this->redirect($page);
 
   }
 
   protected function store($page, $fieldname) {
-    return new StructureStore($page, $fieldname);
+    return $page->structure($fieldname);
   }
 
 } 

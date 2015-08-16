@@ -21,7 +21,7 @@ return function($page) {
 
     $parent    = $page->parent();
     $blueprint = $parent->blueprint();
-    $siblings  = $parent->subpages('visible');
+    $siblings  = $parent->children()->visible();
 
     if($blueprint->pages()->num()->mode() == 'default' and $siblings->count() > 0) {
 

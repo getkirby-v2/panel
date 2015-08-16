@@ -19,6 +19,7 @@ use Kirby\Panel\Models\Page\Menu;
 use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Editor;
 use Kirby\Panel\Models\Page\Uploader;
+use Kirby\Panel\Models\Page\Structure;
 use Kirby\Panel\Models\User\History;
 
 class Page extends \Page {
@@ -117,6 +118,10 @@ class Page extends \Page {
 
   public function form($action, $callback) {    
     return panel()->form('pages/' . $action, $this, $callback);
+  }
+
+  public function structure($field) {
+    return new Structure($this, $field);
   }
 
   public function getFormData() {

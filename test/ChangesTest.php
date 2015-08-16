@@ -18,7 +18,7 @@ class ChangesTest extends PanelTestCase {
   }
 
   public function testConstruct() {
-    $this->assertInstanceOf('Changes', $this->changes);
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page\\Changes', $this->changes);
     $this->assertEquals($this->changes->id(), sha1($this->page->id()));
     $this->assertEquals(array(), $this->changes->data());
   }

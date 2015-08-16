@@ -5,11 +5,11 @@ require_once(__DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'boot
 class PanelTest extends PanelTestCase {
 
   public function testRoots() {
-    $this->assertInstanceOf('Panel\\Roots', $this->panel->roots());
+    $this->assertInstanceOf('Kirby\\Panel\\Roots', $this->panel->roots());
   }
 
   public function testUrls() {
-    $this->assertInstanceOf('Panel\\Urls', $this->panel->urls());
+    $this->assertInstanceOf('Kirby\\Panel\\Urls', $this->panel->urls());
   }
 
   public function testKirby() {
@@ -18,7 +18,7 @@ class PanelTest extends PanelTestCase {
   }
 
   public function testSite() {
-    $this->assertInstanceOf('SiteModel', $this->panel->site());
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Site', $this->panel->site());
   }
 
   public function testPage() {
@@ -54,7 +54,7 @@ class PanelTest extends PanelTestCase {
   }
 
   public function testUsers() {
-    $this->assertInstanceOf('UsersCollection', $this->panel->users());    
+    $this->assertInstanceOf('Kirby\\Panel\\Collections\\Users', $this->panel->users());    
   }
 
   public function testUser() {

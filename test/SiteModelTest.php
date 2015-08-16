@@ -25,15 +25,18 @@ class SiteModelTest extends PanelTestCase {
   }
 
   public function testBlueprint() {
-    $this->assertInstanceOf('Blueprint', $this->site->blueprint());
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page\\Blueprint', $this->site->blueprint());
   }
 
   public function testUrl() {
 
+    $this->assertEquals('/', $this->site->url());
+    $this->assertEquals('/panel/options', $this->site->url('edit'));
+
   }
 
   public function testChanges() {
-    $this->assertInstanceOf('Changes', $this->site->changes());
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page\\Changes', $this->site->changes());
   }
 
   public function testUpdate() {

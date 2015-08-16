@@ -29,6 +29,8 @@ function purl($obj = '/', $action = false) {
   if(empty($obj) or is_string($obj)) {
     $base = panel()->urls()->index();
     return ($obj == '/' or empty($obj)) ? $base . '/' : rtrim($base . '/' . $obj, '/');    
+  } else if(is_a($obj, 'Kirby\\Panel\\Models\\Site')) {
+    return $obj->url(!$action ? 'edit' : $action);  
   } else if(is_a($obj, 'Kirby\\Panel\\Models\\Page')) {
     return $obj->url(!$action ? 'edit' : $action);
   } else if(is_a($obj, 'Kirby\\Panel\\Models\\File')) {

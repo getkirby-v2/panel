@@ -50,6 +50,7 @@ load(array(
   
 ), __DIR__ . DS . 'src');
 
+
 // some fallbacks for possible namespace issues and convenience
 class_alias('Kirby\\Panel\\Form\\FieldOptions', 'FieldOptions');
 class_alias('Kirby\\Panel', 'Panel');

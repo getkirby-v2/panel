@@ -3,11 +3,13 @@
     <testsuite name="Kirby">
       <directory>test</directory>
       <exclude>test/UserModelTest.php</exclude>
-      <exclude>-test/PageModelTest.php</exclude>
+      <exclude>test/PageModelTest.php</exclude>
       <exclude>test/FileModelTest.php</exclude>
       <exclude>test/PanelTest.php</exclude>
       <exclude>test/SiteModelTest.php</exclude>
       <exclude>test/ChangesTest.php</exclude>
+      <exclude>test/StructureTest.php</exclude>
+      <exclude>test/HistoryTest.php</exclude>
     </testsuite>
   </testsuites>
 </phpunit>

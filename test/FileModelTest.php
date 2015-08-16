@@ -35,8 +35,8 @@ class FileModelTest extends PanelTestCase {
     $a = $this->page->file('1.jpg');
     $b = $this->page->file('2.jpg');
 
-    $this->assertInstanceOf('FileModel', $a);
-    $this->assertInstanceOf('FileModel', $b);
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\File', $a);
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\File', $b);
 
   }
 
@@ -47,7 +47,7 @@ class FileModelTest extends PanelTestCase {
 
     $a = $this->page->file('3.jpg');
 
-    $this->assertInstanceOf('FileModel', $a);
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\File', $a);
     $this->assertEquals('3', $a->name());
     $this->assertEquals('3.jpg', $a->filename());
 

@@ -30,7 +30,7 @@ class PageModelTest extends PanelTestCase {
       'title' => 'Home'
     ));
 
-    $this->assertInstanceOf('PageModel', $page);
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page', $page);
     $this->assertTrue($page->isHomePage());
     $this->assertEquals('Home', $page->title());
 
@@ -49,7 +49,7 @@ class PageModelTest extends PanelTestCase {
 
   public function testChanges() {
     $page = $this->site->children()->create('test', 'test');
-    $this->assertInstanceOf('Changes', $page->changes());
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page\\Changes', $page->changes());
   }
 
   public function testUpdate() {
@@ -61,6 +61,19 @@ class PageModelTest extends PanelTestCase {
     ));
 
     $this->assertEquals('Test Title', $page->title());
+
+  }
+
+  public function testParent() {
+
+    $test    = $this->site->children()->create('test', 'test');
+    $subtest = $test->children()->create('test', 'test');
+
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Site', $test->parent());
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page', $subtest->parent());
+
+    $this->assertEquals($this->site, $test->parent());
+    $this->assertEquals($test, $subtest->parent());
 
   }
 

@@ -19,7 +19,7 @@ class StructureField extends BaseField {
     if(!is_null($this->store)) {
       return $this->store;
     } else {
-      return $this->store = new StructureStore($this->page, $this->name);      
+      return $this->store = $this->page->structure($this->name);      
     }
   }
 
