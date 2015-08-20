@@ -3,8 +3,8 @@
 return array(
   'title' => 'Türkçe',
   'direction' => 'ltr',
-  'author' => 'Levent Usta <aristotheme@gmail.com>',
-  'version' => '1.0.1',
+  'author' => 'Levent Usta <aristotheme@gmail.com>, Ahmet Faruk Bora <byybora@gmail.com>',
+  'version' => '1.0.2',
   'data' => array(
 
     // global
@@ -12,6 +12,7 @@ return array(
     'add' => 'Oluştur',
     'save' => 'Kaydet',
     'saved' => 'Kaydedildi!',
+    'change' => 'Değiştir',
     'delete' => 'Sil',
     'insert' => 'Ekle',
     'ok' => 'Tamam',
@@ -62,15 +63,26 @@ return array(
     'dashboard.index.metatags.edit' => 'Düzenle',
     'dashboard.index.history.title' => 'Son güncellemelerin',
     'dashboard.index.history.text' => 'Son güncellemelerin, daha sonra tekrar kolayca bulabilmen için burada görünecek.',
+    'dashboard.index.license.title' => 'Kirby lisans',
 
     // metatags
-    'metatags' => 'Anahtar Kelimeler',
+    'metatags' => 'Site seçenekleri',
+    'metatags.info' => 'Kirby bilgi',
+    'metatags.license' => 'Kirby lisans',
+    'metatags.version.toolkit' => 'Toolkit lisans',
+    'metatags.version.kirby' => 'Kirby versiyon',
+    'metatags.version.panel' => 'Panel versiyon',
     'metatags.back' => 'Kontrol paneline geri dön',
+    'metatags.files' => 'Site dosyaları',
 
     // pages
     'pages.show.settings' => 'Sayfa ayarları',
     'pages.show.preview' => 'Önizlemeyi aç',
     'pages.show.changeurl' => 'Web adresini değiştir',
+    'pages.show.invisible' => 'Durum: görünmez',
+    'pages.show.visible' => 'Durum: görünür',
+    'pages.show.changes.text' => 'Kaydedilmemiş değişiklikleriniz var!',
+    'pages.show.changes.button' => 'Vazgeç',
     'pages.show.delete' => 'Bu sayfayı sil',
     'pages.show.subpages.title' => 'Alt sayfalar',
     'pages.show.subpages.edit' => 'Düzenle',
@@ -103,6 +115,8 @@ return array(
     'pages.url.uid.label.option' => 'Başlıktan oluştur',
     'pages.url.error.exists' => 'Bir sayfa hali hazırda aynı web adres-uzantısına sahip',
     'pages.url.error.move' => 'Web adres-uzantısı değiştirilemedi',
+    'pages.toggle.publish' => 'Bu sayfanın durumunu **görünür** olarak değiştirmek istediğinizden emin misiniz?',
+    'pages.toggle.hide' => 'Bu sayfanın durumunu **görünmez** olarak değiştirmek istediğinizden emin misiniz?',
     'pages.delete.headline' => 'Bu sayfayı silmek istediğinizden emin misiniz?',
     'pages.delete.error.home.headline' => 'Anasayfa silinemez',
     'pages.delete.error.home.text' => 'Anasayfayı silmeyi deniyorsunuz. Fakat bu mümkün değil, çünkü istenilmeyen etkilere neden olur.',
