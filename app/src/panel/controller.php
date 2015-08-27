@@ -60,6 +60,10 @@ class Controller extends Obj {
     return new View($file, $data);
   }
 
+  public function snippet($file, $data = array()) {
+    return new Snippet($file, $data);
+  }
+
   public function topbar($view, $input) {
     return new Topbar($view, $input);
   }

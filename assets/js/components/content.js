@@ -68,6 +68,7 @@ var Content = function() {
 
     $.ajax({
       url: url,
+      method: 'GET',
     }).done(function(response, status, xhr) {
 
       // stop the loading indicator

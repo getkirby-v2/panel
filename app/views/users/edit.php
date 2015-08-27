@@ -105,16 +105,4 @@
 
 </div>
 
-<?php if($user): ?>
-<form id="upload" class="hidden" action="<?php __($user->url('avatar')) ?>" method="post" enctype="multipart/form-data">
-  <input type="file" name="file" accept="image/jpeg,image/png,image/gif">
-</form>
-
-<script>
-
-$('#upload').uploader(function() {
-  app.content.reload();
-});
-
-</script>
-<?php endif ?>
+<?php echo $uploader ?>

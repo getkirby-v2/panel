@@ -1,4 +1,8 @@
-<div class="structure<?php e($field->readonly(), ' structure-readonly') ?>" data-field="structure" data-sort-api="<?php _u($field->page(), 'field/' . $field->name() . '/structure/sort') ?>" data-sortable="<?php e($field->readonly(), 'false', 'true') ?>">
+<div class="structure<?php e($field->readonly(), ' structure-readonly') ?>" 
+  data-field="structure" 
+  data-sort-api="<?php _u($field->page(), 'field/' . $field->name() . '/structure/sort') ?>" 
+  data-sortable="<?php e($field->readonly(), 'false', 'true') ?>"
+  data-csrf="<?php echo panel()->csrf() ?>">
 
   <?php echo $field->headline() ?>
 

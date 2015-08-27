@@ -4,14 +4,25 @@ class PagesController extends Kirby\Panel\Controller {
 
   public function add($id, $template = null) {
 
+    $self   = $this;
     $parent = $this->page($id);
   
     if(empty($template)) {
-      return $this->view('pages/add', array(
-        'parent'    => $parent,
-        'templates' => $parent->blueprint()->pages()->template(),
-        'back'      => $parent->url()
-      ));
+
+      $form = $parent->form('add', function($form) use($parent, $self) {
+      
+        $form->validate();
+
+        if(!$form->isValid()) {
+          return $form->alert(l('pages.add.error.template'));
+        } else {
+          $self->redirect($parent->children()->create(null, $form->value('template')));          
+        }
+
+      });
+
+      return $this->modal('pages/add', compact('form'));
+
     } else {
       $this->redirect($parent->children()->create(null, $template));
     }
@@ -42,7 +53,7 @@ class PagesController extends Kirby\Panel\Controller {
       try {
         $page->delete();
         $self->notify(':)');
-        $self->redirect($page->parent());
+        $self->redirect($page->parent()->isSite() ? '/' : $page->parent());
       } catch(Exception $e) {
         $form->alert($e->getMessage());
       }

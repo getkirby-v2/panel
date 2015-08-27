@@ -127,7 +127,7 @@ class Site extends \Site {
     $topbar->html .= new Snippet('languages');
     $topbar->html .= new Snippet('searchtoggle', array(
       'search' => $this->url('search'),
-      'close'  => $topbar->view == 'pages/search' ? $this->url() : false
+      'close'  => $topbar->view == 'pages/search' ? purl('/') : false
     ));    
 
   }

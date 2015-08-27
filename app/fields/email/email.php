@@ -20,7 +20,7 @@ class EmailField extends InputField {
       $input->attr('autocomplete', 'off');
       $input->data(array(
         'field' => 'autocomplete',
-        'url'   => panel()->urls()->api() . '/autocomplete/emails'
+        'url'   => panel()->urls()->api() . '/autocomplete/emails?_csrf=' . panel()->csrf()
       ));
     }
 

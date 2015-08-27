@@ -9,6 +9,7 @@ class StructureController extends Kirby\Panel\Controller {
     $store = $this->store($page, $fieldname);
     $form  = $this->form('structure/add', array($page, $store), function($form) use($page, $store, $self) {
       $store->add($form->serialize());
+      $self->notify(':)');
       $self->redirect($page);
     });
 
@@ -24,6 +25,7 @@ class StructureController extends Kirby\Panel\Controller {
     $entry = $store->find($entryId);
     $form  = $this->form('structure/update', array($page, $store, $entry), function($form) use($page, $store, $self, $entryId) {
       $store->update($entryId, $form->serialize());
+      $self->notify(':)');
       $self->redirect($page);
     });
 
@@ -39,6 +41,7 @@ class StructureController extends Kirby\Panel\Controller {
     $entry = $store->find($entryId);
     $form  = $this->form('structure/delete', $page, function() use($self, $page, $store, $entryId) {
       $store->delete($entryId);
+      $self->notify(':)');
       $self->redirect($page);
     });
     

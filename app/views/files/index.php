@@ -23,7 +23,7 @@
   </h2>
 
   <?php if($files->count()): ?>
-  <div class="files" data-sort-api="<?php _u($page, 'files') ?>">
+  <div class="files" data-sort-api="<?php __($page->url('files')) ?>" data-sort-csrf="<?php echo panel()->csrf() ?>">
 
     <div class="grid<?php e($sortable, ' sortable') ?>">
 
@@ -79,9 +79,7 @@
 
 </div>
 
-<form id="upload" class="hidden" action="<?php __($page->url('upload')) ?>" method="post" enctype="multipart/form-data">
-  <input type="file" name="file" multiple>
-</form>
+<?php echo $uploader ?>
 
 <script>
 
@@ -89,20 +87,26 @@ var files    = $('.files');
 var sortable = files.find('.sortable');
 var items    = files.find('.grid-item');
 var api      = files.data('sort-api');
+var csrf     = files.data('sort-csrf');
 
-if(items.length) {
-  sortable.sortable({
-    helper: 'clone',
-    update: function() {
-      $.post(api, {filenames: sortable.sortable('toArray'), action: 'sort'}, function(data) {
-        app.content.reload();        
-      });
-    }
-  }).disableSelection();
+if($('.sortable').length > 0) {
+
+  var drag = dragula([$('.sortable')[0]]);
+  
+  drag.on('drop', function(el, target, source) {
+
+    var filenames = [];
+
+    $(target).find('.grid-item').each(function() {
+      filenames.push($(this).attr('id'));
+    });
+
+    $.post(api, {filenames: filenames, action: 'sort', '_csrf' : csrf}, function(data) {
+      app.content.reload();        
+    });
+
+  });  
+
 }
-
-$('#upload').uploader(function() {
-  app.content.reload();
-});
 
 </script>

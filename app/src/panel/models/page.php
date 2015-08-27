@@ -275,7 +275,7 @@ class Page extends \Page {
   
   }
 
-  public function sort($to, $sibling = false) {
+  public function sort($to = null, $sibling = false) {
 
     if($this->isErrorPage()) {
       return $this->num();
@@ -480,7 +480,7 @@ class Page extends \Page {
     $topbar->html .= new Snippet('languages');
     $topbar->html .= new Snippet('searchtoggle', array(
       'search' => $this->url('search'),
-      'close'  => $topbar->view == 'pages/search' ? $this->url() : false
+      'close'  => $topbar->view == 'pages/search' ? $this->url('edit') : false
     ));    
 
   }

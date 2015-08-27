@@ -1,33 +1,46 @@
-<div class="modal-content" data-api="<?php _u('api/slug') ?>">
+<div class="modal-content" data-api="<?php _u('api/slug') ?>" data-csrf="<?php echo panel()->csrf() ?>">
   <?php echo $form ?>
 </div>
 
 <script>
 
-var toggle  = $('.modal-content .label a');
-var input   = $('.modal-content .input');
-var preview = $('.modal-content .uid-preview span');
+(function() {
 
-var toSlug = function(callback) {
-  $.get($('.modal-content').data('api'), {string: input.val()}, callback);
-};
+  var modal   = $('.modal-content');
+  var toggle  = modal.find('.label a');
+  var input   = modal.find('.input');
+  var preview = modal.find('.uid-preview span');
+  var csrf    = modal.data('csrf');
+  var api     = modal.data('api');
 
-toggle.on('click', function() {
-  input.val(toggle.data('title')).trigger('blur').focus();
-  return false;
-});
+  var toSlug = function(callback) {
+    $.post(api, {string: input.val(), _csrf: csrf}, function(response) {
+      if($.type(response) == 'string') {
+        callback(response);        
+      } else {
+        callback(input.val());
+      }
+    });
+  };
 
-input.on('keyup', function() {
-  toSlug(function(slug) {
-    preview.text(slug);
+  toggle.on('click', function() {
+    input.val(toggle.data('title')).trigger('blur').focus();
+    return false;
   });
-});
 
-input.on('blur', function() {
-  toSlug(function(slug) {
-    input.val(slug);
-    preview.text(slug);
-  });  
-});
+  input.on('keyup', function() {
+    toSlug(function(slug) {
+      preview.text(slug);
+    });
+  });
+
+  input.on('blur', function() {
+    toSlug(function(slug) {
+      input.val(slug);
+      preview.text(slug);
+    });  
+  });
+
+})();
 
 </script>

@@ -67,9 +67,7 @@
 
 </div>
 
-<form id="upload" class="hidden" action="<?php __($file->url('replace')) ?>" method="post" enctype="multipart/form-data">
-  <input type="file" name="file" accept="<?php __($file->mime()) ?>">
-</form>
+<?php echo $uploader ?>
 
 <script>
 
@@ -83,10 +81,6 @@ $('#form-field-_link').on('click', function() {
     // copy to clipboard is not supported yet
   }
 
-});
-
-$('#upload').uploader(function() {
-  app.content.reload();
 });
 
 </script>

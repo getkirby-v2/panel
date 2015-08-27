@@ -15,7 +15,7 @@
       $('body').addClass('loading');
 
       $.upload(uploads, {
-        url: form.attr('action'),
+        url: form.attr('action') + '?_csrf=' + form.find('[name=_csrf]').val(),
         complete: function() {
           if(done == false) {
             done = true;

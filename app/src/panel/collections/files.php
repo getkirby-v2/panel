@@ -23,11 +23,13 @@ class Files extends \Files {
     }
 
     if($this->page->canSortFiles()) {
-      $this->sortBy('sort', 'asc');
+      $sorted = $this->sortBy('sort', 'asc');
+      $this->data = $sorted->data;
     } 
 
     if($this->page->blueprint()->files()->sort() == 'flip') {
-      $this->flip();
+      $flipped = $this->flip();
+      $this->data = $flipped->data;
     }
 
   }

@@ -45,6 +45,7 @@ class UsersController extends Kirby\Panel\Controller {
       'user'     => null,
       'form'     => $form,
       'writable' => is_writable(kirby()->roots()->accounts()),
+      'uploader' => null
     ));
 
   }
@@ -82,6 +83,11 @@ class UsersController extends Kirby\Panel\Controller {
       'user'     => $user,
       'form'     => $form,
       'writable' => is_writable(kirby()->roots()->accounts()),
+      'uploader' => $this->snippet('uploader', array(
+        'url'      => $user->url('avatar'),
+        'accept'   => 'image/jpeg,image/png,image/gif',
+        'multiple' => false
+      ))
     ));
 
   }

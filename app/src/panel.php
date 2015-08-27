@@ -9,6 +9,7 @@ use Dir;
 use ErrorController;
 use Exception;
 use F;
+use Header;
 use L;
 use Obj;
 use R;
@@ -37,6 +38,7 @@ class Panel {
   public $route  = null;
   public $language = null;
   public $languages = null;
+  public $csrf = null;
 
   static public function instance() {
     return static::$instance;
@@ -103,6 +105,56 @@ class Panel {
         panel()->redirect('install');
       }
     });
+
+    // check for valid csrf tokens. Can be used for get requests
+    // since all post requests are blocked anyway
+    $this->router->filter('csrf', function() {
+      panel()->csrfCheck();
+    });
+
+    // start the logger
+    $this->log();
+
+    // csrf protection for every post request
+    if(r::is('post')) {
+      $this->csrfCheck();
+    }
+
+  }
+
+  public function log() {
+    f::append(kirby()->roots()->index() . DS . 'panel.log', 
+      date('Y-m-d H:i:s')     . ' - ' . 
+      r::method()             . ' - ' . 
+      $this->kirby->path()    . ' - ' . 
+      http_build_query(get()) . ' - ' . 
+      s::get('csrf')          . ' - ' . 
+      PHP_EOL
+    );
+  }
+
+  public function csrf() {
+
+    if(!is_null($this->csrf)) return $this->csrf;
+
+    // create a new csrf token
+    return $this->csrf = csrf();
+
+  }
+
+  public function csrfCheck() {
+
+    $csrf = get('_csrf');
+
+    if(empty($csrf) or !csrf($csrf)) {        
+    
+      try {
+        $this->user()->logout();
+      } catch(Exception $e) {}
+
+      $this->redirect('login');
+
+    }
 
   }
 

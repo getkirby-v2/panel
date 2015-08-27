@@ -301,11 +301,13 @@ return array(
   array(
     'pattern' => 'api/slug',
     'action'  => 'HelpersController::slug',
+    'method'  => 'POST',
     'filter'  => 'auth',
   ),
   array(
     'pattern' => 'api/autocomplete/(:any)',
     'action'  => 'HelpersController::autocomplete',
+    'method'  => 'POST',
     'filter'  => 'auth',
   ),
 

@@ -20,6 +20,7 @@ class FilesController extends Kirby\Panel\Controller {
       'files'    => $files,
       'back'     => $page->url('edit'),
       'sortable' => $page->canSortFiles(),
+      'uploader' => $this->snippet('uploader', array('url' => $page->url('upload')))
     ));
 
   }
@@ -54,6 +55,11 @@ class FilesController extends Kirby\Panel\Controller {
       'page'     => $page,
       'file'     => $file,
       'returnTo' => url::last() == $page->url('files') ? $page->url('files') : $page->url(),
+      'uploader' => $this->snippet('uploader', array(
+        'url'      => $file->url('replace'), 
+        'accept'   => $file->mime(),
+        'multiple' => false
+      ))
     ));
 
   }
@@ -102,7 +108,7 @@ class FilesController extends Kirby\Panel\Controller {
       try {
         $file->delete();
         $self->notify(':)');
-        $self->redirect($page);
+        $self->redirect($page, 'edit');
       } catch(Exception $e) {
         $form->alert($e->getMessage());
       }

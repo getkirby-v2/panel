@@ -140,10 +140,11 @@ class Editor {
   public function content() {
 
     return new View('pages/edit', array(
-      'sidebar' => $this->sidebar(),
-      'form'    => $this->form(),
-      'page'    => $this->page,
-      'notitle' => $this->page->hasNoTitleField(),
+      'sidebar'  => $this->sidebar(),
+      'form'     => $this->form(),
+      'page'     => $this->page,
+      'notitle'  => $this->page->hasNoTitleField(),
+      'uploader' => new Snippet('uploader', array('url' => $this->page->url('upload')))
     ));
 
   }

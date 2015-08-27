@@ -30,7 +30,11 @@
       <h3><a href="<?php echo $visible->firstPage() ?>"><?php _l('subpages.index.visible') ?></a></h3>
 
       <div class="dropzone subpages">
-        <div class="items<?php e($sortable, ' sortable') ?>" id="visible-children" data-flip="<?php echo $flip ?>" data-start="<?php echo $visible->start() ?>" data-total="<?php echo $visible->total() ?>">
+        <div class="items<?php e($sortable, ' sortable') ?>" id="visible-children" 
+          data-flip="<?php echo $flip ?>" 
+          data-start="<?php echo $visible->start() ?>" 
+          data-total="<?php echo $visible->total() ?>"
+          data-csrf="<?php echo panel()->csrf() ?>">
           <?php foreach($visible->pages() as $subpage): ?>
           <?php echo new Kirby\Panel\Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
           <?php endforeach ?>
@@ -92,26 +96,39 @@
 
 <script>
 
-$('.main .sortable').sortable({
-  connectWith: '.sortable',
-  update: function(e, ui) {
+(function() {
 
-    var $this = $(this);
+  if($('.sortable').length == 0) return;
 
-    if($this.attr('id') == 'visible-children') {
+  var drag = dragula([$('#visible-children')[0], $('#invisible-children')[0]]);
+  var csrf = $('#visible-children').data('csrf');
 
-      var start = parseInt($this.data('start'));
-      var total = $this.data('total');
-      var flip  = $this.data('flip');
-      var index = $this.find('.item').index(ui.item);
-      var id    = ui.item.attr('id');
+  drag.on('drop', function(el, target, source) {
+
+    var $item   = $(el);
+    var $target = $(target);
+    var $source = $(source);
+
+    if($target.is('#invisible-children')) {
+      if($source.is('#visible-children')) {
+        $.post(window.location.href, {action: 'hide', id: $item.attr('id'), _csrf: csrf}, function(data) {
+          app.content.reload();
+        });
+      }
+    } else if($target.is('#visible-children')) {
+
+      var start = parseInt($target.data('start'));
+      var total = $target.data('total');
+      var flip  = $target.data('flip');
+      var index = $target.find('.item').index($item);
+      var id    = $item.attr('id');
 
       if(flip == '1') {
         // if this is an invisible element the 
         // total number of items in the visible list has
         // to be adjusted to get the right result for the
         // sorting number
-        if(ui.sender && ui.sender.attr('id') == 'invisible-children') {
+        if($source.is('#invisible-children')) {
           total++;
         }
         var to = total - start - index + 1;
@@ -119,27 +136,14 @@ $('.main .sortable').sortable({
         var to = index + start;              
       }
 
-      if(ui.item.parent().attr('id') !== 'invisible-children') {
-
-        $.post(window.location.href, {action: 'sort', id: id, to: to}, function(data) {
-          app.content.reload();
-        });
-
-      }
-
-    }
-  },
-  receive : function(event, ui) {
-
-    if($(this).attr('id') == 'invisible-children') {
-
-      $.post(window.location.href, {action: 'hide', id: ui.item.attr('id')}, function(data) {
+      $.post(window.location.href, {action: 'sort', id: id, to: to, _csrf: csrf}, function(data) {
         app.content.reload();
       });
 
     }
 
-  }
-}).disableSelection();
+  });  
+
+})();
 
 </script>

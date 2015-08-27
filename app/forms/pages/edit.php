@@ -17,19 +17,19 @@ return function($page) {
   // set the autofocus on the title field
   $form->fields->title->autofocus = true;
 
-  // add the changes alert
-  if($changes = $page->changes()->get() and !empty($changes)) {
+  // // add the changes alert
+  // if($changes = $page->changes()->get() and !empty($changes)) {
 
-    // display unsaved changes
-    $alert = new Brick('div');
-    $alert->addClass('text marginalia');
-    $alert->attr('style', 'margin-top: 1.5rem');
-    $alert->append(l('pages.show.changes.text') . '<br>');
-    $alert->append('<a href="' . $page->url('discard') . '">' . l('pages.show.changes.button') . '</a>');
+  //   // display unsaved changes
+  //   $alert = new Brick('div');
+  //   $alert->addClass('text marginalia');
+  //   $alert->attr('style', 'margin-top: 1.5rem');
+  //   $alert->append(l('pages.show.changes.text') . '<br>');
+  //   $alert->append('<a href="' . $page->url('discard') . '">' . l('pages.show.changes.button') . '</a>');
 
-    $form->buttons->append('changes', $alert);
+  //   $form->buttons->append('changes', $alert);
 
-  }
+  // }
 
   // check for untranslatable fields
   if(site()->language() != site()->defaultLanguage()) {

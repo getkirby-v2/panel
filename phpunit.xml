@@ -10,6 +10,8 @@
       <exclude>test/ChangesTest.php</exclude>
       <exclude>test/StructureTest.php</exclude>
       <exclude>test/HistoryTest.php</exclude>
+      <exclude>test/NumberingTest.php</exclude>
+      <exclude>test/AutocompleteTest.php</exclude>
     </testsuite>
   </testsuites>
 </phpunit>

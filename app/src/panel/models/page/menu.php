@@ -30,7 +30,7 @@ class Menu {
       if($parent->isSite()) {
         $a->data('modal-return-to', purl('/'));        
       } else {
-        $a->data('modal-return-to', $parent->url());        
+        $a->data('modal-return-to', $parent->url('edit'));        
       }
 
     }
@@ -103,11 +103,10 @@ class Menu {
   public function deleteOption() {
     if($this->page->isDeletable()) {
       return $this->item('trash-o', 'pages.show.delete', array(
-        'href'                 => $this->page->url('delete'),
-        'title'                => '#',
-        'data-shortcut'        => '#',
-        'data-modal'           => true,
-        'data-modal-return-to' => $this->page->parent()->isSite() ? purl('/') : false,
+        'href'          => $this->page->url('delete'),
+        'title'         => '#',
+        'data-shortcut' => '#',
+        'data-modal'    => true,
       ));
     } else {
       return false;

@@ -321,13 +321,13 @@ class Form extends Brick {
   public function on($action, $callback) {
 
     // auto-trigger the submit event when the form is being echoed
-    if(r::is('post') and get('_csrf') and csrf(get('_csrf'))) {    
+    if(r::is('post')) {    
       $callback($this);
     } 
 
     $this->fields->append('_csrf', static::field('hidden', array(
       'name'  => '_csrf',
-      'value' => csrf()
+      'value' => panel()->csrf()
     )));
 
   }

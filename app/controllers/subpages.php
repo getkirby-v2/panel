@@ -16,7 +16,7 @@ class SubpagesController extends Kirby\Panel\Controller {
     $invisible = $this->invisible($page);
 
     // activate the sorting
-    $this->sort($page);
+    $this->sort($page);      
 
     return $this->screen('subpages/index', $page, array(
       'page'      => $page,

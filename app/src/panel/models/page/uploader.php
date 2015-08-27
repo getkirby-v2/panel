@@ -1,6 +1,11 @@
 <?php 
 
-class PageUploader {
+namespace Kirby\Panel\Models\Page;
+
+use Exception;
+use Upload;
+
+class Uploader {
 
   public $kirby;
   public $page;
@@ -12,7 +17,7 @@ class PageUploader {
 
     $this->page      = $page;
     $this->file      = $file;
-    $this->blueprint = blueprint::find($page);
+    $this->blueprint = $page->blueprint();
     $this->filename  = $this->blueprint->files()->sanitize() ? '{safeFilename}' : '{filename}';
 
     if($this->file) {
@@ -104,6 +109,11 @@ class PageUploader {
 
     // block forbidden extensions
     if(in_array(strtolower($file->extension()), $forbiddenExtensions)) {
+      throw new Exception('Forbidden file extension');
+    }
+
+    // especially block any connection that contains php
+    if(str::contains(strtolower($file->extension()), 'php')) {
       throw new Exception('Forbidden file extension');
     }
 

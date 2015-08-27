@@ -26,7 +26,7 @@ class ErrorController extends Kirby\Panel\Controller {
 
   public function auth() {
     try {
-      $user = panel()->site()->user();      
+      $user = panel()->user();      
     } catch(Exception $e) {
       $this->redirect('login');
     }

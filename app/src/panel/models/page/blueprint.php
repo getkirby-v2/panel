@@ -29,13 +29,20 @@ class Blueprint extends Obj {
 
   public function __construct($name) {
 
-    // check if the fallback is needed
-    if(!static::exists($name)) {
-      $name = 'default';
-    }    
+    if(file_exists(static::$root . DS . $name . '.yaml')) {
+      $this->file = static::$root . DS . $name . '.yaml';
+      $this->name = $name;
+    } else if(file_exists(static::$root . DS . $name . '.php')) {
+      $this->file = static::$root . DS . $name . '.php';
+      $this->name = $name;
+    } else if(file_exists(static::$root . DS . 'default.yaml')) {
+      $this->file = static::$root . DS . 'default.yaml';
+      $this->name = 'default';
+    } else if(file_exists(static::$root . DS . 'default.php')) {
+      $this->file = static::$root . DS . 'default.php';
+      $this->name = 'default';
+    }
 
-    $this->name = $name;
-    $this->file = static::$root . DS . $name . '.php';
     $this->yaml = data::read($this->file, 'yaml');
 
     // remove the broken first line
@@ -56,7 +63,10 @@ class Blueprint extends Obj {
   }
 
   static public function exists($name) {
-    return file_exists(static::$root . DS . strtolower($name) . '.php');
+    return (
+      file_exists(static::$root . DS . strtolower($name) . '.php') or
+      file_exists(static::$root . DS . strtolower($name) . '.yaml')
+    );
   }
 
   static public function all() {

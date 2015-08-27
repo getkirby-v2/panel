@@ -50,7 +50,7 @@ class PanelTestCase extends PHPUnit_Framework_TestCase {
   protected function createAdmin($username = 'admin') {
     return $this->panel->users()->create(array(
       'username'             => $username,
-      'email'                => 'admin@getkirby.com', 
+      'email'                => $username . '@getkirby.com', 
       'password'             => 'test',
       'passwordconfirmation' => 'test',
       'role'                 => 'admin'
@@ -60,7 +60,7 @@ class PanelTestCase extends PHPUnit_Framework_TestCase {
   protected function createEditor($username = 'editor') {
     return $this->panel->users()->create(array(
       'username'             => $username,
-      'email'                => 'editor@getkirby.com',
+      'email'                => $username . '@getkirby.com',
       'password'             => 'test',
       'passwordconfirmation' => 'test',
       'role'                 => 'editor'

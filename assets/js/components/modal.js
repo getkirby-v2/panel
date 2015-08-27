@@ -119,6 +119,7 @@ var Modal = function(app) {
 
     $.ajax({
       url: url,
+      method: 'GET',
       headers : {modal : true}
     }).done(function(data, status, xhr) {
 
@@ -181,7 +182,7 @@ var Modal = function(app) {
 
     // switch content events back on
     app.content.on();
-
+    
   };
 
   // return the modal form element

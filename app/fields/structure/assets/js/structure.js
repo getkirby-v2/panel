@@ -6,17 +6,25 @@
     var list    = element.find('.structure-entries');
     var entries = element.find('.structure-entry');
     var sortApi = element.data('sort-api');
+    var csrf    = element.data('csrf');
 
     if(element.data('sortable') == true && list.find('.structure-entry').length > 1) {
 
-      list.sortable({
-        update: function() {
-          var ids = list.sortable('toArray').map(function(entry) {
-            return entry.replace('structure-entry-', '');
-          });
-          $.post(sortApi, {ids: ids});
-        }
-      }).disableSelection();
+      var drag = dragula([list[0]]);
+
+      drag.on('drop', function(e, target, source) {
+
+        var ids = [];
+
+        $(target).find('.structure-entry').each(function() {
+          ids.push($(this).attr('id').replace('structure-entry-', ''));
+        });
+
+        $.post(sortApi, {ids: ids, _csrf: csrf}, function() {
+          app.content.reload();
+        });
+
+      });
 
     }
 

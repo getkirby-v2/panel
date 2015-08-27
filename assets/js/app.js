@@ -36,7 +36,7 @@ var app = {
 
         // keep changes on updates to avoid data loss
         if(form.data('keep')) {
-          $.post(form.data('keep'), form.serialize());
+          //$.post(form.data('keep'), form.serialize());
         }
 
         if(link.is('[data-modal]')) {
@@ -65,10 +65,7 @@ var app = {
           if(!e.metaKey) return true;
 
           // check for an opened modal
-          if(app.hasModal()) {
-            // submit the modal form
-            app.modal.form().trigger('submit');
-          } else {
+          if(!app.hasModal()) {
             // submit the main content form
             app.content.form().trigger('submit');
           }

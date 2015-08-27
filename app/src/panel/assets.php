@@ -17,6 +17,7 @@ class Assets {
 
     $files = array(
       // no-dependency vendors
+      'vendors/dragula.js',
       'vendors/nprogress.js',
 
       // jquery stuff
@@ -26,8 +27,6 @@ class Assets {
       'vendors/jquery.upload.js',
       'vendors/jquery.filedrop.js',
       'vendors/jquery.hotkeys.js',
-      'vendors/jquery.ui.js',
-      'vendors/jquery.ui.touch.js',
       'vendors/jquery.autocomplete.js',
       'vendors/jquery.editorHelpers.js',
       'vendors/jquery.passwordsuggestion.js',

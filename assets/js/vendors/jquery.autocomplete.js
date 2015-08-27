@@ -40,7 +40,7 @@
       }
 
       if(!self.cache) {
-        $.getJSON(self.url, function(data) {
+        $.post(self.url, function(data) {
           self.cache = data;
           callback(data);
         });
