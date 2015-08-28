@@ -37,6 +37,7 @@
 
     }
   };
+
   $.fn.selectRange = function(start, end) {
     if(!end) end = start;
     return this.each(function() {
@@ -76,7 +77,6 @@
     return selection;
 
   };
-
 
   $.fn.insertAtCursor = function (myValue) {
     return this.each(function(){

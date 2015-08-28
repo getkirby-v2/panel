@@ -40,9 +40,11 @@
       }
 
       if(!self.cache) {
-        $.post(self.url, function(data) {
-          self.cache = data;
-          callback(data);
+        $.post(self.url, function(response) {          
+          if($.type(response) == 'object' && response.data) {
+            self.cache = response.data;
+            callback(response.data);            
+          }
         });
       }
 

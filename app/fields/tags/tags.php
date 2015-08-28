@@ -2,12 +2,6 @@
 
 class TagsField extends TextField {
 
-  static public $assets = array(
-    'js' => array(
-      'tags.js'
-    )
-  );
-
   public function __construct() {
 
     $this->icon      = 'tag';

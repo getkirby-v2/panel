@@ -23,7 +23,7 @@
   </h2>
 
   <?php if($files->count()): ?>
-  <div class="files" data-sort-api="<?php __($page->url('files')) ?>" data-sort-csrf="<?php echo panel()->csrf() ?>">
+  <div class="files" data-api="<?php __($page->url('files')) ?>">
 
     <div class="grid<?php e($sortable, ' sortable') ?>">
 
@@ -86,8 +86,7 @@
 var files    = $('.files');
 var sortable = files.find('.sortable');
 var items    = files.find('.grid-item');
-var api      = files.data('sort-api');
-var csrf     = files.data('sort-csrf');
+var api      = files.data('api');
 
 if($('.sortable').length > 0) {
 
@@ -101,7 +100,7 @@ if($('.sortable').length > 0) {
       filenames.push($(this).attr('id'));
     });
 
-    $.post(api, {filenames: filenames, action: 'sort', '_csrf' : csrf}, function(data) {
+    $.post(api, {filenames: filenames, action: 'sort'}, function(data) {
       app.content.reload();        
     });
 

@@ -1,12 +1,16 @@
 <?php
 
+use Kirby\Panel\Installer;
+
 class InstallationController extends Kirby\Panel\Controller {
 
   public function index() {
 
-    if(site()->users()->count() > 0) {
+    $installer = new Installer();
+
+    if($installer->isCompleted()) {
       $this->redirect('login');
-    } else if($problems = installation::check()) {
+    } else if($problems = $installer->problems()) {
       return $this->problems($problems);
     } else {
       return $this->signup();
@@ -15,14 +19,14 @@ class InstallationController extends Kirby\Panel\Controller {
   }
 
   protected function problems($problems) {
-    $form = $this->form('installation/check', $problems);        
-    return $this->modal('installation/index', compact('form'));
+    $form = $this->form('installation/check', array($problems));        
+    return $this->modal('index', compact('form'));
   }
 
   protected function signup() {
 
     $self = $this;
-    $form = $this->form('installation/signup', null, function($form) use($self) {
+    $form = $this->form('installation/signup', array(), function($form) use($self) {
 
       $form->validate();
 
@@ -35,11 +39,13 @@ class InstallationController extends Kirby\Panel\Controller {
         // fetch all the form data
         $data = $form->serialize();
 
+        var_dump($data);
+
         // make sure that the first user is an admin
         $data['role'] = 'admin';
 
         // try to create the new user
-        $user = panel()->site()->users()->create($data);
+        $user = site()->users()->create($data);
 
         // store the new username for the login screen
         s::set('username', $user->username());
@@ -58,8 +64,14 @@ class InstallationController extends Kirby\Panel\Controller {
 
     });
 
-    return $this->modal('installation/index', compact('form'));
+    return $this->modal('index', compact('form'));
 
+  }
+
+  public function modal($view, $data = array()) {
+    return $this->layout('base', array(
+      'content' => $this->view('installation/' . $view, $data)
+    ));
   }
 
 }

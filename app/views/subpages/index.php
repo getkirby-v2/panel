@@ -101,7 +101,6 @@
   if($('.sortable').length == 0) return;
 
   var drag = dragula([$('#visible-children')[0], $('#invisible-children')[0]]);
-  var csrf = $('#visible-children').data('csrf');
 
   drag.on('drop', function(el, target, source) {
 
@@ -111,7 +110,7 @@
 
     if($target.is('#invisible-children')) {
       if($source.is('#visible-children')) {
-        $.post(window.location.href, {action: 'hide', id: $item.attr('id'), _csrf: csrf}, function(data) {
+        $.post(window.location.href, {action: 'hide', id: $item.attr('id')}, function(data) {
           app.content.reload();
         });
       }
@@ -136,7 +135,7 @@
         var to = index + start;              
       }
 
-      $.post(window.location.href, {action: 'sort', id: id, to: to, _csrf: csrf}, function(data) {
+      $.post(window.location.href, {action: 'sort', id: id, to: to}, function(data) {
         app.content.reload();
       });
 

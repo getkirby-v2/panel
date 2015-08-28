@@ -137,17 +137,28 @@ class Panel {
 
     if(!is_null($this->csrf)) return $this->csrf;
 
+    // see if there's a token in the session
+    $token = s::get('csrf');
+
+    // create a new csrf token on every regular request
+    if(!r::ajax() or str::length($token) !== 32) {
+      $token = str::random(32);
+    } 
+
+    // store the new token in the session
+    s::set('csrf', $token);
+
     // create a new csrf token
-    return $this->csrf = csrf();
+    return $this->csrf = $token;
 
   }
 
   public function csrfCheck() {
 
-    $csrf = get('_csrf');
+    $csrf = get('csrf');
 
-    if(empty($csrf) or !csrf($csrf)) {        
-    
+    if(empty($csrf) or $csrf !== s::get('csrf')) {        
+  
       try {
         $this->user()->logout();
       } catch(Exception $e) {}
@@ -442,7 +453,9 @@ class Panel {
         header('Panel-User: ' . $user->username());      
       }
 
-      die(response::json(array('url' => $url)));
+      die(response::json(array(
+        'url' => $url
+      )));
 
     } else {
       go($url);            

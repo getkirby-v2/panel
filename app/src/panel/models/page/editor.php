@@ -44,7 +44,7 @@ class Editor {
 
         $page->update($form->serialize());
 
-        panel()->notify(l('saved'));
+        panel()->notify(':)');
 
         if($page->isSite()) {
           return panel()->redirect('options');

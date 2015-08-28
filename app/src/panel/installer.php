@@ -1,18 +1,16 @@
 <?php
 
-class Installation {
+namespace Kirby\Panel;
 
-  static public function old() {
+use Folder;
 
-    $panel = kirby()->roots()->site() . DS . 'panel';
+class Installer {
 
-    return (is_dir($panel) or
-            is_dir($panel . DS . 'blueprints') or
-            is_dir($panel . DS . 'accounts')) ? true : false;
-
+  public function isCompleted() {
+    return site()->users()->count() > 0;
   }
 
-  static public function check() {
+  public function problems() {
 
     $checks   = array('accounts', 'thumbs', 'blueprints', 'content', 'avatars');
     $problems = array();
@@ -20,34 +18,34 @@ class Installation {
     foreach($checks as $c) {
       $method = 'check' . $c;
 
-      if(!static::$method()) {
+      if(!$this->$method()) {
         $problems[] = l('installation.check.error.' . $c);
       }
 
     }
-
+    
     return empty($problems) ? false : $problems;
 
   }
 
-  static protected function checkAccounts() {
+  protected function checkAccounts() {
     return is_writable(kirby()->roots()->accounts());
   }
 
-  static protected function checkThumbs() {
+  protected function checkThumbs() {
     return is_writable(kirby()->roots()->thumbs());
   }
 
-  static protected function checkBlueprints() {
+  protected function checkBlueprints() {
     return is_dir(kirby()->roots()->blueprints());
   }
 
-  static protected function checkContent() {
+  protected function checkContent() {
     $folder = new Folder(kirby()->roots()->content());
     return $folder->isWritable(true);
   }
 
-  static protected function checkAvatars() {
+  protected function checkAvatars() {
     return is_writable(kirby()->roots()->avatars());
   }
 

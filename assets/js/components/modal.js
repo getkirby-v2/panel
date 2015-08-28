@@ -114,29 +114,11 @@ var Modal = function(app) {
     // to avoid conflicts    
     app.content.off();
 
-    // start the loading indicator
-    app.isLoading(true);
-
-    $.ajax({
-      url: url,
-      method: 'GET',
-      headers : {modal : true}
-    }).done(function(data, status, xhr) {
-
-      // stop the loading indicator
-      app.isLoading(false);
-
-      // check for the current user
-      var user = xhr.getResponseHeader('Panel-User');
-
-      // redirect to the login if the user is missing
-      if(!user) window.location.reload();
+    // load the modal view
+    app.load(url, 'modal', function(response) {
 
       // paste the html into the modal container
-      root.html(data);
-
-      // remove the invalid title element
-      root.find('title').remove();
+      root.html(response.content);
 
       // add the modal to the body
       $('body').append(root);
@@ -150,7 +132,7 @@ var Modal = function(app) {
       if($.type(onLoad) == 'function') {
         onLoad();
       }
-  
+
       // initialize all events
       on(returnTo);
 

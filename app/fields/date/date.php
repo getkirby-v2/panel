@@ -6,12 +6,7 @@ class DateField extends InputField {
 
   static public $assets = array(
     'js' => array(
-      'moment.min.js',
-      'pikaday.min.js',
       'date.js'
-    ),
-    'css' => array(
-      'pikaday.css'
     )
   );
 

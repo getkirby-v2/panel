@@ -3,6 +3,8 @@
 namespace Kirby\Panel;
 
 use Obj;
+use R;
+use Response;
 
 class Controller extends Obj {
 
@@ -44,15 +46,26 @@ class Controller extends Obj {
     switch($type) {
       case 'app':
         $defaults['topbar']  = '';
-        $defaults['formcss'] = Form::css();
-        $defaults['formjs']  = Form::js(false);
-        $defaults['appjs']   = js(panel()->urls()->js() . '/app.js?v=' . panel()->version());
+        $defaults['csrf']    = panel()->csrf();
+        $defaults['formcss'] = css(panel()->urls()->css() . '/form.css?v=' . panel()->version());
+        $defaults['formjs']  = js(panel()->urls()->js()   . '/form.js?v='  . panel()->version());
+        $defaults['appjs']   = js(panel()->urls()->js()   . '/app.js?v='   . panel()->version());
         break;
       case 'base':
         break;
     }
 
-    return new Layout($type, array_merge($defaults, $data));
+    $data = array_merge($defaults, $data);
+
+    if(r::ajax() and $type == 'app') {
+      $response = array(
+        'title'   => $data['title'],
+        'content' => $data['topbar'] . $data['content']
+      );
+      return response::json($response);
+    } else {
+      return new Layout($type, $data);      
+    }
 
   }
 
@@ -78,6 +91,10 @@ class Controller extends Obj {
   public function modal($view, $data = array()) {
     if($view === 'error') $view = 'error/modal';  
     return $this->layout('app', array('content' => $this->view($view, $data)));
+  }
+
+  public function json($data = array()) {
+    return response::json($data);
   }
 
 }

@@ -24,8 +24,7 @@ return function() {
       'label'        => 'installation.signup.email.label',
       'placeholder'  => 'installation.signup.email.placeholder',
       'type'         => 'email',
-      'required'     => true,
-      'autocomplete' => false,
+      'required'     => true
     ),
 
     'password' => array(

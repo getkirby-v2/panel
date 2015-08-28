@@ -34,7 +34,15 @@ var Content = function() {
     });
 
     // hook up the main form
-    Form('.main .form');
+    Form('.main .form', {
+      redirect: function(response) {
+        if($.type(response) == 'object' && response.url) {
+          app.content.open(response.url);                        
+        } else {
+          app.content.replace(response);
+        }
+      }
+    });
 
     // recall the focus and caret position
     focus.on('.main .form');
@@ -63,50 +71,25 @@ var Content = function() {
 
   var open = function(url, state) {
 
-    // start the loading indicator
-    app.isLoading(true);
-
-    $.ajax({
-      url: url,
-      method: 'GET',
-    }).done(function(response, status, xhr) {
-
-      // stop the loading indicator
-      app.isLoading(false);
-
-      // check for the current user
-      var user = xhr.getResponseHeader('Panel-User');
-
-      // // redirect to the login if the user is missing
-      if(!user) window.location.href = url;
-
-      if($.type(response) == 'object' && response.url) {
-        open(response.url);        
+    app.load(url, 'content', function(response) {
+      // handle redirects
+      if(response.url) {
+        open(response.url);
       } else {
-        replace(response, url);        
+        replace(response.content, url);
       }
-
     });
 
   };
 
-  var replace = function(html, url) {
+  var replace = function(content, url) {
 
     app.modal.close();      
 
     var scrollSidebar = element('.sidebar').scrollTop();
     var scrollMainbar = element('.mainbar').scrollTop();
 
-    root.html(html);    
-
-    // find the title element 
-    var title = root.find('title');
-
-    // set the document title
-    document.title = title.text();
-
-    // remove it, since it's actually invalid there
-    title.remove();
+    root.html(content);    
 
     // change the history
     if(url) {

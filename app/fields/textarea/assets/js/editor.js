@@ -4,8 +4,11 @@
 
     return this.each(function() {
 
-      var textarea = $(this).autosize();
+      var textarea = $(this);
       var buttons  = textarea.parent().find('.field-buttons');
+
+      // start autosizing
+      autosize(textarea);
 
       buttons.find('.btn').off('click.editorButton').on('click.editorButton', function(e) {
 

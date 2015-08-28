@@ -15,7 +15,7 @@ return function($problems) {
   }
 
   // add the list of problems to the info field
-  $form->fields->info->text = $info;
+  $form->fields->info->text = (string)$info;
 
   // setup the retry button
   $form->buttons->submit->value     = l('installation.check.retry');

@@ -5,8 +5,7 @@
     var element = $(element);
     var list    = element.find('.structure-entries');
     var entries = element.find('.structure-entry');
-    var sortApi = element.data('sort-api');
-    var csrf    = element.data('csrf');
+    var api     = element.data('api');
 
     if(element.data('sortable') == true && list.find('.structure-entry').length > 1) {
 
@@ -20,7 +19,7 @@
           ids.push($(this).attr('id').replace('structure-entry-', ''));
         });
 
-        $.post(sortApi, {ids: ids, _csrf: csrf}, function() {
+        $.post(api, {ids: ids}, function() {
           app.content.reload();
         });
 

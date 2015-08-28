@@ -3,16 +3,24 @@
 class HelpersController extends Kirby\Panel\Controller {
 
   public function slug() {
-    return str::slug(get('string'));
+    return $this->json(array(
+      'slug' => str::slug(get('string'))
+    ));
   }
 
   public function autocomplete($method) {
+    
     try {
-      $autocomplete = new Kirby\Panel\Autocomplete(panel(), $method, get());
-      return response::json($autocomplete->result());      
+      $auto   = new Kirby\Panel\Autocomplete(panel(), $method, get());
+      $result = $auto->result();
     } catch(Exception $e) {
-      return response::json(array());
+      $result = array();
     }
+
+    return $this->json(array(
+      'data' => $result
+    ));
+
   }
 
 }

@@ -33,7 +33,7 @@ class UsersController extends Kirby\Panel\Controller {
 
       try {
         $user = UserModel::create($data);
-        $self->notify(l('saved'));
+        $self->notify(':)');
         $self->redirect('users');
       } catch(Exception $e) {
         $self->alert($e->getMessage());
@@ -71,7 +71,7 @@ class UsersController extends Kirby\Panel\Controller {
 
       try {
         $user->update($data);
-        $self->notify(l('saved'));
+        $self->notify(':)');
         $self->redirect($user, 'edit');
       } catch(Exception $e) {
         $self->alert($e->getMessage());

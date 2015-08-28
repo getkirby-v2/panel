@@ -32,7 +32,7 @@ class Changes {
 
     $blueprint = $this->model->blueprint();
     $fields    = $blueprint->fields($this->model);
-    $form      = new Kirby\Panel\Form($fields->toArray());
+    $form      = new Form($fields->toArray());
     $data      = $this->model->filterInput($form->serialize());
     $old       = $this->model->content()->toArray();
 

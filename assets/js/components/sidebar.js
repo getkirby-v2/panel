@@ -37,8 +37,9 @@ $.fn.sidebar = function() {
 
     var drag = dragula(containers, {
       copy: true,
-      moves: function(el, container, handle) {
-        return true;
+      moves: function(el, source, handle) {
+        var $handle = $(handle);
+        return $handle.is('.draggable') || $handle.parents('.draggable').length > 0;
       },
       accepts: function(el, target, source, sibling) {
         return $(target).is('textarea');

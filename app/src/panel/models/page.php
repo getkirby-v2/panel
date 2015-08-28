@@ -396,7 +396,7 @@ class Page extends \Page {
 
     $data = $this->filterInput($input);
 
-    $this->discardChanges();
+    $this->changes()->discard();
     parent::update($data);
 
     // move the page if this is still a draft

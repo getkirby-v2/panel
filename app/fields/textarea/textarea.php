@@ -4,7 +4,6 @@ class TextareaField extends InputField {
 
   static public $assets = array(
     'js' => array(
-      'autosize.js',
       'editor.js'
     )
   );

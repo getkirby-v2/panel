@@ -21,6 +21,15 @@ var app = {
     // enable context menus
     new Context();  
 
+    // add the current csrf token to each post request
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+      if(originalOptions.type && originalOptions.type.toLowerCase() == 'post') {      
+        options.data = $.param($.extend(originalOptions.data, {
+          csrf: $('body').attr('data-csrf')
+        }));
+      }    
+    });
+
     // event delegation for all clicks on links
     $(document).on('click', 'a', function(e) {      
 
@@ -36,7 +45,7 @@ var app = {
 
         // keep changes on updates to avoid data loss
         if(form.data('keep')) {
-          //$.post(form.data('keep'), form.serialize());
+          $.post(form.data('keep'), form.serializeObject());
         }
 
         if(link.is('[data-modal]')) {
@@ -91,6 +100,54 @@ var app = {
   hasModal: function() {
     return $('.modal-content').length > 0;
   },
+
+  load: function(url, type, callback) {
+
+    // start the loading indicator
+    app.isLoading(true);
+
+    if(type == 'modal') {
+      var headers = {modal: true};
+    } else {
+      var headers = false;
+    }
+
+    $.ajax({
+      url: url,
+      method: 'GET',
+      headers: headers,
+    }).done(function(response, status, xhr) {
+
+      // stop the loading indicator
+      app.isLoading(false);
+
+      // check for the current user
+      var user = xhr.getResponseHeader('Panel-User');
+
+      // check for possible problems
+      if(!user || $.type(response) !== 'object') {
+        window.location.href = url;
+      }
+
+      // set the document title
+      document.title = response.title;
+
+      // replace the csrf token
+      $('body').attr('data-csrf', response.csrf);
+
+      try {
+        callback(response);        
+      } catch(e) {
+        window.location.href = url;
+      }
+
+    });
+
+  },
+
+  csrf: function() {
+    return $('body').attr('data-csrf');
+  }, 
 
   // global loading indicator toggle
   isLoading: function(toggle) {

@@ -15,7 +15,7 @@ class AuthController extends Kirby\Panel\Controller {
     $form = $this->form('auth/login', $welcome, function($form) use($self) {
 
       $data = $form->serialize();
-      $user = panel()->user(str::lower($data['username']));
+      $user = site()->user(str::lower($data['username']));
 
       if(!$user or !$user->hasPanelAccess() or !$user->login($data['password'])) {
         $form->alert(l('login.error'));

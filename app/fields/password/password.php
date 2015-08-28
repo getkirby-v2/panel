@@ -2,19 +2,13 @@
 
 class PasswordField extends InputField {
 
-  static public $assets = array(
-    'js' => array(
-      'password.js'
-    )
-  );
-
   public $suggestion = false;
 
   public function __construct() {
 
     $this->type  = 'password';
     $this->icon  = 'key';
-    $this->label = l::get('fields.password.label', 'Password');
+    $this->label = l('fields.password.label', 'Password');
 
   }
 

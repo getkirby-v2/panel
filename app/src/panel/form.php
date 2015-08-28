@@ -325,8 +325,8 @@ class Form extends Brick {
       $callback($this);
     } 
 
-    $this->fields->append('_csrf', static::field('hidden', array(
-      'name'  => '_csrf',
+    $this->fields->append('csrf', static::field('hidden', array(
+      'name'  => 'csrf',
       'value' => panel()->csrf()
     )));
 

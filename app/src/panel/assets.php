@@ -19,6 +19,9 @@ class Assets {
       // no-dependency vendors
       'vendors/dragula.js',
       'vendors/nprogress.js',
+      'vendors/pikaday.js',
+      'vendors/moment.js',
+      'vendors/autosize.js',
 
       // jquery stuff
       'vendors/jquery.js',
@@ -27,10 +30,14 @@ class Assets {
       'vendors/jquery.upload.js',
       'vendors/jquery.filedrop.js',
       'vendors/jquery.hotkeys.js',
+      'vendors/jquery.serializeobject.js',
       'vendors/jquery.autocomplete.js',
-      'vendors/jquery.editorHelpers.js',
+      'vendors/jquery.editorhelpers.js',
+      'vendors/jquery.fakefocus.js',
+      'vendors/jquery.token.js',
       'vendors/jquery.passwordsuggestion.js',
       'vendors/jquery.context.js',
+      'vendors/jquery.tags.js',
 
       // custom components
       'components/shortcuts.js',
@@ -71,11 +78,11 @@ class Assets {
     }
 
     if($cache->exists()) {
-      return $type(panel()->urls()->$type() . '/panel.' . $type . '?v=' . time());
+      return $type(panel()->urls()->$type() . '/panel.' . $type . '?v=' . panel()->version());
     }
 
     return $type(array_map(function($item) use($type) {
-      return 'panel/assets/' . $type . '/' . $item . '?v=' . time();
+      return 'panel/assets/' . $type . '/' . $item . '?v=' . panel()->version();
     }, $files));
 
   }

@@ -311,4 +311,18 @@ return array(
     'filter'  => 'auth',
   ),
 
+  // form assets
+  array(
+    'pattern' => 'assets/js/form.js',
+    'action'  => 'AssetsController::js',
+    'method'  => 'GET', 
+    'filter'  => 'auth'
+  ),
+  array(
+    'pattern' => 'assets/css/form.css',
+    'action'  => 'AssetsController::css',
+    'method'  => 'GET',
+    'filter'  => 'auth'
+  ),
+
 );

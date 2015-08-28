@@ -3,5 +3,11 @@
 </div> 
 
 <script>
-$('.message').message();
+
+(function() {
+
+  $('.message').message();
+
+})();
+
 </script>
