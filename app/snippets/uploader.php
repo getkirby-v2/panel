@@ -8,7 +8,7 @@ $attr = attr(array(
 ?>
 <form id="upload" class="hidden" action="<?php __($url) ?>" method="post" enctype="multipart/form-data">
   <input type="file" name="file" <?php echo $attr ?>>
-  <input type="hidden" name="_csrf" value="<?php __(panel()->csrf()) ?>">
+  <input type="hidden" name="csrf" value="<?php __(panel()->csrf()) ?>">
 </form>
 
 <script>

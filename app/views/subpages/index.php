@@ -13,8 +13,8 @@
         <?php i('arrow-circle-left', 'left') . _l('subpages.index.back') ?>
       </a>
 
-      <?php if($addbutton): ?>
-      <a title="+"<?php e($addbutton->modal(), ' data-modal') ?> class="hgroup-option-right" href="<?php __($addbutton->url()) ?>">
+      <?php if($addbutton and $page->children()->count()): ?>
+      <a data-modal data-modal-return-to="<?php echo $page->url('subpages') ?>" title="+" class="hgroup-option-right" href="<?php __($addbutton->url()) ?>">
         <?php i('plus-circle', 'left') ?>
         <?php _l('subpages.index.add') ?>
       </a>
@@ -83,7 +83,7 @@
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php _l('subpages.index.add.first.text') ?></p>
-      <a data-shortcut="+"<?php e($addbutton->modal(), ' data-modal') ?> class="btn btn-rounded" href="<?php __($addbutton->url()) ?>">
+      <a data-shortcut="+" data-modal data-modal-return-to="<?php __($page->url('subpages')) ?>" class="btn btn-rounded" href="<?php __($addbutton->url()) ?>">
         <?php _l('subpages.index.add.first.button') ?>
       </a>
     </div>
@@ -98,50 +98,51 @@
 
 (function() {
 
-  if($('.sortable').length == 0) return;
+  $('.subpages .sortable').sortable({
+    connectWith: '.sortable',
+    update: function(e, ui) {
 
-  var drag = dragula([$('#visible-children')[0], $('#invisible-children')[0]]);
+      var $this = $(this);
 
-  drag.on('drop', function(el, target, source) {
+      if($this.attr('id') == 'visible-children') {
 
-    var $item   = $(el);
-    var $target = $(target);
-    var $source = $(source);
+        var start = parseInt($this.data('start'));
+        var total = $this.data('total');
+        var flip  = $this.data('flip');
+        var index = $this.find('.item').index(ui.item);
+        var id    = ui.item.attr('id');
 
-    if($target.is('#invisible-children')) {
-      if($source.is('#visible-children')) {
-        $.post(window.location.href, {action: 'hide', id: $item.attr('id')}, function(data) {
+        if(flip == '1') {
+          // if this is an invisible element the 
+          // total number of items in the visible list has
+          // to be adjusted to get the right result for the
+          // sorting number
+          if(ui.sender && ui.sender.attr('id') == 'invisible-children') {
+            total++;
+          }
+          var to = total - start - index + 1;
+        } else {
+          var to = index + start;              
+        }
+
+        if(ui.item.parent().attr('id') !== 'invisible-children') {
+          $.post(window.location.href, {action: 'sort', id: id, to: to}, function(data) {
+            app.content.reload();
+          });
+        }
+
+      }
+    },
+    receive : function(event, ui) {
+
+      if($(this).attr('id') == 'invisible-children') {
+        $.post(window.location.href, {action: 'hide', id: ui.item.attr('id')}, function(data) {
           app.content.reload();
         });
       }
-    } else if($target.is('#visible-children')) {
-
-      var start = parseInt($target.data('start'));
-      var total = $target.data('total');
-      var flip  = $target.data('flip');
-      var index = $target.find('.item').index($item);
-      var id    = $item.attr('id');
-
-      if(flip == '1') {
-        // if this is an invisible element the 
-        // total number of items in the visible list has
-        // to be adjusted to get the right result for the
-        // sorting number
-        if($source.is('#invisible-children')) {
-          total++;
-        }
-        var to = total - start - index + 1;
-      } else {
-        var to = index + start;              
-      }
-
-      $.post(window.location.href, {action: 'sort', id: id, to: to}, function(data) {
-        app.content.reload();
-      });
 
     }
-
-  });  
+  }).disableSelection();
 
 })();
 

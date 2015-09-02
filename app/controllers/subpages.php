@@ -1,6 +1,6 @@
 <?php
 
-class SubpagesController extends Kirby\Panel\Controller {
+class SubpagesController extends Kirby\Panel\Controllers\Base {
 
   public function index($id) {
 

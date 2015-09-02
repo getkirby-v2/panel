@@ -1,6 +1,6 @@
 <?php
 
-class FilesController extends Kirby\Panel\Controller {
+class FilesController extends Kirby\Panel\Controllers\Base {
 
   public function index($id) {
 
@@ -29,7 +29,11 @@ class FilesController extends Kirby\Panel\Controller {
 
     $self = $this;
     $page = $this->page($id);
-    $file = $page->file($filename);
+    $file = $page->file(urldecode($filename));
+
+    if(!$file) {
+      throw new Exception(l('files.error.missing.file'));
+    }
 
     // setup the form and form action
     $form = $file->form('edit', function($form) use($file, $page, $self) {
@@ -81,7 +85,7 @@ class FilesController extends Kirby\Panel\Controller {
 
   public function replace($id, $filename) {
 
-    $file = $this->page($id)->file($filename);
+    $file = $this->page($id)->file(urldecode($filename));
 
     try {
       $file->replace();        
@@ -95,14 +99,14 @@ class FilesController extends Kirby\Panel\Controller {
   }
 
   public function context($id, $filename) {
-    return $this->page($id)->file($filename)->menu();
+    return $this->page($id)->file(urldecode($filename))->menu();
   }
 
   public function delete($id, $filename) {
 
     $self = $this;
     $page = $this->page($id);
-    $file = $page->file($filename);
+    $file = $page->file(urldecode($filename));
     $form = $this->form('files/delete', $file, function($form) use($file, $page, $self) {
 
       try {

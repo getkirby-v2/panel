@@ -1,6 +1,8 @@
 <?php
 
-class UsersController extends Kirby\Panel\Controller {
+use Kirby\Panel\Models\User;
+
+class UsersController extends Kirby\Panel\Controllers\Base {
 
   public function index() {
 
@@ -32,7 +34,7 @@ class UsersController extends Kirby\Panel\Controller {
       $data = $form->serialize();
 
       try {
-        $user = UserModel::create($data);
+        $user = panel()->users()->create($data);
         $self->notify(':)');
         $self->redirect('users');
       } catch(Exception $e) {

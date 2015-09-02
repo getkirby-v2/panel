@@ -21,6 +21,7 @@ $.fn.dropdown = function() {
 
     parent.find('.dropdown').hide();
     parent.on('click', '[data-dropdown]', function() {
+      parent.trigger('click.dropdown');
       $($(this).attr('href')).show();
       return false;
     });

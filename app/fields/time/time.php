@@ -1,5 +1,7 @@
 <?php
 
+use Kirby\Panel\Form;
+
 class TimeField extends SelectField {
 
   public $override = false;
@@ -8,6 +10,13 @@ class TimeField extends SelectField {
     $this->icon     = 'clock-o';
     $this->interval = 60;
     $this->format   = 24;
+  }
+
+  public function interval() {
+    if($this->interval <= 0) {
+      $this->interval = 60;
+    } 
+    return $this->interval;    
   }
 
   public function value() {
@@ -24,7 +33,7 @@ class TimeField extends SelectField {
         $value = date($this->format(), time());
       }
 
-      $time  = round((strtotime($value) - strtotime('00:00')) / ($this->interval * 60)) * ($this->interval * 60) + strtotime('00:00');
+      $time  = round((strtotime($value) - strtotime('00:00')) / ($this->interval() * 60)) * ($this->interval() * 60) + strtotime('00:00');
       $value = date($this->format(), $time);
 
     }
@@ -47,7 +56,7 @@ class TimeField extends SelectField {
     while($time < $end) {
 
       $now    = date($format, $time);
-      $time  += 60 * $this->interval;
+      $time  += 60 * $this->interval();
 
       $options[$now] = $now;
 

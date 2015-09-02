@@ -29,9 +29,11 @@
 
       <?php foreach($files as $file): ?><!--
    --><div class="grid-item" id="<?php __($file->filename()) ?>">
-        <figure class="file">
+        <figure title="<?php __($file->filename()) ?>" class="file">
           <a class="file-preview file-preview-is-<?php __($file->type()) ?>" href="<?php __($file->url('edit')) ?>">
-            <?php if($file->canHaveThumb()): ?>
+            <?php if($file->extension() == 'svg'): ?>
+            <object data="<?php __($file->url('preview')) ?>"></object>
+            <?php elseif($file->canHaveThumb()): ?>
             <img src="<?php __($file->thumb()) ?>" alt="<?php __($file->filename()) ?>">
             <?php elseif($file->canHavePreview()): ?>
             <img src="<?php __($file->url('preview')) ?>" alt="<?php __($file->filename()) ?>">
@@ -88,24 +90,14 @@ var sortable = files.find('.sortable');
 var items    = files.find('.grid-item');
 var api      = files.data('api');
 
-if($('.sortable').length > 0) {
-
-  var drag = dragula([$('.sortable')[0]]);
-  
-  drag.on('drop', function(el, target, source) {
-
-    var filenames = [];
-
-    $(target).find('.grid-item').each(function() {
-      filenames.push($(this).attr('id'));
-    });
-
-    $.post(api, {filenames: filenames, action: 'sort'}, function(data) {
-      app.content.reload();        
-    });
-
-  });  
-
+if(sortable.find('.grid-item').length > 1) {
+  sortable.sortable({
+    update: function() {
+      $.post(api, {filenames: $(this).sortable('toArray'), action: 'sort'}, function(data) {
+        app.content.reload();        
+      });
+    }
+  }).disableSelection();
 }
 
 </script>

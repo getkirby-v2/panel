@@ -17,14 +17,15 @@ class Assets {
 
     $files = array(
       // no-dependency vendors
-      'vendors/dragula.js',
+      'vendors/moment.js',
       'vendors/nprogress.js',
       'vendors/pikaday.js',
-      'vendors/moment.js',
-      'vendors/autosize.js',
 
       // jquery stuff
       'vendors/jquery.js',
+      'vendors/jquery.ui.js',
+      'vendors/jquery.ui.touch.js',
+      'vendors/jquery.autosize.js',
       'vendors/jquery.drop.js',
       'vendors/jquery.filereader.js',
       'vendors/jquery.upload.js',

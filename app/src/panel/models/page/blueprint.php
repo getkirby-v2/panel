@@ -14,7 +14,8 @@ use Kirby\Panel\Models\Page\Blueprint\Fields;
 
 class Blueprint extends Obj {
 
-  static public $root = null;
+  static public $cache = array();
+  static public $root  = null;
 
   public $name      = null;
   public $file      = null;
@@ -23,11 +24,34 @@ class Blueprint extends Obj {
   public $preview   = 'page';
   public $pages     = null;
   public $files     = null;
+  public $hide      = false;
   public $deletable = true;
   public $icon      = 'file-o';
   public $fields    = array();
 
   public function __construct($name) {
+
+    // load from yaml file
+    $this->load($name);
+
+    $this->title     = a::get($this->yaml, 'title', 'Page');
+    $this->preview   = a::get($this->yaml, 'preview', 'page');
+    $this->deletable = a::get($this->yaml, 'deletable', true);
+    $this->icon      = a::get($this->yaml, 'icon', 'file-o');
+    $this->hide      = a::get($this->yaml, 'hide', false);
+    $this->pages     = new Pages(a::get($this->yaml, 'pages', true));
+    $this->files     = new Files(a::get($this->yaml, 'files', true));
+
+  }
+
+  public function load($name) {
+
+    if(isset(static::$cache[$name])) {
+      $this->file = static::$cache[$name]['file'];
+      $this->name = static::$cache[$name]['name'];
+      $this->yaml = static::$cache[$name]['yaml'];
+      return true;
+    }
 
     if(file_exists(static::$root . DS . $name . '.yaml')) {
       $this->file = static::$root . DS . $name . '.yaml';
@@ -48,12 +72,13 @@ class Blueprint extends Obj {
     // remove the broken first line
     unset($this->yaml[0]);
 
-    $this->title     = a::get($this->yaml, 'title', 'Page');
-    $this->preview   = a::get($this->yaml, 'preview', 'page');
-    $this->deletable = a::get($this->yaml, 'deletable', true);
-    $this->icon      = a::get($this->yaml, 'icon', 'file-o');
-    $this->pages     = new Pages(a::get($this->yaml, 'pages', true));
-    $this->files     = new Files(a::get($this->yaml, 'files', true));
+    static::$cache[$name] = array(
+      'file' => $this->file,
+      'name' => $this->name,
+      'yaml' => $this->yaml
+    );
+
+    return true;
 
   }
 

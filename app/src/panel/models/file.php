@@ -14,7 +14,7 @@ class File extends \File {
     } else if($action == 'preview') {
       return parent::url() . '?' . $this->modified();    
     } else {
-      return $this->page()->url('file') . '/' . urlencode($this->filename()) . '/' . $action;      
+      return $this->page()->url('file') . '/' . rawurlencode($this->filename()) . '/' . $action;      
     }
   }
 
@@ -78,20 +78,16 @@ class File extends \File {
   public function update($input = array(), $sort = null) {  
 
     if($input == 'sort') {
-
       parent::update(array('sort' => $sort));
-
       kirby()->trigger('panel.file.sort', $this);
-
       return true;
-
     }
 
     $data = $this->filterInput($input);
 
     // rename the file if necessary
     if(!empty($data['_name'])) {
-      $this->rename($data['_name']);      
+      $filename = $this->rename($data['_name']);      
     }
 
     // remove the name url and info

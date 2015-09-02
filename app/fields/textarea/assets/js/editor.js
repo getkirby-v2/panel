@@ -4,11 +4,15 @@
 
     return this.each(function() {
 
+      if($(this).data('editor')) {
+        return $(this);
+      }
+
       var textarea = $(this);
       var buttons  = textarea.parent().find('.field-buttons');
 
       // start autosizing
-      autosize(textarea);
+      textarea.autosize();
 
       buttons.find('.btn').off('click.editorButton').on('click.editorButton', function(e) {
 
@@ -44,6 +48,8 @@
         });
 
       });
+
+      textarea.data('editor', true);
 
     });
 

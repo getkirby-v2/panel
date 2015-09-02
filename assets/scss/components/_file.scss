@@ -13,6 +13,7 @@
 .file-preview-is-image {
   background: url(../images/pattern.png);
 }
+.file-preview object,
 .file-preview img {
   position: absolute;
   top: 50%;
@@ -23,6 +24,9 @@
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);  
+}
+.file-preview object {
+  pointer-events: none;
 }
 .file-preview span {
   position: absolute;

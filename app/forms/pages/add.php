@@ -9,18 +9,34 @@ return function($page) {
   }
 
   $form = new Kirby\Panel\Form(array(
+    'title' => array(
+      'label'        => 'pages.add.title.label',
+      'type'         => 'title',
+      'placeholder'  => 'pages.add.title.placeholder',
+      'autocomplete' => false,
+      'autofocus'    => true,
+      'required'     => true
+    ),
+    'uid' => array(
+      'label'        => 'pages.add.url.label',
+      'type'         => 'text',
+      'icon'         => 'chain',
+      'autocomplete' => false,
+      'required'     => true,
+    ),
     'template' => array(
       'label'    => 'pages.add.template.label',
       'type'     => 'select',
       'options'  => $options,
       'default'  => key($options),
-      'required' => true
+      'required' => true,
+      'readonly' => count($options) == 1 ? true : false,
+      'icon'     => count($options) == 1 ? 'file-o' : 'chevron-down',
     )
   ));
 
   $form->buttons->submit->value = l('add');
-  
-  $form->cancel($page);
+  $form->cancel($page->isSite() ? '/' : $page);
 
   return $form;
 

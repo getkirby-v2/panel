@@ -1,31 +1,32 @@
 <?php
 
-class PagesController extends Kirby\Panel\Controller {
+class PagesController extends Kirby\Panel\Controllers\Base {
 
-  public function add($id, $template = null) {
+  public function add($id) {
 
     $self   = $this;
     $parent = $this->page($id);
-  
-    if(empty($template)) {
+    $form   = $parent->form('add', function($form) use($parent, $self) {
+    
+      $form->validate();
 
-      $form = $parent->form('add', function($form) use($parent, $self) {
-      
-        $form->validate();
+      if(!$form->isValid()) {
+        return $form->alert(l('pages.add.error.template'));
+      } 
 
-        if(!$form->isValid()) {
-          return $form->alert(l('pages.add.error.template'));
-        } else {
-          $self->redirect($parent->children()->create(null, $form->value('template')));          
-        }
+      try {        
+        $data = $form->serialize();
+        $page = $parent->children()->create($data['uid'], $data['template'], array(
+          'title' => $data['title']
+        ));
+        $this->redirect($parent->isSite() ? '/' : $parent);
+      } catch(Exception $e) {
+        $form->alert($e->getMessage());
+      }
 
-      });
+    });
 
-      return $this->modal('pages/add', compact('form'));
-
-    } else {
-      $this->redirect($parent->children()->create(null, $template));
-    }
+    return $this->modal('pages/add', compact('form'));
 
   }
 

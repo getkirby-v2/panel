@@ -19,6 +19,19 @@ var Form = function(form, params) {
     if(el[key]) el[key]();
   });
 
+  // keep changes on updates to avoid data loss
+  if(form.data('keep')) {
+    
+    form.on('keep', function() {
+      $.post(form.data('keep'), form.serializeObject())
+    });
+
+    form.on('change.keep', ':input', function() {
+      form.trigger('keep');
+    });
+
+  }
+
   // don't setup a form submission action
   if(form.data('autosubmit') == 'native') {
     return true;

@@ -15,6 +15,21 @@ class TextareaField extends InputField {
     $this->max     = false;
   }
 
+  public function routes() {
+    return array(
+      array(
+        'pattern' => 'link',
+        'action'  => 'link',
+        'method'  => 'get|post'
+      ),
+      array(
+        'pattern' => 'email',
+        'action'  => 'email',
+        'method'  => 'get|post'
+      ),
+    );
+  }
+
   public function input() {
 
     $input = parent::input();

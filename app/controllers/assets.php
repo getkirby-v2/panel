@@ -2,7 +2,7 @@
 
 use Kirby\Panel\Form;
 
-class AssetsController extends Kirby\Panel\Controller {
+class AssetsController extends Kirby\Panel\Controllers\Base {
 
   public function js() {
     return new Response(Form::js(false), 'text/javascript');

@@ -112,25 +112,11 @@ class Panel {
       panel()->csrfCheck();
     });
 
-    // start the logger
-    $this->log();
-
     // csrf protection for every post request
     if(r::is('post')) {
       $this->csrfCheck();
     }
 
-  }
-
-  public function log() {
-    f::append(kirby()->roots()->index() . DS . 'panel.log', 
-      date('Y-m-d H:i:s')     . ' - ' . 
-      r::method()             . ' - ' . 
-      $this->kirby->path()    . ' - ' . 
-      http_build_query(get()) . ' - ' . 
-      s::get('csrf')          . ' - ' . 
-      PHP_EOL
-    );
   }
 
   public function csrf() {
@@ -140,8 +126,8 @@ class Panel {
     // see if there's a token in the session
     $token = s::get('csrf');
 
-    // create a new csrf token on every regular request
-    if(!r::ajax() or str::length($token) !== 32) {
+    // create a new csrf token if not available yet
+    if(str::length($token) !== 32) {
       $token = str::random(32);
     } 
 
@@ -200,7 +186,11 @@ class Panel {
 
   public function form($id, $data = array(), $submit = null) {
 
-    $file = $this->roots->forms . DS . $id . '.php';
+    if(file_exists($id)) {
+      $file = $id;
+    } else {
+      $file = $this->roots->forms . DS . $id . '.php';      
+    }
 
     if(!file_exists($file)) {
       throw new Exception('The form cannot be found');

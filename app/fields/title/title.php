@@ -17,7 +17,7 @@ class TitleField extends InputField {
 
   public function help() {
 
-    if(!$this->page->isSite()) {
+    if($this->page and !$this->page->isSite()) {
       
       if(!empty($this->help)) {
         $this->help .= '<br />';

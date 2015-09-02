@@ -36,11 +36,26 @@ class User extends \User {
 
     unset($data['passwordconfirmation']);
 
+    if($this->isLastAdmin() and a::get($data, 'role') !== 'admin') {
+      // check the number of left admins to not convert the last one
+      throw new Exception('You are the only admin. This cannot be changed.');
+    }
+
     parent::update($data);
     kirby()->trigger('panel.user.update', $this);
 
     return $this;
 
+  }
+
+  public function isLastAdmin() {
+    if($this->isAdmin()) {
+      if(panel()->users()->filterBy('role', 'admin')->count() == 1) {
+        return true;
+      }
+    } else {
+      return false;       
+    }
   }
 
   public function delete() {
@@ -49,11 +64,9 @@ class User extends \User {
       throw new Exception('You are not allowed to delete users');
     }
 
-    if($this->isAdmin()) {
+    if($this->isLastAdmin()) {
       // check the number of left admins to not delete the last one
-      if(panel()->users()->filterBy('role', 'admin')->count() == 1) {
-        throw new Exception('You cannot delete the last admin');
-      }
+      throw new Exception('You cannot delete the last admin');
     }
 
     parent::delete();

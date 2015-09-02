@@ -84,7 +84,7 @@ return function($user) {
       'width'    => '1/2',
       'default'  => site()->roles()->findDefault()->id(),
       'options'  => $roles,
-      'readonly' => !site()->user()->isAdmin()
+      'readonly' => (!panel()->user()->isAdmin() or ($user and $user->isLastAdmin()))
     ),
 
   ), $content);

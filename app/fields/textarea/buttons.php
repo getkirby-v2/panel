@@ -28,6 +28,12 @@ class Buttons {
 
       if(!in_array($key, $this->buttons)) continue;
 
+      if(!empty($button['action'])) {
+        $action = $this->textarea->page()->url('field/' . $this->textarea->name() . '/textarea/' . $button['action']);
+      } else {
+        $action = null;
+      }
+
       $icon  = '<i class="icon fa fa-' . $button['icon'] . '"></i>';
       $html .= '<li class="field-button-' . $key . '">';
       $html .= html::tag('button', $icon, array(
@@ -38,7 +44,7 @@ class Buttons {
         'data-editor-shortcut' => @$button['shortcut'],
         'data-tpl'             => @$button['template'],
         'data-text'            => @$button['text'],
-        'data-action'          => !empty($button['action']) ? purl($this->textarea->page(), 'field/' . $this->textarea->name() . '/' . $button['action']) : null
+        'data-action'          => $action
       ));
 
       $html .= '</li>';

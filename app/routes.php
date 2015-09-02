@@ -3,14 +3,6 @@
 // register all available routes
 return array(
 
-  // Sandbox
-  array(
-    'pattern' => 'sandbox', 
-    'action'  => 'SandboxController::index',
-    'filter'  => 'auth',
-    'method'  => 'ALL'
-  ),
-
   // Authentication
   array(
     'pattern' => 'login/(:any?)',
@@ -94,62 +86,15 @@ return array(
     'method'  => 'POST|GET',
   ),
 
-  // editors
+  // Field routes
   array(
     'pattern' => array(
-      'site(/)field/(:any)/link',
-      'pages/(:all)/field/(:any)/link',
+      'site(/)field/(:any)/(:any)/(:all)',
+      'pages/(:all)/field/(:any)/(:any)/(:all)',
     ),
-    'action'  => 'EditorController::link',
-    'filter'  => 'auth',
-    'method'  => 'POST|GET'
-  ),
-  array(
-    'pattern' => array(
-      'site(/)field/(:any)/email',
-      'pages/(:all)/field/(:any)/email',
-    ),
-    'action'  => 'EditorController::email',
-    'filter'  => 'auth',
-    'method'  => 'POST|GET'
-  ),
-
-  // structure editor routes
-  array(
-    'pattern' => array(
-      'site(/)field/(:any)/structure/add',
-      'pages/(:all)/field/(:any)/structure/add',
-    ),
-    'action'  => 'StructureController::add',
-    'filter'  => 'auth',
-    'method'  => 'POST|GET'
-  ),
-  array(
-    'pattern' => array(
-      'site(/)field/(:any)/structure/sort',
-      'pages/(:all)/field/(:any)/structure/sort',
-    ),
-    'action'  => 'StructureController::sort',
-    'filter'  => 'auth',
-    'method'  => 'POST|GET'
-  ),
-  array(
-    'pattern' => array(
-      'site(/)field/(:any)/structure/(:any)/update',
-      'pages/(:all)/field/(:any)/structure/(:any)/update',
-    ),
-    'action'  => 'StructureController::update',
-    'filter'  => 'auth',
-    'method'  => 'POST|GET'
-  ),
-  array(
-    'pattern' => array(
-      'site(/)field/(:any)/structure/(:any)/delete',
-      'pages/(:all)/field/(:any)/structure/(:any)/delete',
-    ),
-    'action'  => 'StructureController::delete',
-    'filter'  => 'auth',
-    'method'  => 'POST|GET'
+    'action' => 'FieldController::route', 
+    'filter' => 'auth',
+    'method' => 'GET|POST'
   ),
 
   // Search

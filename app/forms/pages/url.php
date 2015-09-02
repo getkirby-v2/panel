@@ -27,7 +27,7 @@ return function($page) {
   ));
 
   $form->buttons->submit->val(l('change'));
-  $form->cancel($page->url());
+  $form->cancel($page);
 
   return $form;
 

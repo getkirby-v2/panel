@@ -34,18 +34,19 @@ var Content = function() {
     });
 
     // hook up the main form
-    Form('.main .form', {
+    Form('.mainbar .form', {
       redirect: function(response) {
+
         if($.type(response) == 'object' && response.url) {
-          app.content.open(response.url);                        
+          open(response.url);                        
         } else {
-          app.content.replace(response);
+          replace(response.content);
         }
       }
     });
 
     // recall the focus and caret position
-    focus.on('.main .form');
+    focus.on('.mainbar .form');
 
   };
 
@@ -60,9 +61,6 @@ var Content = function() {
 
     // remove all shortcuts
     $(document).unbind('keydown.shortcuts');
-
-    // remove all uncleaned elements
-    $('body').children().not('.main').remove();
 
     // remove window resizing events
     $(window).off('resize');
@@ -93,8 +91,8 @@ var Content = function() {
 
     // change the history
     if(url) {
-      focus.forget();            
       if(window.location.href != url) {                
+        focus.forget();            
         try {
           path = url.replace(window.location.origin, '');
           window.history.pushState({path: path}, document.title, path);                    

@@ -2,30 +2,35 @@
 
   var Structure = function(element) {
 
-    var element = $(element);
-    var list    = element.find('.structure-entries');
-    var entries = element.find('.structure-entry');
-    var api     = element.data('api');
+    var element  = $(element);
+    var style    = element.data('style');
+    var api      = element.data('api');
+    var sortable = element.data('sortable');
+    var entries  = style == 'table' ? element.find('.structure-table tbody') : element.find('.structure-entries');
 
-    if(element.data('sortable') == true && list.find('.structure-entry').length > 1) {
+    if(sortable == false) return false;
 
-      var drag = dragula([list[0]]);
-
-      drag.on('drop', function(e, target, source) {
+    entries.sortable({
+      helper: function(e, ui) {
+        ui.children().each(function() {
+          $(this).width($(this).width());
+        });
+        return ui.addClass('structure-sortable-helper');
+      },
+      update: function() {
 
         var ids = [];
 
-        $(target).find('.structure-entry').each(function() {
-          ids.push($(this).attr('id').replace('structure-entry-', ''));
+        $.each($(this).sortable('toArray'), function(i, id) {
+          ids.push(id.replace('structure-entry-', ''));
         });
 
         $.post(api, {ids: ids}, function() {
           app.content.reload();
         });
 
-      });
-
-    }
+      }
+    });
 
   };
 
@@ -34,11 +39,11 @@
     return this.each(function() {
 
       if($(this).data('structure')) {
-        return $(this).data('structure');
+        return $(this);
       } else {
         var structure = new Structure(this);
         $(this).data('structure', structure);
-        return structure;
+        return $(this);
       }
 
     });

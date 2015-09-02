@@ -54,14 +54,4 @@
 
 </div>
 
-<form id="upload" class="hidden" action="<?php __($site->url('upload')) ?>" method="post" enctype="multipart/form-data">
-  <input type="file" name="file" multiple>
-</form>
-
-<script>
-
-$('#upload').uploader(function() {
-  app.content.reload();
-});
-
-</script>
+<?php echo $uploader ?>

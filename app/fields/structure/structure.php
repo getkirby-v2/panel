@@ -14,6 +14,38 @@ class StructureField extends BaseField {
   public $fields = array();
   public $entry  = null;
   public $store  = null;
+  public $style  = 'items';
+
+  public function routes() {
+
+    return array(
+      array(
+        'pattern' => 'add',
+        'method'  => 'get|post',
+        'action'  => 'add'
+      ),
+      array(
+        'pattern' => 'sort',
+        'method'  => 'post',
+        'action'  => 'sort',
+      ),
+      array(
+        'pattern' => '(:any)/update',
+        'method'  => 'get|post',
+        'action'  => 'update'
+      ),
+      array(
+        'pattern' => '(:any)/delete',
+        'method'  => 'get|post',
+        'action'  => 'delete',
+      )
+    );
+  }
+
+  public function style() {
+    $styles = array('table', 'items');
+    return in_array($this->style, $styles) ? $this->style : 'items';
+  }
 
   public function store() {
     if(!is_null($this->store)) {

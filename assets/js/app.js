@@ -40,14 +40,6 @@ var app = {
         return true;
       } else {
 
-        // keep form data in the main view if requested
-        var form = app.content.element('.form');
-
-        // keep changes on updates to avoid data loss
-        if(form.data('keep')) {
-          $.post(form.data('keep'), form.serializeObject());
-        }
-
         if(link.is('[data-modal]')) {
           app.modal.open(link.attr('href'), link.data('modal-return-to'));
           return false;

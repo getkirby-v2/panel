@@ -2,7 +2,7 @@
 
 use Kirby\Panel\Installer;
 
-class InstallationController extends Kirby\Panel\Controller {
+class InstallationController extends Kirby\Panel\Controllers\Base {
 
   public function index() {
 

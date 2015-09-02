@@ -13,7 +13,7 @@ return function($file) {
   ));
 
   $form->style('delete');
-  $form->cancel($file, 'show');
+  $form->cancel($file);
 
   return $form;
 

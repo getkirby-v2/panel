@@ -1,6 +1,6 @@
 <?php
 
-class AuthController extends Kirby\Panel\Controller {
+class AuthController extends Kirby\Panel\Controllers\Base {
 
   public function login($welcome = null) {
 

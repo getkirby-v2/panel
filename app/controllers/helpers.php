@@ -1,6 +1,6 @@
 <?php
 
-class HelpersController extends Kirby\Panel\Controller {
+class HelpersController extends Kirby\Panel\Controllers\Base {
 
   public function slug() {
     return $this->json(array(

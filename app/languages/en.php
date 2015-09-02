@@ -16,7 +16,6 @@ return array(
     'delete' => 'Delete',
     'insert' => 'Insert',
     'ok' => 'Ok',
-    'untitled' => 'Untitled',
 
     // options (sidebar)
     'options.show' => 'Show options',

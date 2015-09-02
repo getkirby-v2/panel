@@ -20,7 +20,8 @@ class DateField extends InputField {
   }
 
   public function format() {
-    return str::upper($this->format);
+    $format = str::upper($this->format);
+    return empty($format) ? 'YYYY-MM-DD' : $format;
   }
 
   public function validate() {

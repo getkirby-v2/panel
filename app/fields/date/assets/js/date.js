@@ -4,6 +4,10 @@
 
     return this.each(function() {
 
+      if($(this).data('pikaday')) {
+        return $(this);
+      }
+
       var input  = $(this).attr('type', 'text');
       var hidden = input.next();
       var format = input.data('format');
@@ -21,7 +25,7 @@
         }
       });
 
-      new Pikaday({
+      var pikaday = new Pikaday({
         field    : this,
         firstDay : 1,
         format   : format,
@@ -30,6 +34,8 @@
           hidden.val(moment(date).format('YYYY-MM-DD'));
         }
       });
+
+      $(this).data('pikaday', pikaday);
 
     });
 

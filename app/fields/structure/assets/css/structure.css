@@ -40,3 +40,47 @@
 .structure-add-button {
   cursor: pointer;
 }
+
+
+/* Table */
+.structure-table {
+  width: 100%;
+  border-spacing: 0;
+  border: 2px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  table-layout: fixed;
+}
+.structure-table td, .structure-table th {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  text-align: left;
+  vertical-align: top;
+}
+.structure-table th {
+  padding: .5em;
+  font-weight: 400;
+  color: #777;
+  font-style: italic;
+}
+.structure-table td a {
+  display: block;
+  padding: .5em;
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  cursor: move;
+}
+.structure-table-options {
+  width: 3rem;
+  text-align: center;
+}
+.structure-table-options a {
+  text-align: center;
+}
+
+.structure-sortable-helper {
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}

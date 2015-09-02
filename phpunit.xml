@@ -1,17 +1,12 @@
-<phpunit stderr="true">
+<phpunit stderr="true" bootstrap="tests/lib/bootstrap.php">
   <testsuites>
-    <testsuite name="Kirby">
-      <directory>test</directory>
-      <exclude>test/UserModelTest.php</exclude>
-      <exclude>test/PageModelTest.php</exclude>
-      <exclude>test/FileModelTest.php</exclude>
-      <exclude>test/PanelTest.php</exclude>
-      <exclude>test/SiteModelTest.php</exclude>
-      <exclude>test/ChangesTest.php</exclude>
-      <exclude>test/StructureTest.php</exclude>
-      <exclude>test/HistoryTest.php</exclude>
-      <exclude>test/NumberingTest.php</exclude>
-      <exclude>test/AutocompleteTest.php</exclude>
+    <testsuite name="unit">
+      <directory>tests/tests_unit</directory>
+    </testsuite>
+    <testsuite name="web">
+      <file>tests/tests_web/InstallationTest.php</file>
+      <!--<file>tests/tests_web/AuthTest.php</file>-->
+      <file>tests/tests_web/UsersTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>

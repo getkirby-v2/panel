@@ -320,6 +320,10 @@ class Page extends \Page {
     return empty($fields['title']);
   }
 
+  public function isHidden() {
+    return $this->blueprint()->hide() === true;
+  }
+
   public function isDeletable($exception = false) {
 
     if($this->isHomePage()) {

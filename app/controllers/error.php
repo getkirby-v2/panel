@@ -1,6 +1,6 @@
 <?php
 
-class ErrorController extends Kirby\Panel\Controller {
+class ErrorController extends Kirby\Panel\Controllers\Base {
 
   public function index($text = null, $exception = null) {
 

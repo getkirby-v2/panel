@@ -20,7 +20,7 @@ class Menu {
     $a = new Brick('a', '', $attr);
     $a->append(icon($icon, 'left'));
     $a->append(l($label));
-    $a->data('modal-return-to', $this->page->url());
+    $a->data('modal-return-to', $this->page->url('edit'));
 
     $li = new Brick('li');
     $li->append($a);

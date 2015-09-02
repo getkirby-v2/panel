@@ -9,9 +9,9 @@ use Kirby\Panel;
 
 class View {
 
-  protected $_root = null;
-  protected $_file = null;
-  protected $_data = array();
+  public $_root = null;
+  public $_file = null;
+  public $_data = array();
 
   public function __construct($file, $data = array()) {
     $this->_root = panel::instance()->roots()->views();
@@ -25,7 +25,7 @@ class View {
 
   public function render() {
     $file = $this->_root . DS . str_replace('.', DS, $this->_file) . '.php';
-    if(!file_exists($file)) throw new Exception('Invalid view: ' . $this->_file);
+    if(!file_exists($file)) throw new Exception('Invalid view: ' . $file);
     return tpl::load($file, $this->_data);
   }
 

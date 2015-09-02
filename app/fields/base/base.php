@@ -25,7 +25,8 @@ class BaseField {
   public $default;
   public $error = false;
   public $parentField = false;
-
+  public $page;
+  
   public function root() {
     $obj = new ReflectionClass($this);
     return dirname($obj->getFileName());

@@ -22,7 +22,9 @@ class Children extends \Children {
 
     foreach($inventory['children'] as $dirname) {
       $child = new Page($page, $dirname);
-      $this->data[$child->id()] = $child;
+      if(!$child->isHidden()) {
+        $this->data[$child->id()] = $child;        
+      }
     }
 
     $sort = $page->blueprint()->pages()->sort();
@@ -53,10 +55,6 @@ class Children extends \Children {
 
     foreach($blueprint->fields() as $key => $field) {
       $data[$key] = $field->default();        
-    }
-
-    if(empty($data['title'])) {
-      $data['title'] = '(' . l('untitled') . ')';
     }
 
     $data = array_merge($data, $content);

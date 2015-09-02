@@ -12,13 +12,16 @@ load(array(
   'kirby\\panel\\roots'                           => 'panel' . DS . 'roots.php',
   'kirby\\panel\\urls'                            => 'panel' . DS . 'urls.php',
   'kirby\\panel\\view'                            => 'panel' . DS . 'view.php',
-  'kirby\\panel\\controller'                      => 'panel' . DS . 'controller.php',
   'kirby\\panel\\layout'                          => 'panel' . DS . 'layout.php',
   'kirby\\panel\\snippet'                         => 'panel' . DS . 'snippet.php',
   'kirby\\panel\\assets'                          => 'panel' . DS . 'assets.php',
   'kirby\\panel\\installer'                       => 'panel' . DS . 'installer.php',
   'kirby\\panel\\widgets'                         => 'panel' . DS . 'widgets.php',
   'kirby\\panel\\topbar'                          => 'panel' . DS . 'topbar.php',
+
+  // controllers
+  'kirby\\panel\\controllers\\base'               => 'panel' . DS . 'controllers' . DS . 'base.php',
+  'kirby\\panel\\controllers\\field'              => 'panel' . DS . 'controllers' . DS . 'field.php',
   
   // form
   'kirby\\panel\\form'                            => 'panel' . DS . 'form.php',

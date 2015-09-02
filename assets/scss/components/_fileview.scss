@@ -48,7 +48,8 @@
 .fileview-preview-link {
   height: 100%;
 }
-.fileview-preview-link img {
+.fileview-preview-link img,
+.fileview-preview-link object {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -58,6 +59,9 @@
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);  
+}
+.fileview-preview-link object {
+  pointer-events: none;
 }
 .fileview-nav {
   position: absolute;

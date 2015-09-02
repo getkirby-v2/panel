@@ -1,6 +1,6 @@
 <?php
 
-class OptionsController extends Kirby\Panel\Controller {
+class OptionsController extends Kirby\Panel\Controllers\Base {
 
   public function index() {
 
@@ -8,10 +8,11 @@ class OptionsController extends Kirby\Panel\Controller {
     $editor = $site->editor();
 
     return $this->screen('options/index', $site, array(
-      'site'    => $site,
-      'form'    => $editor->form(),
-      'files'   => $editor->files(),
-      'license' => panel()->license()
+      'site'     => $site,
+      'form'     => $editor->form(),
+      'files'    => $editor->files(),
+      'license'  => panel()->license(),
+      'uploader' => $this->snippet('uploader', array('url' => $site->url('upload')))
     ));
 
   }

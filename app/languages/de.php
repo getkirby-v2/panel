@@ -16,7 +16,6 @@ return array(
     'delete' => 'Löschen',
     'insert' => 'Einfügen',
     'ok' => 'Ok',
-    'untitled' => 'Unbenannt',
 
     // options (sidebar)
     'options.show' => 'Optionen einblenden',

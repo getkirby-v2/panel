@@ -1,6 +1,6 @@
 <?php
 
-class AvatarsController extends Kirby\Panel\Controller {
+class AvatarsController extends Kirby\Panel\Controllers\Base {
 
   public function upload($username) {
 

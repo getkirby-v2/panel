@@ -75,15 +75,21 @@ var Modal = function(app) {
     Form(form, {
       redirect: function(response) {
 
-        if($.type(response) == 'object' && response.url) {
-          if(returnTo) {
-            app.content.open(returnTo);                        
-          } else {
-            app.content.open(response.url);                        
-          }
-        } else {
-          replace(response);
-        }
+        if($.type(response) == 'object') {
+          if(response.url) {
+            if(returnTo) {
+              app.content.open(returnTo);                        
+            } else {
+              app.content.open(response.url);                        
+            }            
+            return;
+          } else if(response.content) {
+            replace(response.content);
+            return;
+          } 
+        } 
+
+        window.location.reload();
 
       }
     });
