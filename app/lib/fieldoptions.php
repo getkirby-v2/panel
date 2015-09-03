@@ -150,6 +150,14 @@ class FieldOptions {
         $items = $page->index();
         $items = $items->sortBy('title', 'asc');
         break;
+      case 'visibleRoot':
+        $items = site()->children()->visible();
+        $items = $items->sortBy('title', 'asc');
+        break;
+      case 'invisibleRoot':
+        $items = site()->children()->invisible();
+        $items = $items->sortBy('title', 'asc');
+        break;
       case 'children':
       case 'files':
       case 'images':
