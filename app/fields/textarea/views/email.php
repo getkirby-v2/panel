@@ -25,6 +25,10 @@
     var address = addressField.val();
     var text    = textField.val();
 
+    // make sure not to add invalid parenthesis
+    text = text.replace('(', '[');
+    text = text.replace(')', ']');
+
     if(!text.length) {
       var tag = '<' + address + '>';
     } else if(form.data('kirbytext')) {

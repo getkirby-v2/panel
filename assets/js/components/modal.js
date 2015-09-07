@@ -113,6 +113,9 @@ var Modal = function(app) {
   // open a modal by url
   var open = function(url, returnTo, onLoad) {
 
+    // close all context menus
+    $(document).trigger('click.contextmenu');
+
     // make sure there's no modal
     close();
 
@@ -160,6 +163,9 @@ var Modal = function(app) {
   // removes the modal root
   var close = function() {
 
+    var scrollSidebar = $('.sidebar').scrollTop();
+    var scrollMainbar = $('.mainbar').scrollTop();
+
     if(!app.hasModal()) return true;
 
     // switch off all modal events
@@ -170,6 +176,9 @@ var Modal = function(app) {
 
     // switch content events back on
     app.content.on();
+
+    if($('.mainbar')[0]) $('.mainbar')[0].scrollTop = scrollMainbar;
+    if($('.sidebar')[0]) $('.sidebar')[0].scrollTop = scrollSidebar;
     
   };
 

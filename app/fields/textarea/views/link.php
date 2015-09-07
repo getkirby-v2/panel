@@ -25,6 +25,10 @@
     var url  = urlField.val();
     var text = textField.val();
 
+    // make sure not to add invalid parenthesis
+    text = text.replace('(', '[');
+    text = text.replace(')', ']');
+
     if(!text.length) {
       if(url.match(/^http|s\:\/\//)) {
         var tag = '<' + url + '>';

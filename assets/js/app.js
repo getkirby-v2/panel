@@ -21,6 +21,9 @@ var app = {
     // enable context menus
     new Context();  
 
+    // enable search
+    new Search();
+
     // add the current csrf token to each post request
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
       if(originalOptions.type && originalOptions.type.toLowerCase() == 'post') {      

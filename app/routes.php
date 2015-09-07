@@ -31,6 +31,14 @@ return array(
     'filter'  => array('auth', 'isInstalled'),
   ),
 
+  // Search
+  array(
+    'pattern' => 'search',
+    'action'  => 'SearchController::results',
+    'method'  => 'GET|POST',
+    'filter'  => array('auth'),
+  ),
+  
   // Options
   array(
     'pattern' => 'options',
@@ -95,17 +103,6 @@ return array(
     'action' => 'FieldController::route', 
     'filter' => 'auth',
     'method' => 'GET|POST'
-  ),
-
-  // Search
-  array(
-    'pattern' => array(
-      'site(/)search',
-      'pages/(:all)/search',
-    ),
-    'action'  => 'PagesController::search',
-    'filter'  => 'auth',
-    'method'  => 'POST|GET'
   ),
 
   // New Page

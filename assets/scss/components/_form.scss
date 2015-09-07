@@ -291,6 +291,7 @@ fieldset {
   -ms-appearance: none;
   appearance: none;
   border-radius: 0;
+  word-break: break-all;
 }
 .input:focus {
   outline: 0;

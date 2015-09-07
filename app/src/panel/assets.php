@@ -42,6 +42,7 @@ class Assets {
 
       // custom components
       'components/shortcuts.js',
+      'components/search.js',
       'components/focus.js',
       'components/uploader.js',
       'components/message.js',

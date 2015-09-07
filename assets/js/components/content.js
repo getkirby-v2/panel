@@ -82,10 +82,11 @@ var Content = function() {
 
   var replace = function(content, url) {
 
-    app.modal.close();      
+    // close all context menus
+    $(document).trigger('click.contextmenu');
 
-    var scrollSidebar = element('.sidebar').scrollTop();
-    var scrollMainbar = element('.mainbar').scrollTop();
+    // close all modals
+    app.modal.close();      
 
     root.html(content);    
 
@@ -104,9 +105,6 @@ var Content = function() {
 
     // switch on all events for the mainbar
     on();
-
-    if(element('.mainbar')[0]) element('.mainbar')[0].scrollTop = scrollMainbar;
-    if(element('.sidebar')[0]) element('.sidebar')[0].scrollTop = scrollSidebar;
 
   };
 

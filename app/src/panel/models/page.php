@@ -482,10 +482,6 @@ class Page extends \Page {
     }
    
     $topbar->html .= new Snippet('languages');
-    $topbar->html .= new Snippet('searchtoggle', array(
-      'search' => $this->url('search'),
-      'close'  => $topbar->view == 'pages/search' ? $this->url('edit') : false
-    ));    
 
   }
 

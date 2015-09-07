@@ -133,11 +133,6 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  public function search($id = '/') {
-    $page = $this->page($id);
-    return $this->screen('pages/search', $page, compact('page'));
-  }
-
   public function context($id) {
     return $this->page($id)->menu('context');
   }

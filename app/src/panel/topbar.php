@@ -103,6 +103,7 @@ class Topbar {
     $element->append($this->menu());
     $element->append($this->breadcrumb());
     $element->append($this->html);
+    $element->append(new Snippet('search'));
     $element->append($this->message());
 
     return $element;

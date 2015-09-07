@@ -6276,6 +6276,76 @@ $.fn.shortcuts = function() {
   });
 
 };
+var Search = function() {
+
+  $(document).on('click', function() {
+    $('#search').hide();
+  });
+
+  $(document).on('click', '[href="#search"]', function(e) {
+    e.stopPropagation();
+    $('#search').show().find('.search-input').focus();
+    return false;
+  });
+
+  $(document).on('click', '#search', function(e) {
+    e.stopPropagation();
+  });
+
+  var navigate = function(key) {
+
+    var list   = $('#search .search-results li');
+    var active = list.filter('.active');
+    var index  = list.index(active);
+
+    switch(key) {
+      case 13:
+        active.find('a').trigger('click');
+        return true;
+      case 38:
+        var index = index - 1;
+        break;
+      case 40:
+        var index = index + 1;
+        break;
+    }
+      
+    if(index < 0) {
+      index = -1;
+    }
+    
+    if(index >= list.length) {
+      index = 0;
+    }
+
+    active.removeClass('active');
+    list.eq(index).addClass('active');
+
+  };
+
+  $(document).on('keydown', '.search-input', function(e) {
+
+    switch(e.keyCode) {
+      case 13: // enter
+      case 38: // up
+      case 40: // down
+        navigate(e.keyCode);
+        e.preventDefault();
+        break;
+      default:
+        var q   = $(this).val();
+        var api = $('#search form').attr('action');
+        $('.search-results').load(api, {q: q});
+        break;
+    }
+
+  });
+
+  $(document).on('submit', '#search form', function() {
+    return false;
+  });
+
+};
 var Focus = function() {
 
   var elements = null;
@@ -6686,10 +6756,11 @@ var Content = function() {
 
   var replace = function(content, url) {
 
-    app.modal.close();      
+    // close all context menus
+    $(document).trigger('click.contextmenu');
 
-    var scrollSidebar = element('.sidebar').scrollTop();
-    var scrollMainbar = element('.mainbar').scrollTop();
+    // close all modals
+    app.modal.close();      
 
     root.html(content);    
 
@@ -6708,9 +6779,6 @@ var Content = function() {
 
     // switch on all events for the mainbar
     on();
-
-    if(element('.mainbar')[0]) element('.mainbar')[0].scrollTop = scrollMainbar;
-    if(element('.sidebar')[0]) element('.sidebar')[0].scrollTop = scrollSidebar;
 
   };
 
@@ -6866,6 +6934,9 @@ var Modal = function(app) {
   // open a modal by url
   var open = function(url, returnTo, onLoad) {
 
+    // close all context menus
+    $(document).trigger('click.contextmenu');
+
     // make sure there's no modal
     close();
 
@@ -6913,6 +6984,9 @@ var Modal = function(app) {
   // removes the modal root
   var close = function() {
 
+    var scrollSidebar = $('.sidebar').scrollTop();
+    var scrollMainbar = $('.mainbar').scrollTop();
+
     if(!app.hasModal()) return true;
 
     // switch off all modal events
@@ -6923,6 +6997,9 @@ var Modal = function(app) {
 
     // switch content events back on
     app.content.on();
+
+    if($('.mainbar')[0]) $('.mainbar')[0].scrollTop = scrollMainbar;
+    if($('.sidebar')[0]) $('.sidebar')[0].scrollTop = scrollSidebar;
     
   };
 
