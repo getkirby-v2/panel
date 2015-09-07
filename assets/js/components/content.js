@@ -8,6 +8,23 @@ var Content = function() {
 
   var focus = Focus();
 
+  var scroll = {
+
+    mainbar: 0,
+    sidebar: 0,
+    
+    save : function() {      
+      scroll.mainbar = $('.mainbar').scrollTop();
+      scroll.sidebar = $('.sidebar').scrollTop();
+    },
+
+    restore: function() {
+      if($('.mainbar')[0]) $('.mainbar')[0].scrollTop = scroll.mainbar;
+      if($('.sidebar')[0]) $('.sidebar')[0].scrollTop = scroll.sidebar;
+    }
+
+  };
+
   var on = function() {
 
     // make sure everything is nice and clean first
@@ -35,6 +52,9 @@ var Content = function() {
 
     // hook up the main form
     Form('.mainbar .form', {
+      submit: function() {
+        scroll.save();
+      },
       redirect: function(response) {
 
         if($.type(response) == 'object' && response.url) {
@@ -42,6 +62,7 @@ var Content = function() {
         } else {
           replace(response.content);
         }
+
       }
     });
 
@@ -106,9 +127,13 @@ var Content = function() {
     // switch on all events for the mainbar
     on();
 
+    // restore the previous scroll position
+    scroll.restore();          
+
   };
 
   var reload = function() {
+    scroll.save();
     open(document.location);
   };
 
@@ -141,7 +166,8 @@ var Content = function() {
     shortcuts: shortcuts,
     form: form,
     focus: focus,
-    setup: setup
+    setup: setup, 
+    scroll: scroll
   };
 
 };

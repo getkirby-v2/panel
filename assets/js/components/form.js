@@ -3,9 +3,11 @@ var Form = function(form, params) {
   var form = $(form);
 
   var defaults = {
+    focus    : false,
     returnTo : false,
-    url: form.attr('action'),
-    redirect: function(response) {}
+    url      : form.attr('action'),
+    redirect : function(response) {},
+    submit   : function(form) {}
   };
 
   var options = $.extend({}, defaults, params);
@@ -32,6 +34,11 @@ var Form = function(form, params) {
 
   }
 
+  // focus the right field  
+  if(options.focus) {
+    form.find('[autofocus]').focus();    
+  }
+
   // don't setup a form submission action
   if(form.data('autosubmit') == 'native') {
     return true;
@@ -45,6 +52,9 @@ var Form = function(form, params) {
     if(form.data('autosubmit') == false) {
       return false;
     } 
+
+    // submission event
+    options.submit(form);
 
     // on submit all errors should be removed. Looks weird otherwise
     form.find('.field-with-error').removeClass('field-with-error');
@@ -66,7 +76,5 @@ var Form = function(form, params) {
     return false;
 
   });
-
-  form.find('[autofocus]').focus();
 
 };

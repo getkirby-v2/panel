@@ -73,6 +73,7 @@ var Modal = function(app) {
     }
 
     Form(form, {
+      focus: true,
       redirect: function(response) {
 
         if($.type(response) == 'object') {
@@ -163,8 +164,7 @@ var Modal = function(app) {
   // removes the modal root
   var close = function() {
 
-    var scrollSidebar = $('.sidebar').scrollTop();
-    var scrollMainbar = $('.mainbar').scrollTop();
+    app.content.scroll.save();
 
     if(!app.hasModal()) return true;
 
@@ -176,9 +176,7 @@ var Modal = function(app) {
 
     // switch content events back on
     app.content.on();
-
-    if($('.mainbar')[0]) $('.mainbar')[0].scrollTop = scrollMainbar;
-    if($('.sidebar')[0]) $('.sidebar')[0].scrollTop = scrollSidebar;
+    app.content.scroll.restore();
     
   };
 

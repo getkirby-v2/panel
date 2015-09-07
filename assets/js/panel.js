@@ -6555,9 +6555,11 @@ var Form = function(form, params) {
   var form = $(form);
 
   var defaults = {
+    focus    : false,
     returnTo : false,
-    url: form.attr('action'),
-    redirect: function(response) {}
+    url      : form.attr('action'),
+    redirect : function(response) {},
+    submit   : function(form) {}
   };
 
   var options = $.extend({}, defaults, params);
@@ -6584,6 +6586,11 @@ var Form = function(form, params) {
 
   }
 
+  // focus the right field  
+  if(options.focus) {
+    form.find('[autofocus]').focus();    
+  }
+
   // don't setup a form submission action
   if(form.data('autosubmit') == 'native') {
     return true;
@@ -6597,6 +6604,9 @@ var Form = function(form, params) {
     if(form.data('autosubmit') == false) {
       return false;
     } 
+
+    // submission event
+    options.submit(form);
 
     // on submit all errors should be removed. Looks weird otherwise
     form.find('.field-with-error').removeClass('field-with-error');
@@ -6618,8 +6628,6 @@ var Form = function(form, params) {
     return false;
 
   });
-
-  form.find('[autofocus]').focus();
 
 };
 $.fn.sidebar = function() {
@@ -6682,6 +6690,23 @@ var Content = function() {
 
   var focus = Focus();
 
+  var scroll = {
+
+    mainbar: 0,
+    sidebar: 0,
+    
+    save : function() {      
+      scroll.mainbar = $('.mainbar').scrollTop();
+      scroll.sidebar = $('.sidebar').scrollTop();
+    },
+
+    restore: function() {
+      if($('.mainbar')[0]) $('.mainbar')[0].scrollTop = scroll.mainbar;
+      if($('.sidebar')[0]) $('.sidebar')[0].scrollTop = scroll.sidebar;
+    }
+
+  };
+
   var on = function() {
 
     // make sure everything is nice and clean first
@@ -6709,6 +6734,9 @@ var Content = function() {
 
     // hook up the main form
     Form('.mainbar .form', {
+      submit: function() {
+        scroll.save();
+      },
       redirect: function(response) {
 
         if($.type(response) == 'object' && response.url) {
@@ -6716,6 +6744,7 @@ var Content = function() {
         } else {
           replace(response.content);
         }
+
       }
     });
 
@@ -6780,9 +6809,13 @@ var Content = function() {
     // switch on all events for the mainbar
     on();
 
+    // restore the previous scroll position
+    scroll.restore();          
+
   };
 
   var reload = function() {
+    scroll.save();
     open(document.location);
   };
 
@@ -6815,7 +6848,8 @@ var Content = function() {
     shortcuts: shortcuts,
     form: form,
     focus: focus,
-    setup: setup
+    setup: setup, 
+    scroll: scroll
   };
 
 };
@@ -6894,6 +6928,7 @@ var Modal = function(app) {
     }
 
     Form(form, {
+      focus: true,
       redirect: function(response) {
 
         if($.type(response) == 'object') {
@@ -6984,8 +7019,7 @@ var Modal = function(app) {
   // removes the modal root
   var close = function() {
 
-    var scrollSidebar = $('.sidebar').scrollTop();
-    var scrollMainbar = $('.mainbar').scrollTop();
+    app.content.scroll.save();
 
     if(!app.hasModal()) return true;
 
@@ -6997,9 +7031,7 @@ var Modal = function(app) {
 
     // switch content events back on
     app.content.on();
-
-    if($('.mainbar')[0]) $('.mainbar')[0].scrollTop = scrollMainbar;
-    if($('.sidebar')[0]) $('.sidebar')[0].scrollTop = scrollSidebar;
+    app.content.scroll.restore();
     
   };
 
