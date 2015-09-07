@@ -46,7 +46,7 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
       try {
         $file->update($form->serialize());
-        $self->notify(l('saved'));
+        $self->notify(':)');
         $self->redirect($file);
       } catch(Exception $e) {
         $self->alert($e->getMessage());

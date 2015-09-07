@@ -14,7 +14,7 @@
       // start autosizing
       textarea.autosize();
 
-      buttons.find('.btn').off('click.editorButton').on('click.editorButton', function(e) {
+      buttons.find('.btn').on('click.editorButton', function(e) {
 
         textarea.focus();
         var button = $(this);

@@ -176,7 +176,6 @@ var Modal = function(app) {
 
     // switch content events back on
     app.content.on();
-    app.content.scroll.restore();
     
   };
 

@@ -3,7 +3,7 @@
 return function($page) {
 
   // label option
-  $option = new Brick('a', icon('plus-circle', 'left') . l('pages.url.uid.label.option'), array(
+  $option = new Brick('a', icon('magic', 'left') . l('pages.url.uid.label.option'), array(
     'class'      => 'btn btn-icon label-option',
     'href'       => '#',
     'data-title' => $page->title()
