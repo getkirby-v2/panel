@@ -111,6 +111,8 @@ class Page extends \Page {
       } else {
         return false;
       }
+    } else if($action == 'edit') {
+      return panel()->urls()->index() . '/pages/' . $this->id();            
     } else {
       return panel()->urls()->index() . '/pages/' . $this->id() .  '/' . $action;            
     }

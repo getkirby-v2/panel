@@ -116,14 +116,6 @@ return array(
     'method'  => 'POST|GET'
   ),
 
-  // Page
-  array(
-    'pattern' => 'pages/(:all)/edit',
-    'action'  => 'PagesController::edit',
-    'filter'  => 'auth',
-    'method'  => 'POST|GET'
-  ),
-
   // URL Settings
   array(
     'pattern' => 'pages/(:all)/url',
@@ -196,6 +188,14 @@ return array(
       'pages/(:all)/subpages',
     ),
     'action'  => 'SubpagesController::index',
+    'filter'  => 'auth',
+    'method'  => 'POST|GET'
+  ),
+
+  // Page
+  array(
+    'pattern' => 'pages/(:all)',
+    'action'  => 'PagesController::edit',
     'filter'  => 'auth',
     'method'  => 'POST|GET'
   ),
