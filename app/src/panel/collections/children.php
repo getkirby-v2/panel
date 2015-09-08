@@ -79,5 +79,44 @@ class Children extends \Children {
 
   }
 
+  public function paginated($mode = 'sidebar') {
+
+    if($limit = $this->page->blueprint()->pages()->limit()) {
+
+      $hash = sha1($this->page->id());
+
+      switch($mode) {
+        case 'sidebar':
+          $id  = 'pages.' . $hash;
+          $var = 'page';
+          break;
+        case 'subpages/visible':
+          $id  = 'subpages.invisible.' . $hash;
+          $var = 'visible';
+          break;
+        case 'subpages/invisible':
+          $id  = 'subpages.invisible.' . $hash;
+          $var = 'invisible';
+          break;
+      }
+
+      $children = $this->paginate($limit, array(
+        'page'          => get($var, s::get($id)), 
+        'omitFirstPage' => false, 
+        'variable'      => $var,
+        'method'        => 'query'
+      ));
+
+      // store the last page
+      s::set($id, $children->pagination()->page());
+
+      return $children;
+
+    } else {
+      return $this;
+    }
+
+  }
+
 
 }

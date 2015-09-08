@@ -18,6 +18,7 @@ use Kirby\Panel\Models\Page\Blueprint;
 use Kirby\Panel\Models\Page\Menu;
 use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Editor;
+use Kirby\Panel\Models\Page\Sidebar;
 use Kirby\Panel\Models\Page\Uploader;
 use Kirby\Panel\Models\Page\Structure;
 use Kirby\Panel\Models\User\History;
@@ -348,8 +349,8 @@ class Page extends \Page {
 
   }
 
-  public function editor() {
-    return new Editor($this);    
+  public function sidebar() {
+    return new Sidebar($this);    
   }
 
   public function sortSiblings($skip = null) {
