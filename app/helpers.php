@@ -55,7 +55,10 @@ function n($page) {
         return str::substr($page->title(), 0, 1);
         break;
       case 'date':
-        return date('Y/m/d', strtotime($page->num()));
+        $pageBlueprint = blueprint::find($page);
+        $date = $pageBlueprint->fields()->date();
+        $format = is_null($date) ? 'Y/m/d' : $date->format;
+        return date($format, strtotime($page->num()));
         break;
       default:
         return intval($page->num());
