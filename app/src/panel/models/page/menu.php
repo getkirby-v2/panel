@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kirby\Panel\Models\Page;
 
@@ -25,12 +25,12 @@ class Menu {
 
     $parent = $this->page->parent();
 
-    if($this->position == 'context') {    
-      
+    if($this->position == 'context') {
+
       if($parent->isSite()) {
-        $a->data('modal-return-to', purl('/'));        
+        $a->data('modal-return-to', purl('/'));
       } else {
-        $a->data('modal-return-to', $parent->url('edit'));        
+        $a->data('modal-return-to', $parent->url('edit'));
       }
 
     }
@@ -42,7 +42,7 @@ class Menu {
 
   }
 
-  public function previewOption() {  
+  public function previewOption() {
     if($preview = $this->page->url('preview')) {
       return $this->item('play-circle-o', 'pages.show.preview', array(
         'href'          => $preview,
@@ -55,11 +55,11 @@ class Menu {
     }
   }
 
-  public function editOption() {  
+  public function editOption() {
     if($this->position == 'context') {
       return $this->item('pencil', 'pages.show.subpages.edit', array(
         'href' => $this->page->url('edit'),
-      ));      
+      ));
     }
   }
 
@@ -72,7 +72,7 @@ class Menu {
         $label = 'pages.show.invisible';
       } else {
         $icon  = 'toggle-on';
-        $label = 'pages.show.visible';      
+        $label = 'pages.show.visible';
       }
 
       return $this->item($icon, $label, array(
@@ -85,7 +85,7 @@ class Menu {
     }
 
 
-  } 
+  }
 
   public function urlOption() {
     if(!$this->page->isHomePage() and !$this->page->isErrorPage()) {
@@ -94,7 +94,7 @@ class Menu {
         'title'         => 'u',
         'data-shortcut' => 'u',
         'data-modal'    => true,
-      ));      
+      ));
     } else {
       return false;
     }
@@ -131,7 +131,7 @@ class Menu {
     if(panel()->user()->isAllowed('hidePage', $this->page)) {
       $list->append($this->statusOption());
     }
-    if(panel()->user()->isAllowed('changeurlPage', $this->page)) {
+    if(panel()->user()->isAllowed('movePage', $this->page)) {
       $list->append($this->urlOption());
     }
     if(panel()->user()->isAllowed('deletePage', $this->page)) {

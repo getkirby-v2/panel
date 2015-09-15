@@ -103,7 +103,7 @@ class PagesController extends Kirby\Panel\Controllers\Base {
       ));
     }
 
-    if(!panel()->user()->isAllowed('changeurlPage')) {
+    if(!panel()->user()->isAllowed('movePage')) {
       return $this->modal('error', array(
         'headline' => 'Error',
         'text'     => 'You are not allowed to change the URL of this page',

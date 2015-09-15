@@ -38,7 +38,7 @@ class Permission {
       $this->user->hasPermission('panel.page.update');
   }
 
-  public function changeurlPage() {
+  public function movePage() {
     return
       $this->user->hasPermission('panel.page.move');
   }
