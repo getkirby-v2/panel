@@ -13,7 +13,11 @@ class Permission {
 
 
   public function __construct($user, $page = null) {
-    $this->user = $user;
+    $this->user   = $user;
+
+    if (!is_null($page)) {
+      $this->page = $page;
+    }
   }
 
 
@@ -28,7 +32,7 @@ class Permission {
   public function editPage() {
     return
       $this->updatePage() or
-      $this->changeurlPage() or
+      $this->movePage() or
       $this->hidePage() or
       $this->deletePage();
   }
