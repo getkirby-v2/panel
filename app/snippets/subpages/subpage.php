@@ -12,18 +12,22 @@
           <span>Move</span>
         </a>
       </li>
+      <?php if($canEdit): ?>
       <li>
         <a class="btn btn-with-icon" href="<?php __($subpage->url('edit')) ?>">
           <?php i('pencil', 'left') ?>
           <span>Edit</span>
         </a>
       </li>
+      <?php endif ?>
+      <?php if($canDelete): ?>
       <li>
         <a data-modal data-modal-return-to="<?php echo __($page->url('subpages')) ?>" class="btn btn-with-icon" href="<?php __($subpage->url('delete')) ?>">
           <?php i('trash-o', 'left') ?>
           <span>Delete</span>
         </a>
       </li>
+      <?php endif ?>
     </ul>
   </nav>
 </div>

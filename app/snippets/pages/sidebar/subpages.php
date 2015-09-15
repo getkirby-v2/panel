@@ -4,9 +4,11 @@
   </span>
   <span class="hgroup-options shiv shiv-dark shiv-left">
     <span class="hgroup-option-right">
+      <?php if($canEdit): ?>
       <a title="<?php _l('pages.show.subpages.edit') ?>" href="<?php __($page->url('subpages')) ?>">
         <?php i('pencil', 'left') ?><span><?php _l('pages.show.subpages.edit') ?></span>
       </a>
+      <?php endif ?>
       <?php if($addbutton): ?>
       <a title="+" data-shortcut="+"<?php e($addbutton->modal(), ' data-modal') ?> href="<?php __($addbutton->url()) ?>">
         <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.subpages.add') ?></span>
@@ -21,7 +23,7 @@
 <?php if($subpages->count()): ?>
 <ul class="nav nav-list sidebar-list datalist-items">
   <?php foreach($subpages as $subpage): ?>
-  <?php echo new Kirby\Panel\Snippet('pages/sidebar/subpage', array('subpage' => $subpage)) ?>
+  <?php echo new Kirby\Panel\Snippet('pages/sidebar/subpage', array('subpage' => $subpage, 'canEdit' => $canEdit)) ?>
   <?php endforeach ?>
 </ul>
 

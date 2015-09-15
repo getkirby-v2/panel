@@ -30,13 +30,13 @@
       <h3><a href="<?php echo $visible->firstPage() ?>"><?php _l('subpages.index.visible') ?></a></h3>
 
       <div class="dropzone subpages">
-        <div class="items<?php e($sortable, ' sortable') ?>" id="visible-children" 
-          data-flip="<?php echo $flip ?>" 
-          data-start="<?php echo $visible->start() ?>" 
+        <div class="items<?php e($sortable, ' sortable') ?>" id="visible-children"
+          data-flip="<?php echo $flip ?>"
+          data-start="<?php echo $visible->start() ?>"
           data-total="<?php echo $visible->total() ?>"
           data-csrf="<?php echo panel()->csrf() ?>">
-          <?php foreach($visible->pages() as $subpage): ?>
-          <?php echo new Kirby\Panel\Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
+          <?php foreach($visible->pages() as $key => $subpage): ?>
+          <?php echo new Kirby\Panel\Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage, 'canEdit' => $visibleBtn[$key]['canEdit'], 'canDelete' => $visibleBtn[$key]['canDelete'])) ?>
           <?php endforeach ?>
         </div>
       </div>
@@ -57,8 +57,8 @@
       <div class="dropzone subpages">
         <div class="items<?php e($sortable, ' sortable') ?>" id="invisible-children">
 
-          <?php foreach($invisible->pages() as $subpage): ?>
-          <?php echo new Kirby\Panel\Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage)) ?>
+          <?php foreach($invisible->pages() as $key => $subpage): ?>
+          <?php echo new Kirby\Panel\Snippet('subpages/subpage', array('page' => $page, 'subpage' => $subpage, 'canEdit' => $invisibleBtn[$key]['canEdit'], 'canDelete' => $invisibleBtn[$key]['canDelete'])) ?>
           <?php endforeach ?>
 
         </div>
@@ -113,7 +113,7 @@
         var id    = ui.item.attr('id');
 
         if(flip == '1') {
-          // if this is an invisible element the 
+          // if this is an invisible element the
           // total number of items in the visible list has
           // to be adjusted to get the right result for the
           // sorting number
@@ -122,7 +122,7 @@
           }
           var to = total - start - index + 1;
         } else {
-          var to = index + start;              
+          var to = index + start;
         }
 
         if(ui.item.parent().attr('id') !== 'invisible-children') {

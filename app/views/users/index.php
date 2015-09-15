@@ -2,7 +2,7 @@
 
   <h2 class="hgroup hgroup-single-line cf">
     <span class="hgroup-title"><?php _l('users.index.headline') ?></span>
-    <?php if($admin): ?>
+    <?php if($canAdd): ?>
     <span class="hgroup-options shiv shiv-dark shiv-left">
       <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php _u('users/add') ?>">
         <?php i('plus-circle', 'left') . _l('users.index.add') ?>
@@ -30,24 +30,25 @@
           </a>
         </div>
       </div>
-      <?php if($admin or $user->isCurrent()): ?>
       <nav class="item-options">
-
         <ul class="nav nav-bar">
+          <?php if($canEdit or $user->isCurrent()): ?>
           <li>
             <a class="btn btn-with-icon" href="<?php __($user->url('edit')) ?>">
               <?php i('pencil', 'left') . _l('users.index.edit') ?>
             </a>
           </li>
+          <?php endif ?>
+          <?php if($canDelete or $user->isCurrent()): ?>
           <li>
             <a data-modal class="btn btn-with-icon" href="<?php __($user->url('delete')) ?>">
               <?php i('trash-o', 'left') . _l('users.index.delete') ?>
             </a>
           </li>
+          <?php endif ?>
         </ul>
-
       </nav>
-      <?php endif ?>
+
     </div>
     <?php endforeach ?>
   </div>

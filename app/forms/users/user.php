@@ -52,7 +52,7 @@ return function($user) {
       'required'     => true,
       'autocomplete' => false
     ),
-    
+
     'password' => array(
       'label'      => $mode == 'edit' ? 'users.form.password.new.label' : 'users.form.password.label',
       'required'   => $mode == 'add',
@@ -76,7 +76,7 @@ return function($user) {
       'default'  => kirby()->option('panel.language', 'en'),
       'options'  => $languages
     ),
-    
+
     'role' => array(
       'label'    => 'users.form.role.label',
       'type'     => 'select',
@@ -84,7 +84,10 @@ return function($user) {
       'width'    => '1/2',
       'default'  => site()->roles()->findDefault()->id(),
       'options'  => $roles,
-      'readonly' => (!panel()->user()->isAdmin() or ($user and $user->isLastAdmin()))
+      'readonly' => ($user ? (!panel()->user()->isAllowed('roleUser') or $user->isLastAdmin()) : false)
+
+
+
     ),
 
   ), $content);

@@ -56,8 +56,12 @@ class Menu {
     $list->addClass('dropdown-list');
 
     $list->append($this->previewOption());
-    $list->append($this->editOption());
-    $list->append($this->deleteOption());
+    if(panel()->user()->isAllowed('editFile', $this->page)) {
+      $list->append($this->editOption());
+    }
+    if(panel()->user()->isAllowed('deleteFile', $this->page)) {
+      $list->append($this->deleteOption());
+    }
 
     return '<nav class="dropdown dropdown-dark contextmenu">' . $list . '</nav>';
 

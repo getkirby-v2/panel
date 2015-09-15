@@ -49,7 +49,9 @@ class Topbar {
   }
 
   public function menu() {
-    return new Snippet('menu');
+    return new Snippet('menu', array(
+      'canUpdateSite' => panel()->user()->isAllowed('updateSite', panel()->site())
+    ));
   }
 
   public function breadcrumb() {
@@ -69,7 +71,7 @@ class Topbar {
       $element->addClass('message');
 
       if($type == 'error') {
-        $element->addClass('message-is-alert');      
+        $element->addClass('message-is-alert');
       } else {
         $element->addClass('message-is-notice');
       }

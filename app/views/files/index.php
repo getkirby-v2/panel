@@ -14,7 +14,7 @@
         <?php i('arrow-circle-left', 'left') . _l('files.index.back') ?>
       </a>
 
-      <?php if($page->hasFiles()): ?>
+      <?php if($page->hasFiles() and $canUpload): ?>
       <a data-upload class="hgroup-option-right" href="#upload">
         <?php i('plus-circle', 'left') . _l('files.index.upload') ?>
       </a>
@@ -47,17 +47,24 @@
               <span class="file-meta marginalia cut"><?php __($file->type() . ' / ' . $file->niceSize()) ?></span>
             </a>
           </figcaption>
+
+          <?php if($canEdit or $canDelete) :?>
           <nav class="file-options cf">
 
+            <?php if($canEdit) :?>
             <a class="btn btn-with-icon" href="<?php __($file->url('edit')) ?>">
               <?php i('pencil', 'left') ?><span><?php _l('files.index.edit') ?></span>
             </a>
+            <?php endif ?>
 
+            <?php if($canDelete) :?>
             <a data-modal data-modal-return-to="<?php __($page->url('files')) ?>" class="btn btn-with-icon" href="<?php __($file->url('delete')) ?>">
               <?php i('trash-o', 'left') ?><span><?php _l('files.index.delete') ?></span>
             </a>
+            <?php endif ?>
 
           </nav>
+          <?php endif ?>
         </figure>
       </div><!--
    --><?php endforeach ?>
@@ -94,7 +101,7 @@ if(sortable.find('.grid-item').length > 1) {
   sortable.sortable({
     update: function() {
       $.post(api, {filenames: $(this).sortable('toArray'), action: 'sort'}, function(data) {
-        app.content.reload();        
+        app.content.reload();
       });
     }
   }).disableSelection();

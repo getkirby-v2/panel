@@ -47,19 +47,23 @@
             </a>
           </li>
 
+          <?php if($canReplace) : ?>
           <li>
             <a data-upload title="r" data-shortcut="r" href="#replay" class="btn btn-with-icon">
               <?php i('cloud-upload', 'left') ?>
               <?php _l('files.show.replace') ?>
             </a>
           </li>
+          <?php endif ?>
 
+          <?php if($canDelete) : ?>
           <li>
             <a data-modal data-modal-return-to="<?php __($returnTo) ?>" title="#" data-shortcut="#" href="<?php __($file->url('delete')) ?>" class="btn btn-with-icon">
               <?php i('trash-o', 'left') ?>
               <?php _l('files.show.delete') ?>
             </a>
           </li>
+          <?php endif ?>
         </ul>
       </nav>
     </div>

@@ -1,16 +1,19 @@
-<?php 
+<?php
 
 $site = panel()->site();
+$user = panel()->user();
 
-$options = array(
-  array(
+$options = array();
+
+if($user->isAllowed('editSubpages', $site)) {
+  $options[] = array(
     'text' => l('dashboard.index.pages.edit'),
     'icon' => 'pencil',
     'link' => $site->url('subpages')
-  )
-);
+  );
+}
 
-if($addbutton = $site->addButton()) {
+if($user->isAllowed('createSubpages', $site) and $addbutton = $site->addButton()) {
   $options[] = array(
     'text'  => l('dashboard.index.pages.add'),
     'icon'  => 'plus-circle',
@@ -27,9 +30,10 @@ return array(
     'compressed' => true
   ),
   'options' => $options,
-  'html'  => function() use($site) {
+  'html'  => function() use($site, $user) {
     return tpl::load(__DIR__ . DS . 'pages.html.php', array(
-      'pages' => $site->children()
+      'pages'   => $site->children(),
+      'canEdit' => $user->isAllowed('editSubpages', $site),
     ));
   }
 );

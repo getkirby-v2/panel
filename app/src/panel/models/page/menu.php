@@ -125,10 +125,18 @@ class Menu {
     }
 
     $list->append($this->previewOption());
-    $list->append($this->editOption());
-    $list->append($this->statusOption());
-    $list->append($this->urlOption());
-    $list->append($this->deleteOption());
+    if(panel()->user()->isAllowed('editPage', $this->page)) {
+      $list->append($this->editOption());
+    }
+    if(panel()->user()->isAllowed('hidePage', $this->page)) {
+      $list->append($this->statusOption());
+    }
+    if(panel()->user()->isAllowed('changeurlPage', $this->page)) {
+      $list->append($this->urlOption());
+    }
+    if(panel()->user()->isAllowed('deletePage', $this->page)) {
+      $list->append($this->deleteOption());
+    }
 
     if($this->position == 'context') {
       return '<nav class="dropdown dropdown-dark contextmenu">' . $list . '</nav>';
@@ -140,7 +148,7 @@ class Menu {
 
   public function __toString() {
     try {
-      return (string)$this->html();      
+      return (string)$this->html();
     } catch(Exception $e) {
       return (string)$e->getMessage();
     }

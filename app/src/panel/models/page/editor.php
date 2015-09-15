@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kirby\Panel\Models\Page;
 
@@ -93,7 +93,8 @@ class Editor {
       'page'       => $this->page,
       'subpages'   => $children,
       'templates'  => $this->blueprint->pages()->template(),
-      'addbutton'  => $this->page->addButton(),
+      'addbutton'  => panel()->user()->isAllowed('createSubpages', $this->page) ? $this->page->addButton() : false,
+      'canEdit'    => panel()->user()->isAllowed('editSubpages', $this->page),
       'pagination' => $children->pagination(),
     ));
 
@@ -106,8 +107,10 @@ class Editor {
     }
 
     return new Snippet('pages/sidebar/files', array(
-      'page'  => $this->page,
-      'files' => $this->page->files(),
+      'page'      => $this->page,
+      'files'     => $this->page->files(),
+      'canUpload' => panel()->user()->isAllowed('uploadFile', $this->page),
+      'canEdit'   => panel()->user()->isAllowed('editFile', $this->page),
     ));
 
   }
@@ -125,7 +128,7 @@ class Editor {
   }
 
   public function breadcrumb() {
-    return new Snippet('pages/breadcrumb', array('page' => $this->page));      
+    return new Snippet('pages/breadcrumb', array('page' => $this->page));
   }
 
   public function topbar() {
@@ -139,12 +142,23 @@ class Editor {
 
   public function content() {
 
+    $form = $this->form();
+
+    // set to readonly if permissions missing
+    if(!panel()->user()->isAllowed('updatePage', $this->page)) {
+      $form->buttons->submit = false;
+      foreach($form->fields() as $field) {
+          $field->readonly = true;
+          $field->disabled = true;
+      }
+    }
+
     return new View('pages/edit', array(
-      'sidebar'  => $this->sidebar(),
-      'form'     => $this->form(),
-      'page'     => $this->page,
-      'notitle'  => $this->page->hasNoTitleField(),
-      'uploader' => new Snippet('uploader', array('url' => $this->page->url('upload')))
+      'sidebar'   => $this->sidebar(),
+      'form'      => $form,
+      'page'      => $this->page,
+      'notitle'   => $this->page->hasNoTitleField(),
+      'uploader'  => new Snippet('uploader', array('url' => $this->page->url('upload')))
     ));
 
   }

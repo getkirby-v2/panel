@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 return function($page) {
 
@@ -8,7 +8,7 @@ return function($page) {
   // center the submit button
   $form->centered = true;
 
-  // set the keep api    
+  // set the keep api
   $form->data('keep', $page->url('keep'));
 
   // remove the cancel button

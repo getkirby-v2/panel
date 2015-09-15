@@ -9,11 +9,13 @@
         <?php i('file-o', 'left') . _l('dashboard') ?>
       </a>
     </li>
+    <?php if ($canUpdateSite) : ?>
     <li>
       <a href="<?php _u('options') ?>">
         <?php i('gear', 'left') . _l('metatags') ?>
       </a>
     </li>
+    <?php endif ?>
     <li>
       <a href="<?php _u('users') ?>">
         <?php i('user', 'left') . _l('users') ?>

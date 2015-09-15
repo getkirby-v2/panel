@@ -8,6 +8,7 @@ use Str;
 
 use Kirby\Panel\Models\User\Avatar;
 use Kirby\Panel\Models\User\History;
+use Kirby\Panel\Models\User\Permission;
 
 class User extends \User {
 
@@ -16,7 +17,7 @@ class User extends \User {
     return panel()->urls()->index() . '/users/' . $this->username() . '/' . $action;
   }
 
-  public function form($action, $callback) {    
+  public function form($action, $callback) {
     return panel()->form('users/' . $action, $this, $callback);
   }
 
@@ -54,7 +55,7 @@ class User extends \User {
         return true;
       }
     } else {
-      return false;       
+      return false;
     }
   }
 
@@ -83,6 +84,17 @@ class User extends \User {
     return $this->is(panel()->user());
   }
 
+  public function isAllowed($action, $page = null) {
+    $permission = new Permission($this, $page);
+    $permission = array($permission, $action);
+
+    if (is_callable($permission)) {
+      return call_user_func($permission);
+    } else {
+      throw new Exception('Call to missing permission function: ' . $action);
+    }
+  }
+
   public function history() {
     return new History($this);
   }
@@ -90,10 +102,10 @@ class User extends \User {
   public function topbar($topbar) {
 
     $topbar->append(purl('users'), l('users'));
-    $topbar->append($this->url(), $this->username());    
+    $topbar->append($this->url(), $this->username());
 
     // if($user === 'user') {
-    //   $topbar->append(purl('users/add'), l('users.index.add'));    
+    //   $topbar->append(purl('users/add'), l('users.index.add'));
     // }
 
   }
