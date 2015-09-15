@@ -22,9 +22,7 @@ class Children extends \Children {
 
     foreach($inventory['children'] as $dirname) {
       $child = new Page($page, $dirname);
-      if(!$child->isHidden()) {
-        $this->data[$child->id()] = $child;        
-      }
+      $this->data[$child->id()] = $child;        
     }
 
     $sort = $page->blueprint()->pages()->sort();
