@@ -408,7 +408,7 @@ class Panel {
       $key = null;
     }
 
-    $localhosts = array('::1', '127.0.01', '0.0.0.0');
+    $localhosts = array('::1', '127.0.0.1', '0.0.0.0');
 
     return new Obj(array(
       'key'   => $key,
