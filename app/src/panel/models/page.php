@@ -471,7 +471,7 @@ class Page extends \Page {
 
   public function topbar(Topbar $topbar) {
 
-    foreach($this->parents() as $item) {
+    foreach($this->parents()->flip() as $item) {
       $topbar->append($item->url('edit'), $item->title());
     }
 
