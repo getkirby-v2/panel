@@ -49,7 +49,8 @@
   height: 100%;
 }
 .fileview-preview-link img,
-.fileview-preview-link object {
+.fileview-preview-link object,
+.fileview-preview-link span {
   position: absolute;
   top: 50%;
   left: 50%;
