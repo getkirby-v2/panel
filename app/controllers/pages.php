@@ -57,7 +57,6 @@ class PagesController extends Kirby\Panel\Controllers\Base {
     return $this->screen('pages/edit', $page, array(
       'page'     => $page,
       'sidebar'  => $page->sidebar(),
-      'notitle'  => $page->hasNoTitleField(),
       'form'     => $form,
       'uploader' => $this->snippet('uploader', array('url' => $page->url('upload')))
     ));

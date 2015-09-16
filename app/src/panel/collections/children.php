@@ -73,8 +73,6 @@ class Children extends \Children {
       $page->children()->create($build['uid'], $build['template'], array('title' => $build['title']));
     }
 
-    s::set('draft', $page->id());
-
     return $page;
 
   }

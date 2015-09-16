@@ -127,10 +127,6 @@ class Page extends \Page {
 
   public function getFormData() {
 
-    if($this->isDraft()) {
-      return array();
-    }
-
     // get the latest content from the text file
     $data = $this->content()->toArray();
 
@@ -360,14 +356,6 @@ class Page extends \Page {
     }
   }
 
-  public function isDraft() {
-    if($this->isSite()) {
-      return false;
-    } else {
-      return s::get('draft') == $this->id();      
-    }
-  }
-
   public function addToHistory() {
     panel()->user()->history()->add($this);
   }
@@ -403,12 +391,6 @@ class Page extends \Page {
 
     $this->changes()->discard();
     parent::update($data);
-
-    // move the page if this is still a draft
-    if($this->isDraft()) {
-      parent::move($data['title']);
-      s::set('draft', false);
-    }
 
     $this->updateNum();
     $this->updateUid();
