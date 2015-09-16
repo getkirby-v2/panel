@@ -28,7 +28,11 @@ class DatetimeField extends BaseField {
 
   public function content() {
 
-    $timestamp = strtotime($this->value());
+    if(is_array($this->value())) {
+      $timestamp = strtotime($this->result());      
+    } else {
+      $timestamp = strtotime($this->value());      
+    }
 
     $date = form::field('date', array(
       'name'   => $this->name() . '[date]',
