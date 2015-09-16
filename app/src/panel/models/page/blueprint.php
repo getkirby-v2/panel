@@ -24,7 +24,6 @@ class Blueprint extends Obj {
   public $preview   = 'page';
   public $pages     = null;
   public $files     = null;
-  public $type      = 'page';
   public $hide      = false;
   public $deletable = true;
   public $icon      = 'file-o';

@@ -194,7 +194,7 @@ return array(
 
   // Page
   array(
-    'pattern' => 'pages/(:all)',
+    'pattern' => 'pages/(:all)/edit',
     'action'  => 'PagesController::edit',
     'filter'  => 'auth',
     'method'  => 'POST|GET'
