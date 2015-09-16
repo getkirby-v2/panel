@@ -31,8 +31,37 @@ class PagesController extends Kirby\Panel\Controllers\Base {
   }
 
   public function edit($id) {
-    $editor = $this->page($id)->editor();
-    return $this->screen('pages/edit', $editor->page(), $editor->content());
+
+    $self = $this;
+    $page = $this->page($id);
+    $form = $page->form('edit', function($form) use($page, $self) {
+      
+      // validate all fields
+      $form->validate();
+
+      // stop at invalid fields
+      if(!$form->isValid()) {
+        return $self->alert(l('pages.show.error.form'));
+      }
+
+      try {
+        $page->update($form->serialize());
+        $self->notify(':)');
+        return $self->redirect($page);
+      } catch(Exception $e) {
+        return $self->alert($e->getMessage());
+      }
+
+    });
+
+    return $this->screen('pages/edit', $page, array(
+      'page'     => $page,
+      'sidebar'  => $page->sidebar(),
+      'notitle'  => $page->hasNoTitleField(),
+      'form'     => $form,
+      'uploader' => $this->snippet('uploader', array('url' => $page->url('upload')))
+    ));
+
   }
 
   public function delete($id) {

@@ -39,6 +39,7 @@ class Blueprint extends Obj {
     $this->deletable = a::get($this->yaml, 'deletable', true);
     $this->icon      = a::get($this->yaml, 'icon', 'file-o');
     $this->hide      = a::get($this->yaml, 'hide', false);
+    $this->type      = a::get($this->yaml, 'type', 'page');
     $this->pages     = new Pages(a::get($this->yaml, 'pages', true));
     $this->files     = new Files(a::get($this->yaml, 'files', true));
 

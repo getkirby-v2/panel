@@ -12,7 +12,7 @@ use Kirby\Panel\Collections\Users;
 use Kirby\Panel\Models\Page\AddButton;
 use Kirby\Panel\Models\Page\Blueprint;
 use Kirby\Panel\Models\Page\Changes;
-use Kirby\Panel\Models\Page\Editor;
+use Kirby\Panel\Models\Page\Sidebar;
 use Kirby\Panel\Models\Page\Uploader;
 
 class Site extends \Site {
@@ -98,8 +98,8 @@ class Site extends \Site {
 
   }
 
-  public function editor() {
-    return new Editor($this);    
+  public function sidebar() {
+    return new Sidebar($this);    
   }
 
   public function upload() {

@@ -32,7 +32,7 @@ load(array(
   'kirby\\panel\\models\\page'                    => 'panel' . DS . 'models' . DS . 'page.php',
   'kirby\\panel\\models\\page\\addbutton'         => 'panel' . DS . 'models' . DS . 'page' . DS . 'addbutton.php',
   'kirby\\panel\\models\\page\\menu'              => 'panel' . DS . 'models' . DS . 'page' . DS . 'menu.php',
-  'kirby\\panel\\models\\page\\editor'            => 'panel' . DS . 'models' . DS . 'page' . DS . 'editor.php',
+  'kirby\\panel\\models\\page\\sidebar'           => 'panel' . DS . 'models' . DS . 'page' . DS . 'sidebar.php',
   'kirby\\panel\\models\\page\\changes'           => 'panel' . DS . 'models' . DS . 'page' . DS . 'changes.php',
   'kirby\\panel\\models\\page\\uploader'          => 'panel' . DS . 'models' . DS . 'page' . DS . 'uploader.php',
   'kirby\\panel\\models\\page\\structure'         => 'panel' . DS . 'models' . DS . 'page' . DS . 'structure.php',

@@ -31,30 +31,12 @@ class SubpagesController extends Kirby\Panel\Controllers\Base {
 
   protected function subpages($page, $type) {
 
-    $pages = $page->children()->$type();
-
-    if($limit = $page->blueprint()->pages()->limit()) {
-
-      // create a session id to store the page
-      $sessionId = 'subpages.' . $type . '.' . $page->cacheId();
-
-      // add pagination 
-      $pages = $pages->paginate($limit, array(
-        'page'          => get($type, s::get($sessionId)), 
-        'omitFirstPage' => false, 
-        'variable'      => $type,
-        'method'        => 'query'
-      ));
-
-      // store the last page
-      s::set($sessionId, $pages->pagination()->page());
-      
-      $pagination = $this->snippet('subpages/pagination', array(
-        'pagination' => $pages->pagination(),
-        'nextUrl'    => $pages->pagination()->nextPageUrl(),
-        'prevUrl'    => $pages->pagination()->prevPageUrl(),
-      ));
-    }
+    $pages      = $page->children()->$type()->paginated('subpages/' . $type);
+    $pagination = $this->snippet('subpages/pagination', array(
+      'pagination' => $pages->pagination(),
+      'nextUrl'    => $pages->pagination()->nextPageUrl(),
+      'prevUrl'    => $pages->pagination()->prevPageUrl(),
+    ));
 
     return new Obj(array(
       'pages'      => $pages, 
