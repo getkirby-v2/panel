@@ -29,12 +29,14 @@ class Children extends \Children {
 
     switch($sort) {
       case 'flip':
-        $this->flip();
+        $cloned = $this->flip();
+        $this->data = $cloned->data;
         break;
       default;
         $parts = str::split($sort, ' ');
         if(count($parts) > 0) {
-          call(array($this, 'sortBy'), $parts);
+          $cloned = call(array($this, 'sortBy'), $parts);
+          $this->data = $cloned->data;
         }
         break;
     }
