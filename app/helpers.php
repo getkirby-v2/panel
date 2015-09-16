@@ -57,7 +57,7 @@ function n($page) {
       case 'date':
         $pageBlueprint = blueprint::find($page);
         $date = $pageBlueprint->fields()->date();
-        $format = is_null($date) ? 'Y/m/d' : $date->format;
+        $format = is_null($date) || ! isset($date->format) ? 'Y/m/d' : $date->format;
         return date($format, strtotime($page->num()));
         break;
       default:
