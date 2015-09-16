@@ -32,7 +32,7 @@ class SubpagesController extends Kirby\Panel\Controllers\Base {
   protected function subpages($page, $type) {
 
     $pages      = $page->children()->$type()->paginated('subpages/' . $type);
-    $pagination = $this->snippet('subpages/pagination', array(
+    $pagination = $this->snippet('pagination', array(
       'pagination' => $pages->pagination(),
       'nextUrl'    => $pages->pagination()->nextPageUrl(),
       'prevUrl'    => $pages->pagination()->prevPageUrl(),

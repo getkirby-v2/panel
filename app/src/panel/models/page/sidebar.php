@@ -24,13 +24,20 @@ class Sidebar {
     // fetch all subpages in the right order
     $children = $this->page->children()->paginated('sidebar');
 
+    // create the pagination snippet
+    $pagination = new Snippet('pagination', array(
+      'pagination' => $children->pagination(),
+      'nextUrl'    => $children->pagination()->nextPageUrl(),
+      'prevUrl'    => $children->pagination()->prevPageUrl(),
+    ));
+
     // create the snippet and fill it with all data
     return new Snippet('pages/sidebar/subpages', array(
       'title'      => l('pages.show.subpages.title'),
       'page'       => $this->page,
       'subpages'   => $children,
       'addbutton'  => $this->page->addButton(),
-      'pagination' => $children->pagination(),
+      'pagination' => $pagination,
     ));
 
   }

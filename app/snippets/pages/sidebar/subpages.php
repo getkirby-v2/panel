@@ -25,13 +25,7 @@
   <?php endforeach ?>
 </ul>
 
-<?php if($pagination->pages() > 1): ?>
-<nav class="pagination cf">
-  <a title="alt+left" data-shortcut="alt+left" class="pagination-prev<?php e(!$pagination->hasPrevPage(), ' pagination-inactive') ?>" href="<?php echo $page->url('edit') . '/?page=' . $pagination->prevPage() ?>"><?php i('chevron-left') ?></a>
-  <span class="pagination-index"><?php echo $pagination->page() . ' / ' . $pagination->pages() ?></span>
-  <a title="alt+right" data-shortcut="alt+right" class="pagination-next<?php e(!$pagination->hasNextPage(), ' pagination-inactive') ?>" href="<?php echo $page->url('edit') . '/?page=' . $pagination->nextPage() ?>"><?php i('chevron-right') ?></a>
-</nav>
-<?php endif ?>
+<?php echo $pagination ?>
 
 <?php else: ?>
 <p class="marginalia">
