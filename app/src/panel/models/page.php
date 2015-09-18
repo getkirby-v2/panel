@@ -358,7 +358,7 @@ class Page extends \Page {
 
     // make sure that the sorting number is correct
     if($this->isVisible()) {      
-      $this->sort($num);
+      $this->sort($this->num());
     }
 
     return $this->num();
