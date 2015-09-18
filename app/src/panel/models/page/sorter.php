@@ -109,12 +109,13 @@ class Sorter {
 
   public function delete() {
     $this->siblings = $this->siblings->not($this->page);
-    $this->to = false;
+    $this->to       = false;
     $this->execute();
   }
 
   public function hide() {
     $this->siblings = $this->siblings->not($this->page);
+    $this->to       = false;
     $this->execute();
   }
 
