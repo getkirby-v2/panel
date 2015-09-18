@@ -16,6 +16,7 @@ use Kirby\Panel\Collections\Files;
 use Kirby\Panel\Models\Page\AddButton;
 use Kirby\Panel\Models\Page\Blueprint;
 use Kirby\Panel\Models\Page\Menu;
+use Kirby\Panel\Models\Page\Sorter;
 use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Editor;
 use Kirby\Panel\Models\Page\Sidebar;
@@ -45,17 +46,8 @@ class Page extends \Page {
 
   public function createNum($to = null) {
 
-    $parent  = $this->parent();
-    $visible = $parent->children()->visible();
-    $params  = $parent->blueprint()->pages()->num();
-
-    if($to == 'last') {
-      $to = $visible->count() + 1;
-    } else if($to == 'first') {
-      $to = 1;
-    } else if(is_null($to)) {
-      $to = $this->num();
-    }
+    $parent = $this->parent();
+    $params = $parent->blueprint()->pages()->num();
 
     switch($params->mode()) {
       case 'zero':
@@ -70,14 +62,24 @@ class Page extends \Page {
         break;
       default:
 
+        $visibleSiblings = $parent->children()->visible();
+
+        if($to == 'last') {
+          $to = $visibleSiblings->count() + 1;
+        } else if($to == 'first') {
+          $to = 1;
+        } else if(is_null($to)) {
+          $to = $this->num();
+        }
+
         if(!v::num($to)) return false;
 
         if($to <= 0) return 1;
 
         if($this->isInvisible()) {
-          $limit = $visible->count() + 1;
+          $limit = $visibleSiblings->count() + 1;
         } else {
-          $limit = $visible->count();
+          $limit = $visibleSiblings->count();
         }
 
         if($limit < $to) {
@@ -272,35 +274,36 @@ class Page extends \Page {
   
   }
 
-  public function sort($to = null, $sibling = false) {
+  public function _sort($to) {
+    if(is_dir($this->root())) {
+      return parent::sort($to);       
+    } else {
+      return false;
+    }
+  }
+
+  public function sort($to = null) {
 
     if($this->isErrorPage()) {
       return $this->num();
     }
 
-    // create a new valid sorting num
-    $num = $this->createNum($to);
+    $this->sorter()->to($to);
 
-    // sort the page
-    parent::sort($num);
+    // hit the hook
+    kirby()->trigger('panel.page.sort', $this);
 
-    // clean the other page numbers
-    if(!$sibling) {
+    return $this->num();
 
-      $this->sortSiblings($num);      
+  }
 
-      // hit the hook
-      kirby()->trigger('panel.page.sort', $this);
-
-    }
-
-    return $num;
-
+  public function sorter() {
+    return new Sorter($this);
   }
 
   public function hide() {
     parent::hide();
-    $this->sortSiblings();
+    $this->sorter()->hide();
     kirby()->trigger('panel.page.hide', $this);
   }
 
@@ -347,15 +350,6 @@ class Page extends \Page {
     return new Sidebar($this);    
   }
 
-  public function sortSiblings($skip = null) {
-    $to = 1;
-    foreach(parent::siblings()->visible()->not($this) as $page) {
-      if($to === $skip) $to++;
-      $page->sort($to, true);
-      $to++;
-    }
-  }
-
   public function addToHistory() {
     panel()->user()->history()->add($this);
   }
@@ -363,11 +357,8 @@ class Page extends \Page {
   public function updateNum() {
 
     // make sure that the sorting number is correct
-    if($this->isVisible()) {
-      $num = $this->createNum();
-      if($num !== $this->num()) {
-        $this->sort($num);
-      }
+    if($this->isVisible()) {      
+      $this->sort($num);
     }
 
     return $this->num();
@@ -410,7 +401,7 @@ class Page extends \Page {
     parent::delete();
 
     // resort the siblings
-    $this->sortSiblings();
+    $this->sorter()->delete();
 
     // remove unsaved changes
     $this->changes()->discard();

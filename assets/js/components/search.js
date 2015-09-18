@@ -45,7 +45,7 @@ var Search = function() {
 
   };
 
-  $(document).on('keydown', '.search-input', function(e) {
+  $(document).on('keyup', '.search-input', function(e) {
 
     switch(e.keyCode) {
       case 13: // enter

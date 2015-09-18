@@ -21,16 +21,43 @@
   border-bottom: 0;
 }
 .search-section li > a {
+  position: relative;
   padding: .5em 1em;
   line-height: 1em;
   color: #fff;
+  display: block;
+  white-space: nowrap;
+}
+.search-section a strong,
+.search-section a small {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.search-section .icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+.search-section a span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.search-section a strong {
+  padding-bottom: .125em;
+  font-weight: 400;
+}
+.search-section a small {
+  font-size: .7em;
+  color: #999;
+  padding-top: .125em;
+}
 .search-section li.active a {
   color: #8dae28;
+}
+.search-section li.active a small {
+  color: #fff;
 }
 .search-section .icon {
   width: 2em;
