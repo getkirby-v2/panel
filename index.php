@@ -20,9 +20,6 @@ if(file_exists($index . DS . 'site.php')) {
   $kirby = kirby();
 }
 
-// store the detected url and folder
-$panelUrl = $kirby->url(); 
-
 // fix the base url for the kirby installation
 if(!isset($kirby->urls->index)) {
   $kirby->urls->index = dirname($kirby->url());
@@ -55,7 +52,7 @@ try {
 
   // load the fatal screen
   echo tpl::load(__DIR__ . DS . 'app' . DS . 'layouts' . DS . 'fatal.php', array(
-    'css'     => $panelUrl . '/assets/css/panel.css',
+    'css'     => url::index() . '/assets/css/panel.css',
     'content' => $e->getMessage()
   ));
 

@@ -14,15 +14,19 @@
     a {
       color: #8dae28;
     }
+    p {
+      margin-bottom: 1.5em;
+    }
   </style>
 
 </head>
 <body>
+  <h1>Panel Error:</h1>
   <p>
     <?php echo $content ?>
   </p>
   <p>
-    <strong>Find more info on: <a href="http://getkirby.com">getkirby.com</a></strong>
+    <em>Find more info on: <a href="http://getkirby.com">getkirby.com</a></em>
   </p>
 </body>
 </html>
