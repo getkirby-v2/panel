@@ -2,21 +2,14 @@
 
 class StructureTest extends PanelTestCase {
 
-  public function __construct() {
+  public function setUp() {
 
-    parent::__construct();
-
-    $this->removeAccounts();
-    $this->removeContent();
+    parent::setUp();
 
     $this->user      = $this->createAdmin();
     $this->page      = $this->site->children()->create('test', 'test');
     $this->structure = $this->page->structure('testfield');
 
-  }
-
-  public function setUp() {
-    $this->structure->delete();
   }
 
   public function testConstruct() {

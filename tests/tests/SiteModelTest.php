@@ -2,24 +2,13 @@
 
 class SiteModelTest extends PanelTestCase {
 
-  public function __construct() {
+  protected function setUp() {
 
-    parent::__construct();
-
-    $this->removeContent();
-    $this->removeAccounts();
+    parent::setUp();
 
     $this->user = $this->createAdmin();
-
-  }
-
-  protected function setUp() {
-    $this->removeContent();
     $this->user->login('test');
-  }
 
-  protected function tearDown() {
-    $this->user->logout();    
   }
 
   public function testBlueprint() {

@@ -2,14 +2,11 @@
 
 class AutocompleteTest extends PanelTestCase {
 
-  public function __construct() {
+  protected function setUp() {
 
-    parent::__construct();
+    parent::setUp();
 
-    $this->removeAccounts();
-    $this->removeContent();
-
-    $this->createAdmin('homer');
+    $this->createAdmin('homer')->login('test');
     $this->createAdmin('marge');
     $this->createEditor('lisa');
     $this->createEditor('bart');
@@ -32,7 +29,6 @@ class AutocompleteTest extends PanelTestCase {
       'title' => 'Project C',
       'tags'  => 'architecture, illustration'
     ));
-
 
   }
 

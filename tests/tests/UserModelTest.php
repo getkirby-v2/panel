@@ -3,13 +3,8 @@
 class UserModelTest extends PanelTestCase {
 
   protected function setUp() {
-    s::restart();
-    dir::remove($this->roots->dummy . DS . 'site' . DS . 'accounts');
+    parent::setUp();
     $this->createAdmin();
-  }
-
-  protected function tearDown() {
-    dir::remove($this->roots->dummy . DS . 'site' . DS . 'accounts');
   }
 
   public function testUrl() {

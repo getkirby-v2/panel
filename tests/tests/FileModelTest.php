@@ -2,19 +2,11 @@
 
 class FileModelTest extends PanelTestCase {
 
-  public function __construct() {
+  protected function setUp() {
 
-    parent::__construct();
-
-    $this->removeContent();
-    $this->removeAccounts();
+    parent::setUp();
 
     $this->user = $this->createAdmin();
-
-  }
-
-  protected function setUp() {
-    $this->removeContent();
     $this->user->login('test');
 
     $this->page = $this->site->children()->create('test', 'test');
@@ -25,7 +17,12 @@ class FileModelTest extends PanelTestCase {
   }
 
   public function tearDown() {
+
     $this->user->logout();    
+
+    $this->removeContent();
+    $this->removeAccounts();
+
   }
 
   public function testFind() {

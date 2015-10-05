@@ -50,7 +50,7 @@ class Sorter {
 
       // take the current date if the 
       if(!$date) {
-        date($this->params->format());
+        $date = date($this->params->format());
       }
 
       $sibling->_sort($date);

@@ -20,6 +20,9 @@ class PanelTestCase extends PHPUnit_Framework_TestCase {
     // load kirby
     require_once($roots['kirby'] . DIRECTORY_SEPARATOR . 'bootstrap.php');
 
+    // make sure to start a session
+    s::start();
+
     // create the roots object
     $this->roots = new Obj($roots);
 
@@ -36,6 +39,24 @@ class PanelTestCase extends PHPUnit_Framework_TestCase {
 
     // store the site instance
     $this->site = $this->panel->site();
+
+  }
+
+  protected function setUp() {
+
+    s::restart();
+
+    $this->removeContent();
+    $this->removeAccounts();
+    
+  }
+
+  protected function tearDown() {
+    
+    s::restart();
+
+    $this->removeContent();
+    $this->removeAccounts();
 
   }
 

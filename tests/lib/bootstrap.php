@@ -10,6 +10,3 @@ date_default_timezone_set('UTC');
 
 // include the kirby testcase file
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'testcase.php');
-
-// include the kirby web testcase file
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'webtestcase.php');

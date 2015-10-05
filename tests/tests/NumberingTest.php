@@ -2,20 +2,13 @@
 
 class NumberingTest extends PanelTestCase {
 
-  public function __construct() {
+  protected function setUp() {
 
-    parent::__construct();
-
-    $this->removeContent();
-    $this->removeAccounts();
+    parent::setUp();
 
     $this->user = $this->createAdmin();
     $this->user->login('test');
 
-  }
-
-  protected function setUp() {
-    $this->removeContent();
   }
 
   public function testSortArticles() {
@@ -37,13 +30,22 @@ class NumberingTest extends PanelTestCase {
       'date'  => '2014-12-12 22:33:00'
     ));
 
+    $d = $blog->children()->create('article-d', 'article', array(
+      'title' => 'Article D',
+      'date'  => ''
+    ));
+
     $a->sort();
     $b->sort();
     $c->sort();
+    $d->sort();
 
     $this->assertEquals(20121212, $a->num());
     $this->assertEquals(20131212, $b->num());
     $this->assertEquals(20141212, $c->num());
+    
+    // article with missing date, should be filled with current date
+    $this->assertEquals(date('Ymd'), $d->num());
 
   }
 

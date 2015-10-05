@@ -2,12 +2,9 @@
 
 class ChangesTest extends PanelTestCase {
 
-  public function __construct() {
+  protected function setUp() {
 
-    parent::__construct();
-
-    $this->removeAccounts();
-    $this->removeContent();
+    parent::setUp();
 
     $this->user    = $this->createAdmin();
     $this->page    = $this->site->children()->create('test', 'test');
