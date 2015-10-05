@@ -5,11 +5,13 @@ namespace Kirby;
 use A;
 use C;
 use Collection;
+use Detect;
 use Dir;
 use ErrorController;
 use Exception;
 use F;
 use Header;
+use Kirby;
 use L;
 use Obj;
 use R;
@@ -18,6 +20,7 @@ use Router;
 use Server;
 use S;
 use Str;
+use Toolkit;
 use Url;
 
 use Kirby\Panel\Form;
@@ -26,7 +29,15 @@ use Kirby\Panel\Models\Page\Blueprint;
 
 class Panel {
 
-  static public $version = '2.2.0';
+  static public $version  = '2.2.0';
+
+  // minimal requirements
+  static public $requires = array(
+    'php'     => '5.4.0',
+    'toolkit' => '2.2.0',
+    'kirby'   => '2.2.0'
+  );
+
   static public $instance;
 
   public $kirby;
@@ -63,6 +74,9 @@ class Panel {
   }
 
   public function __construct($kirby, $root) {
+
+    // check requirements
+    $this->requirements();
 
     static::$instance = $this;
 
@@ -115,6 +129,26 @@ class Panel {
     // csrf protection for every post request
     if(r::is('post')) {
       $this->csrfCheck();
+    }
+
+  }
+
+  public function requirements() {
+
+    if(!version_compare(PHP_VERSION, static::$requires['php'], '>=')) {
+      throw new Exception('Your PHP version is too old. Please upgrade to ' . static::$requires['php'] . ' or newer.');
+    }
+
+    if(!detect::mbstring()) {
+      throw new Exception('The mbstring extension must be installed');  
+    }
+
+    if(!version_compare(toolkit::version(), static::$requires['toolkit'], '>=')) {
+      throw new Exception('Your Toolkit version is too old. Please upgrade to ' . toolkit::version() . ' or newer.');
+    }
+
+    if(!version_compare(kirby::version(), static::$requires['kirby'], '>=')) {
+      throw new Exception('Your Kirby version is too old. Please upgrade to ' . kirby::version() . ' or newer.');
     }
 
   }

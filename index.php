@@ -20,6 +20,9 @@ if(file_exists($index . DS . 'site.php')) {
   $kirby = kirby();
 }
 
+// store the detected url and folder
+$panelUrl = $kirby->url(); 
+
 // fix the base url for the kirby installation
 if(!isset($kirby->urls->index)) {
   $kirby->urls->index = dirname($kirby->url());
@@ -40,8 +43,20 @@ if(!isset($kirby->roots->thumbs)) {
   $kirby->roots->thumbs = $index . DS . 'thumbs';
 }
 
-// create the panel object
-$panel = new Kirby\Panel($kirby, __DIR__);
+try {
 
-// launch the panel
-echo $panel->launch();
+  // create the panel object
+  $panel = new Kirby\Panel($kirby, __DIR__);  
+
+  // launch the panel
+  echo $panel->launch();
+
+} catch(Exception $e) {
+
+  // load the fatal screen
+  echo tpl::load(__DIR__ . DS . 'app' . DS . 'layouts' . DS . 'fatal.php', array(
+    'css'     => $panelUrl . '/assets/css/panel.css',
+    'content' => $e->getMessage()
+  ));
+
+}
