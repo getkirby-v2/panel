@@ -6,12 +6,18 @@ class UsersController extends Kirby\Panel\Controllers\Base {
 
   public function index() {
 
-    $users = panel()->users();
-    $admin = panel()->user()->isAdmin();
+    $users      = panel()->users()->paginate(20, array('method' => 'query'));
+    $admin      = panel()->user()->isAdmin();    
+    $pagination = $this->snippet('pagination', array(
+      'pagination' => $users->pagination(),
+      'nextUrl'    => $users->pagination()->nextPageUrl(),
+      'prevUrl'    => $users->pagination()->prevPageUrl(),
+    ));
 
     return $this->screen('users/index', $users, array(
-      'users'  => $users,
-      'admin'  => $admin,
+      'users'      => $users,
+      'admin'      => $admin,
+      'pagination' => $pagination
     ));
 
   }

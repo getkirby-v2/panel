@@ -52,4 +52,6 @@
     <?php endforeach ?>
   </div>
 
+  <?php echo $pagination ?>
+
 </div>
