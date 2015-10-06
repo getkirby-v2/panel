@@ -51,7 +51,7 @@ var Content = function() {
     });
 
     // hook up the main form
-    Form('.mainbar .form', {
+    Form('.main .form', {
       submit: function() {
         scroll.save();
       },
