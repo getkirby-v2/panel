@@ -148,4 +148,53 @@ class Site extends \Site {
     throw new Exception('The site cannot be deleted');
   }
 
+  public function maxSubpages() {
+    $max = $this->blueprint()->pages()->max();
+    // if max subpages is null, use the biggest 32bit integer
+    // will never be reached anyway. Kirby is not made for that scale :)
+    return is_null($max) ? 2147483647 : $max;
+  }
+
+  public function maxFiles() {
+    $max = $this->blueprint()->files()->max();
+    // see: maxSubpages
+    return is_null($max) ? 2147483647 : $max;    
+  }
+
+  public function canHaveSubpages() {
+    return $this->maxSubpages() !== 0;
+  }
+
+  public function canShowSubpages() {
+    return ($this->blueprint()->pages()->hide() !== true and $this->canHaveSubpages());    
+  }
+
+  public function canHaveFiles() {
+    return $this->maxFiles() !== 0;
+  }
+
+  public function canShowFiles() {
+    return ($this->blueprint()->files()->hide() !== true and $this->canHaveFiles());    
+  }
+
+  public function canHaveMoreSubpages() {
+    if(!$this->canHaveSubpages()) {
+      return false;
+    } else if($this->children()->count() >= $this->maxSubpages()) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  public function canHaveMoreFiles() {
+    if(!$this->canHaveFiles()) {
+      return false;
+    } else if($this->files()->count() >= $this->maxFiles()) {
+      return false;
+    } else {
+      return true;
+    }    
+  }
+
 }

@@ -209,7 +209,7 @@ class Page extends \Page {
   }
 
   public function canShowSubpages() {
-    return ($this->pages()->hide() !== true and $this->canHaveSubpages());    
+    return ($this->blueprint()->pages()->hide() !== true and $this->canHaveSubpages());    
   }
 
   public function canHaveFiles() {
@@ -217,7 +217,7 @@ class Page extends \Page {
   }
 
   public function canShowFiles() {
-    return ($this->files()->hide() !== true and $this->canHaveFiles());    
+    return ($this->blueprint()->files()->hide() !== true and $this->canHaveFiles());    
   }
 
   public function canHaveMoreSubpages() {

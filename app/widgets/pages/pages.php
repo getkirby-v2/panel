@@ -1,14 +1,15 @@
 <?php 
 
-$site = panel()->site();
+$site    = panel()->site();
+$options = array();
 
-$options = array(
-  array(
+if($site->canHaveSubpages()) {
+  $options[] = array(
     'text' => l('dashboard.index.pages.edit'),
     'icon' => 'pencil',
     'link' => $site->url('subpages')
-  )
-);
+  );
+}
 
 if($addbutton = $site->addButton()) {
   $options[] = array(
