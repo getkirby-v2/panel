@@ -1,7 +1,7 @@
 <div class="section">
 
   <h2 class="hgroup hgroup-single-line cf">
-    <span class="hgroup-title"><?php _l('users.index.headline') ?></span>
+    <span class="hgroup-title"><?php _l('users.index.headline') ?> (<?php echo $users->pagination()->items() ?>)</span>
     <?php if($admin): ?>
     <span class="hgroup-options shiv shiv-dark shiv-left">
       <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php _u('users/add') ?>">
