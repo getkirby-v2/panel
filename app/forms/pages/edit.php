@@ -32,7 +32,7 @@ return function($page) {
   }
 
   // check for untranslatable fields
-  if(site()->language() != site()->defaultLanguage()) {
+  if(panel()->site()->language() != panel()->site()->defaultLanguage()) {
 
     foreach($form->fields() as $field) {
       if($field->translate() == false) {

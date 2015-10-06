@@ -66,6 +66,8 @@ class Blueprint extends Obj {
     } else if(file_exists(static::$root . DS . 'default.php')) {
       $this->file = static::$root . DS . 'default.php';
       $this->name = 'default';
+    } else {
+      throw new Exception('Missing blueprint: ' . $name);
     }
 
     $this->yaml = data::read($this->file, 'yaml');

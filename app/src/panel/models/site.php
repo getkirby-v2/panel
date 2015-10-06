@@ -86,13 +86,13 @@ class Site extends \Site {
     return array_merge($data, $input);
   }
 
-  public function update($input = array()) {
+  public function update($input = array(), $lang = null) {
 
     $data = $this->filterInput($input);
 
     $this->changes()->discard();
 
-    parent::update($data);
+    parent::update($data, $lang);
 
     kirby()->trigger('panel.site.update', $this);
 
@@ -124,7 +124,10 @@ class Site extends \Site {
       $topbar->append($this->url('subpages'), l('subpages'));    
     }
    
-    $topbar->html .= new Snippet('languages');
+    $topbar->html .= new Snippet('languages', array(
+      'languages' => $this->languages(),
+      'language'  => $this->language(),
+    ));
 
   }
 

@@ -376,12 +376,12 @@ class Page extends \Page {
 
   }
 
-  public function update($input = array()) {
+  public function update($input = array(), $lang = null) {
 
     $data = $this->filterInput($input);
 
     $this->changes()->discard();
-    parent::update($data);
+    parent::update($data, $lang);
 
     $this->updateNum();
     $this->updateUid();
@@ -455,7 +455,10 @@ class Page extends \Page {
       $topbar->append($this->url('subpages'), l('subpages'));    
     }
    
-    $topbar->html .= new Snippet('languages');
+    $topbar->html .= new Snippet('languages', array(
+      'languages' => $this->site()->languages(),
+      'language'  => $this->site()->language(),
+    ));
 
   }
 

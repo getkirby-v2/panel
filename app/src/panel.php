@@ -75,25 +75,28 @@ class Panel {
 
   public function __construct($kirby, $root) {
 
-    // check requirements
+    // check requirements  
     $this->requirements();
 
+    // store the instance as a singleton
     static::$instance = $this;
 
     $this->kirby = $kirby;
-    $this->site  = $kirby->site();
     $this->roots = new \Kirby\Panel\Roots($this, $root);
     $this->urls  = new \Kirby\Panel\Urls($this, $root);
 
     // add the panel default options
     $this->kirby->options = array_merge($this->defaults(), $this->kirby->options);
 
+    // setup the blueprint root
+    blueprint::$root = $this->kirby->roots()->blueprints();
+
+    // load the site object
+    $this->site  = $this->site();
+
     // load all Kirby extensions (methods, tags, smartypants)
     $this->kirby->extensions();
     $this->kirby->plugins();
-
-    // setup the blueprint root
-    blueprint::$root = $this->kirby->roots()->blueprints();
 
     // setup the form plugin
     form::setup($this->roots->fields, $this->kirby->roots()->fields());
@@ -194,7 +197,37 @@ class Panel {
   }
 
   public function site() {
-    return new Site($this->kirby);
+
+    // return the site object if it has already been stored
+    if(!is_null($this->site)) return $this->site;
+
+    // load the original site first to load all branch files
+    $this->kirby->site();
+
+    // create a new panel site object
+    $this->site = new Site($this->kirby);
+
+    if(!$this->site->multilang()) {
+      $language = null;
+    } else if($language = get('language') or $language = s::get('lang')) {
+      // $language is already set
+    } else {
+      $language = null;
+    }
+
+    // set the path and lang for the original site object
+    $this->kirby->site()->visit('/', $language);
+
+    // set the path and lang for the panel site object
+    $this->site->visit('/', $language);
+
+    // store the language code
+    if($this->site->multilang()) {
+      s::set('lang', $this->site->language()->code());      
+    }
+
+    return $this->site;
+
   }
 
   public function page($id) {
@@ -301,23 +334,6 @@ class Panel {
 
   }
 
-  public function multilang() {
-
-    if(!$this->site->multilang()) {
-      $this->site->visit('/');
-      return true;
-    }
-
-    if($language = server::get('http_language') or $language = s::get('lang')) {
-      $this->site->visit('/', $language);
-    } else {
-      $this->site->visit('/');
-    }
-
-    s::set('lang', $this->site->language()->code());
-
-  }
-
   public function direction() {
     return l::get('language.direction');
   }
@@ -328,7 +344,6 @@ class Panel {
     date_default_timezone_set($this->kirby->options['timezone']);
 
     $this->i18n();
-    $this->multilang();
 
     $this->path  = $this->kirby->path();
     $this->route = $this->router->run($this->path);

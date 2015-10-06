@@ -40,7 +40,7 @@ class Search {
 
     if(empty($pages)) {
       $pages = array();
-      foreach(site()->index() as $page) {
+      foreach(panel()->site()->index() as $page) {
         $pages[] = array(
           'title' => (string)$page->title(),
           'uri'   => (string)$page->uri(),
@@ -90,8 +90,8 @@ class Search {
       }
     }
 
-    $this->pages = $this->pages->limit(10);
-    $this->users = $this->users->limit(10);
+    $this->pages = $this->pages->limit(5);
+    $this->users = $this->users->limit(5);
 
   }
 
