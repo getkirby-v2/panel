@@ -22,7 +22,7 @@ class FieldOptions {
 
     if(is_array($field->options)) {
       $this->options = $field->options;
-    } else if(v::url($field->options)) {
+    } else if(v::url($field->options) or str::contains($field->options, '://localhost') or str::contains($field->options, '://127.0.0.1')) {
       
       $response = remote::get($field->options);
       $options  = @json_decode($response->content(), true);
