@@ -62,8 +62,10 @@ class Panel {
   public function defaults() {
 
     return array(
-      'panel.language' => 'en',
-      'panel.widgets'  => array(
+      'panel.language'   => 'en',
+      'panel.stylesheet' => null,
+      'panel.kirbytext'  => false,
+      'panel.widgets'    => array(
         'pages'   => true,
         'site'    => true,
         'account' => true,

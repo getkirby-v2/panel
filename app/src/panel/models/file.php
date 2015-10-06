@@ -156,7 +156,7 @@ class File extends \File {
   }
 
   public function dragText() {
-    if(c::get('panel.kirbytext') === false) {
+    if(kirby()->option('panel.kirbytext') === false) {
       switch($this->type()) {
         case 'image':
           return '![' . $this->name() . '](' . parent::url() . ')';
