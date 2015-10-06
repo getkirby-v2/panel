@@ -74,8 +74,12 @@ class Pages extends Obj {
 
     switch($obj->mode) {
       case 'date':
+        // switch the default date format by configured handler
+        $defaultDateFormat = kirby()->option('date.handler') == 'strftime' ? '%Y%m%d' : 'Ymd';
+
+        // set the defaults
         isset($obj->field)  or $obj->field  = 'date';
-        isset($obj->format) or $obj->format = 'Ymd';
+        isset($obj->format) or $obj->format = $defaultDateFormat;
         break;
     }
 
