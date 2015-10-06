@@ -6097,7 +6097,7 @@ var Context = function() {
           if(self.element.has($(':focus')).length == 0) {
             self.add();
           }
-        }, 1);
+        }, 100);
       });
 
       // add unconfirmed tag on form submit
