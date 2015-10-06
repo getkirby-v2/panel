@@ -92,7 +92,9 @@ class StructureField extends BaseField {
     if(is_null($this->entry) or !is_string($this->entry)) {
       $html = array();
       foreach($this->fields as $name => $field) {
-        $html[] = $data->$name;
+        if(isset($data->$name)) {
+          $html[] = $data->$name;          
+        }
       }
       return implode('<br>', $html);
     } else {

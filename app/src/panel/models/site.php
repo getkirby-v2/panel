@@ -13,6 +13,7 @@ use Kirby\Panel\Models\Page\AddButton;
 use Kirby\Panel\Models\Page\Blueprint;
 use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Sidebar;
+use Kirby\Panel\Models\Page\Structure;
 use Kirby\Panel\Models\Page\Uploader;
 
 class Site extends \Site {
@@ -195,6 +196,10 @@ class Site extends \Site {
     } else {
       return true;
     }    
+  }
+
+  public function structure($field) {
+    return new Structure($this, $field);
   }
 
 }
