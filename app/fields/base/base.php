@@ -92,7 +92,14 @@ class BaseField {
     if(empty($value)) {
       return null;
     } else if(is_array($value)) {
-      return a::get($value, panel()->language(), $this->name());
+      $translation = a::get($value, panel()->language());
+
+      if(empty($translation)) {
+        // try to fallback to the default language at least
+        $translation = a::get($value, kirby()->option('panel.language'), $this->name());
+      }
+
+      return $translation;
     } else if(is_string($value) and $translation = l::get($value)) {
       return $translation;
     } else {
