@@ -27,7 +27,11 @@
   <div class="grid subpages-grid">
 
     <div class="grid-item">
-      <h3><a href="<?php echo $visible->firstPage() ?>"><?php _l('subpages.index.visible') ?></a></h3>
+      <h3>
+        <a href="<?php echo $visible->firstPage() ?>">
+          <?php _l('subpages.index.visible') ?> <span class="counter">( <?php echo $visible->total() ?> )</span>
+        </a>
+      </h3>
 
       <div class="dropzone subpages">
         <div class="items<?php e($sortable, ' sortable') ?>" id="visible-children" 
@@ -52,7 +56,11 @@
     </div><!--
 
  --><div class="grid-item">
-      <h3><a href="<?php echo $invisible->firstPage() ?>"><?php _l('subpages.index.invisible') ?></a></h3>
+      <h3>
+        <a href="<?php echo $invisible->firstPage() ?>">
+          <?php _l('subpages.index.invisible') ?> <span class="counter">( <?php echo $invisible->total() ?> )</span>
+        </a>
+      </h3>
 
       <div class="dropzone subpages">
         <div class="items<?php e($sortable, ' sortable') ?>" id="invisible-children">

@@ -7,6 +7,7 @@
       <?php else: ?>
       <?php _l('files.index.headline') ?> <a href="<?php __($back) ?>"><?php __($page->title()) ?></a>
       <?php endif ?>
+      <span class="counter">( <?php echo $files->count() ?> )</span>
     </span>
     <span class="hgroup-options shiv shiv-dark shiv-left cf">
 
