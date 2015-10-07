@@ -264,6 +264,7 @@ return array(
     'fields.structure.save' => 'Valider',
     'fields.structure.edit' => 'Modifier',
     'fields.structure.delete' => 'Supprimer',
+    'fields.structure.delete.label' => 'Voulez-vous vraiment supprimer cette entrée ?',
     'fields.tags.label' => 'Tags',
     'fields.tel.label' => 'Téléphone',
     'fields.textarea.buttons.bold.label' => 'Gras',
