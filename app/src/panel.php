@@ -62,10 +62,13 @@ class Panel {
   public function defaults() {
 
     return array(
-      'panel.language'   => 'en',
-      'panel.stylesheet' => null,
-      'panel.kirbytext'  => false,
-      'panel.widgets'    => array(
+      'panel.language'         => 'en',
+      'panel.stylesheet'       => null,
+      'panel.kirbytext'        => false,
+      'panel.session.name'     => 'kirby_panel_session',
+      'panel.session.timeout'  => 120,
+      'panel.session.lifetime' => 0,
+      'panel.widgets'          => array(
         'pages'   => true,
         'site'    => true,
         'account' => true,
@@ -94,7 +97,13 @@ class Panel {
     blueprint::$root = $this->kirby->roots()->blueprints();
 
     // load the site object
-    $this->site  = $this->site();
+    $this->site = $this->site();
+
+    // setup the session
+    $this->session();
+
+    // setup the multilang site stuff
+    $this->multilang();
 
     // load all Kirby extensions (methods, tags, smartypants)
     $this->kirby->extensions();
@@ -110,7 +119,7 @@ class Panel {
     $this->router = new Router($this->routes);
 
     // register router filters
-    $this->router->filter('auth', function() use($kirby) {
+    $this->router->filter('auth', function() use($kirby) {      
       try {
         $user = panel()->user();
       } catch(Exception $e) {
@@ -138,6 +147,18 @@ class Panel {
 
   }
 
+  public function session() {
+
+    // setup the session
+    s::$name               = $this->kirby->option('panel.session.name', 'kirby_panel_session');
+    s::$timeout            = $this->kirby->option('panel.session.timeout', 120);
+    s::$cookie['lifetime'] = $this->kirby->option('panel.session.lifetime', 0);
+
+    // start the session
+    s::start();    
+
+  }
+
   public function requirements() {
 
     if(!version_compare(PHP_VERSION, static::$requires['php'], '>=')) {
@@ -149,11 +170,11 @@ class Panel {
     }
 
     if(!version_compare(toolkit::version(), static::$requires['toolkit'], '>=')) {
-      throw new Exception('Your Toolkit version is too old. Please upgrade to ' . toolkit::version() . ' or newer.');
+      throw new Exception('Your Toolkit version is too old. Please upgrade to ' . static::$requires['toolkit'] . ' or newer.');
     }
 
     if(!version_compare(kirby::version(), static::$requires['kirby'], '>=')) {
-      throw new Exception('Your Kirby version is too old. Please upgrade to ' . kirby::version() . ' or newer.');
+      throw new Exception('Your Kirby version is too old. Please upgrade to ' . static::$requires['kirby'] . ' or newer.');
     }
 
   }
@@ -207,7 +228,11 @@ class Panel {
     $this->kirby->site();
 
     // create a new panel site object
-    $this->site = new Site($this->kirby);
+    return $this->site = new Site($this->kirby);
+
+  }
+
+  public function multilang() {
 
     if(!$this->site->multilang()) {
       $language = null;
@@ -227,8 +252,6 @@ class Panel {
     if($this->site->multilang()) {
       s::set('lang', $this->site->language()->code());      
     }
-
-    return $this->site;
 
   }
 
