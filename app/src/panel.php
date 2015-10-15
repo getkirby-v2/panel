@@ -68,6 +68,8 @@ class Panel {
       'panel.session.name'     => 'kirby_panel_session',
       'panel.session.timeout'  => 120,
       'panel.session.lifetime' => 0,
+      'panel.info.license'     => true,
+      'panel.info.versions'    => true,
       'panel.widgets'          => array(
         'pages'   => true,
         'site'    => true,

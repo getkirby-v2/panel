@@ -7,6 +7,8 @@
     <div class="sidebar-content">
 
       <div class="section">
+
+        <?php if(kirby()->option('panel.info.versions')): ?>
         <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
           <span class="hgroup-title">
             <?php _l('metatags.info') ?>
@@ -19,7 +21,9 @@
             <?php _l('metatags.version.panel') ?>: <?php echo panel::version() ?>
           </p>
         </div>
+        <?php endif ?>
 
+        <?php if(kirby()->option('panel.info.license')): ?>
         <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
           <span class="hgroup-title">
             <?php _l('metatags.license') ?>
@@ -38,6 +42,7 @@
           </p>
           <?php endif ?>
         </div>
+        <?php endif ?>
 
         <?php echo $files ?>
       </div>
