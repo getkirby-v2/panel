@@ -18,6 +18,7 @@
   overflow: auto;
   z-index: 2;
   border-radius: 3px;
+  -webkit-backface-visibility: hidden;
   -webkit-transform: translate(0, -50%);
   -moz-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);

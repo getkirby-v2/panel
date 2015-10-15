@@ -115,6 +115,8 @@ return array(
     'pages.url.uid.label.option' => 'Create from title',
     'pages.url.error.exists' => 'A page with the same appendix already exists',
     'pages.url.error.move' => 'The appendix could not be changed',
+    'pages.toggle.position' => 'Position',
+    'pages.toggle.invisible' => 'invisible',
     'pages.toggle.publish' => 'Do you really want to change the status of this page to **visible?**',
     'pages.toggle.hide' => 'Do you really want to change the status of this page to **invisible?**',
     'pages.delete.headline' => 'Do you really want to delete this page?',

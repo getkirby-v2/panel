@@ -308,11 +308,16 @@ class Page extends \Page {
   }
 
   public function toggle($position) {
-    if($this->isVisible()) {
-      $this->hide();
-    } else {
+
+    $mode     = $this->parent()->blueprint()->pages()->num()->mode();
+    $position = intval($position);
+
+    if(($mode == 'default' && $position > 0) || !$this->isVisible()) {
       $this->sort($position);          
+    } else {
+      $this->hide();
     }
+  
   }
 
   public function hasNoTitleField() {

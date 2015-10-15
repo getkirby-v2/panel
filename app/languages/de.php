@@ -114,6 +114,8 @@ return array(
     'pages.url.uid.label.option' => 'Aus Titel erzeugen',
     'pages.url.error.exists' => 'Eine Seite mit dem selben Anhang besteht bereits.',
     'pages.url.error.move' => 'Die URL konnte nicht geändert werden',
+    'pages.toggle.position' => 'Position',
+    'pages.toggle.invisible' => 'unsichtbar',
     'pages.toggle.publish' => 'Willst du den Status der Seite wirklich in **sichtbar** umändern?',
     'pages.toggle.hide' => 'Willst du den Status der Seite wirklich in **unsichtbar** umändern?',
     'pages.delete.headline' => 'Willst du diese Seite wirklich löschen?',
