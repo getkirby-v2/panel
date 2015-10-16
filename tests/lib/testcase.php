@@ -23,6 +23,9 @@ class PanelTestCase extends PHPUnit_Framework_TestCase {
     // make sure to start a session
     s::start();
 
+    // create the dummy content directory
+    dir::make($roots['dummy'] . DS . 'content');
+
     // create the roots object
     $this->roots = new Obj($roots);
 
