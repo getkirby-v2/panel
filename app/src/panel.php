@@ -25,7 +25,8 @@ use Url;
 
 use Kirby\Panel\Form;
 use Kirby\Panel\Models\Site;
-use Kirby\Panel\Models\Page\Blueprint;
+use Kirby\Panel\Models\User\Blueprint as UserBlueprint;
+use Kirby\Panel\Models\Page\Blueprint as PageBlueprint;
 
 class Panel {
 
@@ -95,8 +96,9 @@ class Panel {
     // add the panel default options
     $this->kirby->options = array_merge($this->defaults(), $this->kirby->options);
 
-    // setup the blueprint root
-    blueprint::$root = $this->kirby->roots()->blueprints();
+    // setup the blueprints roots
+    UserBlueprint::$root = $this->kirby->roots()->blueprints() . DS . 'users';
+    PageBlueprint::$root = $this->kirby->roots()->blueprints();
 
     // load the site object
     $this->site = $this->site();

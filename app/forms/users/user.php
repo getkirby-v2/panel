@@ -20,8 +20,8 @@ return function($user) {
     $roles[$role->id()] = $role->name();
   }
 
-  // setup the form with all fields
-  $form = new Kirby\Panel\Form(array(
+  // the default set of fields
+  $fields = array(
 
     'username' => array(
       'label'     => 'users.form.username.label',
@@ -87,8 +87,23 @@ return function($user) {
       'readonly' => (!panel()->user()->isAdmin() or ($user and $user->isLastAdmin()))
     ),
 
-  ), $content);
+  );
 
+  // add all custom fields
+  foreach($user->blueprint()->fields()->toArray() as $name => $field) {
+
+    if(array_key_exists($name, $fields)) {
+      continue;
+    }
+
+    $fields[$name] = $field;
+
+  }
+
+  // setup the form with all fields
+  $form = new Kirby\Panel\Form($fields, $content);
+
+  // setup the url for the cancel button
   $form->cancel('users');
 
   if($mode == 'add') {

@@ -46,6 +46,7 @@ load(array(
   'kirby\\panel\\models\\file'                    => 'panel' . DS . 'models' . DS . 'file.php',
   'kirby\\panel\\models\\file\\menu'              => 'panel' . DS . 'models' . DS . 'file' . DS . 'menu.php',
   'kirby\\panel\\models\\user'                    => 'panel' . DS . 'models' . DS . 'user.php',
+  'kirby\\panel\\models\\user\\blueprint'         => 'panel' . DS . 'models' . DS . 'user' . DS . 'blueprint.php',
   'kirby\\panel\\models\\user\\avatar'            => 'panel' . DS . 'models' . DS . 'user' . DS . 'avatar.php',
   'kirby\\panel\\models\\user\\history'           => 'panel' . DS . 'models' . DS . 'user' . DS . 'history.php',
 

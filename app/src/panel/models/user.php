@@ -7,6 +7,7 @@ use Exception;
 use Str;
 
 use Kirby\Panel\Models\User\Avatar;
+use Kirby\Panel\Models\User\Blueprint;
 use Kirby\Panel\Models\User\History;
 
 class User extends \User {
@@ -96,6 +97,10 @@ class User extends \User {
     //   $topbar->append(purl('users/add'), l('users.index.add'));    
     // }
 
+  }
+
+  public function blueprint() {
+    return new Blueprint($this);
   }
 
   static public function current() {
