@@ -37,7 +37,7 @@ class SelectField extends BaseField {
 
     $default = $this->default();
 
-    if(!$this->required() or empty($default)) {
+    if(!$this->required()) {
       $select->append($this->option('', '', $this->value() == ''));
     }
 
