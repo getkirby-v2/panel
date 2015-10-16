@@ -115,6 +115,8 @@ return array(
     'pages.url.uid.label.option' => 'Başlıktan oluştur',
     'pages.url.error.exists' => 'Bir sayfa hali hazırda aynı web adres-uzantısına sahip',
     'pages.url.error.move' => 'Web adres-uzantısı değiştirilemedi',
+    'pages.toggle.position' => 'Pozisyon',
+    'pages.toggle.invisible' => 'görünmez',
     'pages.toggle.publish' => 'Bu sayfanın durumunu **görünür** olarak değiştirmek istediğinizden emin misiniz?',
     'pages.toggle.hide' => 'Bu sayfanın durumunu **görünmez** olarak değiştirmek istediğinizden emin misiniz?',
     'pages.delete.headline' => 'Bu sayfayı silmek istediğinizden emin misiniz?',
