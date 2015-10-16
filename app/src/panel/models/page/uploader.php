@@ -2,7 +2,10 @@
 
 namespace Kirby\Panel\Models\Page;
 
+use Error;
 use Exception;
+use F;
+use Str;
 use Upload;
 
 class Uploader {
@@ -46,6 +49,11 @@ class Uploader {
     ));
 
     $file = $this->move($upload);
+
+    // create the initial meta file
+    $file->createMeta();
+
+    var_dump($file);
 
     kirby()->trigger('panel.file.upload', $file);          
 
@@ -94,6 +102,7 @@ class Uploader {
     try {
       // security checks
       $this->checkUpload($file);
+      return $file;
     } catch(Exception $e) {
       $file->delete();
       throw $e;

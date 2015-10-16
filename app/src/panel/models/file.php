@@ -188,4 +188,19 @@ class File extends \File {
    
   }
 
+  public function createMeta() {
+
+    // save default meta 
+    $meta = array();
+
+    foreach($this->page()->blueprint()->files()->fields() as $field) {
+      $meta[$field->name()] = $field->default();
+    }
+
+    $this->update($meta);
+
+    return $this;
+
+  }
+
 }
