@@ -2,7 +2,7 @@
 
 class AuthController extends Kirby\Panel\Controllers\Base {
 
-  public function login($welcome = null) {
+  public function login() {
 
     try {
       $user = panel()->user();
@@ -12,7 +12,7 @@ class AuthController extends Kirby\Panel\Controllers\Base {
     }
 
     $self = $this;
-    $form = $this->form('auth/login', $welcome, function($form) use($self) {
+    $form = $this->form('auth/login', null, function($form) use($self) {
 
       $data = $form->serialize();
       $user = site()->user(str::lower($data['username']));

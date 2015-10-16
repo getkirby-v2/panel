@@ -5,7 +5,7 @@ return array(
 
   // Authentication
   array(
-    'pattern' => 'login/(:any?)',
+    'pattern' => 'login',
     'action'  => 'AuthController::login',
     'filter'  => 'isInstalled',
     'method'  => 'GET|POST'

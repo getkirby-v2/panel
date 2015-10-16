@@ -1,6 +1,6 @@
 <?php 
 
-return function($welcome) {
+return function() {
 
   $form = new Kirby\Panel\Form(array(
     'username' => array(
@@ -22,10 +22,6 @@ return function($welcome) {
   $form->style('centered');
   
   $form->buttons->submit->value = l('login.button');
-
-  if($welcome) {
-    $form->notify(l('login.welcome'));
-  }
 
   return $form;
 
