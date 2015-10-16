@@ -115,6 +115,8 @@ return array(
     'pages.url.uid.label.option' => 'Créer à partir du titre',
     'pages.url.error.exists' => 'Une page du même nom existe déjà',
     'pages.url.error.move' => 'L’identifiant de l’URL n’a pu être changé',
+    'pages.toggle.position' => 'Position',
+    'pages.toggle.invisible' => 'invisible',
     'pages.toggle.publish' => 'Voulez-vous vraiment modifier le statut de cette page en **visible**?',
     'pages.toggle.hide' => 'Voulez-vous vraiment modifier le statut de cette page en **invisible**?',
     'pages.delete.headline' => 'Voulez-vous vraiment supprimer définitivement cette page ?',
