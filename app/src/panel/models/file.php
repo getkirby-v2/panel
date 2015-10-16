@@ -63,12 +63,15 @@ class File extends \File {
     }
   }
 
-  public function rename($name) {
+  public function rename($name, $safeName = true) {
 
     if($name == $this->name()) return true;
 
+    // check if the name should be sanitized
+    $safeName = $this->page()->blueprint()->files()->sanitize();
+
     // rename and get the new filename          
-    $filename = parent::rename($name);
+    $filename = parent::rename($name, $safeName);
 
     // trigger the rename hook
     kirby()->trigger('panel.file.rename', $this);          

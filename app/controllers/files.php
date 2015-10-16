@@ -29,7 +29,7 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
     $self = $this;
     $page = $this->page($id);
-    $file = $page->file(urldecode($filename));
+    $file = $page->file(rawurldecode($filename));
 
     if(!$file) {
       throw new Exception(l('files.error.missing.file'));
