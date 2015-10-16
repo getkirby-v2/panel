@@ -7,7 +7,7 @@ return array(
   ),
   'html' => function() {
     return tpl::load(__DIR__ . DS . 'history.html.php', array(
-      'history' => history::get()
+      'history' => panel()->user()->history()->get()
     ));
   }
 );

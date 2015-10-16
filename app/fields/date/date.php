@@ -6,12 +6,7 @@ class DateField extends InputField {
 
   static public $assets = array(
     'js' => array(
-      'moment.min.js',
-      'pikaday.min.js',
       'date.js'
-    ),
-    'css' => array(
-      'pikaday.css'
     )
   );
 
@@ -25,7 +20,8 @@ class DateField extends InputField {
   }
 
   public function format() {
-    return str::upper($this->format);
+    $format = str::upper($this->format);
+    return empty($format) ? 'YYYY-MM-DD' : $format;
   }
 
   public function validate() {

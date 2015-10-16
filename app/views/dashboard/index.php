@@ -1,12 +1,10 @@
-<?php echo $topbar ?>
-
 <div class="section">
 
   <div class="dashboard">
 
-    <?php foreach($widgets as $widget): ?>
+    <?php foreach($widgets as $id => $widget): ?>
     <?php if(!$widget) continue; ?>
-    <div class="section white dashboard-section">
+    <div class="section white dashboard-section" id="<?php echo $id ?>-widget">
 
       <h2 class="hgroup<?php e(@$widget['title']['compressed'] == true, ' hgroup-compressed') ?> hgroup-single-line cf">
         <?php if(is_array($widget['title']) and $title = $widget['title']): ?>
@@ -28,9 +26,9 @@
           <span class="hgroup-option-right">
             <?php foreach($widget['options'] as $option): ?>
             <?php if(!empty($option['key'])): ?>
-            <a title="<?php __($option['key']) ?>" data-shortcut="<?php __($option['key']) ?>" href="<?php __($option['link']) ?>">
+            <a title="<?php __($option['key']) ?>"<?php e(a::get($option, 'modal'), ' data-modal') ?> data-shortcut="<?php __($option['key']) ?>" href="<?php __($option['link']) ?>">
             <?php else: ?>
-            <a title="<?php __($option['text']) ?>" href="<?php __($option['link']) ?>">            
+            <a title="<?php __($option['text']) ?>"<?php e(a::get($option, 'modal'), ' data-modal') ?> href="<?php __($option['link']) ?>">            
             <?php endif ?>
               <?php i($option['icon'], 'left') ?><span><?php __($option['text']) ?></span>
             </a>

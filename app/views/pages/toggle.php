@@ -1,3 +1,3 @@
-<div class="modal-content" data-action="<?php echo $page->isVisible() ? 'unpublish' : 'publish' ?>">
+<div class="modal-content">
   <?php echo $form ?>
 </div>

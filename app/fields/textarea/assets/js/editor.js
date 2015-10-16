@@ -4,18 +4,23 @@
 
     return this.each(function() {
 
-      var textarea = $(this).autosize();
+      if($(this).data('editor')) {
+        return $(this);
+      }
+
+      var textarea = $(this);
       var buttons  = textarea.parent().find('.field-buttons');
 
-      buttons.find('.btn').on('click', function(e) {
+      // start autosizing
+      textarea.autosize();
+
+      buttons.find('.btn').on('click.editorButton', function(e) {
 
         textarea.focus();
         var button = $(this);
 
         if(button.data('action')) {
-
-          EditorController[button.data('action')](textarea, button);
-
+          app.modal.open(button.data('action'), window.location.href);
         } else {
 
           var sel  = textarea.getSelection();
@@ -35,10 +40,6 @@
 
       });
 
-      textarea.bind('keydown', 'meta+return', function() {
-        textarea.parents('.form').trigger('submit');
-      });
-
       buttons.find('[data-editor-shortcut]').each(function(i, el) {
         var key = $(this).data('editor-shortcut');
         textarea.bind('keydown', key, function(e) {
@@ -47,6 +48,8 @@
         });
 
       });
+
+      textarea.data('editor', true);
 
     });
 

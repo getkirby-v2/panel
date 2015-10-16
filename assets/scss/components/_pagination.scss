@@ -24,6 +24,19 @@
   text-align: center;
   color: #777;
 }
+.pagination-index select {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  cursor: pointer;
+  -webkit-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  min-width: 6em;
+  opacity: 0;
+}
 .pagination .pagination-next {
   body.ltr & {
     float: right;

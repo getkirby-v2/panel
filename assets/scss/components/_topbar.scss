@@ -7,23 +7,6 @@
   height: 3em;
   background: #000;
 }
-body.loading .topbar:after {
-  position: absolute;
-  content: "";
-  top: 0;
-  width: 4em;
-  height: 3em;
-  background: #000 url(../images/loader.white.gif) no-repeat center center;
-  z-index: 10000000;
-}
-body.ltr.loading .topbar:after {
-  right: 0;
-  border-left: 1px solid #555;
-}
-body.rtl.loading .topbar:after {
-  left: 0;
-  border-right: 1px solid #555;
-}
 
 .topbar .nav-icon {
   position: absolute;

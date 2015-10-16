@@ -1,5 +1,3 @@
-<?php echo $topbar ?>
-
 <div class="bars bars-with-sidebar-left cf">
 
   <div class="sidebar sidebar-left">
@@ -15,7 +13,7 @@
 
       <ul class="nav nav-list sidebar-list">
 
-        <?php if(!$user->is(site()->user())): ?>
+        <?php if(!$user->isCurrent()): ?>
         <li>
           <a href="mailto:<?php echo $user->email() ?>">
             <?php i('envelope-square', 'left') . _l('users.form.options.message') ?>
@@ -24,40 +22,40 @@
         <?php endif ?>
 
         <li>
-          <a title="#" data-shortcut="#" href="<?php echo purl($user, 'delete') ?>">
+          <a data-modal title="#" data-shortcut="#" href="<?php __($user->url('delete')) ?>">
             <?php i('trash-o', 'left') . _l('users.form.options.delete') ?>
           </a>
         </li>
 
       </ul>
 
-      <h2 class="hgroup hgroup-single-line<?php e(!$user->avatar(), ' hgroup-compressed') ?> cf">
+      <h2 class="hgroup hgroup-single-line<?php e(!$user->avatar()->exists(), ' hgroup-compressed') ?> cf">
         <span class="hgroup-title"><?php _l('users.form.avatar.headline') ?></span>
       </h2>
 
-      <?php if($user->avatar()): ?>
+      <?php if($user->avatar()->exists()): ?>
       <div class="field">
-        <a class="avatar avatar-large" href="<?php _u($user, 'avatar') ?>"><img src="<?php echo $user->avatar()->url() . '?' . $user->avatar()->modified() ?>"></a>
+        <a data-upload class="avatar avatar-large" href="#upload"><img src="<?php echo $user->avatar()->url()  ?>"></a>
       </div>
       <?php endif ?>
 
       <ul class="nav nav-list sidebar-list">
 
-        <?php if($user->avatar()): ?>
+        <?php if($user->avatar()->exists()): ?>
         <li>
-          <a href="<?php _u($user, 'avatar') ?>">
+          <a data-upload href="#upload">
             <?php i('pencil', 'left') . _l('users.form.avatar.replace') ?>
           </a>
         </li>
 
         <li>
-          <a href="<?php _u($user, 'delete-avatar') ?>">
+          <a data-modal href="<?php __($user->url('avatar/delete')) ?>">
             <?php i('trash-o', 'left') . _l('users.form.avatar.delete') ?>
           </a>
         </li>
         <?php else: ?>
         <li>
-          <a href="<?php _u($user, 'avatar') ?>">
+          <a data-upload href="#upload">
             <?php i('cloud-upload', 'left') . _l('users.form.avatar.upload') ?>
           </a>
         </li>
@@ -70,7 +68,7 @@
         <span class="hgroup-title"><?php _l('users.form.options.headline') ?></span>
       </h2>
 
-      <a class="btn btn-with-icon" href="#/users">
+      <a class="btn btn-with-icon" href="<?php _u('users') ?>">
         <?php i('arrow-circle-left', 'left') . _l('users.form.back') ?>
       </a>
 
@@ -79,7 +77,7 @@
         <span class="hgroup-title"><?php _l('users.index.add') ?></span>
       </h2>
 
-      <a class="btn btn-with-icon" href="#/users">
+      <a class="btn btn-with-icon" href="<?php _u('users') ?>">
         <?php i('arrow-circle-left', 'left') . _l('users.form.back') ?>
       </a>
       <?php endif ?>
@@ -89,27 +87,22 @@
 
   <div class="mainbar">
     <div class="section">
-      <form class="form" method="post" autocomplete="off">
-
-        <?php if(!$writable): ?>
+      <?php if(!$writable): ?>
+      <div class="form">
         <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
           <span class="hgroup-title"><?php _l('users.form.error.permissions.title') ?></span>
         </h2>
         <div class="text">
           <p><?php _l('users.form.error.permissions.text') ?></p>
         </div>
-        <div><button type="button" data-element="retry-button" class="btn btn-rounded"><?php _l('pages.show.error.permissions.retry') ?></button></div>
-
-        <?php else: ?>
-        <fieldset class="fieldset field-grid cf">
-          <?php foreach($form->fields() as $field) echo $field ?>
-        </fieldset>
-
-        <?php echo $form->buttons() ?>
-        <?php endif ?>
-
-      </form>
+        <div><a href="<?php __(url::current()) ?>" class="btn btn-rounded"><?php _l('pages.show.error.permissions.retry') ?></a></div>
+      </div>
+      <?php else: ?>
+      <?php echo $form ?>
+      <?php endif ?>
     </div>
   </div>
 
 </div>
+
+<?php echo $uploader ?>

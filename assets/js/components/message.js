@@ -1,31 +1,19 @@
-$.fn.message = function(type, message) {
+$.fn.message = function() {
 
   return this.each(function() {
-    var parent = $(this);
 
-    if(!message) {
+    var message = $(this);
+    var form    = message.closest('form');
 
-      parent.find('.message').remove();
-      errors = parent.find('.field-with-error .input');
+    message.on('close', function() {
+      message.remove();
+      form.find('.field-with-error').removeClass('field-with-error');
+      form.find('[autofocus]').focus();
+    });
 
-      if(errors.length) {
-        errors.focus();
-      } else {
-        parent.find('[autofocus]').focus();
-      }
-
-    } else {
-      parent.message();
-
-      var element = $('<div class="message message-is-' + type + ' cf"><p class="message-content">' + message + '</p><span class="message-toggle"><i>&times;</i></span></div>');
-
-      element.on('click', function() {
-        parent.message();
-      });
-
-      parent.prepend(element);
-
-    }
+    message.on('click', function() {
+      message.trigger('close');
+    });
 
   });
 

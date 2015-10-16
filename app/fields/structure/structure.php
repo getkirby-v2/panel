@@ -13,6 +13,47 @@ class StructureField extends BaseField {
 
   public $fields = array();
   public $entry  = null;
+  public $store  = null;
+  public $style  = 'items';
+
+  public function routes() {
+
+    return array(
+      array(
+        'pattern' => 'add',
+        'method'  => 'get|post',
+        'action'  => 'add'
+      ),
+      array(
+        'pattern' => 'sort',
+        'method'  => 'post',
+        'action'  => 'sort',
+      ),
+      array(
+        'pattern' => '(:any)/update',
+        'method'  => 'get|post',
+        'action'  => 'update'
+      ),
+      array(
+        'pattern' => '(:any)/delete',
+        'method'  => 'get|post',
+        'action'  => 'delete',
+      )
+    );
+  }
+
+  public function style() {
+    $styles = array('table', 'items');
+    return in_array($this->style, $styles) ? $this->style : 'items';
+  }
+
+  public function store() {
+    if(!is_null($this->store)) {
+      return $this->store;
+    } else {
+      return $this->store = $this->page->structure($this->name);      
+    }
+  }
 
   public function fields() {
 
@@ -38,28 +79,34 @@ class StructureField extends BaseField {
 
   }
 
-  public function result() {
-    $result = parent::result();
-    $raw    = (array)json_decode($result);
-    $data   = array();
-    foreach($raw as $key => $row) {
-      unset($row->_id);
-      unset($row->_csfr);
-      $data[$key] = (array)$row;
-    }
-    return yaml::encode($data);
+  public function entries() {
+    return $this->store()->data();
   }
 
-  public function entry() {
+  public function result() {
+    return $this->store()->toYaml();
+  }
+
+  public function entry($data) {
 
     if(is_null($this->entry) or !is_string($this->entry)) {
       $html = array();
       foreach($this->fields as $name => $field) {
-        $html[] = '{{' . $name . '}}';
+        if(isset($data->$name)) {
+          $html[] = $data->$name;          
+        }
       }
       return implode('<br>', $html);
     } else {
-      return $this->entry;
+    
+      $text = $this->entry;
+
+      foreach((array)$data as $key => $value) {
+        $text = str_replace('{{' . $key . '}}', $value, $text);
+      }
+
+      return $text;
+    
     }
 
   }
@@ -75,7 +122,8 @@ class StructureField extends BaseField {
       $add = new Brick('a');
       $add->html('<i class="icon icon-left fa fa-plus-circle"></i>' . l('fields.structure.add'));
       $add->addClass('structure-add-button label-option');
-      $add->attr('#');
+      $add->data('modal', true);
+      $add->attr('href', purl($this->page, 'field/' . $this->name . '/structure/add'));
 
     } else {
       $add = null;

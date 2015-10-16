@@ -1,54 +1,79 @@
-$.fn.form = function() {
+var Form = function(form, params) {
 
-  return this.each(function() {
+  var form = $(form);
 
-    var form = $(this);
+  var defaults = {
+    focus    : false,
+    returnTo : false,
+    url      : form.attr('action'),
+    redirect : function(response) {},
+    submit   : function(form) {}
+  };
 
-    form.find('[data-focus=true]').on({
-      'click' : function() {
-        $(this).find('input, textarea, select').focus();
-      },
-      'focusin' : function() {
-        $(this).addClass('input-is-focused');
-      },
-      'focusout' : function() {
-        $(this).removeClass('input-is-focused');
-      }
+  var options = $.extend({}, defaults, params);
+
+  form.find('[data-focus=true]').fakefocus('input-is-focused');
+
+  // setup all field plugins  
+  form.find('[data-field]').each(function() {
+    var el  = $(this);
+    var key = el.data('field');
+    if(el[key]) el[key]();
+  });
+
+  // keep changes on updates to avoid data loss
+  if(form.data('keep')) {
+    
+    form.on('keep', function() {
+      $.post(form.data('keep'), form.serializeObject())
     });
 
-    form.on('submit', function() {
-      form.find('.field-with-error').removeClass('field-with-error');
+    form.on('change.keep', ':input', function() {
+      form.trigger('keep');
     });
 
-    form.find('[data-field]').each(function() {
-      var el  = $(this);
-      var key = el.data('field');
-      if(el[key]) el[key]();
+  }
+
+  // focus the right field  
+  if(options.focus) {
+    form.find('[autofocus]').focus();    
+  }
+
+  // don't setup a form submission action
+  if(form.data('autosubmit') == 'native') {
+    return true;
+  }
+
+  // hook up the form submission
+  form.on('submit', function(e) {
+
+    // auto submission can be switched off via a data attribute
+    // to setup your own submission action
+    if(form.data('autosubmit') == false) {
+      return false;
+    } 
+
+    // submission event
+    options.submit(form);
+
+    // on submit all errors should be removed. Looks weird otherwise
+    form.find('.field-with-error').removeClass('field-with-error');
+
+    // show the loading indicator
+    if(app) app.isLoading(true);
+
+    // handle the post request for the form and serialize all the data
+    $.post(form.attr('action'), form.serializeObject(), function(response, message, xhr) {
+
+      // hide the loading indicator
+      if(app) app.isLoading(false);
+    
+      // handle redirection and replacement of data
+      options.redirect(response);
+
     });
 
-    var submit = form.find('.btn-submit');
-    var save   = submit.val();
-
-    form.on('success', function() {
-      submit.addClass('btn-positive').val(submit.data('saved')).focus();
-      setTimeout(function() {
-        submit.removeClass('btn-positive').val(save).blur();
-      }, 1000);
-    });
-
-    form.on('error', function(e, fields) {
-
-      if(fields) {
-        $.each(fields, function(i, field) {
-          $('#form-field-' + field).parents('.field').addClass('field-with-error');
-        });
-      }
-
-      setTimeout(function() {
-        form.find('.field-with-error .input').focus();
-      }, 1);
-
-    });
+    return false;
 
   });
 

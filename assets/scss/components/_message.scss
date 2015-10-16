@@ -28,7 +28,7 @@
 .message-toggle {
   position: absolute;
   top: 50%;
-  margin-top: -.7em;
+  margin-top: -.75em;
   border: 2px solid rgba(255,255,255, .5);
   border-radius: 4em;
   width: 1.5em;
@@ -47,14 +47,16 @@
 }
 .message-toggle i {
   position: absolute;
-  left: 0;
+  left: 1px;
   right: 0;
   font-style: normal;
   text-align: center;
-  font-size: 1.1em;
-  line-height: 1.1em;
+  font-size: 1.15em;
+  line-height: 1em;
 }
-
+.message-is-notice .message-toggle {
+  color: #fff;
+}
 
 body > .message {
   position: absolute;
@@ -107,4 +109,84 @@ body > .message-is-alert .message-content:after {
   body.rtl & {
     border-right: .5em solid #b3000a;
   }
+}
+
+.modal-content .message {
+  margin: -1.5em -1.5em 1.5em;
+}
+
+@keyframes showTopbarMessage {
+  0% {
+    -webkit-transform: translateX(6rem);
+    -moz-transform: translateX(6rem);
+    -ms-transform: translateX(6rem);
+    transform: translateX(6rem);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+.topbar .message {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  background: #000;
+  overflow: hidden;
+}
+.topbar .message-content:after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  margin-top: -7px;
+  border-top: 7px solid transparent;
+  border-bottom: 5px solid transparent;
+  body.ltr & {
+    right: -7px;
+    border-left: 7px solid #8dae28;
+  }
+  body.rtl & {
+    left: -7px;
+    border-right: 7px solid #8dae28;
+  }
+}
+.topbar .message-is-alert .message-content:after {
+  body.ltr & {
+    border-left: 7px solid #b3000a;
+  }
+  body.rtl & {
+    border-right: 7px solid #b3000a;
+  }
+}
+.topbar .message-toggle {
+  body.ltr & {
+    right: 1.25em;
+  }
+  body.rtl & {
+    left: 1.25em;
+  }
+}
+.topbar .message-content {
+  position: relative;
+  animation-name: showTopbarMessage;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-duration: .3s;
+
+  body.ltr & {
+    margin-right: 4rem;
+    padding-right: 1.5rem;
+  }
+  body.rtl & {
+    margin-left: 4rem;
+    padding-left: 1.5em;
+  }
+
 }

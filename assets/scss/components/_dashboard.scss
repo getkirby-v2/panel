@@ -1,4 +1,5 @@
 .dashboard-section {
+  position: relative;
   display: inline-block;
   margin-bottom: 1.5em;
   width: 100%;
@@ -34,25 +35,48 @@
 
 /* Dashboard Boxes */
 .dashboard-box {
+  position: relative;
+  display: block;
   border: 2px solid #ddd;
   overflow: hidden;
   background: #efefef;
-}
-.dashboard-box li {
-  border-bottom: 1px solid #ddd;
-  list-style: none;
-}
-.dashboard-box li:last-child {
-  border-bottom: 0;
-}
-.dashboard-box li a {
-  display: block;
-  padding: .5em 1em;
-  line-height: 1.5em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: .5em;
 }
 .dashboard-box .text {
   padding: .75em 1em;
+}
+
+.dashboard-items {
+  list-style: none;
+}
+.dashboard-items .dashboard-item {
+  border-bottom: 1px solid #ddd;
+}
+.dashboard-items .dashboard-item:last-child {
+  border-bottom: 0;
+}
+
+.dashboard-item {
+  white-space: nowrap;
+}
+.dashboard-item-icon {
+  display: inline-block;
+  vertical-align: middle;
+  height: 2.5em;
+  width: 2.5em;
+  text-align: center;
+}
+.dashboard-item-icon-with-border {
+  border-right: 1px solid #ddd;    
+}
+.dashboard-item-icon i {
+  padding-top: .8em;
+}
+.dashboard-item-text {
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  padding: 0 .75em;
+  width: calc(100% - 2.5em);
+  text-overflow: ellipsis;
 }

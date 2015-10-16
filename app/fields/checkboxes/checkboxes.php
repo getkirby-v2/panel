@@ -11,7 +11,7 @@ class CheckboxesField extends RadioField {
       'name'    => $this->name() . '[]',
       'type'    => 'checkbox',
       'value'   => $value,
-      'checked' => in_array($value, (array)$this->value()),
+      'checked' => ($this->value === 'all') ? true : in_array($value, (array)$this->value()),
     ));
 
     return $input;

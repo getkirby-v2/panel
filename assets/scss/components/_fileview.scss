@@ -48,30 +48,21 @@
 .fileview-preview-link {
   height: 100%;
 }
-.fileview-preview-link i {
+.fileview-preview-link img,
+.fileview-preview-link object,
+.fileview-preview-link span {
   position: absolute;
   top: 50%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
-  line-height: 0;
-  height: 100%;
-  width: 100%;
-
-  body.ltr & {
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
-  body.rtl & {
-    right: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    -moz-transform: translate(-50%, 50%);
-    -ms-transform: translate(-50%, 50%);
-    transform: translate(-50%, 50%);
-  }
+  left: 50%;
+  max-width: 100%;
+  max-height: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);  
+}
+.fileview-preview-link object {
+  pointer-events: none;
 }
 .fileview-nav {
   position: absolute;

@@ -44,7 +44,12 @@ body.rtl {
   background: #000;
   padding: .25em 1em;
   color: #fff;
+  width: auto !important;
+  list-style: none;
   border-radius: 3px;
+}
+.draggable-helper a {
+  color: #fff !important;
 }
 .uid-preview {
   max-width: 20em;

@@ -8,18 +8,25 @@
   padding-bottom: 66.66%;
   line-height: 0;
   background: #000;
+  overflow: hidden;
 }
 .file-preview-is-image {
   background: url(../images/pattern.png);
 }
+.file-preview object,
 .file-preview img {
   position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
+  top: 50%;
+  left: 50%;
   max-width: 100%;
   max-height: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);  
+}
+.file-preview object {
+  pointer-events: none;
 }
 .file-preview span {
   position: absolute;
