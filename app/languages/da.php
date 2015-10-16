@@ -63,10 +63,13 @@ return array(
     'dashboard.index.metatags.edit' => 'Rediger',
     'dashboard.index.history.title' => 'Dine seneste opdateringer',
     'dashboard.index.history.text' => 'Dine seneste opdaterede sider vil blive vist her, for at gøre det nemt at finde dem igen senere.',
+    'dashboard.index.license.title' => 'Kirby licens',
 
     // metatags
     'metatags' => 'Website indstillinger',
     'metatags.info' => 'Kirby info',
+    'metatags.license' => 'Kirby licens',
+    'metatags.version.toolkit' => 'Toolkit version',
     'metatags.version.kirby' => 'Kirby version',
     'metatags.version.panel' => 'Panel version',
     'metatags.back' => 'Tilbage til dashboard',
@@ -261,6 +264,7 @@ return array(
     'fields.structure.save' => 'Gem',
     'fields.structure.edit' => 'Rediger',
     'fields.structure.delete' => 'Slet',
+    'fields.structure.delete.label' => 'Ønsker du virkelig at slette denne indtastning?',
     'fields.tags.label' => 'Tags',
     'fields.tel.label' => 'Telefon',
     'fields.textarea.buttons.bold.label' => 'Fed tekst',
