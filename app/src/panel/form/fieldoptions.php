@@ -20,8 +20,11 @@ class FieldOptions {
 
     $this->field = $field;
 
+    // array method
     if(is_array($field->options)) {
       $this->options = $field->options;
+    
+    // api method with valid url
     } else if(v::url($field->options) or str::contains($field->options, '://localhost') or str::contains($field->options, '://127.0.0.1')) {
       
       $response = remote::get($field->options);
@@ -33,8 +36,11 @@ class FieldOptions {
         $this->options = array();
       }
 
+    // without a page object, no files or related pages can be fetched
     } else if(!$field->page) {
       $this->options = array();
+
+    // query method to query any set of images or files
     } else if($field->options == 'query') {
 
       $defaults = array(
