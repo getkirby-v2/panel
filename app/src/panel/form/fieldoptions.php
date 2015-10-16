@@ -57,7 +57,7 @@ class FieldOptions {
       // dynamic page option 
       // ../
       // ../../ etc.
-      
+
       if(str::startsWith($query['page'], '../')) {
         $currentPage = $field->page;
         $path        = $query['page']; 
@@ -70,6 +70,8 @@ class FieldOptions {
           $path = str::substr($path, 3);
         }
         $page = $currentPage;
+      } else if($query['page'] == '/') {
+        $page = site();
       } else {
         $page = page($query['page']);        
       }

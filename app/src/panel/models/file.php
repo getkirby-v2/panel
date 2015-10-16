@@ -116,7 +116,7 @@ class File extends \File {
   }
 
   public function thumb() {
-    return $this->resize(300, 200)->url();
+    return $this->resize(400, 266)->url();
   }
 
   public function icon($position = 'left') {
