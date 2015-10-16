@@ -35,13 +35,13 @@ class Site extends \Site {
 
     if(empty($action)) {
       return parent::url();
-    }
-
-    if($action == 'edit') {
+    } else if($action == 'edit') {
       return panel()->urls()->index() . '/options';
-    } else if($action == 'preview') {
-      return $this->url();
-    } else {    
+    } else if($action == 'preview') {      
+      return parent::url();
+    } else if($this->multilang() and in_array($action, $this->languages()->codes())) {    
+      return parent::url();
+    } else {
       return panel()->urls()->index() . '/site/' . $action;
     }
 
