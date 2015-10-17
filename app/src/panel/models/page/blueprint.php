@@ -48,7 +48,7 @@ class Blueprint extends Obj {
   public function load($name) {
 
     // make sure there's no path included in the name
-    $name = basename($name);
+    $name = basename(strtolower($name));
 
     if(isset(static::$cache[$name])) {
       $this->file = static::$cache[$name]['file'];
