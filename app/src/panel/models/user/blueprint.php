@@ -33,17 +33,16 @@ class Blueprint extends Obj {
     // correspondant blueprint if available
     $this->name = basename(strtolower($this->user->role()));
 
-    // check for a yaml or php version of the blueprint
-    if(file_exists(static::$root . DS . $this->name . '.yaml')) {
-      $this->file = static::$root . DS . $this->name . '.yaml';
-    } else if(file_exists(static::$root . DS . $this->name . '.php')) {
-      $this->file = static::$root . DS . $this->name . '.php';
-    }
+    // try to find a user blueprint
+    $files = glob(static::$root . DS . $this->name . '.{php,yaml,yml}', GLOB_BRACE);
 
-    $this->yaml = data::read($this->file, 'yaml');
+    if(!empty($files)) {
+      $this->file = $files[0];
+      $this->yaml = data::read($this->file, 'yaml');
 
-    // remove the broken first line
-    unset($this->yaml[0]);
+      // remove the broken first line
+      unset($this->yaml[0]);
+    } 
 
   }
 

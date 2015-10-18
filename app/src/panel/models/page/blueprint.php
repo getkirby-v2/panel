@@ -47,6 +47,9 @@ class Blueprint extends Obj {
 
   public function load($name) {
 
+    // make sure there's no path included in the name
+    $name = basename(strtolower($name));
+
     if(isset(static::$cache[$name])) {
       $this->file = static::$cache[$name]['file'];
       $this->name = static::$cache[$name]['name'];
@@ -54,34 +57,32 @@ class Blueprint extends Obj {
       return true;
     }
 
-    if(file_exists(static::$root . DS . $name . '.yaml')) {
-      $this->file = static::$root . DS . $name . '.yaml';
+    // find the matching blueprint file
+    $files = glob(static::$root . DS . $name . '.{php,yaml,yml}', GLOB_BRACE);
+
+
+
+    if(!empty($files[0])) {
+      $this->file = $files[0];
       $this->name = $name;
-    } else if(file_exists(static::$root . DS . $name . '.php')) {
-      $this->file = static::$root . DS . $name . '.php';
-      $this->name = $name;
-    } else if(file_exists(static::$root . DS . 'default.yaml')) {
-      $this->file = static::$root . DS . 'default.yaml';
-      $this->name = 'default';
-    } else if(file_exists(static::$root . DS . 'default.php')) {
-      $this->file = static::$root . DS . 'default.php';
-      $this->name = 'default';
+      $this->yaml = data::read($this->file, 'yaml');
+
+      // remove the broken first line
+      unset($this->yaml[0]);
+
+      static::$cache[$name] = array(
+        'file' => $this->file,
+        'name' => $this->name,
+        'yaml' => $this->yaml
+      );
+
+      return true;
+
+    } else if($name == 'default') {
+      throw new Exception('Missing default blueprint');
     } else {
-      throw new Exception('Missing blueprint: ' . $name);
+      return $this->load('default');
     }
-
-    $this->yaml = data::read($this->file, 'yaml');
-
-    // remove the broken first line
-    unset($this->yaml[0]);
-
-    static::$cache[$name] = array(
-      'file' => $this->file,
-      'name' => $this->name,
-      'yaml' => $this->yaml
-    );
-
-    return true;
 
   }
 

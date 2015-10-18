@@ -117,7 +117,7 @@ class Panel {
     form::setup($this->roots->fields, $this->kirby->roots()->fields());
 
     // load all available routes
-    $this->routes = array_merge($this->routes, require($this->roots->app . DS . 'routes.php'));
+    $this->routes = array_merge($this->routes, require($this->roots->config . DS . 'routes.php'));
 
     // start the router
     $this->router = new Router($this->routes);
