@@ -9,7 +9,7 @@ class InstallationController extends Kirby\Panel\Controllers\Base {
     $installer = new Installer();
 
     if($installer->isCompleted()) {
-      $this->redirect('login');
+      $this->redirect();
     } else if($problems = $installer->problems()) {
       return $this->problems($problems);
     } else {

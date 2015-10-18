@@ -4,9 +4,13 @@
 
 <script>
 
-(function() {
-
+(function() {  
+  
   $('.message').message();
+
+  $('.form').on('submit', function() {
+    $(this).addClass('loading');
+  });
 
 })();
 

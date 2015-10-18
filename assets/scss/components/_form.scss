@@ -3,6 +3,18 @@ fieldset {
   border: 0;
 }
 
+/* Loading blocker */
+form.loading:after {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  cursor: wait;
+  z-index: 10000;
+}
+
 /* Label */
 .label {
   position: relative;

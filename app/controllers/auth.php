@@ -1,28 +1,35 @@
 <?php
 
+use Kirby\Panel\Login;
+
 class AuthController extends Kirby\Panel\Controllers\Base {
 
   public function login() {
 
-    try {
-      $user = panel()->user();
-      $this->redirect();
-    } catch(Exception $e) {
+    $login = new Login();
 
+    if($login->isAuthenticated()) {
+      $this->redirect();
+    }
+
+    if($login->isBlocked()) {
+      return $this->layout('base', array(
+        'content' => $this->view('auth/block')
+      ));
     }
 
     $self = $this;
-    $form = $this->form('auth/login', null, function($form) use($self) {
+    $form = $this->form('auth/login', null, function($form) use($self, $login) {
 
-      $data = $form->serialize();
-      $user = site()->user(str::lower($data['username']));
+      $data = $form->serialize();      
 
-      if(!$user or !$user->hasPanelAccess() or !$user->login($data['password'])) {
+      try {
+        $login->attempt($data['username'], $data['password']);
+        $self->redirect();
+      } catch(Exception $e) {
         $form->alert(l('login.error'));
         $form->fields->username->error = true;
         $form->fields->password->error = true;
-      } else {        
-        $self->redirect();
       }
 
     });
