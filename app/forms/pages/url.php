@@ -6,7 +6,7 @@ return function($page) {
   $option = new Brick('a', icon('magic', 'left') . l('pages.url.uid.label.option'), array(
     'class'      => 'btn btn-icon label-option',
     'href'       => '#',
-    'data-title' => $page->title()
+    'data-title' => str::slug($page->title())
   ));
 
   // url preview
