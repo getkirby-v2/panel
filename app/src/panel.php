@@ -66,7 +66,6 @@ class Panel {
       'panel.language'         => 'en',
       'panel.stylesheet'       => null,
       'panel.kirbytext'        => false,
-      'panel.session.name'     => 'kirby_panel_session',
       'panel.session.timeout'  => 120,
       'panel.session.lifetime' => 0,
       'panel.info.license'     => true,
@@ -154,7 +153,6 @@ class Panel {
   public function session() {
 
     // setup the session
-    s::$name               = $this->kirby->option('panel.session.name', 'kirby_panel_session');
     s::$timeout            = $this->kirby->option('panel.session.timeout', 120);
     s::$cookie['lifetime'] = $this->kirby->option('panel.session.lifetime', 0);
 
