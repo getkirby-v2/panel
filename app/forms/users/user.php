@@ -89,14 +89,18 @@ return function($user) {
 
   );
 
-  // add all custom fields
-  foreach($user->blueprint()->fields()->toArray() as $name => $field) {
+  if($user) {
 
-    if(array_key_exists($name, $fields)) {
-      continue;
+    // add all custom fields
+    foreach($user->blueprint()->fields()->toArray() as $name => $field) {
+
+      if(array_key_exists($name, $fields)) {
+        continue;
+      }
+
+      $fields[$name] = $field;
+
     }
-
-    $fields[$name] = $field;
 
   }
 
