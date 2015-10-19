@@ -21,13 +21,16 @@ class Search {
     $this->pages = new Collection;
     $this->users = new Collection;
 
-    try {
-      $root = kirby()->roots()->cache() . DS . 'search';
-      dir::make($root);
-      $this->cache = cache::setup('file', array('root' => $root));
-    } catch(Exception $e) {
-      $this->cache = cache::setup('session');
-    }
+    // temporary disable the search cache
+    $this->cache = cache::setup('mock');
+
+    // try {
+    //   $root = kirby()->roots()->cache() . DS . 'search';
+    //   dir::make($root);
+    //   $this->cache = cache::setup('file', array('root' => $root));
+    // } catch(Exception $e) {
+    //   $this->cache = cache::setup('session');
+    // }
 
     $this->run();
   
@@ -43,7 +46,7 @@ class Search {
       foreach(panel()->site()->index() as $page) {
         $pages[] = array(
           'title' => (string)$page->title(),
-          'uri'   => (string)$page->uri(),
+          'uri'   => (string)$page->id(),
         );
       }
       $this->cache->set('pages', $pages);
