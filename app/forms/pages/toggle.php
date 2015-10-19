@@ -10,12 +10,14 @@ return function($page) {
   if($blueprint->pages()->num()->mode() == 'default' and $siblings->count() > 0) {
 
     $options = array('' => l('pages.toggle.invisible'), '--' => '--');
-    $n       = 0;
+    $n       = 1;
 
     foreach($siblings as $sibling) {
-      $n++;
       $options[$n] = $n;
+      $n++;
     }
+    
+    $options[$n] = $n;
 
     $form = new Kirby\Panel\Form(array(
       'position' => array(
