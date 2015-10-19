@@ -16,8 +16,10 @@ return function($page) {
       $options[$n] = $n;
       $n++;
     }
-    
-    $options[$n] = $n;
+
+    if($page->isInvisible()) {
+      $options[$n] = $n;      
+    }    
 
     $form = new Kirby\Panel\Form(array(
       'position' => array(
