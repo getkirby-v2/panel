@@ -14,8 +14,8 @@ use Kirby\Panel\Topbar;
 
 class Base extends Obj {
 
-  public function redirect() {    
-    return call(array(panel(), 'redirect'), func_get_args());
+  public function redirect($obj = '/', $action = false, $force = false) {    
+    return panel()->redirect($obj, $action, $force);
   }
 
   public function notify($message) {

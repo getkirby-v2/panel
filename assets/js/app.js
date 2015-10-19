@@ -44,7 +44,7 @@ var app = {
       } else {
 
         if(link.is('[data-modal]')) {
-          app.modal.open(link.attr('href'), link.data('modal-return-to'));
+          app.modal.open(link.attr('href'));
           return false;
         } else if(link.is('[target]')) {
           return true;

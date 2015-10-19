@@ -19,7 +19,7 @@
         </a>
       </li>
       <li>
-        <a data-modal data-modal-return-to="<?php echo __($page->url('subpages')) ?>" class="btn btn-with-icon" href="<?php __($subpage->url('delete')) ?>">
+        <a data-modal class="btn btn-with-icon" href="<?php __($subpage->url('delete') . '?_redirect=' . $page->uri('subpages')) ?>">
           <?php i('trash-o', 'left') ?>
           <span>Delete</span>
         </a>

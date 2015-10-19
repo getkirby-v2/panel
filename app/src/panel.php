@@ -508,9 +508,13 @@ class Panel {
     ));
   }
 
-  public function redirect() {    
+  public function redirect($obj = '/', $action = false, $force = false) {    
 
-    $url = call('purl', func_get_args());
+    if($force === false and $redirect = get('_redirect')) {
+      $url = purl($redirect);
+    } else {
+      $url = purl($obj, $action);
+    }
 
     if(r::ajax()) {
 

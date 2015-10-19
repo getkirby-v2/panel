@@ -8,13 +8,21 @@ use Kirby\Panel\Models\Page\Uploader;
 
 class File extends \File {
 
+  public function uri($action = null) {
+    if(empty($action)) {
+      return parent::uri();
+    } else {
+      return $this->page()->uri('file') . '/' . rawurlencode($this->filename()) . '/' . $action;
+    }
+  }
+
   public function url($action = null) {
     if(empty($action)) {
       return parent::url();
     } else if($action == 'preview') {
       return parent::url() . '?' . $this->modified();    
     } else {
-      return $this->page()->url('file') . '/' . rawurlencode($this->filename()) . '/' . $action;      
+      return panel()->urls()->index() . '/' . $this->uri($action);
     }
   }
 

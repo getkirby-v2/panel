@@ -55,7 +55,7 @@
           </li>
 
           <li>
-            <a data-modal data-modal-return-to="<?php __($returnTo) ?>" title="#" data-shortcut="#" href="<?php __($file->url('delete')) ?>" class="btn btn-with-icon">
+            <a data-modal title="#" data-shortcut="#" href="<?php __($file->url('delete') . '?_redirect=' . $returnTo) ?>" class="btn btn-with-icon">
               <?php i('trash-o', 'left') ?>
               <?php _l('files.show.delete') ?>
             </a>

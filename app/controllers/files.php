@@ -58,7 +58,7 @@ class FilesController extends Kirby\Panel\Controllers\Base {
       'form'     => $form,
       'page'     => $page,
       'file'     => $file,
-      'returnTo' => url::last() == $page->url('files') ? $page->url('files') : $page->url('edit'),
+      'returnTo' => url::last() == $page->url('files') ? $page->uri('files') : $page->uri('edit'),
       'uploader' => $this->snippet('uploader', array(
         'url'      => $file->url('replace'), 
         'accept'   => $file->mime(),

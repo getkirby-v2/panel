@@ -272,8 +272,16 @@ class Form extends Brick {
 
   }
 
+  public function redirect() {
+    return get('_redirect');
+  }
+
   public function cancel() {
-    $this->buttons->cancel->href = call('purl', func_get_args());
+    if($redirect = $this->redirect()) {
+      $this->buttons->cancel->href = purl($redirect);
+    } else {    
+      $this->buttons->cancel->href = call('purl', func_get_args());
+    }
   }
 
   static public function field($type, $options = array()) {
@@ -342,6 +350,13 @@ class Form extends Brick {
     $fieldset->addClass('fieldset field-grid cf');
 
     foreach($this->fields() as $field) $fieldset->append($field);
+  
+    // pass the redirect url   
+    $redirectField = new Brick('input');
+    $redirectField->type  = 'hidden';
+    $redirectField->name  = '_redirect';
+    $redirectField->value = $this->redirect();
+    $fieldset->append($redirectField);
 
     $this->append($fieldset);
 

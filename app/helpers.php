@@ -4,7 +4,7 @@ function panel() {
   return Kirby\Panel::instance();
 }
 
-function icon($icon, $position) {
+function icon($icon, $position = null) {
   return '<i class="icon' . r($position, ' icon-' . $position) . ' fa fa-' . $icon . '"></i>';
 }
 

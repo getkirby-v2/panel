@@ -54,7 +54,7 @@
               <?php i('pencil', 'left') ?><span><?php _l('files.index.edit') ?></span>
             </a>
 
-            <a data-modal data-modal-return-to="<?php __($page->url('files')) ?>" class="btn btn-with-icon" href="<?php __($file->url('delete')) ?>">
+            <a data-modal class="btn btn-with-icon" href="<?php __($file->url('delete') . '?_redirect=' . $page->uri('files')) ?>">
               <?php i('trash-o', 'left') ?><span><?php _l('files.index.delete') ?></span>
             </a>
 

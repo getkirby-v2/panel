@@ -92,6 +92,14 @@ class Page extends \Page {
 
   }
 
+  public function uri($action = null) {
+    if(empty($action)) {
+      return parent::uri();
+    } else {
+      return 'pages/' . $this->id() .  '/' . $action;            
+    }
+  }
+
   public function url($action = null) {
     if(empty($action)) {
       return parent::url();
@@ -115,7 +123,7 @@ class Page extends \Page {
         return false;
       }
     } else {
-      return panel()->urls()->index() . '/pages/' . $this->id() .  '/' . $action;            
+      return panel()->urls()->index() . '/' . $this->uri($action);            
     }
   }
 

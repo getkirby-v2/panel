@@ -8,11 +8,13 @@ use Brick;
 class Menu {
 
   public $page;
+  public $parent;
   public $blueprint;
   public $position;
 
   public function __construct($page, $position = 'sidebar') {
     $this->page      = $page;
+    $this->parent    = $page->parent();
     $this->blueprint = $page->blueprint();
     $this->position  = $position;
   }
@@ -23,22 +25,25 @@ class Menu {
     $a->append(icon($icon, 'left'));
     $a->append(l($label));
 
-    $parent = $this->page->parent();
-
-    if($this->position == 'context') {    
-      
-      if($parent->isSite()) {
-        $a->data('modal-return-to', purl('/'));        
-      } else {
-        $a->data('modal-return-to', $parent->url('edit'));        
-      }
-
-    }
-
     $li = new Brick('li');
     $li->append($a);
 
     return $li;
+
+  }
+
+  public function modalUrl($action) {
+
+    if($this->position == 'context') {    
+      if($this->parent->isSite()) {
+        $redirect = '/';
+      } else {
+        $redirect = $this->parent->uri('edit');        
+      }
+      return $this->page->url($action) . '?_redirect=' . $redirect;
+    } else {
+      return $this->page->url($action);
+    }
 
   }
 
@@ -76,7 +81,7 @@ class Menu {
       }
 
       return $this->item($icon, $label, array(
-        'href'       => $this->page->url('toggle'),
+        'href'       => $this->modalUrl('toggle'),
         'data-modal' => true,
       ));
 
@@ -90,7 +95,7 @@ class Menu {
   public function urlOption() {
     if(!$this->page->isHomePage() and !$this->page->isErrorPage()) {
       return $this->item('chain', 'pages.show.changeurl', array(
-        'href'          => $this->page->url('url'),
+        'href'          => $this->modalUrl('url'),
         'title'         => 'u',
         'data-shortcut' => 'u',
         'data-modal'    => true,
@@ -103,7 +108,7 @@ class Menu {
   public function deleteOption() {
     if($this->page->isDeletable()) {
       return $this->item('trash-o', 'pages.show.delete', array(
-        'href'          => $this->page->url('delete'),
+        'href'          => $this->modalUrl('delete'),
         'title'         => '#',
         'data-shortcut' => '#',
         'data-modal'    => true,

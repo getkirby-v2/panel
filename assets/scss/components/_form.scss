@@ -481,14 +481,30 @@ textarea.over {
     float: right;
   }
 }
+
 .buttons .btn-submit {
   body.ltr & {
     float: right;
+    margin-left: 1rem;
   }
   body.rtl & {
     float: left;
+    margin-right: 1rem;
   }
 }
+
+.btn-submit .btn:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-right: 1rem;
+}
+.btn-submit .btn:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+  padding-left: 1rem;
+}
+
 .buttons-centered {
   text-align: center;
 }

@@ -12,9 +12,13 @@ use Kirby\Panel\Models\User\History;
 
 class User extends \User {
 
+  public function uri($action = 'edit') {
+    return 'users/' . $this->username() . '/' . $action;
+  }
+
   public function url($action = 'edit') {
     if(empty($action)) $action = 'edit';
-    return panel()->urls()->index() . '/users/' . $this->username() . '/' . $action;
+    return panel()->urls()->index() . '/' . $this->uri($action);
   }
 
   public function form($action, $callback) {    

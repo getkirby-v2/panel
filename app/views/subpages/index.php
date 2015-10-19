@@ -14,7 +14,7 @@
       </a>
 
       <?php if($addbutton and $page->children()->count()): ?>
-      <a data-modal data-modal-return-to="<?php echo $page->url('subpages') ?>" title="+" class="hgroup-option-right" href="<?php __($addbutton->url()) ?>">
+      <a data-modal title="+" class="hgroup-option-right" href="<?php __($addbutton->url() . '?_redirect=' . $page->uri('subpages')) ?>">
         <?php i('plus-circle', 'left') ?>
         <?php _l('subpages.index.add') ?>
       </a>
@@ -91,7 +91,7 @@
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php _l('subpages.index.add.first.text') ?></p>
-      <a data-shortcut="+" data-modal data-modal-return-to="<?php __($page->url('subpages')) ?>" class="btn btn-rounded" href="<?php __($addbutton->url()) ?>">
+      <a data-shortcut="+" data-modal class="btn btn-rounded" href="<?php __($addbutton->url() . '?_redirect=' . $page->uri('subpages')) ?>">
         <?php _l('subpages.index.add.first.button') ?>
       </a>
     </div>

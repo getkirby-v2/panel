@@ -35,7 +35,27 @@ return function($page) {
     )
   ));
 
-  $form->buttons->submit->value = l('add');
+  $form->buttons->submit->removeClass('btn-submit');
+
+  $addButton = new Brick('button');
+  $addButton->addClass('btn btn-rounded');
+  $addButton->attr('type', 'submit');
+  $addButton->attr('title', l('add'));
+  $addButton->html(l('ok'));
+
+  $editButton = new Brick('button');
+  $editButton->addClass('btn btn-rounded btn-addit');
+  $editButton->attr('type', 'submit');
+  $editButton->attr('title', l('addit'));
+  $editButton->data('action', $page->url('add/edit'));
+  $editButton->html(icon('pencil'));
+
+  $form->buttons->submit = new Brick('span');
+  $form->buttons->submit->addClass('btn-submit');
+  
+  $form->buttons->submit->append($addButton);
+  $form->buttons->submit->append($editButton);
+
   $form->cancel($page->isSite() ? '/' : $page);
 
   return $form;

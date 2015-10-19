@@ -44,6 +44,12 @@ var Form = function(form, params) {
     return true;
   }
 
+  // special treatment for addit buttons
+  form.find('.btn-addit').on('click', function() {
+    // change the form action
+    form.attr('action', $(this).data('action'));
+  }); 
+
   // hook up the form submission
   form.on('submit', function(e) {
 

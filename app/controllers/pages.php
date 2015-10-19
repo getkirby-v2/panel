@@ -2,12 +2,16 @@
 
 class PagesController extends Kirby\Panel\Controllers\Base {
 
-  public function add($id) {
+  public function add($id, $after = null) {
 
     $self   = $this;
     $parent = $this->page($id);
-    $form   = $parent->form('add', function($form) use($parent, $self) {
+    $form   = $parent->form('add', function($form) use($parent, $self, $after) {
     
+      if(get('addit')) {
+        $form->alert('addit');
+      }
+
       $form->validate();
 
       if(!$form->isValid()) {
@@ -19,7 +23,13 @@ class PagesController extends Kirby\Panel\Controllers\Base {
         $page = $parent->children()->create($data['uid'], $data['template'], array(
           'title' => $data['title']
         ));
-        $this->redirect($parent->isSite() ? '/' : $parent);
+
+        if($after == 'edit') {
+          $this->redirect($page, 'edit', true);
+        } else {
+          $this->redirect($parent->isSite() ? '/' : $parent);          
+        }
+
       } catch(Exception $e) {
         $form->alert($e->getMessage());
       }

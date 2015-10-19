@@ -31,7 +31,7 @@ var Modal = function(app) {
 
   // initialize all modal events as soon 
   // as the modal content is loaded
-  var on = function(returnTo) {
+  var on = function() {
 
     // make sure everything is clean first
     off();
@@ -75,23 +75,16 @@ var Modal = function(app) {
     Form(form, {
       focus: true,
       redirect: function(response) {
-
         if($.type(response) == 'object') {
           if(response.url) {
-            if(returnTo) {
-              app.content.open(returnTo);                        
-            } else {
-              app.content.open(response.url);                        
-            }            
+            app.content.open(response.url);                        
             return;
           } else if(response.content) {
             replace(response.content);
             return;
           } 
         } 
-
         window.location.reload();
-
       }
     });
 
@@ -112,7 +105,7 @@ var Modal = function(app) {
   };
 
   // open a modal by url
-  var open = function(url, returnTo, onLoad) {
+  var open = function(url, onLoad) {
 
     // close all context menus
     $(document).trigger('click.contextmenu');
@@ -144,7 +137,7 @@ var Modal = function(app) {
       }
 
       // initialize all events
-      on(returnTo);
+      on();
 
     });
 
