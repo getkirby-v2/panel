@@ -12,6 +12,8 @@
     $(this).addClass('loading');
   });
 
+  $('.modal-content').center(48);
+
 })();
 
 </script>

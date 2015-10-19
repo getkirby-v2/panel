@@ -56,7 +56,7 @@ class InstallationController extends Kirby\Panel\Controllers\Base {
         }
 
         // redirect to the login
-        $self->redirect('login/welcome');
+        $self->redirect('login');
 
       } catch(Exception $e) {
         $form->alert($e->getMessage());

@@ -3,27 +3,6 @@ var Modal = function(app) {
   // create a new modal root
   var root = $('<div class="modal" tabindex="0"></div>');
 
-  var resize = function() {
-
-    var content = $('.modal-content');
-    var form    = content.find('.form');
-    
-    $(window).data('height', form.outerHeight());
-
-    $(document).on('keyup.modal', function() {
-      $(window).data('height', form.outerHeight()).trigger('resize.modal');
-    });
-
-    $(window).on('resize.modal', function() {
-      if($(window).height() <= $(window).data('height')) {
-        content.addClass('modal-content-fixed');
-      } else {
-        content.removeClass('modal-content-fixed');
-      }
-    }).trigger('resize.modal');
-
-  };
-
   // checks if the modal is opened in an overlay
   var isOverlay = function() {
     return $('.modal').length > 0;
@@ -42,7 +21,7 @@ var Modal = function(app) {
     content.shortcuts();
 
     // enable the content resizer
-    resize(content);
+    content.center(3 * 16);
 
     // close the modal when the cancel button is being clicked
     content.find('.btn-cancel').on('click', function() {

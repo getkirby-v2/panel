@@ -6,6 +6,9 @@
 
 (function() {
 
+  // center the installation box
+  $('.modal-content').center(48);
+
   // setup the message events
   $('.message').message();
 

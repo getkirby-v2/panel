@@ -9,7 +9,7 @@ return function($page) {
   // sorting needed
   if($blueprint->pages()->num()->mode() == 'default' and $siblings->count() > 0) {
 
-    $options = array('' => l('pages.toggle.invisible'), '--' => '--');
+    $options = array('' => l('pages.toggle.invisible'), '-' => '-');
     $n       = 1;
 
     foreach($siblings as $sibling) {

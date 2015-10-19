@@ -18,6 +18,7 @@ return function() {
     )
   ));
 
+  $form->attr('autocomplete', 'off');
   $form->data('autosubmit', 'native');
   $form->style('centered');
   

@@ -6,3 +6,11 @@
     </div>
   </div>
 </div> 
+
+<script>
+
+$(function() {
+  $('.modal-content').center(48);
+});
+
+</script>

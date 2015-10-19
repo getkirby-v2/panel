@@ -24,7 +24,8 @@ return function() {
       'label'        => 'installation.signup.email.label',
       'placeholder'  => 'installation.signup.email.placeholder',
       'type'         => 'email',
-      'required'     => true
+      'required'     => true,
+      'autocomplete' => false,
     ),
 
     'password' => array(
@@ -46,6 +47,7 @@ return function() {
 
   ));
 
+  $form->attr('autocomplete', 'off');
   $form->data('autosubmit', 'native');
   $form->style('centered');
 

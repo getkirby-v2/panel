@@ -304,6 +304,9 @@ form.loading:after {
   appearance: none;
   border-radius: 0;
 }
+.input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px white inset !important;
+}
 .input:focus {
   outline: 0;
   border-color: #8dae28;

@@ -26,6 +26,7 @@ class Assets {
       'vendors/jquery.ui.js',
       'vendors/jquery.ui.touch.js',
       'vendors/jquery.autosize.js',
+      'vendors/jquery.center.js',
       'vendors/jquery.drop.js',
       'vendors/jquery.filereader.js',
       'vendors/jquery.upload.js',

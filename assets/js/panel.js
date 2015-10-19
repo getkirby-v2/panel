@@ -5049,6 +5049,50 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
 }(window.jQuery || window.$)); // jQuery or jQuery-like library, such as Zepto
 (function($) {
 
+  $.fn.center = function(margin) {
+
+    return this.each(function() {
+
+      if($(this).data('center')) {
+        return $(this).data('center');
+      } else {
+
+        var box    = $(this);
+        var win    = $(window);
+        var height = function() {
+          return box.height() + margin;
+        }
+
+        box.data('height', height());
+
+        $(document).on('keyup.center', function() {
+          box.data('height', height());
+          win.trigger('resize.center');
+        });
+
+        win.on('resize.center', function() {
+          if(win.height() <= box.data('height') + margin) {
+            box.css({
+              'top'        : 'auto',
+              'margin-top' : 0
+            });
+          } else {
+            box.css({
+              'top'        : '50%',
+              'margin-top' : -(Math.round(box.data('height') / 2))
+            });
+          }
+        }).trigger('resize.center');
+
+      }
+
+    });
+
+  };
+
+})(jQuery);
+(function($) {
+
   $.fn.drop = function(options) {
     if(options == 'destroy') {
       return this.off('dragenter.drop dragover.drop dragexit.drop dragleave.drop dragend.drop drop.drop');
@@ -6461,6 +6505,7 @@ $.fn.message = function() {
       message.remove();
       form.find('.field-with-error').removeClass('field-with-error');
       form.find('[autofocus]').focus();
+      $(document).trigger('keyup.center');
     });
 
     message.on('click', function() {
@@ -6864,27 +6909,6 @@ var Modal = function(app) {
   // create a new modal root
   var root = $('<div class="modal" tabindex="0"></div>');
 
-  var resize = function() {
-
-    var content = $('.modal-content');
-    var form    = content.find('.form');
-    
-    $(window).data('height', form.outerHeight());
-
-    $(document).on('keyup.modal', function() {
-      $(window).data('height', form.outerHeight()).trigger('resize.modal');
-    });
-
-    $(window).on('resize.modal', function() {
-      if($(window).height() <= $(window).data('height')) {
-        content.addClass('modal-content-fixed');
-      } else {
-        content.removeClass('modal-content-fixed');
-      }
-    }).trigger('resize.modal');
-
-  };
-
   // checks if the modal is opened in an overlay
   var isOverlay = function() {
     return $('.modal').length > 0;
@@ -6903,7 +6927,7 @@ var Modal = function(app) {
     content.shortcuts();
 
     // enable the content resizer
-    resize(content);
+    content.center(3 * 16);
 
     // close the modal when the cancel button is being clicked
     content.find('.btn-cancel').on('click', function() {
