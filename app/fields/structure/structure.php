@@ -11,10 +11,11 @@ class StructureField extends BaseField {
     )
   );
 
-  public $fields = array();
-  public $entry  = null;
-  public $store  = null;
-  public $style  = 'items';
+  public $fields    = array();
+  public $entry     = null;
+  public $store     = null;
+  public $style     = 'items';
+  public $modalsize = 'medium';
 
   public function routes() {
 
@@ -40,6 +41,11 @@ class StructureField extends BaseField {
         'action'  => 'delete',
       )
     );
+  }
+
+  public function modalsize() {
+    $sizes = array('small', 'medium', 'large');
+    return in_array($this->modalsize, $sizes) ? $this->modalsize : 'medium';
   }
 
   public function style() {

@@ -4,10 +4,11 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
 
   public function add() {
 
-    $self  = $this;
-    $page  = $this->model();
-    $store = $this->store($page);
-    $form  = $this->form('add', array($page, $store), function($form) use($page, $store, $self) {
+    $self      = $this;
+    $page      = $this->model();
+    $store     = $this->store($page);
+    $modalsize = $this->field()->modalsize();
+    $form      = $this->form('add', array($page, $store), function($form) use($page, $store, $self) {
 
       $form->validate();
 
@@ -20,17 +21,18 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
       $self->redirect($page);
     });
 
-    return $this->modal('add', compact('form'));
+    return $this->modal('add', compact('form', 'modalsize'));
 
   }
 
   public function update($entryId) {
 
-    $self  = $this;
-    $page  = $this->model();
-    $store = $this->store($page);
-    $entry = $store->find($entryId);
-    $form  = $this->form('update', array($page, $store, $entry), function($form) use($page, $store, $self, $entryId) {
+    $self      = $this;
+    $page      = $this->model();
+    $store     = $this->store($page);
+    $entry     = $store->find($entryId);
+    $modalsize = $this->field()->modalsize();
+    $form      = $this->form('update', array($page, $store, $entry), function($form) use($page, $store, $self, $entryId) {
 
       // run the form validator
       $form->validate();
@@ -45,7 +47,7 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
 
     });
 
-    return $this->modal('update', compact('form'));
+    return $this->modal('update', compact('form', 'modalsize'));
         
   }
 
