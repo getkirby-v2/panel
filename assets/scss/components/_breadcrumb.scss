@@ -46,6 +46,9 @@
     padding-right: 1.25em;
   }
 }
+.breadcrumb-link:focus {
+  outline: 0;
+}
 .breadcrumb-label {
   display: block;
   white-space: nowrap;
