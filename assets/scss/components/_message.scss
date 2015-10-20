@@ -179,6 +179,8 @@ body > .message-is-alert .message-content:after {
   animation-iteration-count: 1;
   animation-timing-function: ease-out;
   animation-duration: .3s;
+  min-width: 4.5em;
+  text-align: center;
 
   body.ltr & {
     margin-right: 4rem;

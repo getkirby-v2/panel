@@ -5094,14 +5094,28 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
 (function($) {
 
   $.fn.drop = function(options) {
+
     if(options == 'destroy') {
       return this.off('dragenter.drop dragover.drop dragexit.drop dragleave.drop dragend.drop drop.drop');
     } else {
-      return this.on('dragenter.drop dragover.drop dragexit.drop dragleave.drop dragend.drop drop.drop', function(e) {      
+
+      var enter;
+
+      return this.on('dragenter.drop dragover.drop dragexit.drop dragleave.drop dragend.drop drop.drop', function(e) {
+
         e.stopPropagation();
         e.preventDefault();
+
+        if(e.type == 'dragenter') {
+          enter = e.target;
+        } else if(e.type == 'dragleave' && enter !== e.target) {
+          return;
+        }
+
         if(options[e.type]) options[e.type].apply(this, [e]);
+
       });
+
     }
   };
 
@@ -6479,6 +6493,15 @@ var Focus = function() {
     };
 
     $(document).filedrop('destroy').filedrop({
+      dragenter : function() {
+        $('body').addClass('over');
+      },
+      drop: function() {
+        $('body').removeClass('over');
+      },
+      dragleave: function() {
+        $('body').removeClass('over');
+      },
       files : function(uploads) {
         upload(uploads);
       }

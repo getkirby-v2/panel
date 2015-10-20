@@ -29,6 +29,15 @@
     };
 
     $(document).filedrop('destroy').filedrop({
+      dragenter : function() {
+        $('body').addClass('over');
+      },
+      drop: function() {
+        $('body').removeClass('over');
+      },
+      dragleave: function() {
+        $('body').removeClass('over');
+      },
       files : function(uploads) {
         upload(uploads);
       }
