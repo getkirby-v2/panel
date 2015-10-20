@@ -37,7 +37,25 @@ class Structure {
   }
 
   public function fields() {
-    return $this->config->fields();
+    $fields = $this->config->fields();
+
+    // make sure that no unwanted options or fields 
+    // are being included here
+    foreach($fields as $name => $field) {
+
+      // remove all structure fields within structures
+      if($field['type'] == 'structure') {
+        unset($fields[$name]);
+
+      // remove all buttons from textareas
+      } else if($field['type'] == 'textarea') {
+        $fields[$name]['buttons'] = false;
+      }
+
+    }
+
+    return $fields;
+
   }
 
   public function data() {
