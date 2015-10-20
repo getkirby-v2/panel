@@ -94,6 +94,7 @@ class Blueprint extends Obj {
   static public function exists($name) {
     return (
       file_exists(static::$root . DS . strtolower($name) . '.php') or
+      file_exists(static::$root . DS . strtolower($name) . '.yml') or
       file_exists(static::$root . DS . strtolower($name) . '.yaml')
     );
   }

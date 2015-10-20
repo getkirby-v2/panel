@@ -65,7 +65,7 @@ class Panel {
     return array(
       'panel.language'         => 'en',
       'panel.stylesheet'       => null,
-      'panel.kirbytext'        => false,
+      'panel.kirbytext'        => true,
       'panel.session.timeout'  => 120,
       'panel.session.lifetime' => 0,
       'panel.info.license'     => true,
