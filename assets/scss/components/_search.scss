@@ -13,6 +13,21 @@
   border: 0;
   background: #8dae28;
 }
+.search-input::-webkit-input-placeholder {
+  color: #404f12;  
+}
+.search-input:-moz-placeholder {
+  color: #404f12;  
+}
+.search-input::-moz-placeholder {
+  color: #404f12;  
+}
+.search-input:-ms-input-placeholder {
+  color: #404f12;
+}
+.search-input:focus {
+  outline: 0;
+}
 .search-section {
   padding: .5em;
   border-bottom: 1px solid rgba(255,255,255, .2);
