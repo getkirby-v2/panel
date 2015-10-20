@@ -57,7 +57,7 @@ class Assets {
 
     );
 
-    return static::combine('js', $files, false);
+    return static::combine('js', $files, true);
 
   }
 

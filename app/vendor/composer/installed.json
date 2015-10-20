@@ -1,17 +1,17 @@
 [
     {
         "name": "tedivm/jshrink",
-        "version": "v1.0.1",
-        "version_normalized": "1.0.1.0",
+        "version": "v1.1.0",
+        "version_normalized": "1.1.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/tedious/JShrink.git",
-            "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078"
+            "reference": "688527a2e854d7935f24f24c7d5eb1b604742bf9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/tedious/JShrink/zipball/7575d9d96f113bc7c1c28ec8231ee086751a9078",
-            "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078",
+            "url": "https://api.github.com/repos/tedious/JShrink/zipball/688527a2e854d7935f24f24c7d5eb1b604742bf9",
+            "reference": "688527a2e854d7935f24f24c7d5eb1b604742bf9",
             "shasum": ""
         },
         "require": {
@@ -22,7 +22,7 @@
             "phpunit/phpunit": "4.0.*",
             "satooshi/php-coveralls": "dev-master"
         },
-        "time": "2014-11-11 03:54:14",
+        "time": "2015-07-04 07:35:09",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

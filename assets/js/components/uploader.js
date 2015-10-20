@@ -29,7 +29,7 @@
     };
 
     $(document).filedrop('destroy').filedrop({
-      dragenter : function() {
+      dragenter : function(e) {      
         $('body').addClass('over');
       },
       drop: function() {
