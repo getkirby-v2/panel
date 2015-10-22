@@ -6,7 +6,8 @@ var Search = function() {
 
   $(document).on('click', '[href="#search"]', function(e) {
     e.stopPropagation();
-    $('#search').show().find('.search-input').focus();
+    $(document).find('.dropdown').not('.search').hide();
+    $('#search').toggle().find('.search-input').focus();
     return false;
   });
 
