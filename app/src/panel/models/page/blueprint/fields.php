@@ -12,6 +12,14 @@ class Fields extends Collection {
 
     foreach($fields as $name => $field) {
 
+      // import a field by name
+      if(is_string($field)) {
+        $field = array(
+          'name'    => $name,
+          'extends' => $field
+        );
+      }
+
       // add the name to the field
       $field['name'] = $name;
 

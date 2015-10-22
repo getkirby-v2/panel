@@ -3,6 +3,8 @@
 namespace Kirby\Panel\Models\Page\Blueprint;
 
 use A;
+use Data;
+use Exception;
 use Obj;
 
 class Field extends Obj {
@@ -16,6 +18,10 @@ class Field extends Obj {
   public $translate = true;
 
   public function __construct($params = array()) {
+
+    if(!empty($params['extends'])) {
+      $params = $this->_extend($params);
+    }
 
     if(a::get($params, 'name') == 'title') {
       $params['type'] = 'title';
@@ -33,6 +39,22 @@ class Field extends Obj {
     $params['default'] = $this->_default(a::get($params, 'default'));
 
     parent::__construct($params);
+
+  }
+
+  public function _extend($params) {
+
+    $extends = $params['extends'];
+    $files   = glob(kirby()->roots()->blueprints() . DS . 'fields' . DS . $extends . '.{yml,yaml,php}', GLOB_BRACE);
+
+    if(empty($files)) {
+      throw new Exception('The field cannot be extended');
+    }
+
+    $yaml   = data::read($files[0], 'yaml');
+    $params = a::merge($yaml, $params);
+
+    return $params;
 
   }
 
