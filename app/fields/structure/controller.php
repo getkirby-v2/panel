@@ -27,10 +27,17 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
 
   public function update($entryId) {
 
-    $self      = $this;
-    $page      = $this->model();
-    $store     = $this->store($page);
-    $entry     = $store->find($entryId);
+    $self  = $this;
+    $page  = $this->model();
+    $store = $this->store($page);
+    $entry = $store->find($entryId);
+
+    if(!$entry) {
+      return $this->modal('error', array(
+        'text' => 'The item could not be found'
+      ));
+    }
+
     $modalsize = $this->field()->modalsize();
     $form      = $this->form('update', array($page, $store, $entry), function($form) use($page, $store, $self, $entryId) {
 
@@ -57,7 +64,14 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
     $page  = $this->model();
     $store = $this->store($page);
     $entry = $store->find($entryId);
-    $form  = $this->form('delete', $page, function() use($self, $page, $store, $entryId) {
+
+    if(!$entry) {
+      return $this->modal('error', array(
+        'text' => 'The item could not be found'
+      ));
+    }
+
+    $form = $this->form('delete', $page, function() use($self, $page, $store, $entryId) {
       $store->delete($entryId);
       $self->notify(':)');
       $self->redirect($page);
