@@ -108,6 +108,9 @@ class StructureField extends BaseField {
       $text = $this->entry;
 
       foreach((array)$data as $key => $value) {
+        if(is_array($value)) {
+          $value = implode(', ', array_values($value));
+        }
         $text = str_replace('{{' . $key . '}}', $value, $text);
       }
 
