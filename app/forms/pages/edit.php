@@ -5,6 +5,9 @@ return function($page) {
   // create the form
   $form = new Kirby\Panel\Form($page->getFormFields(), $page->getFormData());
 
+  // add the blueprint name as css class
+  $form->addClass('form-blueprint-' . $page->blueprint()->name());
+
   // center the submit button
   $form->centered = true;
 
