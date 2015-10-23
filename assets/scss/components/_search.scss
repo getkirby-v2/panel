@@ -68,9 +68,11 @@
   color: #999;
   padding-top: .125em;
 }
+.search-section li:hover a,
 .search-section li.active a {
   color: #8dae28;
 }
+.search-section li:hover a small,
 .search-section li.active a small {
   color: #fff;
 }
