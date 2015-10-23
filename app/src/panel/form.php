@@ -5,6 +5,7 @@ namespace Kirby\Panel;
 use A;
 use Brick;
 use Collection;
+use Exception;
 use Dir;
 use F;
 use R;
@@ -287,6 +288,11 @@ class Form extends Brick {
   static public function field($type, $options = array()) {
 
     $class = $type . 'field';
+
+    if(!class_exists($class)) {
+      throw new Exception('The ' . $type . ' field is missing. Please add it to your installed fields or remove it from your blueprint');      
+    }
+
     $field = new $class;
 
     foreach($options as $key => $value) {
