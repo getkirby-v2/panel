@@ -66,7 +66,7 @@ var app = {
         // meta+enter
         case 83:
         case 13:
-          if(!e.metaKey) return true;
+          if(!e.metaKey && !e.ctrlKey) return true;
 
           // check for an opened modal
           if(!app.hasModal()) {
