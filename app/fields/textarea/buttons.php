@@ -64,26 +64,26 @@ buttons::$setup = array(
   'bold' => array(
     'label'    => l::get('fields.textarea.buttons.bold.label'),
     'text'     => l::get('fields.textarea.buttons.bold.text'),
-    'shortcut' => 'meta+b',
+    'shortcut' => 'meta+b, ctrl+b',
     'template' => '**{text}**',
     'icon'     => 'bold'
   ),
   'italic' => array(
     'label'    => l::get('fields.textarea.buttons.italic.label'),
     'text'     => l::get('fields.textarea.buttons.italic.text'),
-    'shortcut' => 'meta+i',
+    'shortcut' => 'meta+i, ctrl+i',
     'template' => '*{text}*',
     'icon'     => 'italic'
   ),
   'link' => array(
     'label'    => l::get('fields.textarea.buttons.link.label'),
-    'shortcut' => 'meta+shift+l',
+    'shortcut' => 'meta+shift+l, ctrl+shift+l',
     'action'   => 'link',
     'icon'     => 'chain'
   ),
   'email' => array(
     'label'    => l::get('fields.textarea.buttons.email.label'),
-    'shortcut' => 'meta+shift+e',
+    'shortcut' => 'meta+shift+e, ctrl+shift+e',
     'action'   => 'email',
     'icon'     => 'envelope'
   ),
