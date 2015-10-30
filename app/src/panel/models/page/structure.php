@@ -52,6 +52,7 @@ class Structure {
         $fields[$name]['buttons'] = false;
       }
 
+      $fields[$name]["page"] = $this->page;
     }
 
     return $fields;
