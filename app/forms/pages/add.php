@@ -41,14 +41,14 @@ return function($page) {
   $addButton->addClass('btn btn-rounded');
   $addButton->attr('type', 'submit');
   $addButton->attr('title', l('add'));
-  $addButton->html(l('ok'));
+  $addButton->html(l('add'));
 
   $editButton = new Brick('button');
   $editButton->addClass('btn btn-rounded btn-addit');
   $editButton->attr('type', 'submit');
   $editButton->attr('title', l('addit'));
   $editButton->data('action', $page->url('add/edit'));
-  $editButton->html(icon('pencil'));
+  $editButton->html(l('addit'));
 
   $form->buttons->submit = new Brick('span');
   $form->buttons->submit->addClass('btn-submit');
