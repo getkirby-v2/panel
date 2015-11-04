@@ -113,7 +113,10 @@ class Panel {
     $this->kirby->plugins();
 
     // setup the form plugin
-    form::setup($this->roots->fields, $this->kirby->roots()->fields());
+    form::$root = array(
+      'default' => $this->roots->fields,
+      'custom'  => $this->kirby->roots()->fields()
+    );
 
     // load all available routes
     $this->routes = array_merge($this->routes, require($this->roots->config . DS . 'routes.php'));

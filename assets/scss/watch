@@ -1,5 +1,0 @@
-#!/bin/sh
-
-sass --watch ./:../css --style compressed
-
-exit 0

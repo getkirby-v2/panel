@@ -8,6 +8,7 @@
 
   <?php echo $css ?>
   <?php echo $formcss ?>
+  <?php echo $pluginscss ?>
 
   <?php if($stylesheet = kirby()->option('panel.stylesheet')): ?>
   <?php echo css($stylesheet) ?>
@@ -16,6 +17,7 @@
   <?php echo $js ?>
   <?php echo $appjs ?>
   <?php echo $formjs ?>
+  <?php echo $pluginsjs ?>
 
 </head>
 <body class="app <?php __($direction) ?>" data-csrf="<?php __($csrf) ?>">

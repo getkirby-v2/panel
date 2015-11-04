@@ -11,7 +11,7 @@ use F;
 use R;
 use Str;
 
-use JShrink\Minifier;
+use Kirby\Panel\Form\Plugins;
 
 class Form extends Brick {
 
@@ -25,6 +25,7 @@ class Form extends Brick {
   public $buttons     = null;
   public $centered    = false;
   public $parentField = false;
+  public $plugins     = null;
 
   public function __construct($fields = array(), $values = array(), $parent = false) {
 
@@ -32,6 +33,9 @@ class Form extends Brick {
 
     // if Form is part of a structureField, set structureField name
     $this->parentField = $parent;
+
+    // initialize all field plugins
+    $this->plugins = new Plugins();
 
     $this->values($values);
     $this->fields($fields);
@@ -158,89 +162,8 @@ class Form extends Brick {
     return $this->serialize();
   }
 
-  static public function files() {
-
-    if(!is_null(static::$files)) return static::$files;
-
-    static::$files = array();
-
-    $files = dir::read(static::$root['default']);
-
-    if(isset(static::$root['custom'])) {
-      $files = array_merge($files, dir::read(static::$root['custom']));
-    }
-
-    foreach($files as $file) {
-
-      $name = strtolower($file) . 'field';
-
-      if(isset(static::$root['custom']) and is_dir(static::$root['custom'] . DS . $file)) {
-        $root = static::$root['custom'] . DS . $file . DS . $file . '.php';
-      } else {
-        $root = static::$root['default'] . DS . $file . DS . $file . '.php';
-      }
-
-      if(file_exists($root)) {
-        static::$files[$name] = $root;
-      }
-
-    }
-
-    return static::$files;
-
-  }
-
-  static public function assets($type, $compress = true) {
-
-    $files    = static::files();
-    $output   = array();
-
-    foreach(static::files() as $field => $file) {
-      if(isset($field::$assets) and isset($field::$assets[$type])) {
-        foreach($field::$assets[$type] as $f) {
-          $output[] = f::read(dirname($file) . DS . 'assets' . DS . $type . DS . $f);
-        }
-      }
-    }
-
-    $output = implode(PHP_EOL . PHP_EOL, $output);
-
-    if($compress) {
-      if($type == 'css') {
-        $output = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $output);
-        $output = trim(str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), ' ', $output));        
-      } else {
-        $output = Minifier::minify($output, array('flaggedComments' => false));
-      }
-    }
-
-    return $output;
-
-  }
-
-  static public function js($compress = true) {
-    return static::assets('js', $compress);
-  }
-
-  static public function css($compress = true) {
-    return static::assets('css', $compress);
-  }
-
-  static public function setup($defaultFieldsRoot, $customFieldsRoot = null) {
-
-    static::$root['default'] = $defaultFieldsRoot;
-    static::$root['custom']  = $customFieldsRoot;
-
-    $classes = static::files();
-
-    load($classes);
-
-    foreach($classes as $classname => $root) {
-      if(method_exists($classname, 'setup')) {
-        call(array($classname, 'setup'));
-      }
-    }
-
+  public function plugins() {
+    return $this->plugins;
   }
 
   public function style($style) {

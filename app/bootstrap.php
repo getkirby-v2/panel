@@ -15,7 +15,6 @@ load(array(
   'kirby\\panel\\view'                            => 'panel' . DS . 'view.php',
   'kirby\\panel\\layout'                          => 'panel' . DS . 'layout.php',
   'kirby\\panel\\snippet'                         => 'panel' . DS . 'snippet.php',
-  'kirby\\panel\\assets'                          => 'panel' . DS . 'assets.php',
   'kirby\\panel\\installer'                       => 'panel' . DS . 'installer.php',
   'kirby\\panel\\widgets'                         => 'panel' . DS . 'widgets.php',
   'kirby\\panel\\topbar'                          => 'panel' . DS . 'topbar.php',
@@ -27,6 +26,7 @@ load(array(
   
   // form
   'kirby\\panel\\form'                            => 'panel' . DS . 'form.php',
+  'kirby\\panel\\form\\plugins'                   => 'panel' . DS . 'form' . DS . 'plugins.php',
   'kirby\\panel\\form\\fieldoptions'              => 'panel' . DS . 'form' . DS . 'fieldoptions.php',
 
   // models
@@ -63,6 +63,5 @@ load(array(
 class_alias('Kirby\\Panel\\Form\\FieldOptions', 'FieldOptions');
 class_alias('Kirby\\Panel', 'Panel');
 
-include(__DIR__ . DS . 'vendor' . DS . 'autoload.php');
 include(__DIR__ . DS . 'helpers.php');
 

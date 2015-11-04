@@ -255,13 +255,13 @@ return array(
 
   // form assets
   array(
-    'pattern' => 'assets/js/form.js',
+    'pattern' => 'plugins.js',
     'action'  => 'AssetsController::js',
     'method'  => 'GET', 
     'filter'  => 'auth'
   ),
   array(
-    'pattern' => 'assets/css/form.css',
+    'pattern' => 'plugins.css',
     'action'  => 'AssetsController::css',
     'method'  => 'GET',
     'filter'  => 'auth'

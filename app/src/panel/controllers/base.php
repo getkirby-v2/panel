@@ -40,22 +40,32 @@ class Base extends Obj {
 
   public function layout($type, $data = array()) {
 
+    $version  = panel()->version();
+    $base     = panel()->urls()->index();
+    $cssbase  = panel()->urls()->css();
+    $jsbase   = panel()->urls()->js();
+
     $defaults = array(
       'title'     => panel()->site()->title() . ' | Panel',
       'direction' => panel()->direction(),
       'meta'      => $this->snippet('meta'),
-      'css'       => Assets::css(),
-      'js'        => Assets::js(),
+      'css'       => css($cssbase . '/panel.css?v=' . $version),
+      'js'        => js($jsbase . '/dist/panel.min.js?v=' . $version),
       'content'   => ''
     );    
 
     switch($type) {
       case 'app':
-        $defaults['topbar']  = '';
-        $defaults['csrf']    = panel()->csrf();
-        $defaults['formcss'] = css(panel()->urls()->css() . '/form.css?v=' . panel()->version());
-        $defaults['formjs']  = js(panel()->urls()->js()   . '/form.js?v='  . panel()->version());
-        $defaults['appjs']   = js(panel()->urls()->js()   . '/app.js?v='   . panel()->version());
+        $defaults['topbar']     = '';
+        $defaults['csrf']       = panel()->csrf();
+        $defaults['formcss']    = css($cssbase . '/form.min.css?v=' . $version);
+        $defaults['formjs']     = js($jsbase   . '/dist/form.min.js?v='  . $version);
+        $defaults['appjs']      = js($jsbase   . '/dist/app.min.js?v='   . $version);
+
+        // plugin stuff
+        $defaults['pluginscss'] = css($base . '/plugins.css?v='  . $version);
+        $defaults['pluginsjs']  = js($base . '/plugins.js?v='  . $version);
+
         break;
       case 'base':
         break;
