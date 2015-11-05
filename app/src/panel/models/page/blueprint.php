@@ -5,6 +5,7 @@ namespace Kirby\Panel\Models\Page;
 use A;
 use Data;
 use Dir;
+use Exception;
 use F;
 use Obj;
 
