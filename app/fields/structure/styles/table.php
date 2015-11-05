@@ -30,35 +30,3 @@
     <?php endforeach ?>
   </tbody>
 </table>
-
-<script>
-
-// (function() {
-
-//   var structure = $('.structure');
-//   var table     = structure.find('.structure-table tbody');
-//   var drag      = dragula([table[0]]);
-
-//   drag.on('cloned', function(clone, original, type) {
-//     $(clone).addClass('structure-draggable-helper');
-//   });
-
-//   drag.on('drop', function(e, target, source) {
-
-//     var ids = [];
-
-//     $('.structure-table tbody tr').each(function() {
-//       ids.push($(this).attr('id').replace('structure-entry-', ''));
-//     });
-
-//     $.post(structure.data('api'), {ids: ids}, function() {
-//       app.content.reload();
-//     });
-
-//   });
-
-
-
-// })();
-
-</script>
