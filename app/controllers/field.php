@@ -2,10 +2,27 @@
 
 class FieldController extends Kirby\Panel\Controllers\Base {
 
-  public function route($id, $fieldName, $fieldType, $path) {
+  public function forFile($pageId, $filename, $fieldName, $fieldType, $path) {
 
-    $page  = $this->page($id);
+    $page = $this->page($pageId);
+    $file = $page->file(rawurldecode($filename));
+    $form = $file->form('edit', function() {});
+
+    return $this->route($file, $form, $fieldName, $fieldType, $path);
+
+  }
+
+  public function forPage($pageId, $fieldName, $fieldType, $path) {
+
+    $page  = $this->page($pageId);
     $form  = $page->form('edit', function() {});
+
+    return $this->route($page, $form, $fieldName, $fieldType, $path);
+
+  }
+
+  public function route($model, $form, $fieldName, $fieldType, $path) {
+
     $field = $form->fields()->$fieldName;
 
     if(!$field or $field->type() !== $fieldType) {
@@ -34,7 +51,7 @@ class FieldController extends Kirby\Panel\Controllers\Base {
           throw new Exception('The field controller class is missing');
         }
 
-        $controller = new $controllerName($page, $field);
+        $controller = new $controllerName($model, $field);
 
         return call(array($controller, $route->action()), $route->arguments());
 

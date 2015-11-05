@@ -6,7 +6,7 @@ use Collection;
 
 class Fields extends Collection {
 
-  public function __construct($fields = array(), $page = null) {
+  public function __construct($fields = array(), $model) {
 
     if(empty($fields) or !is_array($fields)) $fields = array();
 
@@ -22,12 +22,9 @@ class Fields extends Collection {
 
       // add the name to the field
       $field['name'] = $name;
-
-      // add the page to the field
-      if($page) $field['page'] = $page;        
-      
+          
       // create the field object
-      $field = new Field($field);
+      $field = new Field($field, $model);
 
       // append it to the collection
       $this->append($name, $field);

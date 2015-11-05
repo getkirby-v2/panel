@@ -26,6 +26,7 @@ class BaseField {
   public $error = false;
   public $parentField = false;
   public $page;
+  public $model;
   
   public function root() {
     $obj = new ReflectionClass($this);

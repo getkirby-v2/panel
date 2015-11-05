@@ -87,9 +87,9 @@ class Blueprint extends Obj {
 
   }
 
-  public function fields($page = null) {
+  public function fields($model) {
     $fields = a::get($this->yaml, 'fields', array());
-    return new Fields($fields, $page);
+    return new Fields($fields, $model);
   }
 
   static public function exists($name) {

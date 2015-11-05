@@ -45,7 +45,7 @@ class File extends \File {
 
 
   public function getFormFields() {
-    return $this->page()->blueprint()->files()->fields($this->page())->toArray();
+    return $this->page()->blueprint()->files()->fields($this)->toArray();
   }
 
   public function getFormData() {

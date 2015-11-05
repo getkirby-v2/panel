@@ -46,14 +46,12 @@ class Files extends Obj {
       $this->sort       = a::get($params, 'sort', $this->sort);
       $this->sortable   = a::get($params, 'sortable', $this->sortable);
       $this->sanitize   = a::get($params, 'sanitize', true);
-
-
     }
 
   }
 
-  public function fields($page = null) {
-    return new Fields($this->fields, $page);
+  public function fields($file) {
+    return new Fields($this->fields, $file);
   }
 
 }

@@ -17,7 +17,7 @@ class Field extends Obj {
   public $required  = false;
   public $translate = true;
 
-  public function __construct($params = array()) {
+  public function __construct($params = array(), $model) {
 
     if(!empty($params['extends'])) {
       $params = $this->_extend($params);
@@ -33,6 +33,16 @@ class Field extends Obj {
 
     if(empty($params['type'])) {
       $params['type'] = 'text';
+    }
+
+    // register the parent model
+    $params['model'] = $model;
+
+    // try to fetch the parent page from the model
+    if(is_a($model, 'Page')) {
+      $params['page'] = $model;
+    } else if(is_a($model, 'File')) {
+      $params['page'] = $model->page();
     }
 
     // create the default value

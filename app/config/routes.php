@@ -97,10 +97,19 @@ return array(
   // Field routes
   array(
     'pattern' => array(
+      'site(/)file/(:any)/field/(:any)/(:any)/(:all)',
+      'pages/(:all)/file/(:any)/field/(:any)/(:any)/(:all)',
+    ),
+    'action' => 'FieldController::forFile', 
+    'filter' => 'auth',
+    'method' => 'GET|POST'
+  ),
+  array(
+    'pattern' => array(
       'site(/)field/(:any)/(:any)/(:all)',
       'pages/(:all)/field/(:any)/(:any)/(:all)',
     ),
-    'action' => 'FieldController::route', 
+    'action' => 'FieldController::forPage', 
     'filter' => 'auth',
     'method' => 'GET|POST'
   ),

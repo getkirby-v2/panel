@@ -29,7 +29,7 @@ class Buttons {
       if(!in_array($key, $this->buttons)) continue;
 
       if(!empty($button['action'])) {
-        $action = $this->textarea->page()->url('field/' . $this->textarea->name() . '/textarea/' . $button['action']);
+        $action = $this->textarea->model()->url('field/' . $this->textarea->name() . '/textarea/' . $button['action']);
       } else {
         $action = null;
       }
