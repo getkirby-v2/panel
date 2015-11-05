@@ -8,6 +8,8 @@ use Obj;
 use Str;
 use Yaml;
 
+use Kirby\Panel\Models\Page\Blueprint\Fields;
+
 class Structure {
 
   protected $page;
@@ -47,18 +49,30 @@ class Structure {
       if($field['type'] == 'structure') {
         unset($fields[$name]);
 
-      // remove all buttons from textareas
+      // remove unsupported buttons from textareas
       } else if($field['type'] == 'textarea') {
-        $fields[$name]['buttons'] = false;
+
+        $buttons = $fields[$name]['buttons'];
+
+        if(is_array($buttons)) {
+
+          $index = array_search("email", $buttons);
+          if($index >= 0) array_splice($buttons, $index, 1);
+
+          $index = array_search("link", $buttons);
+          if($index >= 0) array_splice($buttons, array_search($index, $buttons), 1);
+
+          $fields[$name]['buttons'] = $buttons;
+
+        } else if($buttons == null)
+
+          $fields[$name]['buttons'] = ["bold", "italic"];
+
       }
-
-      // add the page to the fields
-      $fields[$name]['page'] = $this->page;
-
     }
 
-    return $fields;
-
+    $fields = new Fields($fields, $this->page);
+    return $fields->toArray();
   }
 
   public function data() {
