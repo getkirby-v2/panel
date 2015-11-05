@@ -10,6 +10,7 @@ return array(
     // global
     'cancel' => 'Annuler',
     'add' => 'Ajouter',
+    'addit' => 'Ajouter & Éditer',
     'save' => 'Enregistrer',
     'saved' => 'Enregistré !',
     'change' => 'Modifier',
