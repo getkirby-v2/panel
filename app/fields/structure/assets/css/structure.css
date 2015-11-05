@@ -76,8 +76,9 @@
   width: 3rem;
   text-align: center;
 }
-.structure-table-options a {
+.structure-table .structure-table-options a {
   text-align: center;
+  cursor: pointer;
 }
 
 .structure-sortable-helper {
