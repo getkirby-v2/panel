@@ -6967,8 +6967,18 @@ var Search = function() {
 
   $(document).on('click', '[href="#search"]', function(e) {
     e.stopPropagation();
-    $('#search').show().find('.search-input').focus();
+
+    var $search = $('#search');
+
+    if($search.is(':visible')) {
+      $search.hide();
+    } else {
+      $search.show();
+      $search.find('.search-input').focus();
+    }
+
     return false;
+
   });
 
   $(document).on('click', '#search', function(e) {
