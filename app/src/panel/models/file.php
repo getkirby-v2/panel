@@ -3,6 +3,7 @@
 namespace Kirby\Panel\Models;
 
 use C;
+use Kirby\Panel\Structure;
 use Kirby\Panel\Models\File\Menu;
 use Kirby\Panel\Models\Page\Uploader;
 
@@ -43,9 +44,12 @@ class File extends \File {
     return array_merge($data, $input);
   }
 
+  public function getBlueprintFields() {
+    return $this->blueprint()->files()->fields($this);
+  }
 
   public function getFormFields() {
-    return $this->page()->blueprint()->files()->fields($this)->toArray();
+    return $this->getBlueprintFields()->toArray();
   }
 
   public function getFormData() {
@@ -209,6 +213,14 @@ class File extends \File {
 
     return $this;
 
+  }
+
+  public function blueprint() {
+    return $this->page->blueprint();
+  }
+
+  public function structure() {
+    return new Structure($this, 'file_' . $this->page()->id() . '_' . $this->filename() . '_' . $this->site()->lang());
   }
 
 }

@@ -11,6 +11,7 @@ use V;
 
 use Kirby\Panel\Snippet;
 use Kirby\Panel\Topbar;
+use Kirby\Panel\Structure;
 use Kirby\Panel\Collections\Children;
 use Kirby\Panel\Collections\Files;
 use Kirby\Panel\Models\Page\AddButton;
@@ -21,7 +22,6 @@ use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Editor;
 use Kirby\Panel\Models\Page\Sidebar;
 use Kirby\Panel\Models\Page\Uploader;
-use Kirby\Panel\Models\Page\Structure;
 use Kirby\Panel\Models\User\History;
 
 class Page extends \Page {
@@ -131,8 +131,8 @@ class Page extends \Page {
     return panel()->form('pages/' . $action, $this, $callback);
   }
 
-  public function structure($field) {
-    return new Structure($this, $field);
+  public function structure() {
+    return new Structure($this, 'page_' . $this->id() . '_' . $this->site->lang());
   }
 
   public function getFormData() {
@@ -150,8 +150,12 @@ class Page extends \Page {
 
   }
 
+  public function getBlueprintFields() {
+    return $this->blueprint()->fields($this);
+  }
+
   public function getFormFields() {
-    return $this->blueprint()->fields($this)->toArray();
+    return $this->getBlueprintFields()->toArray();
   }
 
   public function children() {
@@ -394,6 +398,7 @@ class Page extends \Page {
     $data = $this->filterInput($input);
 
     $this->changes()->discard();
+    
     parent::update($data, $lang);
 
     $this->updateNum();

@@ -13,7 +13,7 @@ class StructureField extends BaseField {
 
   public $fields    = array();
   public $entry     = null;
-  public $store     = null;
+  public $structure = null;
   public $style     = 'items';
   public $modalsize = 'medium';
 
@@ -53,11 +53,11 @@ class StructureField extends BaseField {
     return in_array($this->style, $styles) ? $this->style : 'items';
   }
 
-  public function store() {
-    if(!is_null($this->store)) {
-      return $this->store;
+  public function structure() {
+    if(!is_null($this->structure)) {
+      return $this->structure;
     } else {
-      return $this->store = $this->page->structure($this->name);      
+      return $this->structure = $this->model->structure()->forField($this->name);      
     }
   }
 
@@ -75,22 +75,12 @@ class StructureField extends BaseField {
 
   }
 
-  public function value() {
-
-    if(is_string($this->value)) {
-      $this->value = yaml::decode($this->value);
-    }
-
-    return $this->value;
-
-  }
-
   public function entries() {
-    return $this->store()->data();
+    return $this->structure()->data();
   }
 
   public function result() {
-    return $this->store()->toYaml();
+    return $this->structure()->toYaml();
   }
 
   public function entry($data) {
@@ -132,7 +122,7 @@ class StructureField extends BaseField {
       $add->html('<i class="icon icon-left fa fa-plus-circle"></i>' . l('fields.structure.add'));
       $add->addClass('structure-add-button label-option');
       $add->data('modal', true);
-      $add->attr('href', purl($this->page, 'field/' . $this->name . '/structure/add'));
+      $add->attr('href', purl($this->model, 'field/' . $this->name . '/structure/add'));
 
     } else {
       $add = null;
@@ -149,5 +139,9 @@ class StructureField extends BaseField {
   public function content() {
     return tpl::load(__DIR__ . DS . 'template.php', array('field' => $this));
   }
+
+  public function url($action) {
+    return purl($this->model(), 'field/' . $this->name() . '/structure/' . $action);
+  }  
 
 }

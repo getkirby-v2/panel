@@ -113,6 +113,14 @@ return array(
     'filter' => 'auth',
     'method' => 'GET|POST'
   ),
+  array(
+    'pattern' => array(
+      'users/(:all)/field/(:any)/(:any)/(:all)',
+    ),
+    'action' => 'FieldController::forUser', 
+    'filter' => 'auth',
+    'method' => 'GET|POST'
+  ),
 
   // New Page
   array(

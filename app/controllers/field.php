@@ -21,6 +21,15 @@ class FieldController extends Kirby\Panel\Controllers\Base {
 
   }
 
+  public function forUser($username, $fieldName, $fieldType, $path) {
+
+    $user = panel()->user($username);
+    $form = $user->form('user', function() {});
+
+    return $this->route($user, $form, $fieldName, $fieldType, $path);
+
+  }
+
   public function route($model, $form, $fieldName, $fieldType, $path) {
 
     $field = $form->fields()->$fieldName;

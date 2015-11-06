@@ -6,6 +6,7 @@ use A;
 use Exception;
 use Str;
 
+use Kirby\Panel\Structure;
 use Kirby\Panel\Models\User\Avatar;
 use Kirby\Panel\Models\User\Blueprint;
 use Kirby\Panel\Models\User\History;
@@ -97,14 +98,18 @@ class User extends \User {
     $topbar->append(purl('users'), l('users'));
     $topbar->append($this->url(), $this->username());    
 
-    // if($user === 'user') {
-    //   $topbar->append(purl('users/add'), l('users.index.add'));    
-    // }
+  }
 
+  public function getBlueprintFields() {
+    return $this->blueprint()->fields($this);
   }
 
   public function blueprint() {
     return new Blueprint($this);
+  }
+
+  public function structure() {
+    return new Structure($this, 'user_' . $this->username());
   }
 
   static public function current() {

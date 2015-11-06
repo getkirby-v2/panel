@@ -5,6 +5,7 @@ namespace Kirby\Panel\Models;
 use Exception;
 use Kirby;
 use Kirby\Panel\Snippet;
+use Kirby\Panel\Structure;
 use Kirby\Panel\Topbar;
 use Kirby\Panel\Collections\Files;
 use Kirby\Panel\Collections\Children;
@@ -13,7 +14,6 @@ use Kirby\Panel\Models\Page\AddButton;
 use Kirby\Panel\Models\Page\Blueprint;
 use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Sidebar;
-use Kirby\Panel\Models\Page\Structure;
 use Kirby\Panel\Models\Page\Uploader;
 
 class Site extends \Site {
@@ -198,8 +198,12 @@ class Site extends \Site {
     }    
   }
 
-  public function structure($field) {
-    return new Structure($this, $field);
+  public function structure() {
+    return new Structure($this, 'site_' . $this->lang());
+  }
+
+  public function lang() {
+    return $this->multilang() ? $this->language()->code() : false;
   }
 
 }

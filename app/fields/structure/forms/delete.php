@@ -1,6 +1,6 @@
 <?php 
 
-return function($page) {
+return function($model) {
 
   $form = new Kirby\Panel\Form(array(
     'entry' => array(
@@ -10,7 +10,7 @@ return function($page) {
   ));
 
   $form->style('delete');
-  $form->cancel($page, 'show');
+  $form->cancel($model);
 
   return $form;
 

@@ -19,7 +19,9 @@ load(array(
   'kirby\\panel\\widgets'                         => 'panel' . DS . 'widgets.php',
   'kirby\\panel\\topbar'                          => 'panel' . DS . 'topbar.php',
   'kirby\\panel\\search'                          => 'panel' . DS . 'search.php',
-
+  'kirby\\panel\\structure'                       => 'panel' . DS . 'structure.php',
+  'kirby\\panel\\structure\\store'                => 'panel' . DS . 'structure' . DS . 'store.php',
+  
   // controllers
   'kirby\\panel\\controllers\\base'               => 'panel' . DS . 'controllers' . DS . 'base.php',
   'kirby\\panel\\controllers\\field'              => 'panel' . DS . 'controllers' . DS . 'field.php',
@@ -37,7 +39,6 @@ load(array(
   'kirby\\panel\\models\\page\\sidebar'           => 'panel' . DS . 'models' . DS . 'page' . DS . 'sidebar.php',
   'kirby\\panel\\models\\page\\changes'           => 'panel' . DS . 'models' . DS . 'page' . DS . 'changes.php',
   'kirby\\panel\\models\\page\\uploader'          => 'panel' . DS . 'models' . DS . 'page' . DS . 'uploader.php',
-  'kirby\\panel\\models\\page\\structure'         => 'panel' . DS . 'models' . DS . 'page' . DS . 'structure.php',
   'kirby\\panel\\models\\page\\sorter'            => 'panel' . DS . 'models' . DS . 'page' . DS . 'sorter.php',
   'kirby\\panel\\models\\page\\blueprint'         => 'panel' . DS . 'models' . DS . 'page' . DS . 'blueprint.php',
   'kirby\\panel\\models\\page\\blueprint\\pages'  => 'panel' . DS . 'models' . DS . 'page' . DS . 'blueprint' . DS . 'pages.php',

@@ -16,13 +16,13 @@
     <tr id="structure-entry-<?php echo $entry->id() ?>">
       <?php foreach($field->fields() as $f): ?>
       <td>
-        <a data-modal href="<?php _u($field->page(), 'field/' . $field->name() . '/structure/' . $entry->id() . '/update') ?>">
+        <a data-modal href="<?php __($field->url($entry->id() . '/update')) ?>">
           <?php echo html(@$entry->{$f['name']}, false) ?>
         </a>
       </td>
       <?php endforeach ?>
       <td class="structure-table-options">
-        <a data-modal class="btn" href="<?php _u($field->page(), 'field/' . $field->name() . '/structure/' . $entry->id() . '/delete') ?>">
+        <a data-modal class="btn" href="<?php __($field->url($entry->id() . '/delete')) ?>">
           <?php i('trash-o') ?>
         </a>
       </td>

@@ -53,13 +53,27 @@ class Changes {
     }
 
     s::set('changes', $store);
+
+    // remove all structures from the session as well
+    $this->model->structure()->reset();
+
     return $store;
 
   }
 
-  public function exist($field) {
-    $data = $this->get();
-    return isset($data[$field]);
+  public function differ() {
+
+    $data    = $this->get();
+    $changes = false;
+
+    foreach($data as $field => $value) {
+      if($this->model->{$field}()->value() !== $value) {
+        $changes = true;
+      }
+    }
+
+    return $changes;
+
   }
 
   public function get($field = null) {

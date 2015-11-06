@@ -36,6 +36,8 @@
   <aside class="fileview-sidebar">
 
     <div class="section">
+
+
       <?php echo $form ?>
 
       <nav class="fileview-options">

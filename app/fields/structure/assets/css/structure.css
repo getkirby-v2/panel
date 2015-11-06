@@ -30,9 +30,19 @@
   padding: 1.5em;
   background: #ddd;
 }
+.fileview-sidebar .structure-empty {
+  background: none;
+  border-radius: 5px;
+  border: 1px dashed #ddd;
+  padding: 1rem 1.5rem 1.25rem;
+}
 .structure-empty a {
   border-bottom: 2px solid #aaa;
   margin-left: .5em;
+}
+.fileview-sidebar .structure-empty a {
+  display: inline-block;
+  margin-left: 0;
 }
 .structure-empty a:hover {
   border-color: #000;

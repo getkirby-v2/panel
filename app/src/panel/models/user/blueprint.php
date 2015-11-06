@@ -48,7 +48,7 @@ class Blueprint extends Obj {
 
   public function fields() {
     $fields = (array)a::get($this->yaml, 'fields', array());
-    return new Fields($fields);
+    return new Fields($fields, $this->user);
   }
 
   public function __toString() {

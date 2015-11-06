@@ -5,10 +5,10 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
   public function add() {
 
     $self      = $this;
-    $page      = $this->model();
-    $store     = $this->store($page);
+    $model     = $this->model();
+    $structure = $this->structure($model);
     $modalsize = $this->field()->modalsize();
-    $form      = $this->form('add', array($page, $store), function($form) use($page, $store, $self) {
+    $form      = $this->form('add', array($model, $structure), function($form) use($model, $structure, $self) {
 
       $form->validate();
 
@@ -16,9 +16,10 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
         return false;
       }
 
-      $store->add($form->serialize());
+      $structure->add($form->serialize());
       $self->notify(':)');
-      $self->redirect($page);
+      $self->redirect($model);
+
     });
 
     return $this->modal('add', compact('form', 'modalsize'));
@@ -27,10 +28,10 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
 
   public function update($entryId) {
 
-    $self  = $this;
-    $page  = $this->model();
-    $store = $this->store($page);
-    $entry = $store->find($entryId);
+    $self      = $this;
+    $model     = $this->model();
+    $structure = $this->structure($model);
+    $entry     = $structure->find($entryId);
 
     if(!$entry) {
       return $this->modal('error', array(
@@ -39,7 +40,7 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
     }
 
     $modalsize = $this->field()->modalsize();
-    $form      = $this->form('update', array($page, $store, $entry), function($form) use($page, $store, $self, $entryId) {
+    $form      = $this->form('update', array($model, $structure, $entry), function($form) use($model, $structure, $self, $entryId) {
 
       // run the form validator
       $form->validate();
@@ -48,9 +49,9 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
         return false;
       }
 
-      $store->update($entryId, $form->serialize());
+      $structure->update($entryId, $form->serialize());
       $self->notify(':)');
-      $self->redirect($page);
+      $self->redirect($model);
 
     });
 
@@ -60,10 +61,10 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
 
   public function delete($entryId) {
     
-    $self  = $this;
-    $page  = $this->model();
-    $store = $this->store($page);
-    $entry = $store->find($entryId);
+    $self      = $this;
+    $model     = $this->model();
+    $structure = $this->structure($model);
+    $entry     = $structure->find($entryId);
 
     if(!$entry) {
       return $this->modal('error', array(
@@ -71,10 +72,10 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
       ));
     }
 
-    $form = $this->form('delete', $page, function() use($self, $page, $store, $entryId) {
-      $store->delete($entryId);
+    $form = $this->form('delete', $model, function() use($self, $model, $structure, $entryId) {
+      $structure->delete($entryId);
       $self->notify(':)');
-      $self->redirect($page);
+      $self->redirect($model);
     });
     
     return $this->modal('delete', compact('form'));
@@ -82,14 +83,14 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
   }
 
   public function sort() {
-    $page  = $this->model();
-    $store = $this->store($page);
-    $store->sort(get('ids'));
-    $this->redirect($page);
+    $model     = $this->model();
+    $structure = $this->structure($model);
+    $structure->sort(get('ids'));
+    $this->redirect($model);
   }
 
-  protected function store($page) {
-    return $page->structure($this->fieldname());
+  protected function structure($model) {
+    return $model->structure()->forField($this->fieldname());
   }
 
 }
