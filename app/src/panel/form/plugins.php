@@ -76,7 +76,7 @@ class Plugins {
       $output[] = f::read(dirname($root) . DS . 'assets' . DS . $type . DS . $filename);          
     }
 
-    $this->{$type} = implode(PHP_EOL . PHP_EOL, $output);
+    $this->{$type} .= implode(PHP_EOL . PHP_EOL, $output);
 
   }
 

@@ -76,13 +76,33 @@ class Structure {
     // are being included here
     foreach($fields as $name => $field) {
 
+      // skip fields without type
+      if(!isset($field['type']))
+        continue;
+
       // remove all structure fields within structures
       if($field['type'] == 'structure') {
         unset($fields[$name]);
 
-      // remove all buttons from textareas
+      // remove unsupported buttons from textareas
       } else if($field['type'] == 'textarea') {
-        $fields[$name]['buttons'] = false;
+
+        $buttons = $fields[$name]['buttons'];
+
+        if(is_array($buttons)) {
+
+          $index = array_search("email", $buttons);
+          if($index >= 0) array_splice($buttons, $index, 1);
+
+          $index = array_search("link", $buttons);
+          if($index >= 0) array_splice($buttons, array_search($index, $buttons), 1);
+
+          $fields[$name]['buttons'] = $buttons;
+
+        } else if($buttons == null)
+
+          $fields[$name]['buttons'] = ["bold", "italic"];
+
       }
 
     }
