@@ -53,8 +53,8 @@ class Children extends \Children {
     $blueprint = new Blueprint($template);
     $data      = array();
 
-    foreach($blueprint->fields() as $key => $field) {
-      $data[$key] = $field->default();        
+    foreach($blueprint->fields(null) as $key => $field) {
+      $data[$key] = $field->default();
     }
 
     $data = array_merge($data, $content);
