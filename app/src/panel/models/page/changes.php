@@ -67,7 +67,7 @@ class Changes {
     $changes = false;
 
     foreach($data as $field => $value) {
-      if($this->model->{$field}()->value() !== $value) {
+      if((string)$this->model->{$field}() !== $value) {
         $changes = true;
       }
     }
