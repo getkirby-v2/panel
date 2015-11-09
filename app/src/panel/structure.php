@@ -2,6 +2,7 @@
 
 namespace Kirby\Panel;
 
+use A;
 use Exception;
 use Collection;
 use Obj;
@@ -80,9 +81,18 @@ class Structure {
       if($field['type'] == 'structure') {
         unset($fields[$name]);
 
-      // remove all buttons from textareas
+      // remove invalid buttons from textareas
       } else if($field['type'] == 'textarea') {
-        $fields[$name]['buttons'] = false;
+        $buttons = a::get($fields[$name], 'buttons');
+        if(is_array($buttons)) {
+          foreach($buttons as $index => $value) {
+            if(in_array($value, array('link','email'))) {
+              unset($fields[$name]['buttons'][$index]);              
+            }
+          }
+        } else if($buttons !== false) {
+          $fields[$name]['buttons'] = array('bold', 'italic');
+        }
       }
 
     }
