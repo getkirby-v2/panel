@@ -1,6 +1,6 @@
 <?php
 
-class TextareaField extends InputField {
+class TextareaField extends TextField {
 
   static public $assets = array(
     'js' => array(
