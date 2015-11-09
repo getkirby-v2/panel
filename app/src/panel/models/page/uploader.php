@@ -115,14 +115,20 @@ class Uploader {
     $filesettings        = $this->blueprint->files();
     $forbiddenExtensions = array('php', 'html', 'htm', 'exe', kirby()->option('content.file.extension', 'txt'));
     $forbiddenMimes      = array_merge(f::$mimes['php'], array('text/html', 'application/x-msdownload'));
+    $extension           = strtolower($file->extension());
+
+    // files without extension are not allowed
+    if(empty($extension)) {
+      throw new Exception('You cannot upload files without extension');
+    }
 
     // block forbidden extensions
-    if(in_array(strtolower($file->extension()), $forbiddenExtensions)) {
+    if(in_array($extension, $forbiddenExtensions)) {
       throw new Exception('Forbidden file extension');
     }
 
     // especially block any connection that contains php
-    if(str::contains(strtolower($file->extension()), 'php')) {
+    if(str::contains($extension, 'php')) {
       throw new Exception('Forbidden file extension');
     }
 
