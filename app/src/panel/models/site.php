@@ -63,8 +63,12 @@ class Site extends \Site {
 
   }
 
+  public function getBlueprintFields() {
+    return $this->blueprint()->fields($this);
+  }
+
   public function getFormFields() {
-    return $this->blueprint()->fields($this)->toArray();
+    return $this->getBlueprintFields()->toArray();
   }
 
   public function canSortFiles() {
@@ -197,6 +201,7 @@ class Site extends \Site {
       return true;
     }    
   }
+
 
   public function structure() {
     return new Structure($this, 'site_' . $this->lang());
