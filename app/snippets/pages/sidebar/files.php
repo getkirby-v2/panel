@@ -7,9 +7,11 @@
       <a title="<?php _l('pages.show.files.edit') ?>" href="<?php __($page->url('files')) ?>">
         <?php i('pencil', 'left') ?><span><?php _l('pages.show.files.edit') ?></span>
       </a>
+      <?php if($page->canHaveMoreFiles()) : ?>
       <a data-upload href="#upload">
         <?php i('plus-circle', 'left') ?><span><?php _l('pages.show.files.add') ?></span>
       </a>
+      <?php endif ?>
     </span>
   </span>
 </h2>

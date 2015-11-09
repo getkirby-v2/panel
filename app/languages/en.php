@@ -155,6 +155,7 @@ return array(
     'files.index.upload.first.button' => 'Upload the first file',
     'files.index.edit' => 'Edit',
     'files.index.delete' => 'Delete',
+    'files.add.error.max' => 'The maximum number of files for the current page has been reached.',
     'files.show.name.label' => 'Filename',
     'files.show.info.label' => 'Type / Size / Dimensions',
     'files.show.link.label' => 'Public link',

@@ -15,7 +15,7 @@
         <?php i('arrow-circle-left', 'left') . _l('files.index.back') ?>
       </a>
 
-      <?php if($page->hasFiles()): ?>
+      <?php if($page->hasFiles() and $page->canHaveMoreFiles()): ?>
       <a data-upload class="hgroup-option-right" href="#upload">
         <?php i('plus-circle', 'left') . _l('files.index.upload') ?>
       </a>
@@ -72,9 +72,11 @@
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php _l('files.index.upload.first.text') ?></p>
+      <?php if($page->canHaveMoreFiles()) : ?>
       <a data-upload data-shortcut="+" class="btn btn-rounded" href="#upload">
         <?php _l('files.index.upload.first.button') ?>
       </a>
+      <?php endif ?>
     </div>
   </div>
 
