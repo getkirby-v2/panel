@@ -89,7 +89,7 @@ class Children extends \Children {
           $var = 'page';
           break;
         case 'subpages/visible':
-          $id  = 'subpages.invisible.' . $hash;
+          $id  = 'subpages.visible.' . $hash;
           $var = 'visible';
           break;
         case 'subpages/invisible':
