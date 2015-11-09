@@ -122,6 +122,8 @@ class Page extends \Page {
       } else {
         return false;
       }
+    } else if($this->site->multilang() and $lang = $this->site->language($action)) {
+      return parent::url($lang->code());
     } else {
       return panel()->urls()->index() . '/' . $this->uri($action);            
     }
