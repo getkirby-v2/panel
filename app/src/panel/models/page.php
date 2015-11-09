@@ -101,7 +101,7 @@ class Page extends \Page {
   }
 
   public function url($action = null) {
-    if(empty($action)) {
+    if(empty($action) or $lang = $this->site->language($action)) {
       return parent::url();
     } else if($action == 'preview') {
       if($previewSetting = $this->blueprint()->preview()) {
