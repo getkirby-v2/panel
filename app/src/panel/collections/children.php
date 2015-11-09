@@ -53,8 +53,8 @@ class Children extends \Children {
     $blueprint = new Blueprint($template);
     $data      = array();
 
-    foreach($blueprint->fields() as $key => $field) {
-      $data[$key] = $field->default();        
+    foreach($blueprint->fields(null) as $key => $field) {
+      $data[$key] = $field->default();
     }
 
     $data = array_merge($data, $content);
@@ -89,7 +89,7 @@ class Children extends \Children {
           $var = 'page';
           break;
         case 'subpages/visible':
-          $id  = 'subpages.invisible.' . $hash;
+          $id  = 'subpages.visible.' . $hash;
           $var = 'visible';
           break;
         case 'subpages/invisible':
