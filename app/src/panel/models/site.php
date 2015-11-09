@@ -63,6 +63,10 @@ class Site extends \Site {
 
   }
 
+  public function getBlueprintFields() {
+    return $this->blueprint()->fields($this);
+  }
+
   public function getFormFields() {
     return $this->blueprint()->fields($this)->toArray();
   }
