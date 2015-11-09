@@ -31,7 +31,7 @@ class Plugins {
       $file = $root . DS . $name . DS . $name . '.php';
 
       if(file_exists($file)) {
-        $this->{$type}[$name . 'field'] = $file;        
+        $this->{$type}[$name . 'field'] = $file;
       }
 
     }
@@ -57,11 +57,11 @@ class Plugins {
       if(!isset($classname::$assets)) continue;
 
       if(isset($classname::$assets['css'])) {
-        $this->assets('css', $root, $classname::$assets['css']);          
+        $this->assets('css', $root, $classname::$assets['css']);
       }
 
       if(isset($classname::$assets['js'])) {
-        $this->assets('js', $root, $classname::$assets['js']);          
+        $this->assets('js', $root, $classname::$assets['js']);
       }
 
     }
@@ -73,10 +73,10 @@ class Plugins {
     $output = array();
 
     foreach($files as $filename) {
-      $output[] = f::read(dirname($root) . DS . 'assets' . DS . $type . DS . $filename);          
+      $output[] = f::read(dirname($root) . DS . 'assets' . DS . $type . DS . $filename);
     }
 
-    $this->{$type} = implode(PHP_EOL . PHP_EOL, $output);
+    $this->{$type} .= implode(PHP_EOL . PHP_EOL, $output);
 
   }
 
