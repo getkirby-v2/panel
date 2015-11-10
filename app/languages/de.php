@@ -58,7 +58,7 @@ return array(
     'login.password.label' => 'Passwort',
     'login.error' => 'Ungültiger Benutzername oder Passwort',
     'login.button' => 'Anmelden',
-    'login.log.error.permissions' => 'Die Anmeldelog-Datei ist nicht beschreibbar.'
+    'login.log.error.permissions' => 'Die Anmeldelog-Datei ist nicht beschreibbar.',
 
     // logout
     'logout' => 'Abmelden',
@@ -307,7 +307,7 @@ return array(
     'fields.structure.add' => 'Hinzufügen',
     'fields.structure.add.first' => 'Füge den ersten Eintrag hinzu',
     'fields.structure.empty' => 'Es bestehen keine Einträge.',
-    'fields.structure.entry.error' = > 'Der Eintrag konnte nicht gefunden werden',
+    'fields.structure.entry.error' => 'Der Eintrag konnte nicht gefunden werden',
     'fields.structure.cancel' => 'Abbrechen',
     'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Bearbeiten',

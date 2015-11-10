@@ -58,7 +58,7 @@ return array(
     'login.password.label' => 'Password',
     'login.error' => 'Invalid username or password',
     'login.button' => 'Login',
-    'login.log.error.permissions' => 'Login log file is not writable.'
+    'login.log.error.permissions' => 'Login log file is not writable.',
 
     // logout
     'logout' => 'Logout',
@@ -307,7 +307,7 @@ return array(
     'fields.structure.add' => 'Add',
     'fields.structure.add.first' => 'Add the first entry',
     'fields.structure.empty' => 'No entries yet.',
-    'fields.structure.entry.error' = > 'The item could not be found',
+    'fields.structure.entry.error' => 'The item could not be found',
     'fields.structure.cancel' => 'Cancel',
     'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Edit',
