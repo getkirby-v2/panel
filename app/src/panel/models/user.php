@@ -29,7 +29,7 @@ class User extends \User {
   public function update($data = array()) {
 
     if(!panel()->user()->isAdmin() and !$this->isCurrent()) {
-      throw new Exception(l('users.form.error.update.rights'));
+      throw new Exception(l('users.form.error.update.permission.single'));
     }
 
     if(str::length(a::get($data, 'password')) > 0) {
@@ -67,7 +67,7 @@ class User extends \User {
   public function delete() {
 
     if(!panel()->user()->isAdmin() and !$this->isCurrent()) {
-      throw new Exception('You are not allowed to delete users');
+      throw new Exception(l('users.form.error.update.permission'));
     }
 
     if($this->isLastAdmin()) {

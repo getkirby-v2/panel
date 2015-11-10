@@ -18,6 +18,16 @@ return array(
     'insert' => 'Einfügen',
     'ok' => 'Ok',
 
+    // routes
+    'routes.error.invalid' => 'Ungültige Panel-URL',
+
+    // controllers
+    'controller.error.invalid' => 'Ungültiger Controller',
+    'controller.error.action' => 'Ungültige Aktion',
+
+    // views
+    'view.error.invalid' => 'Ungültiger View: ',
+
     // options (sidebar)
     'options.show' => 'Optionen einblenden',
     'options.hide' => 'Optionen ausblenden',
@@ -48,9 +58,13 @@ return array(
     'login.password.label' => 'Passwort',
     'login.error' => 'Ungültiger Benutzername oder Passwort',
     'login.button' => 'Anmelden',
+    'login.log.error.permissions' => 'Die Anmeldelog-Datei ist nicht beschreibbar.'
 
     // logout
     'logout' => 'Abmelden',
+
+    // topbar
+    'topbar.error.class.definition' => 'Fehlende Topbar-Definition für Klasse: ',
 
     // dashboard
     'dashboard' => 'Übersicht',
@@ -110,6 +124,7 @@ return array(
     'pages.add.url.close' => 'Schließen',
     'pages.add.url.help' => 'Format: Kleinbuchstaben a-z, 0-9 und Bindestriche',
     'pages.add.template.label' => 'Vorlage',
+    'pages.add.error.create' => 'Die Seite konnte nicht hinzugefügt werden',
     'pages.add.error.title' => 'Der Titel fehlt',
     'pages.add.error.template' => 'Die Vorlage fehlt',
     'pages.add.error.max.headline' => 'Keine weiteren Unterseiten zugelassen',
@@ -150,6 +165,7 @@ return array(
     'subpages.index.invisible' => 'Unsichtbare Seiten',
     'subpages.index.invisible.help' => 'Ziehe sichtbare Seiten hierher, um sie unsichtbar zu machen',
     'subpages.add.error' => 'Keine Unterseiten für diese Seite zugelassen',
+    'subpages.add.error.more' => 'Diese Seite kann keine weiteren Unterseiten haben',
     'subpages.error.missing' => 'Die Seite konnte nicht gefunden werden.',
 
     // files
@@ -163,6 +179,14 @@ return array(
     'files.index.delete' => 'Löschen',
     'files.index.error.disabled' => 'Keine Dateien für diese Seite zugelassen',
     'files.add.error.max' => 'Die maximale Anzahl an Dateien für die aktuelle Seite ist erreicht.',
+    'files.add.error.extension.missing' => 'Du kannst keine Dateien ohne Dateiendung hochladen',
+    'files.add.error.extension.forbidden' => 'Verbotene Dateiendung',
+    'files.add.error.mime.forbidden' => 'Verbotener MIME-Typ',
+    'files.add.error.htaccess' => 'htaccess-Dateien können nicht hochgeladen werden',
+    'files.add.error.invisible' => 'Versteckte Dateien können nicht hochgeladen werden',
+    'files.add.blueprint.type.error' => 'Seite erlaubt nur: ',
+    'files.add.blueprint.size.error' => 'Seite erlaubt nur eine Dateigröße von ',
+
     'files.show.name.label' => 'Dateiname',
     'files.show.info.label' => 'Typ / Größe / Abmessungen',
     'files.show.link.label' => 'Öffentlicher Link',
@@ -218,18 +242,25 @@ return array(
     'users.form.error.permissions.text' => 'Bitte stelle sicher, dass /site/accounts besteht und beschreibbar ist.',
     'users.delete.headline' => 'Willst du diesen Benutzer wirklich löschen?',
     'users.delete.error' => 'Der Benutzer konnte nicht gelöscht werden',
-    'users.delete.error.rights' => 'Du kannst diesen Benutzer nicht löschen',
+    'users.delete.error.permission' => 'Du kannst keine Benutzer löschen',
+    'users.delete.error.permission.single' => 'Du kannst diesen Benutzer nicht löschen',
     'users.delete.error.lastadmin' => 'Du kannst den letzten Admin nicht löschen',
     'users.avatar.drop' => 'Ziehe ein Profilbild hierher…',
     'users.avatar.click' => '…oder klicke, um ein Profilbild hochzuladen',
     'users.avatar.error.type' => 'Es sind nur JPG, PNG und GIF Dateien erlaubt.',
     'users.avatar.error.folder.headline' => 'Der Profilbild Ordner ist nicht beschreibbar',
     'users.avatar.error.folder.text' => 'Bitte erstelle den Ordner <strong>/assets/avatars</strong> und stelle sicher, dass er beschreibbar ist.',
+    'users.avatar.error.permission' => 'Du darfst den Avatar nicht verändern',
     'users.avatar.delete.error' => 'Das Profilbild konnte nicht gelöscht werden',
+    'users.avatar.delete.error.permission' => 'Du darfst den Avater dieses Users nicht löschen',
     'users.avatar.delete.success' => 'Das Profilbild wurde gelöscht',
     'users.avatar.missing' => 'Der Benutzer hat kein Profilbild',
     'users.error.missing' => 'Der Benutzer wurde nicht gefunden',
     'user.error.lastadmin' => 'Du bist der letzte Admin. Das kann nicht verändert werden.',
+
+    // form
+    'form.error.missing' => 'Das Formular kann nicht gefunden werden',
+    'form.construct.error.invalid' => 'Ungültiger Formularkonstruktor',
 
     // form fields
     'fields.required' => 'Pflichtfeld',
@@ -276,6 +307,7 @@ return array(
     'fields.structure.add' => 'Hinzufügen',
     'fields.structure.add.first' => 'Füge den ersten Eintrag hinzu',
     'fields.structure.empty' => 'Es bestehen keine Einträge.',
+    'fields.structure.entry.error' = > 'Der Eintrag konnte nicht gefunden werden',
     'fields.structure.cancel' => 'Abbrechen',
     'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Bearbeiten',
@@ -298,6 +330,7 @@ return array(
     'fields.error.missing.controller' => 'Die Feldcontroller-Datei fehlt',
     'fields.error.missing.class' => 'Die Feldcontroller-Klasse fehlt',
     'fields.error.route.invalid' => 'Ungültige Feld-Route',
+    'fields.error.extended' => 'Das Feld kann nicht erweitert werden',
 
     // textarea overlays
     'editor.link.url.label' => 'URL einfügen',
@@ -309,6 +342,12 @@ return array(
     'editor.email.text.help' => 'Der Linktext ist optional',
     'editor.file.empty' => 'Diese Seite hat keine Dateien',
     'editor.image.empty' => 'Diese Seite hat keine Bilder',
+
+    // autocomplete
+    'autocomplete.method.error' => 'Ungültige Autocomplete-Methode',
+
+    // blueprints
+    'blueprints.error.default.missing' => 'Standard-Blueprint fehlt',
 
     // error page
     'error' => 'Fehler',

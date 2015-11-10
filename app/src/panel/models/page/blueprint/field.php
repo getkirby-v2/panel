@@ -58,7 +58,7 @@ class Field extends Obj {
     $files   = glob(kirby()->roots()->blueprints() . DS . 'fields' . DS . $extends . '.{yml,yaml,php}', GLOB_BRACE);
 
     if(empty($files)) {
-      throw new Exception('The field cannot be extended');
+      throw new Exception(l('fields.error.extended'));
     }
 
     $yaml   = data::read($files[0], 'yaml');

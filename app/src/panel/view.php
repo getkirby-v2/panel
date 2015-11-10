@@ -25,7 +25,7 @@ class View {
 
   public function render() {
     $file = $this->_root . DS . str_replace('.', DS, $this->_file) . '.php';
-    if(!file_exists($file)) throw new Exception('Invalid view: ' . $file);
+    if(!file_exists($file)) throw new Exception(l('view.error.invalid') . $file);
     return tpl::load($file, $this->_data);
   }
 

@@ -18,6 +18,16 @@ return array(
     'insert' => 'Insert',
     'ok' => 'Ok',
 
+    // routes
+    'routes.error.invalid' => 'Invalid Panel URL',
+
+    // controllers
+    'controller.error.invalid' => 'Invalid controller',
+    'controller.error.action' => 'Invalid action',
+
+    // views
+    'view.error.invalid' => 'Invalid view: ',
+
     // options (sidebar)
     'options.show' => 'Show options',
     'options.hide' => 'Hide options',
@@ -48,9 +58,13 @@ return array(
     'login.password.label' => 'Password',
     'login.error' => 'Invalid username or password',
     'login.button' => 'Login',
+    'login.log.error.permissions' => 'Login log file is not writable.'
 
     // logout
     'logout' => 'Logout',
+
+    // topbar
+    'topbar.error.class.definition' => 'Missing topbar definition for class: ',
 
     // dashboard
     'dashboard' => 'Dashboard',
@@ -111,6 +125,7 @@ return array(
     'pages.add.url.close' => 'Close',
     'pages.add.url.help' => 'Format: lowercase a-z, 0-9 and regular dashes',
     'pages.add.template.label' => 'Template',
+    'pages.add.error.create' => 'The page could not be created',
     'pages.add.error.title' => 'The title is missing',
     'pages.add.error.template' => 'The template is missing',
     'pages.add.error.max.headline' => 'No new pages allowed',
@@ -151,6 +166,7 @@ return array(
     'subpages.index.invisible' => 'Invisible pages',
     'subpages.index.invisible.help' => 'Drag visible pages here to unsort them/make them invisible.',
     'subpages.add.error' => 'This page is not allowed to have subpages',
+    'subpages.add.error.more' => 'This page cannot have any more subpages',
     'subpages.error.missing' => 'The page could not be found',
 
     // files
@@ -164,6 +180,13 @@ return array(
     'files.index.delete' => 'Delete',
     'files.index.error.disabled' => 'The page is not allowed to have any files',
     'files.add.error.max' => 'The maximum number of files for the current page has been reached.',
+    'files.add.error.extension.missing' => 'You cannot upload files without extension',
+    'files.add.error.extension.forbidden' => 'Forbidden file extension',
+    'files.add.error.mime.forbidden' => 'Forbidden mime type',
+    'files.add.error.htaccess' => 'htaccess files cannot be uploaded',
+    'files.add.error.invisible' => 'Invisible files cannot be uploaded',
+    'files.add.blueprint.type.error' => 'Page only allows: ',
+    'files.add.blueprint.size.error' => 'Page only allows file size of ',
     'files.show.name.label' => 'Filename',
     'files.show.info.label' => 'Type / Size / Dimensions',
     'files.show.link.label' => 'Public link',
@@ -219,18 +242,25 @@ return array(
     'users.form.error.permissions.text' => 'Please make sure that /site/accounts exists and is writable.',
     'users.delete.headline' => 'Do you really want to delete this user?',
     'users.delete.error' => 'The user could not be deleted',
-    'users.delete.error.rights' => 'You are not allowed to delete this user',
+    'users.delete.error.permission' => 'You are not allowed to delete users',
+    'users.delete.error.permission.single' => 'You are not allowed to delete this user',
     'users.delete.error.lastadmin' => 'You cannot delete the last admin',
     'users.avatar.drop' => 'Drop a profile picture here…',
     'users.avatar.click' => '…or click to upload',
     'users.avatar.error.type' => 'You can only upload JPG, PNG and GIF files',
     'users.avatar.error.folder.headline' => 'The avatar folder is not writable',
     'users.avatar.error.folder.text' => 'Please create the folder <strong>/assets/avatars</strong> and make it writable to upload profile pictures.',
+    'users.avatar.error.permission' => 'You are not allowed to change the avatar',
     'users.avatar.delete.error' => 'The profile picture could not be deleted',
+    'users.avatar.delete.error.permission' => 'You are not allowed to delete the avatar of this user',
     'users.avatar.delete.success' => 'The profile picture has been deleted',
     'users.avatar.missing' => 'This user has no avatar',
     'users.error.missing' => 'The user could not be found',
     'user.error.lastadmin' => 'You are the only admin. This cannot be changed.',
+
+    // form
+    'form.error.missing' => 'The form cannot be found',
+    'form.construct.error.invalid' => 'Invalid form construction method',
 
     // form fields
     'fields.required' => 'Required',
@@ -277,6 +307,7 @@ return array(
     'fields.structure.add' => 'Add',
     'fields.structure.add.first' => 'Add the first entry',
     'fields.structure.empty' => 'No entries yet.',
+    'fields.structure.entry.error' = > 'The item could not be found',
     'fields.structure.cancel' => 'Cancel',
     'fields.structure.save' => 'Ok',
     'fields.structure.edit' => 'Edit',
@@ -299,6 +330,7 @@ return array(
     'fields.error.missing.controller' => 'The field controller file is missing',
     'fields.error.missing.class' => 'The field controller class is missing',
     'fields.error.route.invalid' => 'Invalid field route',
+    'fields.error.extended' => 'The field cannot be extended',
 
     // textarea overlays
     'editor.link.url.label' => 'Insert URL',
@@ -310,6 +342,12 @@ return array(
     'editor.email.text.help' => 'The link text is optional',
     'editor.file.empty' => 'This page has no files',
     'editor.image.empty' => 'This page has no images',
+
+    // autocomplete
+    'autocomplete.method.error' => 'Invalid autocomplete method',
+
+    // blueprints
+    'blueprints.error.default.missing' => 'Missing default blueprint',
 
     // error page
     'error' => 'Error',

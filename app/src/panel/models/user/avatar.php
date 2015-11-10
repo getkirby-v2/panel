@@ -37,7 +37,7 @@ class Avatar extends Media {
   public function upload() {
 
     if(!panel()->user()->isAdmin() and !$this->user->isCurrent()) {
-      throw new Exception('You are not allowed to change the avatar');
+      throw new Exception(l('users.avatar.error.permission'));
     }
 
     $root = $this->exists() ? $this->root() : $this->user->avatarRoot('{safeExtension}');
@@ -71,7 +71,7 @@ class Avatar extends Media {
   public function delete() {
 
     if(!panel()->user()->isAdmin() and !$this->user->isCurrent()) {
-      throw new Exception('You are not allowed to delete the avatar of this user');
+      throw new Exception(l('users.avatar.delete.error.permission'));
     } else if(!$this->exists()) {
       return true;
     }

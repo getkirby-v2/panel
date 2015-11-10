@@ -35,7 +35,7 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
 
     if(!$entry) {
       return $this->modal('error', array(
-        'text' => 'The item could not be found'
+        'text' => l('fields.structure.entry.error')
       ));
     }
 
@@ -68,7 +68,7 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
 
     if(!$entry) {
       return $this->modal('error', array(
-        'text' => 'The item could not be found'
+        'text' => l('fields.structure.entry.error')
       ));
     }
 

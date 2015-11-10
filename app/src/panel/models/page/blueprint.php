@@ -80,7 +80,7 @@ class Blueprint extends Obj {
       return true;
 
     } else if($name == 'default') {
-      throw new Exception('Missing default blueprint');
+      throw new Exception(l('blueprints.error.default.missing'));
     } else {
       return $this->load('default');
     }

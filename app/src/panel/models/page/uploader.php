@@ -96,7 +96,7 @@ class Uploader {
     // delete the upload if something went wrong
     if(!$file) {
       $uploaded->delete();
-      throw new Exception('The file could not be found');
+      throw new Exception(l('files.error.missing.file'));
     }
 
     try {
@@ -119,42 +119,42 @@ class Uploader {
 
     // files without extension are not allowed
     if(empty($extension)) {
-      throw new Exception('You cannot upload files without extension');
+      throw new Exception(l('files.add.error.extension.missing'));
     }
 
     // block forbidden extensions
     if(in_array($extension, $forbiddenExtensions)) {
-      throw new Exception('Forbidden file extension');
+      throw new Exception(l('files.add.error.extension.forbidden'));
     }
 
     // especially block any connection that contains php
     if(str::contains($extension, 'php')) {
-      throw new Exception('Forbidden file extension');
+      throw new Exception(l('files.add.error.extension.forbidden'));
     }
 
     // block forbidden mimes
     if(in_array(strtolower($file->mime()), $forbiddenMimes)) {
-      throw new Exception('Forbidden mime type');
+      throw new Exception(l('files.add.error.mime.forbidden'));
     }
-    
+
     // Block htaccess files
     if(strtolower($file->filename()) == '.htaccess') {
-      throw new Exception('htaccess files cannot be uploaded');
+      throw new Exception(l('files.add.error.htaccess'));
     }
 
     // Block invisible files
     if(str::startsWith($file->filename(), '.')) {
-      throw new Exception('Invisible files cannot be uploaded');
+      throw new Exception(l('files.add.error.invisible'));
     }
 
     // Files blueprint option 'type'
     if(count($filesettings->type()) > 0 and !in_array($file->type(), $filesettings->type())) {
-      throw new Exception('Page only allows: ' . implode(', ', $filesettings->type()));
+      throw new Exception(l('files.add.blueprint.type.error') . implode(', ', $filesettings->type()));
     }
 
-    // Files blueprint option 'size' 
+    // Files blueprint option 'size'
     if($filesettings->size() and f::size($file->root()) > $filesettings->size()) {
-      throw new Exception('Page only allows file size of ' . f::niceSize($filesettings->size()));
+      throw new Exception(l('files.add.blueprint.size.error') . f::niceSize($filesettings->size()));
     }
 
     // Files blueprint option 'width'
