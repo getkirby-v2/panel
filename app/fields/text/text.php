@@ -45,33 +45,10 @@ class TextField extends InputField {
 
   public function input() {
 
-    $input = new Brick('input', null);
-    $input->addClass('input');
+    $input = parent::input();
 
-    if (!$this->readonly() && ($this->min() || $this->max())) {
+    if(!$this->readonly() && ($this->min() || $this->max())) {
       $input->data('max', $this->max())->data('min', $this->min());
-    }
-
-    $input->attr(array(
-      'type'         => $this->type(),
-      'value'        => '',
-      'required'     => $this->required(),
-      'name'         => $this->name(),
-      'autocomplete' => $this->autocomplete() === false ? 'off' : 'on',
-      'autofocus'    => $this->autofocus(),
-      'placeholder'  => $this->i18n($this->placeholder()),
-      'readonly'     => $this->readonly(),
-      'disabled'     => $this->disabled(),
-      'id'           => $this->id()
-    ));
-
-    if(!is_array($this->value())) {
-      $input->val(html($this->value(), false));
-    }
-
-    if($this->readonly()) {
-      $input->attr('tabindex', '-1');
-      $input->addClass('input-is-readonly');
     }
 
     return $input;
@@ -80,15 +57,16 @@ class TextField extends InputField {
 
   public function outsideRange($length) {
 
-    if ($this->min() && $length < $this->min()) {
+    if($this->min() && $length < $this->min()) {
       return true;
     }
 
-    if ($this->max() && $length > $this->max()) {
+    if($this->max() && $length > $this->max()) {
       return true;
     }
 
     return false;
+
   }
 
   public function counter() {
@@ -98,16 +76,17 @@ class TextField extends InputField {
     $counter = new Brick('div');
     $counter->addClass('field-counter marginalia text');
 
-    $length = strlen($this->value());
+    $length = str::length($this->value());
 
-    if ($this->outsideRange($length)) {
+    if($this->outsideRange($length)) {
       $counter->addClass('outside-range');
     }
 
-    $counter->data('field', 'counter')->data('count', $this->name());
+    $counter->data('field', 'counter');
     $counter->html($length . ($this->max() ? '/' . $this->max() : ''));
 
     return $counter;
+
   }
 
   public function template() {

@@ -1,14 +1,14 @@
 (function($) {
 
-  var Structure = function(element) {
+  var Structure = function(el) {
 
-    var element  = $(element);
+    var element  = $(el);
     var style    = element.data('style');
     var api      = element.data('api');
     var sortable = element.data('sortable');
     var entries  = style == 'table' ? element.find('.structure-table tbody') : element.find('.structure-entries');
 
-    if(sortable == false) return false;
+    if(sortable === false) return false;
 
     entries.sortable({
       helper: function(e, ui) {

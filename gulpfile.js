@@ -37,6 +37,8 @@ gulp.task('app-js', function() {
 gulp.task('form-js', function() {
 
   return gulp.src('app/fields/*/assets/js/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
     .pipe(concat('form.js')) 
     .pipe(gulp.dest('assets/js/dist'))
     .pipe(rename('form.min.js'))
