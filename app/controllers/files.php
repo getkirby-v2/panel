@@ -72,6 +72,10 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
     $page = $this->page($id);
 
+    if(!$page->canHaveMoreFiles()) {
+      return $form->alert(l('files.add.error.max'));
+    }
+
     try {
       $page->upload();        
       $this->notify(':)');

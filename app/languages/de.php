@@ -162,6 +162,7 @@ return array(
     'files.index.edit' => 'Bearbeiten',
     'files.index.delete' => 'Löschen',
     'files.index.error.disabled' => 'Keine Dateien für diese Seite zugelassen',
+    'files.add.error.max' => 'Die maximale Anzahl an Dateien für die aktuelle Seite ist erreicht.',
     'files.show.name.label' => 'Dateiname',
     'files.show.info.label' => 'Typ / Größe / Abmessungen',
     'files.show.link.label' => 'Öffentlicher Link',

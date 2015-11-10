@@ -163,6 +163,7 @@ return array(
     'files.index.edit' => 'Edit',
     'files.index.delete' => 'Delete',
     'files.index.error.disabled' => 'The page is not allowed to have any files',
+    'files.add.error.max' => 'The maximum number of files for the current page has been reached.',
     'files.show.name.label' => 'Filename',
     'files.show.info.label' => 'Type / Size / Dimensions',
     'files.show.link.label' => 'Public link',
