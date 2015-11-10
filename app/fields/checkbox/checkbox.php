@@ -29,8 +29,12 @@ class CheckboxField extends InputField {
 
   }
 
-  public function result() {
+  public function value() {
+    $value = parent::value();
+    return empty($value) ? '0' : $value;
+  }
 
+  public function result() {
     $result = parent::result();
     return v::accepted($result) ? '1' : '0';
   }
