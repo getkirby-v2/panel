@@ -76,6 +76,9 @@ return array(
     'metatags.back' => 'Back to the dashboard',
     'metatags.files' => 'Site files',
 
+    // site
+    'site.delete.error' => 'The site cannot be deleted',
+
     // pages
     'pages.show.settings' => 'Page settings',
     'pages.show.preview' => 'Open preview',
@@ -116,10 +119,13 @@ return array(
     'pages.url.uid.label.option' => 'Create from title',
     'pages.url.error.exists' => 'A page with the same appendix already exists',
     'pages.url.error.move' => 'The appendix could not be changed',
+    'pages.url.error.rights' => 'You cannot change the URL of this page',
+    'pages.url.home.error.error' => 'The URL for the home and error pages cannot be changed',
     'pages.toggle.position' => 'Position',
     'pages.toggle.invisible' => 'invisible',
     'pages.toggle.publish' => 'Do you really want to change the status of this page to **visible?**',
     'pages.toggle.hide' => 'Do you really want to change the status of this page to **invisible?**',
+    'pages.toggle.error.error' => 'The status of the error page cannot be changed',
     'pages.delete.headline' => 'Do you really want to delete this page?',
     'pages.delete.error.home.headline' => 'The home page cannot be deleted',
     'pages.delete.error.home.text' => 'You are trying to delete the home page. This is not possible and would lead to unwanted effects.',
@@ -144,6 +150,7 @@ return array(
     'subpages.index.visible.help' => 'Drag invisible pages here to sort them/make them visible.',
     'subpages.index.invisible' => 'Invisible pages',
     'subpages.index.invisible.help' => 'Drag visible pages here to unsort them/make them invisible.',
+    'subpages.add.error' => 'This page is not allowed to have subpages',
     'subpages.error.missing' => 'The page could not be found',
 
     // files
@@ -155,6 +162,7 @@ return array(
     'files.index.upload.first.button' => 'Upload the first file',
     'files.index.edit' => 'Edit',
     'files.index.delete' => 'Delete',
+    'files.index.error.disabled' => 'The page is not allowed to have any files',
     'files.show.name.label' => 'Filename',
     'files.show.info.label' => 'Type / Size / Dimensions',
     'files.show.link.label' => 'Public link',
@@ -204,11 +212,14 @@ return array(
     'users.form.back' => 'Back to users',
     'users.form.error.password.confirm' => 'Please confirm the password',
     'users.form.error.update' => 'The user could not be updated',
+    'users.form.error.update.rights' => 'You are not allowed to update this user',
     'users.form.error.create' => 'The user could not be created',
     'users.form.error.permissions.title' => 'The account folder is not writable',
     'users.form.error.permissions.text' => 'Please make sure that /site/accounts exists and is writable.',
     'users.delete.headline' => 'Do you really want to delete this user?',
     'users.delete.error' => 'The user could not be deleted',
+    'users.delete.error.rights' => 'You are not allowed to delete this user',
+    'users.delete.error.lastadmin' => 'You cannot delete the last admin',
     'users.avatar.drop' => 'Drop a profile picture here…',
     'users.avatar.click' => '…or click to upload',
     'users.avatar.error.type' => 'You can only upload JPG, PNG and GIF files',
@@ -216,7 +227,9 @@ return array(
     'users.avatar.error.folder.text' => 'Please create the folder <strong>/assets/avatars</strong> and make it writable to upload profile pictures.',
     'users.avatar.delete.error' => 'The profile picture could not be deleted',
     'users.avatar.delete.success' => 'The profile picture has been deleted',
+    'users.avatar.missing' => 'This user has no avatar',
     'users.error.missing' => 'The user could not be found',
+    'user.error.lastadmin' => 'You are the only admin. This cannot be changed.',
 
     // form fields
     'fields.required' => 'Required',
@@ -282,6 +295,9 @@ return array(
     'fields.toggle.no' => 'No',
     'fields.toggle.on' => 'On',
     'fields.toggle.off' => 'Off',
+    'fields.error.missing.controller' => 'The field controller file is missing',
+    'fields.error.missing.class' => 'The field controller class is missing',
+    'fields.error.route.invalid' => 'Invalid field route',
 
     // textarea overlays
     'editor.link.url.label' => 'Insert URL',

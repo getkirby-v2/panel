@@ -107,8 +107,8 @@ class UsersController extends Kirby\Panel\Controllers\Base {
 
     if(!panel()->user()->isAdmin() and !$user->isCurrent()) {
       return $this->modal('error', array(
-        'headline' => 'Error',
-        'text'     => 'You are not allowed to delete this user', 
+        'headline' => l('error'),
+        'text'     => l('users.delete.error.rights'),
         'back'     => purl('users')
       ));
     } else {

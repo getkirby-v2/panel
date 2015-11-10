@@ -76,6 +76,9 @@ return array(
     'metatags.back' => 'Zurück zur Übersicht',
     'metatags.files' => 'Globale Dateien',
 
+    // site
+    'site.delete.error' => 'Die Seite kann nicht gelöscht werden',
+
     // pages
     'pages.show.settings' => 'Seiteneinstellungen',
     'pages.show.preview' => 'Seite öffnen',
@@ -115,10 +118,13 @@ return array(
     'pages.url.uid.label.option' => 'Aus Titel erzeugen',
     'pages.url.error.exists' => 'Eine Seite mit dem selben Anhang besteht bereits.',
     'pages.url.error.move' => 'Die URL konnte nicht geändert werden',
+    'pages.url.error.rights' => 'Du kannst die URL dieser Seite nicht ändern',
+    'pages.url.home.error.error' => 'Die URL für die Start- and Fehlerseite kann nicht geändert werden',
     'pages.toggle.position' => 'Position',
     'pages.toggle.invisible' => 'unsichtbar',
     'pages.toggle.publish' => 'Willst du den Status der Seite wirklich in **sichtbar** umändern?',
     'pages.toggle.hide' => 'Willst du den Status der Seite wirklich in **unsichtbar** umändern?',
+    'pages.toggle.error.error' => 'Der Status der Fehlerseite kann nicht geändert werden',
     'pages.delete.headline' => 'Willst du diese Seite wirklich löschen?',
     'pages.delete.error.home.headline' => 'Die Startseite kann nicht gelöscht werden',
     'pages.delete.error.home.text' => 'Du versuchst die Startseite zu löschen. Das ist nicht möglich und würde zu ungewollten Fehlern führen.',
@@ -143,6 +149,7 @@ return array(
     'subpages.index.visible.help' => 'Ziehe unsichtbare Seiten hierher, um sie zu sortieren/sichtbar zu machen',
     'subpages.index.invisible' => 'Unsichtbare Seiten',
     'subpages.index.invisible.help' => 'Ziehe sichtbare Seiten hierher, um sie unsichtbar zu machen',
+    'subpages.add.error' => 'Keine Unterseiten für diese Seite zugelassen',
     'subpages.error.missing' => 'Die Seite konnte nicht gefunden werden.',
 
     // files
@@ -154,6 +161,7 @@ return array(
     'files.index.upload.first.button' => 'Lade die erste Datei hoch',
     'files.index.edit' => 'Bearbeiten',
     'files.index.delete' => 'Löschen',
+    'files.index.error.disabled' => 'Keine Dateien für diese Seite zugelassen',
     'files.show.name.label' => 'Dateiname',
     'files.show.info.label' => 'Typ / Größe / Abmessungen',
     'files.show.link.label' => 'Öffentlicher Link',
@@ -203,11 +211,14 @@ return array(
     'users.form.back' => 'Zurück zur Benutzerübersicht',
     'users.form.error.password.confirm' => 'Bitte bestätige das Passwort',
     'users.form.error.update' => 'Der Benutzer konnte nicht gespeichert werden',
+    'users.form.error.update.rights' => 'Du kannst diesen Benutzer nicht aktualisieren',
     'users.form.error.create' => 'Der Benutzer konnte nicht erstellt werden',
     'users.form.error.permissions.title' => 'Der accounts Ordner ist nicht beschreibbar',
     'users.form.error.permissions.text' => 'Bitte stelle sicher, dass /site/accounts besteht und beschreibbar ist.',
     'users.delete.headline' => 'Willst du diesen Benutzer wirklich löschen?',
     'users.delete.error' => 'Der Benutzer konnte nicht gelöscht werden',
+    'users.delete.error.rights' => 'Du kannst diesen Benutzer nicht löschen',
+    'users.delete.error.lastadmin' => 'Du kannst den letzten Admin nicht löschen',
     'users.avatar.drop' => 'Ziehe ein Profilbild hierher…',
     'users.avatar.click' => '…oder klicke, um ein Profilbild hochzuladen',
     'users.avatar.error.type' => 'Es sind nur JPG, PNG und GIF Dateien erlaubt.',
@@ -215,7 +226,9 @@ return array(
     'users.avatar.error.folder.text' => 'Bitte erstelle den Ordner <strong>/assets/avatars</strong> und stelle sicher, dass er beschreibbar ist.',
     'users.avatar.delete.error' => 'Das Profilbild konnte nicht gelöscht werden',
     'users.avatar.delete.success' => 'Das Profilbild wurde gelöscht',
+    'users.avatar.missing' => 'Der Benutzer hat kein Profilbild',
     'users.error.missing' => 'Der Benutzer wurde nicht gefunden',
+    'user.error.lastadmin' => 'Du bist der letzte Admin. Das kann nicht verändert werden.',
 
     // form fields
     'fields.required' => 'Pflichtfeld',
@@ -281,6 +294,9 @@ return array(
     'fields.toggle.no' => 'Nein',
     'fields.toggle.on' => 'An',
     'fields.toggle.off' => 'Aus',
+    'fields.error.missing.controller' => 'Die Feldcontroller-Datei fehlt',
+    'fields.error.missing.class' => 'Die Feldcontroller-Klasse fehlt',
+    'fields.error.route.invalid' => 'Ungültige Feld-Route',
 
     // textarea overlays
     'editor.link.url.label' => 'URL einfügen',

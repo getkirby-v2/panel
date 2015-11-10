@@ -265,7 +265,7 @@ class Page extends \Page {
   public function move($uid) {
 
     if(!$this->canChangeUrl()) {
-      throw new Exception('You cannot change the URL of this page');
+      throw new Exception(l('pages.url.error.rights'));
     }
 
     $site    = panel()->site();

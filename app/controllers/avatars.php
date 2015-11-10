@@ -25,7 +25,7 @@ class AvatarsController extends Kirby\Panel\Controllers\Base {
 
     if(!$avatar->exists()) {
       return $this->modal('error', array(
-        'text' => 'This user has no avatar',
+        'text' => l('users.avatar.missing'),
         'back' => $user->url()
       ));
     }
