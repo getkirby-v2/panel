@@ -150,7 +150,7 @@ class Site extends \Site {
   }
 
   public function delete($force = false) {
-    throw new Exception('The site cannot be deleted');
+    throw new Exception(l('site.delete.error'));
   }
 
   public function maxSubpages() {

@@ -51,13 +51,13 @@ class FieldController extends Kirby\Panel\Controllers\Base {
         $controllerName = $fieldType . 'FieldController';
 
         if(!file_exists($controllerFile)) {
-          throw new Exception('The field controller file is missing');
+          throw new Exception(l('fields.error.missing.controller'));
         }
 
         require_once($controllerFile);
 
         if(!class_exists($controllerName)) {
-          throw new Exception('The field controller class is missing');
+          throw new Exception(l('fields.error.missing.class'));
         }
 
         $controller = new $controllerName($model, $field);
@@ -67,7 +67,7 @@ class FieldController extends Kirby\Panel\Controllers\Base {
       }
  
     } else {
-      throw new Exception('Invalid field route');
+      throw new Exception(l('fields.error.route.invalid'));
     }
 
   }

@@ -121,9 +121,9 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
     if(!$page->canChangeUrl()) {
       return $this->modal('error', array(
-        'headline' => 'Error',
-        'text'     => 'The URL for the home and error pages cannot be changed',
-      ));      
+        'headline' => l('error'),
+        'text'     => l('pages.url.home.error.error'),
+      ));
     }
 
     $form = $page->form('url', function($form) use($page, $self) {
@@ -150,8 +150,8 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
     if($page->isErrorPage()) {
       return $this->modal('error', array(
-        'headline' => 'Error',
-        'text'     => 'The status of the error page cannot be changed',
+        'headline' => l('error'),
+        'text'     => l('pages.toggle.error.error'),
       ));
     }
 

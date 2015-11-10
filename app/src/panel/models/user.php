@@ -29,7 +29,7 @@ class User extends \User {
   public function update($data = array()) {
 
     if(!panel()->user()->isAdmin() and !$this->isCurrent()) {
-      throw new Exception('You are not allowed to update this user');
+      throw new Exception(l('users.form.error.update.rights'));
     }
 
     if(str::length(a::get($data, 'password')) > 0) {
@@ -44,7 +44,7 @@ class User extends \User {
 
     if($this->isLastAdmin() and a::get($data, 'role') !== 'admin') {
       // check the number of left admins to not convert the last one
-      throw new Exception('You are the only admin. This cannot be changed.');
+      throw new Exception(l('user.error.lastadmin'));
     }
 
     parent::update($data);
@@ -72,7 +72,7 @@ class User extends \User {
 
     if($this->isLastAdmin()) {
       // check the number of left admins to not delete the last one
-      throw new Exception('You cannot delete the last admin');
+      throw new Exception(l('users.delete.error.lastadmin'));
     }
 
     parent::delete();

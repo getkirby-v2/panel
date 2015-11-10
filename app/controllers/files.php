@@ -9,7 +9,7 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
     // don't create the view if the page is not allowed to have files
     if(!$page->canHaveFiles()) {
-      throw new Exception('The page is not allowed to have any files');
+      throw new Exception(l('files.index.error.disabled'));
     }
 
     // sort action
