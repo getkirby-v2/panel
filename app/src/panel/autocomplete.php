@@ -24,7 +24,7 @@ class Autocomplete {
     $method = 'autocomplete' . $this->method;
 
     if(!method_exists($this, $method)) {
-      throw new Exception('Invalid autocomplete method');
+      throw new Exception(l('autocomplete.method.error'));
     }
 
     $result = array_values((array)$this->$method($this->params));

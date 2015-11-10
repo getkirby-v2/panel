@@ -40,7 +40,7 @@ class Login {
 
     // make sure the logroot exists
     if(!is_writable(dirname($this->logfile))) {
-      throw new Exception('The accounts folder is not writable.');
+      throw new Exception(l('users.form.error.permissions.title'));
     }
 
     // create the logfile if not there yet
@@ -48,7 +48,7 @@ class Login {
 
     // make sure the logroot exists
     if(!is_writable($this->logfile)) {
-      throw new Exception('Login log file is not writable.');
+      throw new Exception(l('login.log.error.permissions'));
     }
 
   }
@@ -67,13 +67,13 @@ class Login {
     try {
 
       if($this->isInvalidUsername() || $this->isInvalidPassword()) {
-        throw new Exception('Invalid username or password');
+        throw new Exception(l('login.error'));
       }
       
       $user = $this->user();      
       
       if(!$user->login($this->password)) {
-        throw new Exception('Invalid username or password');
+        throw new Exception(l('login.error'));
       }
   
       $this->clearLog($this->visitorId());

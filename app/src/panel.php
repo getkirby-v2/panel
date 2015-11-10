@@ -264,7 +264,7 @@ class Panel {
     if($page = (empty($id) or $id == '/') ? $this->site() : $this->site()->find($id)) {
       return $page;
     } else {
-      throw new Exception('The page could not be found');
+      throw new Exception(l('pages.error.missing'));
     }
   }
 
@@ -290,13 +290,13 @@ class Panel {
     }
 
     if(!file_exists($file)) {
-      throw new Exception('The form cannot be found');
+      throw new Exception(l('form.error.missing'));
     }
 
     $callback = require($file);
 
     if(!is_callable($callback)) {
-      throw new Exception('Invalid form construction method');
+      throw new Exception(l('form.construct.error.invalid'));
     }
 
     $form = call($callback, $data);
@@ -387,7 +387,7 @@ class Panel {
 
       // react on invalid routes
       if(!$this->route) {
-        throw new Exception('Invalid Panel URL');
+        throw new Exception(l('routes.error.invalid'));
       }
 
       if(is_callable($this->route->action())) {
@@ -432,7 +432,7 @@ class Panel {
 
     // react on missing controllers
     if(!file_exists($controllerFile)) {
-      throw new Exception('Invalid controller');
+      throw new Exception(l('controller.error.invalid'));
     }
 
     // load the controller
@@ -440,7 +440,7 @@ class Panel {
 
     // check for the called action
     if(!method_exists($controllerName, $controllerAction)) {
-      throw new Exception('Invalid action');
+      throw new Exception(l('controller.error.action'));
     }
 
     // run the controller
@@ -544,7 +544,7 @@ class Panel {
     if($user = $this->site()->user($username)) {
       return $user;
     } else {
-      throw new Exception('The user could not be found');
+      throw new Exception(l('users.error.missing'));
     }
   }
 

@@ -32,7 +32,7 @@ class Topbar {
         $callback($this, $input);
 
       } else {
-        throw new Exception('Missing topbar definition for class: ' . $class);
+        throw new Exception(l('topbar.error.class.definition') . $class);
       }
 
     }

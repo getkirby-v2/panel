@@ -7,7 +7,7 @@ class ErrorController extends Kirby\Panel\Controllers\Base {
     $this->auth();
 
     if(is_null($text)) {
-      $text = 'The page could not be found';
+      $text = l('pages.error.missing');
     }
 
     if(server::get('HTTP_MODAL')) {

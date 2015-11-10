@@ -63,7 +63,7 @@ class Children extends \Children {
     $page = new Page($this->page, parent::create($uid, $template, $data)->dirname());
 
     if(!$page) {
-      throw new Exception('The page could not be created');
+      throw new Exception(l('pages.add.error.create'));
     }
 
     // subpage builder
