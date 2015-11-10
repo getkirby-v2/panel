@@ -81,7 +81,6 @@ gulp.task('watch', function() {
   gulp.watch('assets/js/src/**/*.js', ['panel-js', 'app-js']);
   gulp.watch('app/fields/*/assets/js/*.js', ['form-js']);
   gulp.watch('app/fields/*/assets/css/*.css', ['form-css']);
-  gulp.watch('assets/images/*', ['image']);
 
 });
 
