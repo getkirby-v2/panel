@@ -19,12 +19,7 @@
 <?php if($files->count()): ?>
 <ul class="nav nav-list sidebar-list">
   <?php foreach($files as $file): ?>
-  <li>
-    <a class="draggable" data-helper="<?php __($file->filename()) ?>" data-text="<?php __($file->dragText()) ?>" href="<?php __($file->url('edit')) ?>">
-      <?php echo $file->icon() . __($file->filename()) ?>
-    </a>
-    <a class="option" data-context="<?php __($file->url('context')) ?>" href="#options"><?php i('pencil') ?></a>
-  </li>
+  <?php echo new Kirby\Panel\Snippet('pages/sidebar/file', array('file' => $file)) ?>
   <?php endforeach ?>
 </ul>
 <?php else: ?>

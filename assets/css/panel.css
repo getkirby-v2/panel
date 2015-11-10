@@ -2212,15 +2212,15 @@ body.rtl .sidebar-list > li > a {
 
 .sidebar-list > li > .option {
   position: absolute;
-  top: 0;
+  top: -1px;
   left: 0;
   background: red;
   z-index: 1;
   text-align: right;
   padding: 0 !important;
-  width: 1em;
   background: #fff;
-  display: none; }
+  display: none;
+  font-size: 18px; }
 
 .sidebar-list > li:hover .option {
   display: block; }

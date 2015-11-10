@@ -3,5 +3,5 @@
     <?php echo $subpage->icon() ?><span><?php __($subpage->title()) ?></span>
     <small class="marginalia shiv shiv-left shiv-white"><?php __($subpage->displayNum()) ?></small>
   </a>
-  <a class="option" data-context="<?php __($subpage->url('context')) ?>" href="#options"><?php i('pencil') ?></a>
+  <a class="option" data-context="<?php __($subpage->url('context')) ?>" href="#options"><?php i('ellipsis-h') ?></a>
 </li>
