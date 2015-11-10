@@ -1,14 +1,9 @@
 <?php
 
-class FilenameField extends InputField {
+class FilenameField extends TextField {
 
-  public $type      = 'text';
   public $extension = null;
   public $icon      = true;
-
-  public function type() {
-    return $this->type = 'text';
-  }
 
   public function icon() {
 
