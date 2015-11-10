@@ -1,10 +1,9 @@
 <?php
 
-class PageField extends InputField {
+class PageField extends TextField {
 
   public function __construct() {
 
-    $this->type        = 'text';
     $this->icon        = 'chain';
     $this->label       = l::get('fields.page.label', 'Page');
     $this->placeholder = l::get('fields.page.placeholder', 'path/to/page');
