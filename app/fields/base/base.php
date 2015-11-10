@@ -41,12 +41,14 @@ class BaseField {
         return true;
       } else if(is_array($this->validate)) {
         foreach($this->validate as $validator => $options) {
-          if(is_numeric($validator)) {
-            $result = call('v::' . $options, $this->value());
-          } else {
-            $result = call('v::' . $validator, array($this->value(), $options));
+          if(!v::denied($options)) {
+             if(is_numeric($validator)) {
+              $result = call('v::' . $options, $this->value());
+            } else {
+              $result = call('v::' . $validator, array($this->value(), $options));
+            }
+            if(!$result) return false;
           }
-          if(!$result) return false;
         }
         return true;
       } else {
