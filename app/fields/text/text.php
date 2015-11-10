@@ -5,7 +5,7 @@ class TextField extends InputField {
   public $type     = 'text';
   public $validate = array(
     'min' => 0,
-    'max' => false
+    'max' => null
   );
 
   static public $assets = array(

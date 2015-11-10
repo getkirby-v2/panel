@@ -41,7 +41,7 @@ class BaseField {
         return true;
       } else if(is_array($this->validate)) {
         foreach($this->validate as $validator => $options) {
-          if(!v::denied($options)) {
+          if(!is_null($options)) {
              if(is_numeric($validator)) {
               $result = call('v::' . $options, $this->value());
             } else {
