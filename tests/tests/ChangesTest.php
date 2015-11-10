@@ -58,21 +58,6 @@ class ChangesTest extends PanelTestCase {
 
   }
 
-  public function testExists() {
-
-    $updates = array(
-      'a' => 'test-1',
-      'b' => false
-    );
-
-    $this->changes->update($updates);
-
-    $this->assertTrue($this->changes->exist('a'));
-    $this->assertTrue($this->changes->exist('b'));
-    $this->assertFalse($this->changes->exist('c'));
-
-  }
-
   public function testFlush() {
 
     $updates = array(

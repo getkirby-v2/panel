@@ -101,7 +101,7 @@ class SiteModelTest extends PanelTestCase {
   }
 
   public function testStructure() {
-    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page\\Structure', $this->site->structure('test'));    
+    $this->assertInstanceOf('Kirby\\Panel\\Structure', $this->site->structure('test'));    
   }
 
 }

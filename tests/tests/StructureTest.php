@@ -8,16 +8,16 @@ class StructureTest extends PanelTestCase {
 
     $this->user      = $this->createAdmin();
     $this->page      = $this->site->children()->create('test', 'test');
-    $this->structure = $this->page->structure('testfield');
+    $this->structure = $this->page->structure()->forField('testfield');
 
   }
 
   public function testConstruct() {
 
-    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page\\Structure', $this->structure);
-    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page', $this->structure->page());
+    $this->assertInstanceOf('Kirby\\Panel\\Structure', $this->structure);
+    $this->assertInstanceOf('Kirby\\Panel\\Models\\Page', $this->structure->model());
     $this->assertInstanceOf('Collection', $this->structure->data());
-    $this->assertEquals($this->structure->page(), $this->page);
+    $this->assertEquals($this->structure->model(), $this->page);
 
   }
 

@@ -140,7 +140,7 @@ class Structure {
   }
 
   public function add($data = array()) {
-    return $this->toObject($this->store()->add($data));
+    return $this->store()->add($data);
   }
 
   public function update($id, $data = array()) {

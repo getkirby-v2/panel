@@ -40,9 +40,9 @@ class NumberingTest extends PanelTestCase {
     $c->sort();
     $d->sort();
 
-    $this->assertEquals(20121212, $a->num());
-    $this->assertEquals(20131212, $b->num());
-    $this->assertEquals(20141212, $c->num());
+    $this->assertEquals('20121212', $a->num());
+    $this->assertEquals('20131212', $b->num());
+    $this->assertEquals('20141212', $c->num());
     
     // article with missing date, should be filled with current date
     $this->assertEquals(date('Ymd'), $d->num());
