@@ -23,7 +23,7 @@
         } else {
           counter.removeClass('outside-range');
         }
-      });
+      }).trigger('keyup');
 
       counter.data('counter', true);
 
