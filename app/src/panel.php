@@ -25,6 +25,7 @@ use Url;
 
 use Kirby\Panel\Form;
 use Kirby\Panel\Models\Site;
+use Kirby\Panel\Translation;
 use Kirby\Panel\Models\User\Blueprint as UserBlueprint;
 use Kirby\Panel\Models\Page\Blueprint as PageBlueprint;
 
@@ -48,8 +49,8 @@ class Panel {
   public $routes = array();
   public $router = null;
   public $route  = null;
-  public $language = null;
-  public $languages = null;
+  public $translation = null;
+  public $translations = null;
   public $csrf = null;
 
   static public function instance() {
@@ -309,63 +310,37 @@ class Panel {
 
   }
 
-  public function languages() {
+  public function translations() {
 
-    $languages = new Collection;
-    $root      = $this->roots()->languages();
+    if(!is_null($this->translations)) return $this->translations;
 
-    foreach(dir::read($root) as $file) {
+    $this->translations = new Collection;
 
-      // skip invalid language files
-      if(f::extension($file) != 'php') continue;
-
-      // fetch all strings from the language file
-      $strings = require($root . DS . $file);
-
-      // skip invalid language files
-      if(!is_array($strings)) continue;
-
-      // create the language object
-      $language = new Obj($strings);
-      $language->code = str_replace('.php', '', $file);
-      $languages->set($language->code, $language);
-
+    foreach(dir::read($this->roots()->translations()) as $dir) {
+      // create the translation object
+      $translation = new Translation($this, $dir);
+      $this->translations->append($translation->code(), $translation);
     }
 
-    return $languages;
+    return $this->translations;
 
   }
 
-  public function language() {
-    return $this->language;
-  }
+  public function translation() {
 
-  public function i18n() {
+    if(!is_null($this->translation)) return $this->translation;
 
     // load the interface language file
     if($user = $this->site()->user()) {
-      $this->language = $user->language();
+      return $this->translation = new Translation($this, $user->language());
     } else {
-      $this->language = $this->kirby()->option('panel.language', 'en');
-    }
-
-    $translation = require($this->roots()->languages() . DS . 'en.php');
-    $translation = a::merge($translation, require($this->roots()->languages() . DS . $this->language . '.php'));
-
-    // set all language variables
-    l::$data = $translation['data'];
-
-    // set language direction (ltr is default)
-    if(isset($translation['direction']) and $translation['direction'] == 'rtl') {
-      l::set('language.direction', 'rtl');
-    } else {
-      l::set('language.direction', 'ltr');
+      return $this->translation = new Translation($this, $this->kirby()->option('panel.language', 'en'));
     }
 
   }
 
   public function direction() {
-    return l::get('language.direction');
+    return $this->translation->direction();
   }
 
   public function launch($path = null) {
@@ -373,7 +348,8 @@ class Panel {
     // set the timezone for all date functions
     date_default_timezone_set($this->kirby->options['timezone']);
 
-    $this->i18n();
+    // load the current translation
+    $this->translation()->load();
 
     $this->path  = $this->kirby->path();
     $this->route = $this->router->run($this->path);

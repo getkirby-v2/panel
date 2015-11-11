@@ -2,17 +2,17 @@
 
 return function($user) {
 
-  $mode      = $user ? 'edit' : 'add';
-  $content   = $user ? $user->data() : array();
-  $languages = array();
-  $roles     = array();
+  $mode         = $user ? 'edit' : 'add';
+  $content      = $user ? $user->data() : array();
+  $translations = array();
+  $roles        = array();
 
   // make sure the password is never shown in the form
   unset($content['password']);
 
   // add all languages
-  foreach(panel()->languages() as $code => $lang) {
-    $languages[$code] = $lang->title();
+  foreach(panel()->translations() as $code => $translation) {
+    $translations[$code] = $translation->title();
   }
 
   // add all roles
@@ -74,7 +74,7 @@ return function($user) {
       'required' => true,
       'width'    => '1/2',
       'default'  => kirby()->option('panel.language', 'en'),
-      'options'  => $languages
+      'options'  => $translations
     ),
     
     'role' => array(

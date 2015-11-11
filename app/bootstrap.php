@@ -9,6 +9,7 @@ load(array(
 
   // global stuff
   'kirby\\panel\\login'                           => 'panel' . DS . 'login.php',
+  'kirby\\panel\\translation'                     => 'panel' . DS . 'translation.php',
   'kirby\\panel\\autocomplete'                    => 'panel' . DS . 'autocomplete.php',
   'kirby\\panel\\roots'                           => 'panel' . DS . 'roots.php',
   'kirby\\panel\\urls'                            => 'panel' . DS . 'urls.php',

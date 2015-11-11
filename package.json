@@ -2,7 +2,6 @@
   "name": "kirby-panel",
   "version": "2.2.0",
   "author": "Bastian Allgeier <bastian@getkirby.com>",
-  "license": "SEE LICENSE IN <license.md>",
   "homepage": "https://getkirby.com",
   "repository": {
     "type": "git",

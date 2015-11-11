@@ -15,19 +15,19 @@ class Roots extends Obj {
     $this->app         = $root . DS . 'app';
     $this->assets      = $root . DS . 'assets';
 
-    $this->config      = $this->app . DS . 'config';
-    $this->controllers = $this->app . DS . 'controllers';
-    $this->collections = $this->app . DS . 'collections';
-    $this->models      = $this->app . DS . 'models';
-    $this->fields      = $this->app . DS . 'fields';
-    $this->forms       = $this->app . DS . 'forms';
-    $this->languages   = $this->app . DS . 'languages';
-    $this->widgets     = $this->app . DS . 'widgets';
-    $this->layouts     = $this->app . DS . 'layouts';
-    $this->lib         = $this->app . DS . 'lib';
-    $this->topbars     = $this->app . DS . 'topbars';
-    $this->snippets    = $this->app . DS . 'snippets';
-    $this->views       = $this->app . DS . 'views';
+    $this->config       = $this->app . DS . 'config';
+    $this->controllers  = $this->app . DS . 'controllers';
+    $this->collections  = $this->app . DS . 'collections';
+    $this->models       = $this->app . DS . 'models';
+    $this->fields       = $this->app . DS . 'fields';
+    $this->forms        = $this->app . DS . 'forms';
+    $this->translations = $this->app . DS . 'translations';
+    $this->widgets      = $this->app . DS . 'widgets';
+    $this->layouts      = $this->app . DS . 'layouts';
+    $this->lib          = $this->app . DS . 'lib';
+    $this->topbars      = $this->app . DS . 'topbars';
+    $this->snippets     = $this->app . DS . 'snippets';
+    $this->views        = $this->app . DS . 'views';
 
   }
 
