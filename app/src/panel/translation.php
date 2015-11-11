@@ -53,7 +53,7 @@ class Translation {
 
   public function direction() {
     $direction = $this->info()->direction();
-    return $direction ? $direction : 'rtl';
+    return $direction ? $direction : 'ltr';
   }
 
   public function __call($method, $args) {
