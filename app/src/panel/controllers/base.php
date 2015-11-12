@@ -63,8 +63,8 @@ class Base extends Obj {
         $defaults['appjs']      = js($jsbase   . '/dist/app.min.js?v='   . $version);
 
         // plugin stuff
-        $defaults['pluginscss'] = css($base . '/plugins.css?v='  . $version);
-        $defaults['pluginsjs']  = js($base . '/plugins.js?v='  . $version);
+        $defaults['pluginscss'] = css($base . '/plugins/css?v='  . $version);
+        $defaults['pluginsjs']  = js($base . '/plugins/js?v='  . $version);
 
         break;
       case 'base':

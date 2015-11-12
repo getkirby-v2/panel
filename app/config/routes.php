@@ -50,8 +50,8 @@ return array(
   // Files
   array(
     'pattern' => array(
-      'site(/)file/(:any)/edit',
-      'pages/(:all)/file/(:any)/edit',
+      'site(/)file/(:any)-(:any)/edit',
+      'pages/(:all)/file/(:any)-(:any)/edit',
     ),
     'action'  => 'FilesController::edit',
     'filter'  => 'auth',
@@ -59,8 +59,8 @@ return array(
   ),
   array(
     'pattern' => array(
-      'site(/)file/(:any)/context',
-      'pages/(:all)/file/(:any)/context',
+      'site(/)file/(:any)-(:any)/context',
+      'pages/(:all)/file/(:any)-(:any)/context',
     ),
     'action'  => 'FilesController::context',
     'filter'  => 'auth',
@@ -68,8 +68,8 @@ return array(
   ),
   array(
     'pattern' => array(
-      'site(/)file/(:any)/delete',
-      'pages/(:all)/file/(:any)/delete',
+      'site(/)file/(:any)-(:any)/delete',
+      'pages/(:all)/file/(:any)-(:any)/delete',
     ),
     'action'  => 'FilesController::delete',
     'filter'  => 'auth',
@@ -77,8 +77,8 @@ return array(
   ),
   array(
     'pattern' => array(
-      'site(/)file/(:any)/replace',
-      'pages/(:all)/file/(:any)/replace',
+      'site(/)file/(:any)-(:any)/replace',
+      'pages/(:all)/file/(:any)-(:any)/replace',
     ),
     'action'  => 'FilesController::replace',
     'filter'  => 'auth',
@@ -97,8 +97,8 @@ return array(
   // Field routes
   array(
     'pattern' => array(
-      'site(/)file/(:any)/field/(:any)/(:any)/(:all)',
-      'pages/(:all)/file/(:any)/field/(:any)/(:any)/(:all)',
+      'site(/)file/(:any)-(:any)/field/(:any)/(:any)/(:all)',
+      'pages/(:all)/file/(:any)-(:any)/field/(:any)/(:any)/(:all)',
     ),
     'action' => 'FieldController::forFile', 
     'filter' => 'auth',
@@ -272,13 +272,13 @@ return array(
 
   // form assets
   array(
-    'pattern' => 'plugins.js',
+    'pattern' => 'plugins/js',
     'action'  => 'AssetsController::js',
     'method'  => 'GET', 
     'filter'  => 'auth'
   ),
   array(
-    'pattern' => 'plugins.css',
+    'pattern' => 'plugins/css',
     'action'  => 'AssetsController::css',
     'method'  => 'GET',
     'filter'  => 'auth'

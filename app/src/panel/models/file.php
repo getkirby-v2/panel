@@ -13,7 +13,7 @@ class File extends \File {
     if(empty($action)) {
       return parent::uri();
     } else {
-      return $this->page()->uri('file') . '/' . rawurlencode($this->filename()) . '/' . $action;
+      return $this->page()->uri('file') . '/' . rawurlencode($this->name()) . '-' . $this->extension() . '/' . $action;
     }
   }
 

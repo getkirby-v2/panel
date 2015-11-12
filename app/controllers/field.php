@@ -2,10 +2,15 @@
 
 class FieldController extends Kirby\Panel\Controllers\Base {
 
-  public function forFile($pageId, $filename, $fieldName, $fieldType, $path) {
+  public function forFile($pageId, $name, $extension, $fieldName, $fieldType, $path) {
 
     $page = $this->page($pageId);
-    $file = $page->file(rawurldecode($filename));
+    $file = $page->file(rawurldecode($name) . '.' . $extension);
+
+    if(!$file) {
+      throw new Exception(l('files.error.missing.file'));
+    }
+
     $form = $file->form('edit', function() {});
 
     return $this->route($file, $form, $fieldName, $fieldType, $path);
@@ -14,8 +19,8 @@ class FieldController extends Kirby\Panel\Controllers\Base {
 
   public function forPage($pageId, $fieldName, $fieldType, $path) {
 
-    $page  = $this->page($pageId);
-    $form  = $page->form('edit', function() {});
+    $page = $this->page($pageId);
+    $form = $page->form('edit', function() {});
 
     return $this->route($page, $form, $fieldName, $fieldType, $path);
 

@@ -33,6 +33,11 @@ class Uploader {
 
   public function upload() {
 
+    // check if more files can be uploaded for the page
+    if(!$this->page->canHaveMoreFiles()) {
+      throw new Exception(l('files.add.error.max'));
+    }
+
     $upload = new Upload($this->page->root() . DS . $this->filename, array(
       'overwrite' => true,
       'accept'    => function($file) {
@@ -52,8 +57,6 @@ class Uploader {
 
     // create the initial meta file
     $file->createMeta();
-
-    var_dump($file);
 
     kirby()->trigger('panel.file.upload', $file);          
 

@@ -25,15 +25,11 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  public function edit($id, $filename) {
+  public function edit($id, $name, $extension) {
 
     $self = $this;
     $page = $this->page($id);
-    $file = $page->file(rawurldecode($filename));
-
-    if(!$file) {
-      throw new Exception(l('files.error.missing.file'));
-    }
+    $file = $this->file($page, $name, $extension);
 
     // setup the form and form action
     $form = $file->form('edit', function($form) use($file, $page, $self) {
@@ -72,10 +68,6 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
     $page = $this->page($id);
 
-    if(!$page->canHaveMoreFiles()) {
-      return $form->alert(l('files.add.error.max'));
-    }
-
     try {
       $page->upload();        
       $this->notify(':)');
@@ -87,9 +79,10 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  public function replace($id, $filename) {
+  public function replace($id, $name, $extension) {
 
-    $file = $this->page($id)->file(urldecode($filename));
+    $page = $this->page($id);
+    $file = $this->file($page, $name, $extension);
 
     try {
       $file->replace();        
@@ -102,15 +95,20 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  public function context($id, $filename) {
-    return $this->page($id)->file(urldecode($filename))->menu();
+  public function context($id, $name, $extension) {
+
+    $page = $this->page($id);
+    $file = $this->file($page, $name, $extension);
+
+    return $file->menu();
+
   }
 
-  public function delete($id, $filename) {
+  public function delete($id, $name, $extension) {
 
     $self = $this;
     $page = $this->page($id);
-    $file = $page->file(urldecode($filename));
+    $file = $this->file($page, $name, $extension);
     $form = $this->form('files/delete', $file, function($form) use($file, $page, $self) {
 
       try {
@@ -124,6 +122,18 @@ class FilesController extends Kirby\Panel\Controllers\Base {
     });
 
     return $this->modal('files/delete', compact('form'));
+
+  }
+
+  protected function file($page, $name, $extension) {
+
+    $file = $page->file(rawurldecode($name) . '.' . $extension);    
+
+    if(!$file) {
+      throw new Exception(l('files.error.missing.file'));
+    }
+
+    return $file;
 
   }
 
