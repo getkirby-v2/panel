@@ -2,45 +2,24 @@
 
 class TextField extends InputField {
 
-  public $type = 'text';
-  public $min  = 0;
-  public $max  = false;
+  public $type     = 'text';
+  public $validate = array(
+    'min' => 0,
+    'max' => null
+  );
 
   static public $assets = array(
     'js' => array(
       'counter.js'
-    ),
-    'css' => array(
-      'counter.css'
     )
   );
 
-  public function __construct() {
-    $this->min = 0;
-    $this->max = false;
-  }
-
-  public function validate() {
-
-    if($this->min and !v::min($this->result(), $this->min)) return false;
-    if($this->max and !v::max($this->result(), $this->max)) return false;
-
-    return parent::validate();
-
-  }
-
   public function min() {
-    if (isset($this->validate['min'])) {
-      return $this->validate['min'];
-    }
-    return false;
+    return isset($this->validate['min']) ? $this->validate['min'] : false;
   }
 
   public function max() {
-    if (isset($this->validate['max'])) {
-      return $this->validate['max'];
-    }
-    return false;
+    return isset($this->validate['max']) ? $this->validate['max'] : false;
   }
 
   public function input() {
@@ -57,13 +36,8 @@ class TextField extends InputField {
 
   public function outsideRange($length) {
 
-    if($this->min() && $length < $this->min()) {
-      return true;
-    }
-
-    if($this->max() && $length > $this->max()) {
-      return true;
-    }
+    if($this->min() && $length < $this->min()) return true;
+    if($this->max() && $length > $this->max()) return true;
 
     return false;
 
