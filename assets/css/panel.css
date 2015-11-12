@@ -389,6 +389,9 @@ body.rtl .nav-icon-right {
 .btn-addit i {
   line-height: 0; }
 
+.btn-wide {
+  min-width: 10em; }
+
 /* Reset */
 fieldset {
   border: 0; }
@@ -2618,9 +2621,25 @@ body.rtl .fileview-nav-next {
     background: linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.8) 75%, rgba(239, 239, 239, 0));
     margin: 0;
     padding: 1.5em 3em 1.5em; }
-  .mainbar .form .buttons .timestamp strong {
-    font-weight: normal;
-    color: #777; } }
+  .mainbar .form .buttons .text span {
+    position: relative;
+    padding: 0.35rem 2rem;
+    background: #8dae28;
+    display: inline-block;
+    margin: 0 auto 1.5rem;
+    color: #fff;
+    border-radius: 3px;
+    font-weight: 600; }
+  .mainbar .form .buttons .text span:after {
+    position: absolute;
+    content: "";
+    border-top: 5px solid #8dae28;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    bottom: -5px;
+    left: 50%;
+    margin-left: -5px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px; } }
 
 .autocomplete {
   position: absolute;
