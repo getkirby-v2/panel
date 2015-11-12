@@ -34,10 +34,8 @@
           <a class="file-preview file-preview-is-<?php __($file->type()) ?>" href="<?php __($file->url('edit')) ?>">
             <?php if($file->extension() == 'svg'): ?>
             <object data="<?php __($file->url('preview')) ?>"></object>
-            <?php elseif($file->canHaveThumb()): ?>
-            <img src="<?php __($file->thumb()) ?>" alt="<?php __($file->filename()) ?>">
             <?php elseif($file->canHavePreview()): ?>
-            <img src="<?php __($file->url('preview')) ?>" alt="<?php __($file->filename()) ?>">
+            <img src="<?php __($file->thumb()) ?>" alt="<?php __($file->filename()) ?>">
             <?php else: ?>
             <span><?php __($file->extension()) ?></span>
             <?php endif ?>

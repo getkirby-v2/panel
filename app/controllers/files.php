@@ -106,6 +106,31 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
+  public function thumb($id, $filename) {
+
+    $page   = $this->page($id);
+    $file   = $this->file($page, $filename);
+    $width  = intval(get('width'));
+    $height = intval(get('height'));
+
+    if(!$file->canHavePreview()) {
+      return response::error('No preview available', 404);
+    }
+
+    if(!$file->canHaveThumb()) {
+      go($file->url());
+    }
+
+    if(get('crop') == true) {
+      $thumb = $file->crop($width, $height, 80);
+    } else {
+      $thumb = $file->resize($width, $height, 80);
+    }
+
+    go($thumb->url());
+
+  }
+
   public function delete($id, $filename) {
 
     $self = $this;

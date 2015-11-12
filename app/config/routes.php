@@ -68,6 +68,15 @@ return array(
   ),
   array(
     'pattern' => array(
+      'site(/)file/(:any)/thumb',
+      'pages/(:all)/file/(:any)/thumb',
+    ),
+    'action'  => 'FilesController::thumb',
+    'filter'  => 'auth',
+    'method'  => 'GET',
+  ),
+  array(
+    'pattern' => array(
       'site(/)file/(:any)/delete',
       'pages/(:all)/file/(:any)/delete',
     ),

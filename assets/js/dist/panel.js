@@ -7141,7 +7141,16 @@ var Search = function() {
           return $('<div class="draggable-helper"></div>');
         },
         start: function(e, ui) {
-          ui.helper.text($(this).data('helper'));
+          
+          var url = $(this).data('url');
+
+          if(url) {
+            ui.helper.html('<img src="' + url + '">');            
+            ui.helper.addClass('draggable-helper-with-image');
+          } else {
+            ui.helper.text($(this).data('helper'));
+          }
+
         }
       });
 
