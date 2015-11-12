@@ -1,4 +1,4 @@
-<div class="modal-content modal-content-large" data-api="<?php _u('api/slug') ?>">
+<div class="modal-content modal-content-medium" data-api="<?php _u('api/slug') ?>">
   <?php echo $form ?>
 </div>
 

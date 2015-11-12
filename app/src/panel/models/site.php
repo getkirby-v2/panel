@@ -31,6 +31,14 @@ class Site extends \Site {
     return new Changes($this);
   }
 
+  public function uri($action = null) {
+    if(empty($action)) {
+      return parent::uri();
+    } else {
+      return 'site/' . $action;            
+    }
+  }
+
   public function url($action = null) {
 
     if(empty($action)) {
@@ -42,7 +50,7 @@ class Site extends \Site {
     } else if($this->multilang() and in_array($action, $this->languages()->codes())) {    
       return parent::url($action);
     } else {
-      return panel()->urls()->index() . '/site/' . $action;
+      return panel()->urls()->index() . '/' . $this->uri($action);
     }
 
   }

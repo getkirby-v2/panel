@@ -134,8 +134,8 @@ return array(
   // New Page
   array(
     'pattern' => array(
-      'site(/)add/(:any?)',
-      'pages/(:all)/add/(:any?)',
+      'site(/)add',
+      'pages/(:all)/add',
     ),
     'action'  => 'PagesController::add',
     'filter'  => 'auth',
