@@ -22,6 +22,7 @@ load(array(
   'kirby\\panel\\search'                          => 'panel' . DS . 'search.php',
   'kirby\\panel\\structure'                       => 'panel' . DS . 'structure.php',
   'kirby\\panel\\structure\\store'                => 'panel' . DS . 'structure' . DS . 'store.php',
+  'kirby\\panel\\upload'                          => 'panel' . DS . 'upload.php',
   
   // controllers
   'kirby\\panel\\controllers\\base'               => 'panel' . DS . 'controllers' . DS . 'base.php',

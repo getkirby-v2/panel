@@ -4,10 +4,10 @@ namespace Kirby\Panel\Models\User;
 
 use Media;
 use Exception;
-use Upload;
 use Error;
 use Thumb;
 
+use Kirby\Panel\Upload;
 use Kirby\Panel\Models\User;
 
 class Avatar extends Media {

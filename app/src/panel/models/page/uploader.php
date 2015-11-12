@@ -6,7 +6,7 @@ use Error;
 use Exception;
 use F;
 use Str;
-use Upload;
+use Kirby\Panel\Upload;
 
 class Uploader {
 
