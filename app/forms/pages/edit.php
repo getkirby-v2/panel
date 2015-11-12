@@ -14,9 +14,6 @@ return function($page) {
   // set the keep api    
   $form->data('keep', $page->url('keep'));
 
-  // remove the cancel button
-  $form->buttons->cancel = '';
-
   // set the autofocus on the title field
   $form->fields->title->autofocus = true;
 
@@ -25,13 +22,20 @@ return function($page) {
 
     // display unsaved changes
     $alert = new Brick('div');
-    $alert->addClass('text marginalia');
-    $alert->attr('style', 'margin-top: 1.5rem');
-    $alert->append(l('pages.show.changes.text') . '<br>');
-    $alert->append('<a href="' . $page->url('discard') . '">' . l('pages.show.changes.button') . '</a>');
+    $alert->addClass('text');
+    $alert->append('<span>' . l('pages.show.changes.text') . '</span>');
 
-    $form->buttons->append('changes', $alert);
+    $form->buttons->prepend('changes', $alert);
+    $form->buttons->cancel->attr('href', $page->url('discard'));
+    $form->buttons->cancel->html(l('pages.show.changes.button'));
 
+    // add wide buttons
+    $form->buttons->cancel->addClass('btn-wide');
+    $form->buttons->submit->addClass('btn-wide');
+
+  } else {
+    // remove the cancel button
+    $form->buttons->cancel = '';    
   }
 
   // check for untranslatable fields
