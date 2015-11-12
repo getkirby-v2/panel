@@ -51,16 +51,17 @@ class Base extends Obj {
       'meta'      => $this->snippet('meta'),
       'css'       => css($cssbase . '/panel.css?v=' . $version),
       'js'        => js($jsbase . '/dist/panel.min.js?v=' . $version),
-      'content'   => ''
+      'content'   => '',
+      'bodyclass' => '',
     );    
 
     switch($type) {
       case 'app':
-        $defaults['topbar']     = '';
-        $defaults['csrf']       = panel()->csrf();
-        $defaults['formcss']    = css($cssbase . '/form.min.css?v=' . $version);
-        $defaults['formjs']     = js($jsbase   . '/dist/form.min.js?v='  . $version);
-        $defaults['appjs']      = js($jsbase   . '/dist/app.min.js?v='   . $version);
+        $defaults['topbar']  = '';
+        $defaults['csrf']    = panel()->csrf();
+        $defaults['formcss'] = css($cssbase . '/form.min.css?v=' . $version);
+        $defaults['formjs']  = js($jsbase   . '/dist/form.min.js?v='  . $version);
+        $defaults['appjs']   = js($jsbase   . '/dist/app.min.js?v='   . $version);
 
         // plugin stuff
         $defaults['pluginscss'] = css($base . '/plugins/css?v='  . $version);

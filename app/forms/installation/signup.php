@@ -2,10 +2,10 @@
 
 return function() {
 
-  $languages = array();
+  $translations = array();
 
-  foreach(panel()->languages() as $lang) {
-    $languages[$lang->code()] = $lang->title();
+  foreach(panel()->translations() as $translation) {
+    $translations[$translation->code()] = $translation->title();
   }
 
   $form = new Kirby\Panel\Form(array(
@@ -42,7 +42,7 @@ return function() {
       'required'     => true,
       'autocomplete' => false,
       'default'      => kirby()->option('panel.language', 'en'),
-      'options'      => $languages
+      'options'      => $translations
     )
 
   ));

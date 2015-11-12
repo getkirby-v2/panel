@@ -35,7 +35,8 @@ class AuthController extends Kirby\Panel\Controllers\Base {
     });
 
     return $this->layout('base', array(
-      'content' => $this->view('auth/login', compact('form'))
+      'bodyclass' => 'login',
+      'content'   => $this->view('auth/login', compact('form'))
     ));
 
   }

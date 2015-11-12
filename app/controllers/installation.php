@@ -39,8 +39,6 @@ class InstallationController extends Kirby\Panel\Controllers\Base {
         // fetch all the form data
         $data = $form->serialize();
 
-        var_dump($data);
-
         // make sure that the first user is an admin
         $data['role'] = 'admin';
 
@@ -70,7 +68,8 @@ class InstallationController extends Kirby\Panel\Controllers\Base {
 
   public function modal($view, $data = array()) {
     return $this->layout('base', array(
-      'content' => $this->view('installation/' . $view, $data)
+      'bodyclass' => 'installation',
+      'content'   => $this->view('installation/' . $view, $data)
     ));
   }
 

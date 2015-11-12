@@ -15,7 +15,7 @@
   <?php echo $js ?>
 
 </head>
-<body class="app <?php __($direction) ?>">
+<body class="app <?php __($direction) ?> <?php __($bodyclass) ?>">
   <?php echo $content ?>
 </body>
 </html>
