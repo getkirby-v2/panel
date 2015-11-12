@@ -13,8 +13,25 @@ class File extends \File {
     if(empty($action)) {
       return parent::uri();
     } else {
-      return $this->page()->uri('file') . '/' . rawurlencode($this->name()) . '-' . $this->extension() . '/' . $action;
+      return $this->page()->uri('file') . '/' . $this->encodedFilename() . '/' . $action;
     }
+  }
+
+  public function encodedFilename() {
+    if(php_sapi_name() == 'cli-server') {
+      $filename = str_replace('.', '․', $this->filename());
+    } else {
+      $filename = $this->filename();
+    }
+    return rawurlencode($filename);
+  }
+
+  public static function decodeFilename($filename) {
+    $filename = rawurldecode($filename);
+    if(php_sapi_name() == 'cli-server') {
+      $filename = str_replace('․', '.', $filename);
+    }
+    return $filename;
   }
 
   public function url($action = null) {

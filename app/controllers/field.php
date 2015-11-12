@@ -1,11 +1,13 @@
 <?php
 
+use Kirby\Panel\Models\File;
+
 class FieldController extends Kirby\Panel\Controllers\Base {
 
-  public function forFile($pageId, $name, $extension, $fieldName, $fieldType, $path) {
+  public function forFile($pageId, $filename, $fieldName, $fieldType, $path) {
 
     $page = $this->page($pageId);
-    $file = $page->file(rawurldecode($name) . '.' . $extension);
+    $file = $page->file(File::decodeFilename($filename));
 
     if(!$file) {
       throw new Exception(l('files.error.missing.file'));

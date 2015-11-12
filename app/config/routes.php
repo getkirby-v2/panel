@@ -50,8 +50,8 @@ return array(
   // Files
   array(
     'pattern' => array(
-      'site(/)file/(:any)-(:any)/edit',
-      'pages/(:all)/file/(:any)-(:any)/edit',
+      'site(/)file/(:any)/edit',
+      'pages/(:all)/file/(:any)/edit',
     ),
     'action'  => 'FilesController::edit',
     'filter'  => 'auth',
@@ -59,8 +59,8 @@ return array(
   ),
   array(
     'pattern' => array(
-      'site(/)file/(:any)-(:any)/context',
-      'pages/(:all)/file/(:any)-(:any)/context',
+      'site(/)file/(:any)/context',
+      'pages/(:all)/file/(:any)/context',
     ),
     'action'  => 'FilesController::context',
     'filter'  => 'auth',
@@ -68,8 +68,8 @@ return array(
   ),
   array(
     'pattern' => array(
-      'site(/)file/(:any)-(:any)/delete',
-      'pages/(:all)/file/(:any)-(:any)/delete',
+      'site(/)file/(:any)/delete',
+      'pages/(:all)/file/(:any)/delete',
     ),
     'action'  => 'FilesController::delete',
     'filter'  => 'auth',
@@ -77,8 +77,8 @@ return array(
   ),
   array(
     'pattern' => array(
-      'site(/)file/(:any)-(:any)/replace',
-      'pages/(:all)/file/(:any)-(:any)/replace',
+      'site(/)file/(:any)/replace',
+      'pages/(:all)/file/(:any)/replace',
     ),
     'action'  => 'FilesController::replace',
     'filter'  => 'auth',
@@ -97,8 +97,8 @@ return array(
   // Field routes
   array(
     'pattern' => array(
-      'site(/)file/(:any)-(:any)/field/(:any)/(:any)/(:all)',
-      'pages/(:all)/file/(:any)-(:any)/field/(:any)/(:any)/(:all)',
+      'site(/)file/(:any)/field/(:any)/(:any)/(:all)',
+      'pages/(:all)/file/(:any)/field/(:any)/(:any)/(:all)',
     ),
     'action' => 'FieldController::forFile', 
     'filter' => 'auth',

@@ -1,5 +1,7 @@
 <?php
 
+use Kirby\Panel\Models\File;
+
 class FilesController extends Kirby\Panel\Controllers\Base {
 
   public function index($id) {
@@ -25,11 +27,11 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  public function edit($id, $name, $extension) {
+  public function edit($id, $filename) {
 
     $self = $this;
     $page = $this->page($id);
-    $file = $this->file($page, $name, $extension);
+    $file = $this->file($page, $filename);
 
     // setup the form and form action
     $form = $file->form('edit', function($form) use($file, $page, $self) {
@@ -79,10 +81,10 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  public function replace($id, $name, $extension) {
+  public function replace($id, $filename) {
 
     $page = $this->page($id);
-    $file = $this->file($page, $name, $extension);
+    $file = $this->file($page, $filename);
 
     try {
       $file->replace();        
@@ -95,20 +97,20 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  public function context($id, $name, $extension) {
+  public function context($id, $filename) {
 
     $page = $this->page($id);
-    $file = $this->file($page, $name, $extension);
+    $file = $this->file($page, $filename);
 
     return $file->menu();
 
   }
 
-  public function delete($id, $name, $extension) {
+  public function delete($id, $filename) {
 
     $self = $this;
     $page = $this->page($id);
-    $file = $this->file($page, $name, $extension);
+    $file = $this->file($page, $filename);
     $form = $this->form('files/delete', $file, function($form) use($file, $page, $self) {
 
       try {
@@ -125,9 +127,9 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  protected function file($page, $name, $extension) {
+  protected function file($page, $filename) {
 
-    $file = $page->file(rawurldecode($name) . '.' . $extension);    
+    $file = $page->file(File::decodeFilename($filename));    
 
     if(!$file) {
       throw new Exception(l('files.error.missing.file'));

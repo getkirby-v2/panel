@@ -110,8 +110,8 @@ var app = {
     $.ajax({
       url: url,
       method: 'GET',
-      headers: headers,
-    }).done(function(response, status, xhr) {
+      headers: headers
+    }).success(function(response, status, xhr) {
 
       // stop the loading indicator
       app.isLoading(false);
@@ -136,6 +136,8 @@ var app = {
         window.location.href = url;
       }
 
+    }).error(function() {
+      window.location.href = url;
     });
 
   },
