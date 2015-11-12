@@ -2,19 +2,19 @@
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: 400;
-  src: url(../fonts/sourcesanspro-400.woff) format("woff"); }
+  src: url(../fonts/sourcesanspro-400.woff2) format("woff2"), url(../fonts/sourcesanspro-400.woff) format("woff"); }
 
 @font-face {
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: 600;
-  src: url(../fonts/sourcesanspro-600.woff) format("woff"); }
+  src: url(../fonts/sourcesanspro-600.woff2) format("woff2"), url(../fonts/sourcesanspro-600.woff) format("woff"); }
 
 @font-face {
   font-family: 'Source Sans Pro';
   font-style: italic;
   font-weight: 400;
-  src: url(../fonts/sourcesanspro-400-italic.woff) format("woff"); }
+  src: url(../fonts/sourcesanspro-400-italic.woff2) format("woff2"), url(../fonts/sourcesanspro-400-italic.woff) format("woff"); }
 
 *, *:before, *:after {
   margin: 0;
@@ -2688,8 +2688,7 @@ body.rtl .fileview-nav-next {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../fonts/fontawesome-webfont.eot?v=4.4.0");
-  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.4.0") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2?v=4.4.0") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.4.0") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.4.0") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular") format("svg");
+  src: url("../fonts/fontawesome-webfont.woff2?v=4.4.0") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.4.0") format("woff");
   font-weight: normal;
   font-style: normal; }
 
