@@ -467,7 +467,7 @@ class Panel {
 
     return new Obj(array(
       'key'   => $key,
-      'local' => false, //(in_array(server::get('SERVER_ADDR'), $localhosts) or server::get('SERVER_NAME') == 'localhost'),
+      'local' => (in_array(server::get('SERVER_ADDR'), $localhosts) or server::get('SERVER_NAME') == 'localhost'),
       'type'  => $type,
     ));
 
