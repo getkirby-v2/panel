@@ -66,6 +66,8 @@ class Children extends \Children {
       throw new Exception(l('pages.add.error.create'));
     }
 
+    kirby()->trigger('panel.page.create', $page);
+
     // subpage builder
     foreach((array)$page->blueprint()->pages()->build() as $build) {
       $missing = a::missing($build, array('title', 'template', 'uid'));

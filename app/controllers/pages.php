@@ -37,7 +37,16 @@ class PagesController extends Kirby\Panel\Controllers\Base {
   public function edit($id) {
 
     $self = $this;
-    $page = $this->page($id);
+    
+    try {
+      $page = $this->page($id);      
+    } catch(Exception $e) {
+      if($page = $this->page(dirname($id))) {
+        $this->alert(l('pages.error.missing'));
+        $this->redirect($page);
+      }
+    }
+
     $form = $page->form('edit', function($form) use($page, $self) {
       
       // validate all fields

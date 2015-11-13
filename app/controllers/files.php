@@ -31,7 +31,13 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
     $self = $this;
     $page = $this->page($id);
-    $file = $this->file($page, $filename);
+
+    try {
+      $file = $this->file($page, $filename);
+    } catch(Exception $e) {
+      $this->alert(l('files.error.missing.file'));
+      $this->redirect($page);
+    }
 
     // setup the form and form action
     $form = $file->form('edit', function($form) use($file, $page, $self) {
