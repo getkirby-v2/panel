@@ -1,4 +1,4 @@
-<div class="modal-content modal-content-medium" data-api="<?php _u('api/slug') ?>">
+<div class="modal-content modal-content-medium">
   <?php echo $form ?>
 </div>
 
@@ -6,21 +6,12 @@
 
 (function() {
 
+  $.slug.table = <?php echo slugTable() ?>;
+
   var modal   = $('.modal-content');
   var toggle  = modal.find('.label a');
   var input   = modal.find('.input');
   var preview = modal.find('.uid-preview span');
-  var api     = modal.data('api');
-
-  var toSlug = function(callback) {
-    $.post(api, {string: input.val()}, function(response) {
-      if($.type(response) == 'object' && response.slug) {
-        callback(response.slug);        
-      } else {
-        callback(input.val());
-      }
-    });
-  };
 
   toggle.on('click', function() {
     input.val(toggle.data('title')).trigger('blur').focus();
@@ -28,16 +19,13 @@
   });
 
   input.on('keyup', function() {
-    toSlug(function(slug) {
-      preview.text(slug);
-    });
+    preview.text($.slug(input.val()));
   });
 
   input.on('blur', function() {
-    toSlug(function(slug) {
-      input.val(slug);
-      preview.text(slug);
-    });  
+    var slug = $.slug(input.val());
+    preview.text(slug);
+    input.val(slug);
   });
 
 })();

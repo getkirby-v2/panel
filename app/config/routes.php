@@ -265,16 +265,10 @@ return array(
     'method'  => 'POST|GET'
   ),
 
-  // helpers
-  array(
-    'pattern' => 'api/slug',
-    'action'  => 'HelpersController::slug',
-    'method'  => 'POST',
-    'filter'  => 'auth',
-  ),
+  // Autocomplete
   array(
     'pattern' => 'api/autocomplete/(:any)',
-    'action'  => 'HelpersController::autocomplete',
+    'action'  => 'AutocompleteController::index',
     'method'  => 'POST',
     'filter'  => 'auth',
   ),

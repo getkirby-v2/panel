@@ -40,3 +40,15 @@ function purl($obj = '/', $action = false) {
   }
 
 }
+
+function slugTable() {
+  $table = array();
+  foreach(str::$ascii as $key => $value) {
+    $key = trim($key, '/');
+    foreach(str::split($key, '|') as $needle) {
+      $table[$needle] = $value;
+    }
+  }
+
+  return json_encode($table, JSON_UNESCAPED_UNICODE);
+}

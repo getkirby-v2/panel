@@ -1,14 +1,8 @@
 <?php
 
-class HelpersController extends Kirby\Panel\Controllers\Base {
+class AutocompleteController extends Kirby\Panel\Controllers\Base {
 
-  public function slug() {
-    return $this->json(array(
-      'slug' => str::slug(get('string'))
-    ));
-  }
-
-  public function autocomplete($method) {
+  public function index($method) {
     
     try {
       $auto   = new Kirby\Panel\Autocomplete(panel(), $method, get());
