@@ -52,6 +52,7 @@
     "dashboard.index.history.title": "Deine letzten Änderungen",
     "dashboard.index.history.text": "Sobald du die ersten Änderungen an Seiten vornimmst, werden sie hier aufgelistet, um jeder Zeit schnell darauf zugreifen zu können.",
     "dashboard.index.license.title": "Kirby Lizenz",
+    "dashboard.index.license.text": "Scheinbar nutzt Du Kirby auf einem öffentlichen Server ohne gültige Lizenz!\n\nBitte unterstütze Kirby und (link: {buy} text: kaufe jetzt eine Lizenz)\n\nWenn Du bereits einen Lizenzschlüssel hast, füge ihn zur Config-Datei hinzu: (link: {docs} text: site/config/config.php)",
     "metatags": "Einstellungen",
     "metatags.info": "Kirby Information",
     "metatags.license": "Kirby Lizenz",

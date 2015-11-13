@@ -11,7 +11,12 @@ if($license->type() == 'trial' and !$license->local()) {
       'compressed' => false
     ),
     'html' => function() {
-      return tpl::load(__DIR__ . DS . 'license.html.php');
+      return tpl::load(__DIR__ . DS . 'license.html.php', array(
+        'text' => kirbytext(str::template(l('dashboard.index.license.text'), array(
+          'buy'  => 'http://getkirby.com/buy',
+          'docs' => 'http://getkirby.com/docs/installation/license-code'
+        )))
+      ));
     }
   );
 

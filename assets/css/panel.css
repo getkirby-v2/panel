@@ -1318,6 +1318,9 @@ body.rtl .tag button.tag-label {
 .dashboard-box .text {
   padding: 0.75em 1em; }
 
+.dashboard-box .text :last-child {
+  margin-bottom: 0; }
+
 .dashboard-items {
   list-style: none; }
 

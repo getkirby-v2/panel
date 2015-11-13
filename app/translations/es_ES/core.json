@@ -52,6 +52,7 @@
     "dashboard.index.history.title": "Tus últimas actualizaciones",
     "dashboard.index.history.text": "Las páginas modificadas recientemente se mostrarán aquí para que puedas encontrarlas fácilmente.",
     "dashboard.index.license.title": "Licencia de Kirby",
+    "dashboard.index.license.text": "It seems you are running Kirby on a public server without a valid license!\n\nPlease, support Kirby and (link: {buy} text: buy a license now)\n\nIf you already have a license key, just add it to your config file: (link: {docs} text: site/config/config.php)",
     "metatags": "Variables del sitio",
     "metatags.info": "Información de Kirby",
     "metatags.license": "Licencia de Kirby",
