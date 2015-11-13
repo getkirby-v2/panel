@@ -98,6 +98,9 @@ class File extends \File {
 
   public function rename($name, $safeName = true) {
 
+    // keep the old state of the file object
+    $old = clone $this;
+
     if($name == $this->name()) return true;
 
     // check if the name should be sanitized
@@ -107,7 +110,7 @@ class File extends \File {
     $filename = parent::rename($name, $safeName);
 
     // trigger the rename hook
-    kirby()->trigger('panel.file.rename', $this);          
+    kirby()->trigger('panel.file.rename', array($this, $old));          
 
   }
 
