@@ -75,9 +75,13 @@ class Base extends Obj {
     $data = array_merge($defaults, $data);
 
     if(r::ajax() and $type == 'app') {
+      $panel    = panel();
+      $user     = $panel->site()->user();
       $response = array(
-        'title'   => $data['title'],
-        'content' => $data['topbar'] . $data['content']
+        'user'      => $user ? $user->username() : false,
+        'direction' => $panel->direction(),
+        'title'     => $data['title'],
+        'content'   => $data['topbar'] . $data['content']
       );
       return response::json($response);
     } else {

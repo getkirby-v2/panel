@@ -116,19 +116,25 @@ var app = {
       // stop the loading indicator
       app.isLoading(false);
 
-      // check for the current user
-      var user = xhr.getResponseHeader('Panel-User');
-
       // check for possible problems
-      if(!user || $.type(response) !== 'object') {
+      if($.type(response) !== 'object' || !response.user || !response.direction) {
         window.location.href = url;
       }
 
       // set the document title
       document.title = response.title;
 
-      // replace the csrf token
-      $('body').attr('data-csrf', response.csrf);
+      // store the body, we need it a couple times
+      var body = $('body');
+
+      // switch the interface direction if necessary
+      if(!body.hasClass(response.direction)) {
+        if(response.direction == 'ltr') {
+          body.removeClass('rtl').addClass('ltr');
+        } else {
+          body.removeClass('ltr').addClass('rtl');
+        }
+      }
 
       try {
         callback(response);        

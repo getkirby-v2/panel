@@ -378,14 +378,6 @@ class Panel {
       $response   = $controller->index($e->getMessage(), $e);
     }
 
-    // send custom header for ajax requests
-    header('Panel-Location: ' . url::current());
-
-    // set the username of the current user
-    if($user = site()->user()) {
-      header('Panel-User: ' . $user->username());      
-    }
-
     // check for a valid response object
     if(is_a($response, 'Response')) {
       echo $response;
@@ -497,13 +489,11 @@ class Panel {
 
     if(r::ajax()) {
 
-      // set the username of the current user
-      if($user = site()->user()) {
-        header('Panel-User: ' . $user->username());      
-      }
+      $user = $this->site()->user();
 
       die(response::json(array(
-        'url' => $url
+        'user' => $user ? $user->username() : false,
+        'url'  => $url
       )));
 
     } else {

@@ -76,7 +76,7 @@ class UsersController extends Kirby\Panel\Controllers\Base {
       }
 
       $data = $form->serialize();
-
+      
       try {
         $user->update($data);
         $self->notify(':)');
