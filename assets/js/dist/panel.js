@@ -5974,7 +5974,7 @@ var Context = function() {
 
       var t = $('<span data-tag="' + tag.toLowerCase() + '" tabindex="-1" class="tag"></span>');
       var x = $('<i class="tag-x">&times;</i>');
-      var b = $('<button class="tag-label" type="button">' + tag + '</button>');
+      var b = $('<button class="tag-label" type="button"></button>').text(tag);
 
       t.append(b).append(x);
 

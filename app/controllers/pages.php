@@ -21,6 +21,7 @@ class PagesController extends Kirby\Panel\Controllers\Base {
           'title' => $data['title']
         ));
 
+        $self->notify(':)');
         $this->redirect($page, 'edit');
 
       } catch(Exception $e) {
