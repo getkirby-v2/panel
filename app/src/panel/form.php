@@ -60,8 +60,6 @@ class Form extends Brick {
 
     foreach($fields as $name => $field) {
 
-      if($name == 'title') $field['type'] = 'title';
-
       $name = str_replace('-','_', str::lower($name));
 
       $field['name']    = $name;

@@ -19,23 +19,10 @@
           </a>
         </div>
       </div>
-      <?php elseif($page->hasNoTitleField()): ?>
-      <div class="form">
-        <h2 class="hgroup hgroup-single-line hgroup-compressed cf">
-          <span class="hgroup-title"><?php _l('pages.show.error.notitle.title') ?></span>
-        </h2>
-        <div class="text">
-          <p><?php _l('pages.show.error.notitle.text') ?></p>
-        </div>
-        <div>
-          <a href="<?php __($page->url('edit')) ?>" class="btn btn-rounded">
-            <?php _l('pages.show.error.notitle.retry') ?>
-          </a>
-        </div>
-      </div>
       <?php else: ?>
       <?php echo $form ?>
       <?php endif ?>
+
     </div>
   </div>
 

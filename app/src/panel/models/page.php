@@ -157,7 +157,22 @@ class Page extends \Page {
   }
 
   public function getFormFields() {
-    return $this->getBlueprintFields()->toArray();
+    
+    $fields = $this->getBlueprintFields()->toArray();
+
+    // add the title as hidden field
+    if(!isset($fields['title'])) {
+      $fields['title'] = array(
+        'type' => 'hidden',
+        'name' => 'title'
+      ); 
+    } else {
+      // make sure the title field always has the type title
+      $fields['title']['type'] = 'title';
+    }
+
+    return $fields;
+
   }
 
   public function children() {

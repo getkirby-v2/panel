@@ -1,9 +1,11 @@
 <?php 
 
+use Kirby\Panel\Form;
+
 return function($page) {
 
   // create the form
-  $form = new Kirby\Panel\Form($page->getFormFields(), $page->getFormData());
+  $form = new Form($page->getFormFields(), $page->getFormData());
 
   // add the blueprint name as css class
   $form->addClass('form-blueprint-' . $page->blueprint()->name());
