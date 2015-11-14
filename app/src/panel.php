@@ -492,8 +492,9 @@ class Panel {
       $user = $this->site()->user();
 
       die(response::json(array(
-        'user' => $user ? $user->username() : false,
-        'url'  => $url
+        'direction' => $this->direction(),
+        'user'      => $user ? $user->username() : false,
+        'url'       => $url
       )));
 
     } else {
