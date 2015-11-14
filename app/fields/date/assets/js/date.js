@@ -16,6 +16,12 @@
 
       input.attr('placeholder', format);
       input.val(date);
+
+      // don't initialize the datepicker on readonly fields
+      if(input.is('[readonly]')) {
+        return false;
+      }
+
       input.on('change', function() {
         var val = input.val();
         if(val) {
