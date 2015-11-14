@@ -2,6 +2,7 @@
 
 namespace Kirby\Panel;
 
+use Dir;
 use Folder;
 
 class Installer {
@@ -29,11 +30,25 @@ class Installer {
   }
 
   protected function checkAccounts() {
-    return is_writable(kirby()->roots()->accounts());
+
+    $root = kirby()->roots()->accounts();
+
+    // try to create the accounts folder
+    dir::make($root);
+
+    return is_writable($root);
+
   }
 
   protected function checkThumbs() {
-    return is_writable(kirby()->roots()->thumbs());
+
+    $root = kirby()->roots()->thumbs();
+
+    // try to create the thumbs folder
+    dir::make($root);
+
+    return is_writable($root);
+
   }
 
   protected function checkBlueprints() {
@@ -46,7 +61,14 @@ class Installer {
   }
 
   protected function checkAvatars() {
-    return is_writable(kirby()->roots()->avatars());
+
+    $root = kirby()->roots()->avatars();
+
+    // try to create the avatars folder
+    dir::make($root);
+
+    return is_writable($root);
+
   }
 
 }
