@@ -131,7 +131,6 @@
 .sidebar-list > li > .option {
   position: absolute;
   top: -1px;
-  left: 0;
   background: red;
   z-index: 1;
   text-align: right;
@@ -139,6 +138,12 @@
   background: #fff;
   display: none;
   font-size: 18px;
+  .ltr & {
+    left: 0;
+  }
+  .rtl & {
+    right: 0;
+  }
 }
 .sidebar-list > li:hover .option {
   display: block;

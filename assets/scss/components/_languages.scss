@@ -23,6 +23,7 @@
 }
 .languages-toggle span {
   position: relative;
+  display: block;
   body.ltr & {
     padding-right: 1.25em;
   }
@@ -38,10 +39,10 @@
   border-left: .3em solid transparent;
   border-right: .3em solid transparent;
   body.ltr & {
-    right: 0;
+    right: 1em;
   }
   body.rtl & {
-    left: 0;
+    left: 1em;
   }
 }
 .languages .dropdown {

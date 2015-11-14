@@ -14,21 +14,11 @@
   max-width: 75%;
   max-height: 75%;
   width: 100%;
-
-  body.ltr & {
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
-  body.rtl & {
-    right: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    -moz-transform: translate(-50%, 50%);
-    -ms-transform: translate(-50%, 50%);
-    transform: translate(-50%, 50%);
-  }
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .fileview-image-link span {
   background: #000;
@@ -76,20 +66,10 @@
   padding: 1em;
 }
 .fileview-nav-prev {
-  body.ltr & {
-    float: left;
-  }
-  body.rtl & {
-    float: right;
-  }
+  float: left;
 }
 .fileview-nav-next {
-  body.ltr & {
-    float: right;
-  }
-  body.rtl & {
-    float: left;
-  }
+  float: right;
 }
 .fileview-options {
   margin-top: 6em;
@@ -115,18 +95,31 @@
   .fileview-image {
     position: absolute;
     top: 0;
-    left: 0;
-    right: 50%;
     bottom: 0;
     padding:0;
+
+    .ltr & {
+      left: 0;
+      right: 50%;
+    }
+    .rtl & {
+      left: 50%;
+      right: 0;
+    }
+
   }
   .fileview-sidebar {
     position: absolute;
     top: 0;
-    right: 0;
     bottom: 0;
     width: 50%;
     overflow: auto;
+    .ltr & {
+      right: 0;
+    }
+    .rtl & {
+      left: 0;
+    }
   }
   .fileview-options {
     margin-bottom: 6em;
@@ -147,10 +140,10 @@
     right: 1.5em;
   }
   .fileview-image {
-    body.ltr & {
+    .ltr & {
       right: 33.33%;
     }
-    body.rtl & {
+    .rtl & {
       left: 33.33%;
     }
   }

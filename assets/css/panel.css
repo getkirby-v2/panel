@@ -882,6 +882,44 @@ body.rtl .buttons .btn-submit {
 #form-field-username {
   text-transform: lowercase; }
 
+@media screen and (min-width: 50em) {
+  .mainbar .form {
+    padding: 0 1.5em 9em; }
+  .mainbar .form .buttons {
+    position: fixed;
+    bottom: 0;
+    background: #efefef;
+    background: -webkit-linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
+    background: -moz-linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
+    background: -ms-linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
+    background: linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
+    margin: 0;
+    padding: 1.5em 3em 1.5em; }
+  .ltr .mainbar .form .buttons {
+    left: 33.33%;
+    right: 0; }
+  .rtl .mainbar .form .buttons {
+    right: 33.33%;
+    left: 0; }
+  .mainbar .form .buttons .text span {
+    position: relative;
+    padding: 0.35rem 2rem;
+    background: #8dae28;
+    display: inline-block;
+    margin: 0 auto 1.5rem;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 10px; }
+  .mainbar .form .buttons .text span:after {
+    position: absolute;
+    content: "";
+    border-top: 5px solid #8dae28;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    bottom: -5px;
+    left: 50%;
+    margin-left: -5px; } }
+
 .gu-mirror {
   position: fixed !important;
   margin: 0 !important;
@@ -1113,10 +1151,13 @@ body.rtl body > .message-is-alert .message-content:after {
 .topbar .message {
   position: absolute;
   top: 0;
-  right: 0;
   z-index: 100;
   background: #000;
   overflow: hidden; }
+  .ltr .topbar .message {
+    right: 0; }
+  .rtl .topbar .message {
+    left: 0; }
 
 .topbar .message-content:after {
   position: absolute;
@@ -1979,7 +2020,8 @@ body.rtl .item-condensed.item-with-image .item-info {
   text-transform: uppercase; }
 
 .languages-toggle span {
-  position: relative; }
+  position: relative;
+  display: block; }
   body.ltr .languages-toggle span {
     padding-right: 1.25em; }
   body.rtl .languages-toggle span {
@@ -1993,9 +2035,9 @@ body.rtl .item-condensed.item-with-image .item-info {
   border-left: .3em solid transparent;
   border-right: .3em solid transparent; }
   body.ltr .languages-toggle span:after {
-    right: 0; }
+    right: 1em; }
   body.rtl .languages-toggle span:after {
-    left: 0; }
+    left: 1em; }
 
 .languages .dropdown {
   width: 100%; }
@@ -2236,7 +2278,6 @@ body.rtl .sidebar-list > li > a {
 .sidebar-list > li > .option {
   position: absolute;
   top: -1px;
-  left: 0;
   background: red;
   z-index: 1;
   text-align: right;
@@ -2244,6 +2285,10 @@ body.rtl .sidebar-list > li > a {
   background: #fff;
   display: none;
   font-size: 18px; }
+  .ltr .sidebar-list > li > .option {
+    left: 0; }
+  .rtl .sidebar-list > li > .option {
+    right: 0; }
 
 .sidebar-list > li:hover .option {
   display: block; }
@@ -2382,19 +2427,12 @@ body.rtl .subpages-help-left:after {
   top: 50%;
   max-width: 75%;
   max-height: 75%;
-  width: 100%; }
-  body.ltr .fileview-image-link {
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%); }
-  body.rtl .fileview-image-link {
-    right: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    -moz-transform: translate(-50%, 50%);
-    -ms-transform: translate(-50%, 50%);
-    transform: translate(-50%, 50%); }
+  width: 100%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); }
 
 .fileview-image-link span {
   background: #000;
@@ -2441,17 +2479,11 @@ body.rtl .subpages-help-left:after {
   display: block;
   padding: 1em; }
 
-body.ltr .fileview-nav-prev {
+.fileview-nav-prev {
   float: left; }
 
-body.rtl .fileview-nav-prev {
+.fileview-nav-next {
   float: right; }
-
-body.ltr .fileview-nav-next {
-  float: right; }
-
-body.rtl .fileview-nav-next {
-  float: left; }
 
 .fileview-options {
   margin-top: 6em;
@@ -2475,17 +2507,24 @@ body.rtl .fileview-nav-next {
   .fileview-image {
     position: absolute;
     top: 0;
-    left: 0;
-    right: 50%;
     bottom: 0;
     padding: 0; }
+    .ltr .fileview-image {
+      left: 0;
+      right: 50%; }
+    .rtl .fileview-image {
+      left: 50%;
+      right: 0; }
   .fileview-sidebar {
     position: absolute;
     top: 0;
-    right: 0;
     bottom: 0;
     width: 50%;
     overflow: auto; }
+    .ltr .fileview-sidebar {
+      right: 0; }
+    .rtl .fileview-sidebar {
+      left: 0; }
   .fileview-options {
     margin-bottom: 6em; }
   .fileview-options li {
@@ -2499,9 +2538,9 @@ body.rtl .fileview-nav-next {
   .fileview-nav {
     left: 1.5em;
     right: 1.5em; }
-  body.ltr .fileview-image {
+  .ltr .fileview-image {
     right: 33.33%; }
-  body.rtl .fileview-image {
+  .rtl .fileview-image {
     left: 33.33%; }
   .fileview-sidebar {
     width: 33.33%; } }
@@ -2625,40 +2664,6 @@ body.rtl .fileview-nav-next {
   body.rtl .main .loader:after {
     right: 50%;
     margin-right: -1.5em; }
-
-@media screen and (min-width: 50em) {
-  .mainbar .form {
-    padding: 0 1.5em 9em; }
-  .mainbar .form .buttons {
-    position: fixed;
-    bottom: 0;
-    left: 33.33%;
-    right: 0;
-    background: #efefef;
-    background: -webkit-linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
-    background: -moz-linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
-    background: -ms-linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
-    background: linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
-    margin: 0;
-    padding: 1.5em 3em 1.5em; }
-  .mainbar .form .buttons .text span {
-    position: relative;
-    padding: 0.35rem 2rem;
-    background: #8dae28;
-    display: inline-block;
-    margin: 0 auto 1.5rem;
-    color: #fff;
-    font-weight: 600;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 10px; }
-  .mainbar .form .buttons .text span:after {
-    position: absolute;
-    content: "";
-    border-top: 5px solid #8dae28;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    bottom: -5px;
-    left: 50%;
-    margin-left: -5px; } }
 
 .autocomplete {
   position: absolute;

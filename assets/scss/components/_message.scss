@@ -136,10 +136,15 @@ body > .message-is-alert .message-content:after {
 .topbar .message {
   position: absolute;
   top: 0;
-  right: 0;
   z-index: 100;
   background: #000;
   overflow: hidden;
+  .ltr & {
+    right: 0;      
+  }
+  .rtl & {
+    left: 0;
+  }
 }
 .topbar .message-content:after {
   position: absolute;
