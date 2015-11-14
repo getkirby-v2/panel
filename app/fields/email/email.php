@@ -1,6 +1,6 @@
 <?php
 
-class EmailField extends InputField {
+class EmailField extends TextField {
 
   public function __construct() {
 

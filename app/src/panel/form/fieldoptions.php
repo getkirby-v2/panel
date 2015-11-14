@@ -2,6 +2,7 @@
 
 namespace Kirby\Panel\Form;
 
+use Collection;
 use Str;
 use Remote;
 use V;
@@ -174,6 +175,8 @@ class FieldOptions {
       case 'archives':
         $items = $page->{$method}();
         break;
+      default: 
+        $items = new Collection();
     }
 
     return $items;

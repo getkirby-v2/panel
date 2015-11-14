@@ -16,6 +16,12 @@
 
       input.attr('placeholder', format);
       input.val(date);
+
+      // don't initialize the datepicker on readonly fields
+      if(input.is('[readonly]')) {
+        return false;
+      }
+
       input.on('change', function() {
         var val = input.val();
         if(val) {
@@ -108,12 +114,12 @@
       }
 
       var field  = counter.parent('.field').find('.input');
-      var length = $.trim(field.val().length;
+      var length = $.trim(field.val()).length;
       var max    = field.data('max');
       var min    = field.data('min');
       
       field.keyup(function() {
-        length = field.val().trim().length;
+        length = $.trim(field.val()).length;
         counter.text(length + (max ? '/' + max : ''));
         if((max && length > max) || (min && length < min)) {
           counter.addClass('outside-range');
