@@ -1,6 +1,6 @@
 <?php
 
-class TelField extends InputField {
+class TelField extends TextField {
 
   public function __construct() {
     $this->type  = 'tel';
