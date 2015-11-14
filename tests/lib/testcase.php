@@ -40,6 +40,9 @@ class PanelTestCase extends PHPUnit_Framework_TestCase {
     // initiate the panel
     $this->panel = new Panel($this->kirby, $this->roots->panel);
 
+    // load the default panel translation
+    $this->panel->translation()->load();
+
     // store the site instance
     $this->site = $this->panel->site();
 
