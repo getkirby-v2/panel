@@ -303,6 +303,7 @@ form.loading:after {
   -ms-appearance: none;
   appearance: none;
   border-radius: 0;
+  min-height: 2.75em;
 }
 .input:-webkit-autofill {
   box-shadow: 0 0 0 1000px white inset !important;
