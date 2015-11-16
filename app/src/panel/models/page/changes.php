@@ -66,10 +66,18 @@ class Changes {
     $data    = $this->get();
     $changes = false;
 
-    foreach($data as $field => $value) {
-      if((string)$this->model->{$field}() !== $value) {
+    foreach($data as $field => $value) {    
+
+      $object = $this->model->{$field}();
+
+      if(!method_exists($object, '__toString')) {
+        continue;
+      }
+
+      if((string)$object !== $value) {
         $changes = true;
       }
+    
     }
 
     return $changes;
