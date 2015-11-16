@@ -72,6 +72,8 @@ class Structure {
   public function fields() {
 
     $fields = $this->config->fields();
+    $fields = new Fields($fields, $this->model);
+    $fields = $fields->toArray();
 
     // make sure that no unwanted options or fields 
     // are being included here
@@ -97,8 +99,7 @@ class Structure {
 
     }
 
-    $fields = new Fields($fields, $this->model);
-    return $fields->toArray();
+    return $fields;
 
   }
 

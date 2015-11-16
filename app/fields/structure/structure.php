@@ -65,7 +65,7 @@ class StructureField extends BaseField {
 
     $output = array();
 
-    foreach($this->fields as $k => $v) {
+    foreach($this->structure->fields() as $k => $v) {
       $v['name']  = $k;
       $v['value'] = '{{' . $k . '}}';
       $output[] = $v;
