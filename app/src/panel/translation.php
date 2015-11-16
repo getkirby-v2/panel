@@ -14,11 +14,24 @@ class Translation {
   public $root;
   public $info = null;
 
+  public $map = array(
+    'es_la' => 'es_419',
+    'no_nb' => 'nb',
+    'cz'    => 'cs'
+  );
+
   public function __construct($panel, $code) {
 
     $this->panel = $panel;
     $this->code  = strtolower(basename($code));
-    $this->root  = $this->panel->roots()->translations() . DS . $this->code;
+
+    // convert old codes
+    if(isset($this->map[$this->code])) {
+      $this->code = $this->map[$this->code];
+    }
+
+    // set the root for the translation directory
+    $this->root = $this->panel->roots()->translations() . DS . $this->code;
 
     if(!is_dir($this->root)) {
       throw new Exception('The translation does not exist: ' . $this->code);
