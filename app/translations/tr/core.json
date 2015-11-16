@@ -52,7 +52,7 @@
     "dashboard.index.history.title": "Son güncellemelerin",
     "dashboard.index.history.text": "Son güncellemelerin, daha sonra tekrar kolayca bulabilmen için burada görünecek",
     "dashboard.index.license.title": "Kirby lisans",
-    "dashboard.index.license.text": "It seems you are running Kirby on a public server without a valid license!\n\nPlease, support Kirby and (link: {buy} text: buy a license now)\n\nIf you already have a license key, just add it to your config file: (link: {docs} text: site/config/config.php)",
+    "dashboard.index.license.text": "Kirby'yi canlı sunucuda geçerli bir lisansınız olmadan kullanıyor görünüyorsunuz!\n\nLütfen, Kirby'yi destekleyin ve (link: {buy} text: bir lisans satın alın)\n\nEğer bir lisans anahtarınız var ise, bunu yapılandırma dosyanıza ekleyin: (link: {docs} text: site/config/config.php)",
     "metatags": "Site seçenekleri",
     "metatags.info": "Kirby bilgi",
     "metatags.license": "Kirby lisans",
