@@ -339,6 +339,10 @@ class Panel {
 
   }
 
+  public function language() {
+    return $this->translation;
+  }
+
   public function direction() {
     return $this->translation->direction();
   }

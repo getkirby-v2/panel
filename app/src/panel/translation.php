@@ -73,4 +73,8 @@ class Translation {
     return $this->info()->{$method}();
   }
 
+  public function __toString() {
+    return $this->code;
+  }
+
 }
