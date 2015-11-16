@@ -18,12 +18,27 @@ class DatetimeField extends BaseField {
   }
 
   public function validate() {
-    return v::date($this->result());
+    
+    $result = $this->result();
+
+    if(empty($result)) {
+      return !$this->required();
+    } else {
+      return v::date($result);      
+    }
+  
   }
 
   public function result() {
-    $value = $this->value();
+
+    $value = array_filter($this->value());
+
+    if(empty($value) or !isset($value['date']) or !isset($value['time'])) {
+      return '';
+    }
+
     return a::get($value, 'date') . ' ' . a::get($value, 'time') . ':00';
+
   } 
 
   public function content() {
@@ -35,18 +50,22 @@ class DatetimeField extends BaseField {
     }
 
     $date = form::field('date', array(
-      'name'   => $this->name() . '[date]',
-      'value'  => $timestamp ? date('Y-m-d', $timestamp) : null,      
-      'format' => a::get($this->date, 'format', 'YYYY-MM-DD'),      
-      'id'     => 'form-field-' . $this->name() . '-date',
+      'name'     => $this->name() . '[date]',
+      'value'    => $timestamp ? date('Y-m-d', $timestamp) : null,      
+      'format'   => a::get($this->date, 'format', 'YYYY-MM-DD'),      
+      'id'       => 'form-field-' . $this->name() . '-date',
+      'required' => $this->required(),
+      'readonly' => $this->readonly(),
     ));
 
     $time = form::field('time', array(
       'name'     => $this->name() . '[time]',
-      'value'    => $timestamp ? date('H:i', $timestamp) : null,
+      'value'    => $timestamp ? date('H:i', $timestamp) : ($this->required() ? 'now' : false),
       'format'   => a::get($this->time, 'format', 24),
       'interval' => a::get($this->time, 'interval', 60),
       'id'       => 'form-field-' . $this->name() . '-time',
+      'required' => $this->required(),
+      'readonly' => $this->readonly(),
     ));
 
     $grid  = '<div class="field-grid">';
