@@ -3,12 +3,12 @@
 namespace Kirby\Panel;
 
 use A;
-use Exception;
 use Collection;
+use Exception;
 use Obj;
+use S;
 use Str;
 use Yaml;
-use S;
 
 use Kirby\Panel\Structure\Store;
 use Kirby\Panel\Models\Page\Blueprint\Fields;

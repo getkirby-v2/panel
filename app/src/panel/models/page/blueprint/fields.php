@@ -3,6 +3,7 @@
 namespace Kirby\Panel\Models\Page\Blueprint;
 
 use Collection;
+use Str;
 
 class Fields extends Collection {
 
@@ -11,6 +12,9 @@ class Fields extends Collection {
     if(empty($fields) or !is_array($fields)) $fields = array();
 
     foreach($fields as $name => $field) {
+
+      // sanitize the name
+      $name = str_replace('-','_', str::lower($name));
 
       // import a field by name
       if(is_string($field)) {
