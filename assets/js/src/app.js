@@ -118,7 +118,7 @@ var app = {
 
       // check for possible problems
       if($.type(response) !== 'object' || !response.user || !response.direction) {
-        window.location.href = url;
+        return window.location.href = url;
       }
 
       // set the document title
