@@ -23,7 +23,7 @@ class Translation {
   public function __construct($panel, $code) {
 
     $this->panel = $panel;
-    $this->code  = strtolower(basename($code));
+    $this->code  = basename($code);
 
     // convert old codes
     if(isset($this->map[$this->code])) {
