@@ -35,6 +35,9 @@ class Field extends Obj {
       $params['type'] = 'text';
     }
 
+    // lowercase the type
+    $params['type'] = strtolower($params['type']);
+
     // register the parent model
     $params['model'] = $model;
 
