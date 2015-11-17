@@ -1,6 +1,6 @@
 <?php
 
-class PasswordField extends InputField {
+class PasswordField extends TextField {
 
   public $suggestion = false;
 
