@@ -289,6 +289,8 @@ class Page extends \Page {
 
   public function move($uid) {
 
+    $old = clone($this);
+
     if(!$this->canChangeUrl()) {
       throw new Exception(l('pages.url.error.rights'));
     }
@@ -309,7 +311,7 @@ class Page extends \Page {
     $this->changes()->update($changes);
 
     // hit the hook
-    kirby()->trigger('panel.page.move', $this);
+    kirby()->trigger('panel.page.move', array($this, $old));
   
   }
 
