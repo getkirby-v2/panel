@@ -67,7 +67,7 @@ class Panel {
       'panel.language'         => 'en',
       'panel.stylesheet'       => null,
       'panel.kirbytext'        => true,
-      'panel.session.timeout'  => 120,
+      'panel.session.timeout'  => 1440,
       'panel.session.lifetime' => 0,
       'panel.info.license'     => true,
       'panel.info.versions'    => true,
