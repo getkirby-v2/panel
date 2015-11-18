@@ -95,7 +95,7 @@ class BaseField {
     if(empty($value)) {
       return null;
     } else if(is_array($value)) {
-      $translation = a::get($value, panel()->language());
+      $translation = a::get($value, panel()->language()->code());
 
       if(empty($translation)) {
         // try to fallback to the default language at least
