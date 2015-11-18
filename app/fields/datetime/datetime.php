@@ -12,7 +12,7 @@ class DatetimeField extends BaseField {
 
     $this->time = array(
       'interval' => 60,
-      'format'   => 25
+      'format'   => 24
     );
 
   }
