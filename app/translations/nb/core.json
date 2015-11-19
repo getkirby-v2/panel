@@ -52,7 +52,7 @@
     "dashboard.index.history.title": "Dine siste endringer",
     "dashboard.index.history.text": "Dine siste endrede sider vil vises her for å gjøre det enkelt å finne dem igjen senere.",
     "dashboard.index.license.title": "Kirby lisens",
-    "dashboard.index.license.text": "It seems you are running Kirby on a public server without a valid license!\n\nPlease, support Kirby and (link: {buy} text: buy a license now)\n\nIf you already have a license key, just add it to your config file: (link: {docs} text: site/config/config.php)",
+    "dashboard.index.license.text": "Det ser ut som om du kjører Kirby på en offentlig server uten en gyldig lisens!\n\nVær så snill, støtt Kirby og (link: {buy} text: kjøp en lisens nå)\n\nOm du allerede har en lisens nøkkel, legg den til i din konfigurasjons fil: (link {docs} text: site/config/config.php)",
     "metatags": "Nettsted variabler",
     "metatags.info": "Kirby informasjon",
     "metatags.license": "Kirby lisens",
