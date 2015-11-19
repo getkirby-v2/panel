@@ -36,7 +36,7 @@ class Panel {
   // minimal requirements
   static public $requires = array(
     'php'     => '5.4.0',
-    'toolkit' => '2.2.1',
+    'toolkit' => '2.2.2',
     'kirby'   => '2.2.1'
   );
 

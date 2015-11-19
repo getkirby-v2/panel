@@ -59,12 +59,11 @@ class Blueprint extends Obj {
     }
 
     // find the matching blueprint file
-    $files = glob(static::$root . DS . $name . '.{php,yaml,yml}', GLOB_BRACE);
+    $file = f::resolve(static::$root . DS . $name, array('yml', 'php', 'yaml'));
 
+    if($file) {
 
-
-    if(!empty($files[0])) {
-      $this->file = $files[0];
+      $this->file = $file;
       $this->name = $name;
       $this->yaml = data::read($this->file, 'yaml');
 
@@ -93,11 +92,7 @@ class Blueprint extends Obj {
   }
 
   static public function exists($name) {
-    return (
-      file_exists(static::$root . DS . strtolower($name) . '.php') or
-      file_exists(static::$root . DS . strtolower($name) . '.yml') or
-      file_exists(static::$root . DS . strtolower($name) . '.yaml')
-    );
+    return f::resolve(static::$root . DS . $name, array('yml', 'php', 'yaml')) ? true : false;
   }
 
   static public function all() {
