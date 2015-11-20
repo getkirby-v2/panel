@@ -8,7 +8,7 @@ use Folder;
 class Installer {
 
   public function isCompleted() {
-    return site()->users()->count() > 0;
+    return (site()->users()->count() > 0 && is_writable(kirby()->roots()->accounts()));
   }
 
   public function problems() {

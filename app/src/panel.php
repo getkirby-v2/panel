@@ -23,6 +23,7 @@ use Str;
 use Toolkit;
 use Url;
 
+use Kirby\Panel\Installer;
 use Kirby\Panel\Form;
 use Kirby\Panel\Models\Site;
 use Kirby\Panel\Translation;
@@ -136,7 +137,8 @@ class Panel {
 
     // check for a completed installation
     $this->router->filter('isInstalled', function() use($kirby) {
-      if(panel()->users()->count() == 0) {
+      $installer = new Installer();
+      if(!$installer->isCompleted()) {
         panel()->redirect('install');
       }
     });
