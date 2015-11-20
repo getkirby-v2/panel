@@ -53,12 +53,7 @@ class File extends \File {
   }
 
   public function filterInput($input) {
-    $data = array();
-    foreach($this->meta()->toArray() as $key => $value) {
-      if(strtolower($key) == 'sort') continue;
-      $data[$key] = null;
-    }
-    return array_merge($data, $input);
+    return $input;
   }
 
   public function getBlueprintFields() {
@@ -114,15 +109,13 @@ class File extends \File {
 
   }
 
-  public function update($input = array(), $sort = null) {  
+  public function update($data = array(), $sort = null) {  
 
-    if($input == 'sort') {
+    if($data == 'sort') {
       parent::update(array('sort' => $sort));
       kirby()->trigger('panel.file.sort', $this);
       return true;
     }
-
-    $data = $this->filterInput($input);
 
     // rename the file if necessary
     if(!empty($data['_name'])) {

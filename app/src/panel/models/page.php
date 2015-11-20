@@ -210,20 +210,7 @@ class Page extends \Page {
   }
 
   public function filterInput($input) {
-
-    $data = array();
-
-    foreach($this->content()->toArray() as $key => $value) {
-      if(strtolower($key) == 'url_key') {
-        // don't erase the url key
-        continue;
-      } else {
-        $data[$key] = null;  
-      }      
-    }
-
-    return array_merge($data, $input);
-
+    return $input;
   }
 
   public function changes() {
@@ -422,9 +409,7 @@ class Page extends \Page {
 
   }
 
-  public function update($input = array(), $lang = null) {
-
-    $data = $this->filterInput($input);
+  public function update($data = array(), $lang = null) {
 
     $this->changes()->discard();
     
