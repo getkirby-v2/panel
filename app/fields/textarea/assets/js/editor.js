@@ -41,11 +41,17 @@
       });
 
       buttons.find('[data-editor-shortcut]').each(function(i, el) {
-        var key = $(this).data('editor-shortcut');
-        textarea.bind('keydown', key, function(e) {
+        var key    = $(this).data('editor-shortcut');
+        var action = function(e) {
           $(el).trigger('click');
           return false;
-        });
+        };
+
+        textarea.bind('keydown', key, action);
+
+        if(key.match(/meta\+/)) {
+          textarea.bind('keydown', key.replace('meta+', 'ctrl+'), action);
+        }
 
       });
 
