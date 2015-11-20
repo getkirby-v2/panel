@@ -7219,7 +7219,10 @@ var Search = function() {
 
     $(document).filedrop('destroy').filedrop({
       dragenter : function(e) {      
-        $('body').addClass('over');
+        var transfer = e.originalEvent.dataTransfer;
+        if(transfer.types != null && (transfer.types.indexOf ? transfer.types.indexOf('Files') != -1 : transfer.types.contains('application/x-moz-file'))) {
+          $('body').addClass('over');
+        }
       },
       drop: function() {
         $('body').removeClass('over');
