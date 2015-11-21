@@ -134,6 +134,9 @@ form.loading:after {
   margin-top: -7px;
   color: #777;
 }
+.field-icon:hover .icon {
+  color: #8dae28;
+}
 .field-with-icon .input {
   body.ltr & {
     padding-right: 3.5em;
