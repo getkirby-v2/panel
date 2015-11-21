@@ -166,6 +166,7 @@ class FieldOptions {
         $items = $items->sortBy('title', 'asc');
         break;
       case 'children':
+      case 'grandchildren':
       case 'files':
       case 'images':
       case 'documents':
