@@ -460,13 +460,18 @@ class Page extends \Page {
     if($this->isInvisible()) {
       return '—';
     } else {
-      switch($this->parent()->blueprint()->pages()->num()->mode()) {
+
+      $numberSettings = $this->parent()->blueprint()->pages()->num();
+
+      switch($numberSettings->mode()) {
         case 'zero':
           return str::substr($this->title(), 0, 1);
           break;
         case 'date':
           return date('Y/m/d', strtotime($this->num()));
           break;
+        case 'field':
+          return $this->{$numberSettings->field()}();
         default:
           return intval($this->num());
           break;
