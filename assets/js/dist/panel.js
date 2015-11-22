@@ -5327,7 +5327,7 @@ var Context = function() {
     if(e.keyCode == 27) $(this).trigger('click.contextmenu');
   });
 
-  $(document).on('click', '.contextmenu', function() {
+  $(document).on('click', '.contextmenu', function(e) {
     e.stopPropagation();
   });
 
@@ -5371,6 +5371,7 @@ var Context = function() {
   });
 
 };
+
 (function($) {
 
   $.fn.drop = function(options) {
