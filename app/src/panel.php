@@ -21,6 +21,7 @@ use Server;
 use S;
 use Str;
 use Toolkit;
+use Tpl;
 use Url;
 
 use Kirby\Panel\Installer;
@@ -519,6 +520,25 @@ class Panel {
     } else {
       throw new Exception(l('users.error.missing'));
     }
+  }
+
+  public static function fatal($e, $root) {
+
+    $message = $e->getMessage() ? $e->getMessage() : 'Error without a useful message :(';
+    $where   = implode('<br>', [
+      '',
+      '',
+      '<b>It happened here:</b>',
+      'File: <i>' . str_replace($root, '/panel', $e->getFile()) . '</i>',
+      'Line: <i>' . $e->getLine() . '</i>'
+    ]);
+
+    // load the fatal screen
+    return tpl::load($root . DS . 'app' . DS . 'layouts' . DS . 'fatal.php', [
+      'css'     => url::index() . '/assets/css/panel.css',
+      'content' => $message . $where
+    ]);
+
   }
 
 }
