@@ -468,7 +468,8 @@ class Page extends \Page {
           return str::substr($this->title(), 0, 1);
           break;
         case 'date':
-          return date('Y/m/d', strtotime($this->num()));
+          $handler = kirby()->option('date.handler');
+          return $handler($numberSettings->display(), strtotime($this->num()));
           break;
         case 'field':
           return $this->{$numberSettings->field()}();
