@@ -1,5 +1,7 @@
 <?php
 
+use Kirby\Panel;
+
 define('DS', DIRECTORY_SEPARATOR);
 
 // fetch the site's index directory
@@ -43,17 +45,11 @@ if(!isset($kirby->roots->thumbs)) {
 try {
 
   // create the panel object
-  $panel = new Kirby\Panel($kirby, __DIR__);  
+  $panel = new Panel($kirby, __DIR__);  
 
   // launch the panel
   echo $panel->launch();
 
 } catch(Exception $e) {
-
-  // load the fatal screen
-  echo tpl::load(__DIR__ . DS . 'app' . DS . 'layouts' . DS . 'fatal.php', array(
-    'css'     => url::index() . '/assets/css/panel.css',
-    'content' => $e->getMessage()
-  ));
-
+  echo Panel::fatal($e, __DIR__);
 }

@@ -5327,7 +5327,7 @@ var Context = function() {
     if(e.keyCode == 27) $(this).trigger('click.contextmenu');
   });
 
-  $(document).on('click', '.contextmenu', function() {
+  $(document).on('click', '.contextmenu', function(e) {
     e.stopPropagation();
   });
 
@@ -5371,6 +5371,7 @@ var Context = function() {
   });
 
 };
+
 (function($) {
 
   $.fn.drop = function(options) {
@@ -7219,7 +7220,10 @@ var Search = function() {
 
     $(document).filedrop('destroy').filedrop({
       dragenter : function(e) {      
-        $('body').addClass('over');
+        var transfer = e.originalEvent.dataTransfer;
+        if(transfer.types != null && (transfer.types.indexOf ? transfer.types.indexOf('Files') != -1 : transfer.types.contains('application/x-moz-file'))) {
+          $('body').addClass('over');
+        }
       },
       drop: function() {
         $('body').removeClass('over');

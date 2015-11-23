@@ -4,6 +4,7 @@ namespace Kirby\Panel\Models\User;
 
 use A;
 use Data;
+use F;
 use Obj;
 
 use Kirby\Panel\Models\Page\Blueprint\Fields;
@@ -34,10 +35,10 @@ class Blueprint extends Obj {
     $this->name = basename(strtolower($this->user->role()));
 
     // try to find a user blueprint
-    $files = glob(static::$root . DS . $this->name . '.{php,yaml,yml}', GLOB_BRACE);
+    $file = f::resolve(static::$root . DS . $this->name, array('yml', 'php', 'yaml'));
 
-    if(!empty($files)) {
-      $this->file = $files[0];
+    if($file) {
+      $this->file = $file;
       $this->yaml = data::read($this->file, 'yaml');
 
       // remove the broken first line

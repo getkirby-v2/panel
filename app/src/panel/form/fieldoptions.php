@@ -21,47 +21,98 @@ class FieldOptions {
 
     $this->field = $field;
 
-    // array method
-    if(is_array($field->options)) {
-      $this->options = $field->options;
-    
-    // api method with valid url
-    } else if(v::url($field->options) or str::contains($field->options, '://localhost') or str::contains($field->options, '://127.0.0.1')) {
-      
-      $response = remote::get($field->options);
-      $options  = @json_decode($response->content(), true);
+    if(is_array($this->field->options)) {
+      $this->options = $this->field->options;
+    } else if($this->isUrl($this->field->options)) {
+      $this->options = $this->optionsFromApi($this->field->options);
+    } else if($this->field->options == 'query') {
+      $this->options = $this->optionsFromQuery($this->field->query);
+    } else {
+      $this->options = $this->optionsFromPageMethod($this->field->page, $this->field->options);
+    }
 
-      if(is_array($options)) {
-        $this->options = $options;        
-      } else {
-        $this->options = array();
+    // sorting
+    $this->options = $this->sort($this->options, !empty($this->field->sort) ? $this->field->sort : null);
+
+  }
+
+  public function optionsFromPageMethod($page, $method) {
+
+    if($page && $items = $this->items($page, $method)) {
+      $options = array();
+      foreach($items as $item) {
+        if(is_a($item, 'Page')) {
+          $options[$item->uid()] = (string)$item->title();
+        } else if(is_a($item, 'File')) {
+          $options[$item->filename()] = (string)$item->filename();
+        }
       }
+      return $options;
+    } else {
+      return array();
+    }
 
-    // without a page object, no files or related pages can be fetched
-    } else if(!$field->page) {
-      $this->options = array();
+  }
 
-    // query method to query any set of images or files
-    } else if($field->options == 'query') {
+  public function optionsFromApi($url) {
+    $response = remote::get($url);
+    $options  = @json_decode($response->content(), true);
+    return is_array($options) ? $options : array();
+  }
 
-      $defaults = array(
-        'page'     => $field->page->id(),
-        'fetch'    => 'children',
-        'value'    => '{{uid}}',
-        'text'     => '{{title}}',
-        'flip'     => false,
-        'template' => false
-      );
+  public function optionsFromQuery($query) {
 
-      $query = array_merge($defaults, $field->query);
-      
-      // dynamic page option 
-      // ../
-      // ../../ etc.
+    // default query parameters
+    $defaults = array(
+      'page'     => $this->field->page ? $this->field->page->id() : '',
+      'fetch'    => 'children',
+      'value'    => '{{uid}}',
+      'text'     => '{{title}}',
+      'flip'     => false,
+      'template' => false
+    );
 
-      if(str::startsWith($query['page'], '../')) {
-        $currentPage = $field->page;
-        $path        = $query['page']; 
+    // sanitize the query
+    if(!is_array($query)) {
+      $query = array();
+    }
+
+    // merge the default parameters with the actual query
+    $query = array_merge($defaults, $query);
+    
+    // dynamic page option 
+    // ../
+    // ../../ etc.
+    $page    = $this->page($query['page']);
+    $items   = $this->items($page, $query['fetch']);
+    $options = array();
+
+    if($query['template']) {
+      $items = $items->filter(function($item) use($query) {
+        return in_array(str::lower($item->intendedTemplate()), array_map('str::lower', (array)$query['template']));
+      });
+    }
+
+    if($query['flip']) {
+      $items = $items->flip();
+    }
+
+    foreach($items as $item) {
+      $value = $this->tpl($query['value'], $item);
+      $text  = $this->tpl($query['text'], $item);
+
+      $options[$value] = $text;
+    }    
+
+    return $options;
+
+  }
+
+  public function page($uri) {
+
+    if(str::startsWith($uri, '../')) {
+      if($currentPage = $this->field->page) {
+        $path = $uri; 
         while(str::startsWith($path, '../')) {
           if($parent = $currentPage->parent()) {
             $currentPage = $parent;
@@ -70,76 +121,53 @@ class FieldOptions {
           }
           $path = str::substr($path, 3);
         }
-        $page = $currentPage;
-      } else if($query['page'] == '/') {
-        $page = site();
+        $page = $currentPage;          
       } else {
-        $page = page($query['page']);        
+        $page = null;
       }
-
-      $items = $this->items($page, $query['fetch']);
-
-      if($query['template']) {
-        $items = $items->filter(function($item) use($query) {
-          return in_array(str::lower($item->intendedTemplate()), array_map('str::lower', (array)$query['template']));
-        });
-      }
-
-      if($query['flip']) {
-        $items = $items->flip();
-      }
-
-      foreach($items as $item) {
-
-        $value = $this->tpl($query['value'], $item);
-        $text  = $this->tpl($query['text'], $item);
-
-        $this->options[$value] = $text;
-
-      }
-
-    } else if($items = $this->items($field->page, $field->options)) {
-
-      foreach($items as $item) {
-
-        if(is_a($item, 'Page')) {
-          $this->options[$item->uid()] = (string)$item->title();
-        } else if(is_a($item, 'File')) {
-          $this->options[$item->filename()] = (string)$item->filename();
-        }
-
-      }
-
+    } else if($uri == '/') {
+      $page = site();
     } else {
-      $this->options = array();
+      $page = page($uri);        
     }
 
-    // sorting
-
-    if(!empty($this->field->sort)) {
-
-      switch(strtolower($this->field->sort)) {
-        case 'asc':
-          asort($this->options);
-          break;
-        case 'desc':
-          arsort($this->options);
-          break;
-      }
-
-    }
+    return $page;
 
   }
 
-  protected function tpl($string, $obj) {
+  public function sort($options, $sort) {
 
+    if(empty($sort)) return $options;
+
+    switch(strtolower($sort)) {
+      case 'asc':
+        asort($options);
+        break;
+      case 'desc':
+        arsort($options);
+        break;
+    }
+
+    return $options;
+
+  }
+
+  public function tpl($string, $obj) {
     return preg_replace_callback('!\{\{(.*?)\}\}!', function($item) use($obj) {
       return (string)$obj->{$item[1]}();
     }, $string);
-
   }
 
-  protected function items($page, $method) {
+  public function isUrl($url) {
+    return 
+      v::url($url) or 
+      str::contains($url, '://localhost') or 
+      str::contains($url, '://127.0.0.1');
+  }
+
+  public function items($page, $method) {
+
+    if(!$page) return new Collection();
 
     switch($method) {
       case 'visibleChildren':
@@ -166,6 +194,7 @@ class FieldOptions {
         $items = $items->sortBy('title', 'asc');
         break;
       case 'children':
+      case 'grandchildren':
       case 'files':
       case 'images':
       case 'documents':

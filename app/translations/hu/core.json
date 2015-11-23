@@ -52,7 +52,7 @@
     "dashboard.index.history.title": "Legutóbbi frissítések",
     "dashboard.index.history.text": "Az általad legutóbb módosított oldalakat találod itt, hogy könnyebben megtaláld újból.",
     "dashboard.index.license.title": "Kirby licenc",
-    "dashboard.index.license.text": "It seems you are running Kirby on a public server without a valid license!\n\nPlease, support Kirby and (link: {buy} text: buy a license now)\n\nIf you already have a license key, just add it to your config file: (link: {docs} text: site/config/config.php)",
+    "dashboard.index.license.text": "Úgy tűnik a Kirby egy publikus szerveren fut érvényes licensz nélkül.\n\nKérlek támogasd a Kirby-t és (link: {buy} text: vásárold meg a licenszet most)\n\nHa már rendelkezel licensz kulccsal, csak add hozzá a konfig fájlodhoz: (link: {docs} text: site/config/config.php)",
     "metatags": "Metatagok",
     "metatags.info": "Kirby infó",
     "metatags.license": "Kirby licenc",

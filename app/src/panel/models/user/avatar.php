@@ -64,6 +64,10 @@ class Avatar extends Media {
       'crop'      => true
     ));
 
+    // flush the cache in case if the user data is 
+    // used somewhere on the site (i.e. for profiles)
+    kirby()->cache()->flush();
+
     kirby()->trigger('panel.avatar.upload', $this);
 
   }
@@ -79,6 +83,10 @@ class Avatar extends Media {
     if(!parent::delete()) {
       throw new Exception(l('users.avatar.delete.error'));
     } 
+
+    // flush the cache in case if the user data is 
+    // used somewhere on the site (i.e. for profiles)
+    kirby()->cache()->flush();
 
     kirby()->trigger('panel.avatar.delete', $this);
 

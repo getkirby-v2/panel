@@ -5,6 +5,7 @@ namespace Kirby\Panel\Models\Page\Blueprint;
 use A;
 use Data;
 use Exception;
+use F;
 use Obj;
 
 class Field extends Obj {
@@ -55,16 +56,35 @@ class Field extends Obj {
 
   }
 
+
+
+  public function _snippet($name) {
+
+    $base = kirby()->roots()->blueprints() . DS . 'fields' . DS . $name;
+
+
+    if(file_exists($base . '.yml')) {
+      return $base . '.yml';
+    } else if(file_exists($base . '.php')) {
+      return $base . '.php';
+    } else if(file_exists($base . '.yaml')) {
+      return $base . '.yaml';
+    } else {
+      return false;
+    }
+
+  }
+
   public function _extend($params) {
 
     $extends = $params['extends'];
-    $files   = glob(kirby()->roots()->blueprints() . DS . 'fields' . DS . $extends . '.{yml,yaml,php}', GLOB_BRACE);
+    $snippet = f::resolve(kirby()->roots()->blueprints() . DS . 'fields' . DS . $extends, array('yml', 'php', 'yaml'));
 
-    if(empty($files)) {
+    if(empty($snippet)) {
       throw new Exception(l('fields.error.extended'));
     }
 
-    $yaml   = data::read($files[0], 'yaml');
+    $yaml   = data::read($snippet, 'yaml');
     $params = a::merge($yaml, $params);
 
     return $params;

@@ -48,6 +48,11 @@ class User extends \User {
     }
 
     parent::update($data);
+
+    // flush the cache in case if the user data is 
+    // used somewhere on the site (i.e. for profiles)
+    kirby()->cache()->flush();
+
     kirby()->trigger('panel.user.update', $this);
 
     return $this;
@@ -76,6 +81,10 @@ class User extends \User {
     }
 
     parent::delete();
+
+    // flush the cache in case if the user data is 
+    // used somewhere on the site (i.e. for profiles)
+    kirby()->cache()->flush();
 
     kirby()->trigger('panel.user.delete', $this);
 

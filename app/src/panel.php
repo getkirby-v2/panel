@@ -21,8 +21,10 @@ use Server;
 use S;
 use Str;
 use Toolkit;
+use Tpl;
 use Url;
 
+use Kirby\Panel\Installer;
 use Kirby\Panel\Form;
 use Kirby\Panel\Models\Site;
 use Kirby\Panel\Translation;
@@ -31,12 +33,12 @@ use Kirby\Panel\Models\Page\Blueprint as PageBlueprint;
 
 class Panel {
 
-  static public $version  = '2.2.1';
+  static public $version  = '2.2.2';
 
   // minimal requirements
   static public $requires = array(
     'php'     => '5.4.0',
-    'toolkit' => '2.2.0',
+    'toolkit' => '2.2.2',
     'kirby'   => '2.2.1'
   );
 
@@ -136,7 +138,8 @@ class Panel {
 
     // check for a completed installation
     $this->router->filter('isInstalled', function() use($kirby) {
-      if(panel()->users()->count() == 0) {
+      $installer = new Installer();
+      if(!$installer->isCompleted()) {
         panel()->redirect('install');
       }
     });
@@ -517,6 +520,25 @@ class Panel {
     } else {
       throw new Exception(l('users.error.missing'));
     }
+  }
+
+  public static function fatal($e, $root) {
+
+    $message = $e->getMessage() ? $e->getMessage() : 'Error without a useful message :(';
+    $where   = implode('<br>', [
+      '',
+      '',
+      '<b>It happened here:</b>',
+      'File: <i>' . str_replace($root, '/panel', $e->getFile()) . '</i>',
+      'Line: <i>' . $e->getLine() . '</i>'
+    ]);
+
+    // load the fatal screen
+    return tpl::load($root . DS . 'app' . DS . 'layouts' . DS . 'fatal.php', [
+      'css'     => url::index() . '/assets/css/panel.css',
+      'content' => $message . $where
+    ]);
+
   }
 
 }
