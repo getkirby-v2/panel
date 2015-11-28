@@ -68,6 +68,8 @@ class FieldOptions {
       'fetch'    => 'children',
       'value'    => '{{uid}}',
       'text'     => '{{title}}',
+      'sort'     => false,
+      'order'    => 'ASC',
       'flip'     => false,
       'template' => false
     );
@@ -86,6 +88,10 @@ class FieldOptions {
     $page    = $this->page($query['page']);
     $items   = $this->items($page, $query['fetch']);
     $options = array();
+
+    if ($query['sort']) {
+      $items = $items->sortBy($query['sort'], $query['order']);
+    }
 
     if($query['template']) {
       $items = $items->filter(function($item) use($query) {
@@ -187,11 +193,9 @@ class FieldOptions {
         break;
       case 'pages':
         $items = site()->index();
-        $items = $items->sortBy('title', 'asc');
         break;
       case 'index':
         $items = $page->index();
-        $items = $items->sortBy('title', 'asc');
         break;
       case 'children':
       case 'grandchildren':
