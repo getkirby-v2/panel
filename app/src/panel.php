@@ -320,6 +320,9 @@ class Panel {
     $this->translations = new Collection;
 
     foreach(dir::read($this->roots()->translations()) as $dir) {
+      // filter out everything but directories
+      if(!is_dir($this->roots()->translations() . DS . $dir)) continue;
+      
       // create the translation object
       $translation = new Translation($this, $dir);
       $this->translations->append($translation->code(), $translation);
