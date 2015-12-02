@@ -98,7 +98,7 @@ class Form extends Brick {
 
       if($field->required() and $value == '') {
         $field->error = true;
-      } else if($value !== '' and $field->validate() === false) {
+      } else if($value !== '' and $field->validate() == false) {
         $field->error = true;
       }
 
