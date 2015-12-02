@@ -39,7 +39,7 @@
     "login.button": "Подписване",
     "login.log.error.permissions": "Лог файла за влизанията не е записваем",
     "logout": "Отписване",
-    "topbar.error.class.definition": "Missing topbar definition for class:",
+    "topbar.error.class.definition": "липсва topbar definition за клас:",
     "dashboard": "Табло",
     "dashboard.index.pages.title": "Страници",
     "dashboard.index.pages.edit": "Редактирай",
