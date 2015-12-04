@@ -33,7 +33,7 @@ class CheckboxesField extends RadioField {
 
   public function result() {
     $result = parent::result();
-    return is_array($result) ? implode(', ', $result) : null;
+    return is_array($result) ? implode(', ', $result) : '';
   }
 
   public function item($value, $text) {
