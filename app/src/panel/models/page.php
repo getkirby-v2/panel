@@ -4,6 +4,7 @@ namespace Kirby\Panel\Models;
 
 use C;
 use Exception;
+use F;
 use Obj;
 use S;
 use Str;
@@ -264,6 +265,14 @@ class Page extends \Page {
     }
   }
 
+  public function canChangeTemplate() {
+    if($this->isHomePage() or $this->isErrorPage()) {
+      return false;
+    } else {
+      return $this->parent()->blueprint()->pages()->template()->count() > 1;
+    }
+  }
+
   public function move($uid) {
 
     $old = clone($this);
@@ -481,6 +490,27 @@ class Page extends \Page {
       'languages' => $this->site()->languages(),
       'language'  => $this->site()->language(),
     ));
+
+  }
+
+  public function changeTemplate($template) {
+
+    if($template == $this->template()) return true;
+
+    if($this->site()->multilang()) {
+      foreach($this->site()->languages() as $lang) {
+        // rename all content files
+        $old = $this->textfile(null, $lang->code());
+        $new = $this->textfile($template, $lang->code());
+        f::move($old, $new);
+      }
+    } else {
+      $old = $this->textfile();      
+      $new = $this->textfile($template);
+      f::move($old, $new);
+    }
+
+    return true;
 
   }
 

@@ -89,8 +89,19 @@ class Menu {
       return false;
     }
 
-
   } 
+
+  public function templateOption() {  
+
+    if(!$this->page->canChangeTemplate()) return false;
+
+    return $this->item('file-code-o', 'pages.show.template', array(
+      'href'          => $this->page->url('template'),
+      'data-modal'    => true,
+      'data-shortcut' => 't',
+    ));
+
+  }
 
   public function urlOption() {
     if(!$this->page->isHomePage() and !$this->page->isErrorPage()) {
@@ -133,6 +144,7 @@ class Menu {
     $list->append($this->editOption());
     $list->append($this->statusOption());
     $list->append($this->urlOption());
+    $list->append($this->templateOption());
     $list->append($this->deleteOption());
 
     if($this->position == 'context') {
