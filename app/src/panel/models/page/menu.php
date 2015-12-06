@@ -96,7 +96,7 @@ class Menu {
     if(!$this->page->canChangeTemplate()) return false;
 
     return $this->item('file-code-o', 'pages.show.template', array(
-      'href'          => $this->page->url('template'),
+      'href'          => $this->modalUrl('template'),
       'data-modal'    => true,
       'data-shortcut' => 't',
     ));
