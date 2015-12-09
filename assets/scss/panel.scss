@@ -1,3 +1,4 @@
+/* Panel components */
 @import "components/fonts";
 @import "components/reset";
 @import "components/misc";
@@ -36,7 +37,9 @@
 @import "components/fileselector";
 @import "components/main";
 @import "components/autocomplete";
-@import "components/fontawesome";
 @import "components/pikaday";
 @import "components/counter";
 @import "components/body";
+
+/* Fontawesome */
+@import "fontawesome/fontawesome";
