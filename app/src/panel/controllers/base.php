@@ -49,7 +49,7 @@ class Base extends Obj {
       'title'     => panel()->site()->title() . ' | Panel',
       'direction' => panel()->direction(),
       'meta'      => $this->snippet('meta'),
-      'css'       => css($cssbase . '/panel.css?v=' . $version),
+      'css'       => css($cssbase . '/panel.min.css?v=' . $version),
       'js'        => js($jsbase . '/dist/panel.min.js?v=' . $version),
       'content'   => '',
       'bodyclass' => '',

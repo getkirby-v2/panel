@@ -17,7 +17,6 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
       }
 
       $structure->add($form->serialize());
-      $self->notify(':)');
       $self->redirect($model);
 
     });
@@ -50,7 +49,6 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
       }
 
       $structure->update($entryId, $form->serialize());
-      $self->notify(':)');
       $self->redirect($model);
 
     });
@@ -74,7 +72,6 @@ class StructureFieldController extends Kirby\Panel\Controllers\Field {
 
     $form = $this->form('delete', $model, function() use($self, $model, $structure, $entryId) {
       $structure->delete($entryId);
-      $self->notify(':)');
       $self->redirect($model);
     });
     

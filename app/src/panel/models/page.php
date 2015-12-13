@@ -171,16 +171,6 @@ class Page extends \Page {
       $fields['title']['type'] = 'title';
     }
 
-    // check for forbidden fields
-    foreach($fields as $name => $field) {
-      if(method_exists('\\Page', $name)) {
-        $allowed = array('title', 'date');
-        if(!in_array($name, $allowed)) {
-          throw new Exception('The field name: ' . $name . ' must not be used for pages.');
-        }
-      }
-    }
-
     return $fields;
 
   }

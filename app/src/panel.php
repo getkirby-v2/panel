@@ -21,6 +21,7 @@ use Server;
 use S;
 use Str;
 use Toolkit;
+use Tpl;
 use Url;
 
 use Kirby\Panel\Installer;
@@ -32,7 +33,7 @@ use Kirby\Panel\Models\Page\Blueprint as PageBlueprint;
 
 class Panel {
 
-  static public $version  = '2.2.2';
+  static public $version = '2.2.3';
 
   // minimal requirements
   static public $requires = array(
@@ -319,6 +320,9 @@ class Panel {
     $this->translations = new Collection;
 
     foreach(dir::read($this->roots()->translations()) as $dir) {
+      // filter out everything but directories
+      if(!is_dir($this->roots()->translations() . DS . $dir)) continue;
+      
       // create the translation object
       $translation = new Translation($this, $dir);
       $this->translations->append($translation->code(), $translation);
@@ -519,6 +523,25 @@ class Panel {
     } else {
       throw new Exception(l('users.error.missing'));
     }
+  }
+
+  public static function fatal($e, $root) {
+
+    $message = $e->getMessage() ? $e->getMessage() : 'Error without a useful message :(';
+    $where   = implode('<br>', [
+      '',
+      '',
+      '<b>It happened here:</b>',
+      'File: <i>' . str_replace($root, '/panel', $e->getFile()) . '</i>',
+      'Line: <i>' . $e->getLine() . '</i>'
+    ]);
+
+    // load the fatal screen
+    return tpl::load($root . DS . 'app' . DS . 'layouts' . DS . 'fatal.php', [
+      'css'     => url::index() . '/assets/css/panel.css',
+      'content' => $message . $where
+    ]);
+
   }
 
 }
