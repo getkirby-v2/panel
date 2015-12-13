@@ -495,7 +495,7 @@ class Page extends \Page {
 
   public function changeTemplate($template) {
 
-    if($template == $this->template()) return true;
+    if($template == $this->intendedTemplate()) return true;
 
     if($this->site()->multilang()) {
       foreach($this->site()->languages() as $lang) {
