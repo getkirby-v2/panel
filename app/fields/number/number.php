@@ -28,8 +28,8 @@ class NumberField extends InputField {
     if($this->validate and is_array($this->validate)) {
       return parent::validate();
     } else {
-      if($this->min and !v::min($this->result(), $this->min)) return false;
-      if($this->max and !v::max($this->result(), $this->max)) return false;
+      if(is_numeric($this->min) and !v::min($this->result(), $this->min)) return false;
+      if(is_numeric($this->max) and !v::max($this->result(), $this->max)) return false;
     }
 
     return true;
