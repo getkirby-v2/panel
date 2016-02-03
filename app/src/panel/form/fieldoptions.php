@@ -27,6 +27,8 @@ class FieldOptions {
       $this->options = $this->optionsFromApi($this->field->options);
     } else if($this->field->options == 'query') {
       $this->options = $this->optionsFromQuery($this->field->query);
+    } else if($this->field->options == 'field') {
+      $this->options = $this->optionsFromField($this->field->field);
     } else {
       $this->options = $this->optionsFromPageMethod($this->field->page, $this->field->options);
     }
@@ -58,6 +60,38 @@ class FieldOptions {
     $response = remote::get($url);
     $options  = @json_decode($response->content(), true);
     return is_array($options) ? $options : array();
+  }
+
+  public function optionsFromField($field) {
+
+    // default field parameters
+    $defaults = array(
+      'page'      => $this->field->page ? $this->field->page->id() : '',
+      'name'      => 'tags',
+      'seperator' => ',',
+    );
+
+    // sanitize the query
+    if(!is_array($field)) {
+      $field = array();
+    }
+
+    // merge the default parameters with the actual query
+    $field = array_merge($defaults, $field);
+
+    // dynamic page option
+    // ../
+    // ../../ etc.
+    $page    = $this->page($field['page']);
+    $items   = $page->{$field['name']}()->split($field['seperator']);
+    $options = array();
+
+    foreach($items as $item) {
+      $options[$item] = $item;
+    }
+
+    return $options;
+
   }
 
   public function optionsFromQuery($query) {
