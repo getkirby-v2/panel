@@ -68,7 +68,7 @@ class FieldOptions {
     $defaults = array(
       'page'      => $this->field->page ? $this->field->page->id() : '',
       'name'      => 'tags',
-      'seperator' => ',',
+      'separator' => ',',
     );
 
     // sanitize the query
@@ -83,7 +83,7 @@ class FieldOptions {
     // ../
     // ../../ etc.
     $page    = $this->page($field['page']);
-    $items   = $page->{$field['name']}()->split($field['seperator']);
+    $items   = $page->{$field['name']}()->split($field['separator']);
     $options = array();
 
     foreach($items as $item) {
@@ -113,8 +113,8 @@ class FieldOptions {
 
     // merge the default parameters with the actual query
     $query = array_merge($defaults, $query);
-    
-    // dynamic page option 
+
+    // dynamic page option
     // ../
     // ../../ etc.
     $page    = $this->page($query['page']);
@@ -136,7 +136,7 @@ class FieldOptions {
       $text  = $this->tpl($query['text'], $item);
 
       $options[$value] = $text;
-    }    
+    }
 
     return $options;
 
@@ -146,7 +146,7 @@ class FieldOptions {
 
     if(str::startsWith($uri, '../')) {
       if($currentPage = $this->field->page) {
-        $path = $uri; 
+        $path = $uri;
         while(str::startsWith($path, '../')) {
           if($parent = $currentPage->parent()) {
             $currentPage = $parent;
@@ -155,14 +155,14 @@ class FieldOptions {
           }
           $path = str::substr($path, 3);
         }
-        $page = $currentPage;          
+        $page = $currentPage;
       } else {
         $page = null;
       }
     } else if($uri == '/') {
       $page = site();
     } else {
-      $page = page($uri);        
+      $page = page($uri);
     }
 
     return $page;
@@ -193,9 +193,9 @@ class FieldOptions {
   }
 
   public function isUrl($url) {
-    return 
-      v::url($url) or 
-      str::contains($url, '://localhost') or 
+    return
+      v::url($url) or
+      str::contains($url, '://localhost') or
       str::contains($url, '://127.0.0.1');
   }
 
@@ -238,7 +238,7 @@ class FieldOptions {
       case 'archives':
         $items = $page->{$method}();
         break;
-      default: 
+      default:
         $items = new Collection();
     }
 
