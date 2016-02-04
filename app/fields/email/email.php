@@ -9,7 +9,6 @@ class EmailField extends TextField {
     $this->label        = l::get('fields.email.label', 'Email');
     $this->placeholder  = l::get('fields.email.placeholder', 'mail@example.com');
     $this->autocomplete = true;
-
   }
 
   public function input() {
@@ -29,6 +28,9 @@ class EmailField extends TextField {
   }
 
   public function validate() {
+    if (!$this->validate) {
+      return true;
+    }
     return v::email($this->result());
   }
 
