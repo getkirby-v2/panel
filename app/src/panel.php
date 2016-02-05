@@ -336,12 +336,15 @@ class Panel {
 
     if(!is_null($this->translation)) return $this->translation;
 
-    // load the interface language file
-    if($user = $this->site()->user()) {
-      return $this->translation = new Translation($this, $user->language());
-    } else {
-      return $this->translation = new Translation($this, $this->kirby()->option('panel.language', 'en'));
+    // get the default language code from the options
+    $lang = $this->kirby()->option('panel.language', 'en');
+    $user = $this->site()->user();
+
+    if($user && $user->language()) {
+      $lang = $user->language();
     }
+
+    return $this->translation = new Translation($this, $lang);
 
   }
 
