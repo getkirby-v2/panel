@@ -199,7 +199,7 @@ class BaseField {
     try {
       return (string)$this->template();
     } catch(Exception $e) {
-      die($e);
+      return (string)$e->getMessage();
     }
   }
 

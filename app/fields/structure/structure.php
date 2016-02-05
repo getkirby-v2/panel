@@ -128,6 +128,11 @@ class StructureField extends BaseField {
       $add = null;
     }
 
+    // make sure there's at least an empty label
+    if(!$this->label) {
+      $this->label = '&nbsp;';
+    }
+ 
     $label = parent::label();
     $label->addClass('structure-label');
     $label->append($add);
