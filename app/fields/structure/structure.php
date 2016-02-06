@@ -63,6 +63,10 @@ class StructureField extends BaseField {
     return $this->flip === true ? true : false;
   }
 
+  public function sortable() {
+    return $this->readonly() or $this->sort() or $this->flip();
+  }
+
 
   public function structure() {
     if(!is_null($this->structure)) {
