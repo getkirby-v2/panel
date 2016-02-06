@@ -85,7 +85,6 @@ class StructureField extends BaseField {
         $entries = $entries->sortBy($this->sort);
       } else {
         throw new Exception('Structure field: sort field does not exist');
-
       }
     }
 
