@@ -192,6 +192,14 @@
 
       });
 
+      // Catch Tab key and insert it into the textarea
+      textarea.bind('keydown', function(e){
+        if(e.keyCode === 9) {
+          textarea.insertAtCursor('\t');
+          return false;
+        }
+      });
+
       textarea.data('editor', true);
 
     });
