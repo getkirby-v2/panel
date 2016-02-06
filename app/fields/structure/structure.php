@@ -56,7 +56,7 @@ class StructureField extends BaseField {
   }
 
   public function sort() {
-    return array_key_exists($this->sort, $this->structure()->fields()) ? $this->sort : false;
+    return $this->sort ? str::split($this->sort) : false;
   }
 
   public function flip() {
@@ -94,7 +94,7 @@ class StructureField extends BaseField {
     $entries = $this->structure()->data();
 
     if($sort = $this->sort()) {
-      $entries = $entries->sortBy($sort);
+      $entries = call_user_func_array(array($entries, 'sortBy'), $sort);
     }
     if($this->flip()) {
       $entries = $entries->flip();
