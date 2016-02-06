@@ -16,6 +16,8 @@ class StructureField extends BaseField {
   public $structure = null;
   public $style     = 'items';
   public $modalsize = 'medium';
+  public $sort      = null;
+  public $flip      = false;
 
   public function routes() {
 
@@ -76,7 +78,22 @@ class StructureField extends BaseField {
   }
 
   public function entries() {
-    return $this->structure()->data();
+    $entries = $this->structure()->data();
+
+    if($this->sort) {
+      if(array_key_exists($this->sort, $this->structure()->fields())) {
+        $entries = $entries->sortBy($this->sort);
+      } else {
+        throw new Exception('Structure field: sort field does not exist');
+
+      }
+    }
+
+    if($this->flip and is_bool($this->flip)) {
+      $entries = $entries->flip();
+    }
+
+    return $entries;
   }
 
   public function result() {
