@@ -55,6 +55,15 @@ class StructureField extends BaseField {
     return in_array($this->style, $styles) ? $this->style : 'items';
   }
 
+  public function sort() {
+    return array_key_exists($this->sort, $this->structure()->fields()) ? $this->sort : false;
+  }
+
+  public function flip() {
+    return $this->flip === true ? true : false;
+  }
+
+
   public function structure() {
     if(!is_null($this->structure)) {
       return $this->structure;
@@ -80,17 +89,8 @@ class StructureField extends BaseField {
   public function entries() {
     $entries = $this->structure()->data();
 
-    if($this->sort) {
-      if(array_key_exists($this->sort, $this->structure()->fields())) {
-        $entries = $entries->sortBy($this->sort);
-      } else {
-        throw new Exception('Structure field: sort field does not exist');
-      }
-    }
-
-    if($this->flip and is_bool($this->flip)) {
-      $entries = $entries->flip();
-    }
+    if($sort = $this->sort()) $entries = $entries->sortBy($sort);
+    if($this->flip())         $entries = $entries->flip();
 
     return $entries;
   }
