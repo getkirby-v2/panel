@@ -93,8 +93,12 @@ class StructureField extends BaseField {
   public function entries() {
     $entries = $this->structure()->data();
 
-    if($sort = $this->sort()) $entries = $entries->sortBy($sort);
-    if($this->flip())         $entries = $entries->flip();
+    if($sort = $this->sort()) {
+      $entries = $entries->sortBy($sort);
+    }
+    if($this->flip()) {
+      $entries = $entries->flip();
+    }
 
     return $entries;
   }
