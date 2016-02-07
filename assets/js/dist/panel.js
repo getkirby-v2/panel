@@ -5900,7 +5900,7 @@ var Context = function() {
 
     // keyboard shortcut helper
     this.keys = function(element, keys) {
-      element.on('keydown', function(e) {
+      element.on('keydown keypress', function(e) {
         if(keys[e.keyCode]) {
           return keys[e.keyCode](e);
         }
@@ -6169,8 +6169,9 @@ var Context = function() {
 
       $('body').append(self.measure);
 
+
       // input field keyboard shortcuts
-      self.keys(self.input, {
+      var keyshortcuts = {
         // enter
         13 : function(e) {
           if(self.input.val().length > 0 && !e.metaKey) {
@@ -6187,11 +6188,6 @@ var Context = function() {
             return false;
           }
         },
-        // ,
-        188 : function() {
-          self.add();
-          return false;
-        },
         // backspace
         8 : function() {
           if(self.cursor == 0) {
@@ -6206,7 +6202,14 @@ var Context = function() {
             return false;
           }
         },
-      });
+      };
+      // (custom) separator
+      keyshortcuts[self.separator.charCodeAt()] = function() {
+        self.add();
+        return false;
+      };
+      self.keys(self.input, keyshortcuts);
+
 
       // resize the input field
       self.input.on('keydown, keyup', function() {
