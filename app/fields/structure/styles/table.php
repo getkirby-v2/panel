@@ -3,7 +3,7 @@
     <tr>
       <?php foreach($field->fields() as $f): ?>
       <th>
-        <?php echo html($f['label'], false) ?>
+        <?php echo html($field->i18n($f['label']), false) ?>
       </th>
       <?php endforeach ?>
       <th class="structure-table-options">  
