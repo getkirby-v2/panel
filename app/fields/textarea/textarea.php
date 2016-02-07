@@ -13,6 +13,7 @@ class TextareaField extends TextField {
     $this->buttons = true;
     $this->min     = 0;
     $this->max     = false;
+    $this->tabs    = false;
   }
 
   public function routes() {
@@ -37,7 +38,10 @@ class TextareaField extends TextField {
     $input->removeAttr('type');
     $input->removeAttr('value');
     $input->html($this->value() ? htmlentities($this->value(), ENT_NOQUOTES, 'UTF-8') : false);
-    $input->data('field', 'editor');
+    $input->data(array(
+      'field' =>  'editor',
+      'tabs'  =>  $this->tabs() ? 'true' : 'false' 
+    ));
 
     return $input;
 
