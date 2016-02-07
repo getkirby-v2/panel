@@ -14,9 +14,8 @@ class TitleField extends TextField {
 
     if($this->page and !$this->page->isSite()) {
 
-      $this->help = $this->i18n($this->help);
-
       if(!empty($this->help)) {
+        $this->help  = $this->i18n($this->help);
         $this->help .= '<br />';
       }
 
