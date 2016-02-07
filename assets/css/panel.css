@@ -694,11 +694,11 @@ body.rtl .field-grid {
   outline: 0;
   border-color: #8dae28; }
 
+.input.over {
+  border-color: #000; }
+
 textarea.input {
   resize: none; }
-
-textarea.over {
-  border-color: #000; }
 
 .input:required,
 .input:invalid {
