@@ -8,7 +8,7 @@ class NumberField extends InputField {
     $this->label       = l::get('fields.number.label', 'Number');
     $this->placeholder = l::get('fields.number.placeholder', '#');
     $this->step        = 1;
-    $this->min         = 0;
+    $this->min         = false;
     $this->max         = false;
 
   }
