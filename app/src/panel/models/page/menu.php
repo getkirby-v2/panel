@@ -23,7 +23,7 @@ class Menu {
 
     $a = new Brick('a', '', $attr);
     $a->append(icon($icon, 'left'));
-    $a->append(l($label));
+    $a->append(l($label) ?: $label);
 
     $li = new Brick('li');
     $li->append($a);
@@ -95,7 +95,7 @@ class Menu {
 
     if(!$this->page->canChangeTemplate()) return false;
 
-    return $this->item('file-code-o', 'pages.show.template', array(
+    return $this->item('file-code-o', l('pages.show.template') . ': ' . $this->page->blueprint()->title(), array(
       'href'          => $this->modalUrl('template'),
       'data-modal'    => true,
       'data-shortcut' => 't',
@@ -143,8 +143,8 @@ class Menu {
     $list->append($this->previewOption());
     $list->append($this->editOption());
     $list->append($this->statusOption());
-    $list->append($this->urlOption());
     $list->append($this->templateOption());
+    $list->append($this->urlOption());
     $list->append($this->deleteOption());
 
     if($this->position == 'context') {

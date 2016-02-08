@@ -64,7 +64,7 @@
     "site.delete.error": "The site cannot be deleted",
     "pages.show.settings": "Page settings",
     "pages.show.preview": "Open preview",
-    "pages.show.template": "Change template",
+    "pages.show.template": "Template",
     "pages.show.changeurl": "Change URL",
     "pages.show.invisible": "Status: invisible",
     "pages.show.visible": "Status: visible",
