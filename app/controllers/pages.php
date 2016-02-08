@@ -158,6 +158,15 @@ class PagesController extends Kirby\Panel\Controllers\Base {
       ));
     }
 
+    if($info = get('info')) {
+
+      $prep = $page->prepareForNewTemplate($page->blueprint()->name(), $info);      
+      $html = array();
+
+      return $this->snippet('template', $prep);
+
+    }
+
     $form = $page->form('template', function($form) use($page, $self) {
 
       try {

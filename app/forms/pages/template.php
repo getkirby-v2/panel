@@ -11,7 +11,7 @@ return function($page) {
   // create the form
   $form = new Kirby\Panel\Form(array(
     'template' => array(
-      'label'     => 'pages.add.template.label',
+      'label'     => 'pages.template.select.label',
       'type'      => 'select',
       'options'   => $options,
       'default'   => key($options),
@@ -19,6 +19,10 @@ return function($page) {
       'readonly'  => count($options) == 1 ? true : false,
       'icon'      => count($options) == 1 ? 'file-o' : 'chevron-down',
       'autofocus' => true
+    ),
+    'disclaimer' => array(
+      'type'  => 'info',
+      'text'  => ''
     )
   ), array(
     'template' => $page->intendedTemplate()

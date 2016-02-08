@@ -64,3 +64,7 @@
     margin-right: 1.25em;
   }
 }
+
+.text *:last-child {
+  margin-bottom: 0;
+}

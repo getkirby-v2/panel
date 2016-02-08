@@ -493,25 +493,91 @@ class Page extends \Page {
 
   }
 
-  public function changeTemplate($template) {
+  public function changeTemplate($newTemplate) {
 
-    if($template == $this->intendedTemplate()) return true;
+    $oldTemplate = $this->intendedTemplate();
+
+    if($newTemplate == $oldTemplate) return true;
 
     if($this->site()->multilang()) {
+      
       foreach($this->site()->languages() as $lang) {
-        // rename all content files
         $old = $this->textfile(null, $lang->code());
-        $new = $this->textfile($template, $lang->code());
+        $new = $this->textfile($newTemplate, $lang->code());
         f::move($old, $new);
+        $this->reset();
+        $this->updateForNewTemplate($oldTemplate, $newTemplate, $lang->code());
       }
+
     } else {
       $old = $this->textfile();      
-      $new = $this->textfile($template);
+      $new = $this->textfile($newTemplate);
       f::move($old, $new);
+      $this->reset();
+      $this->updateForNewTemplate($oldTemplate, $newTemplate);
     }
 
     return true;
 
+  }
+
+  public function prepareForNewTemplate($oldTemplate, $newTemplate, $language = null) {
+
+    $data         = array();
+    $incompatible = array();
+    $content      = $this->content($language);
+    $oldBlueprint = new Blueprint($oldTemplate);
+    $oldFields    = $oldBlueprint->fields($this);
+    $newBlueprint = new Blueprint($newTemplate);
+    $newFields    = $newBlueprint->fields($this);
+
+    // log
+    $removed  = array();
+    $replaced = array();
+    $added    = array();
+
+    // first overwrite everything
+    foreach($oldFields as $oldField) {
+      $data[$oldField->name()] = null;    
+    }
+
+    // now go through all new fileds and compare them to the old field types
+    foreach($newFields as $newField) {
+
+      $oldField = $oldFields->{$newField->name()};
+
+      // only take data from fields with matching names and types
+      if($oldField and $oldField->type() == $newField->type()) {
+        $data[$newField->name()] = $content->get($newField->name())->value();
+      } else {
+        $data[$newField->name()] = $newField->default();
+
+        if($oldField) {
+          $replaced[$newField->name()] = $newField->label();          
+        } else {
+          $added[$newField->name()] = $newField->label();          
+        }
+
+      }
+
+    }
+
+    foreach($data as $name => $content) {
+      if(is_null($content)) $removed[$name] = $oldFields->{$name}->label();
+    }
+
+    return array(
+      'data'     => $data,
+      'removed'  => $removed,
+      'replaced' => $replaced,
+      'added'    => $added
+    );
+
+  }
+
+  public function updateForNewTemplate($oldTemplate, $newTemplate, $language = null) {
+    $prep = $this->prepareForNewTemplate($oldTemplate, $newTemplate, $language);
+    $this->update($prep['data'], $language);
   }
 
 }
