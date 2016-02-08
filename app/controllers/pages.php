@@ -146,6 +146,47 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
   }
 
+  public function template($id) {
+
+    $self = $this;
+    $page = $this->page($id);
+
+    if(!$page->canChangeTemplate()) {
+      return $this->modal('error', array(
+        'headline' => l('error'),
+        'text'     => l('pages.template.error'),
+      ));
+    }
+
+    if($info = get('info')) {
+
+      $prep = $page->prepareForNewTemplate($page->blueprint()->name(), $info);      
+      $html = array();
+
+      return $this->snippet('template', $prep);
+
+    }
+
+    $form = $page->form('template', function($form) use($page, $self) {
+
+      try {
+
+        $data = $form->serialize();
+
+        $page->changeTemplate(a::get($data, 'template'));
+
+        $self->notify(':)');
+        $self->redirect($page);
+      } catch(Exception $e) {
+        $form->alert($e->getMessage());
+      }
+
+    });
+
+    return $this->modal('pages/template', compact('form'));
+
+  }
+
   public function toggle($id) {
 
     $self = $this;

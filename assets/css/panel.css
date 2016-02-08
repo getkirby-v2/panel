@@ -309,6 +309,9 @@ body.ltr .text ol {
 body.rtl .text ol {
   margin-right: 1.25em; }
 
+.text *:last-child {
+  margin-bottom: 0; }
+
 .nav > li {
   list-style: none; }
 
