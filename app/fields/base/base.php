@@ -182,6 +182,8 @@ class BaseField {
       $element->addClass('field-with-icon');
     }
 
+    $element->addClass('field-name-' . $this->name);
+
     return $element;
 
   }
