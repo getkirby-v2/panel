@@ -37,13 +37,11 @@ class SelectField extends BaseField {
 
     $default = $this->default();
 
-    if(!$this->required()) {
-      $select->append($this->option('', '', $this->value() == ''));
-    }
-
     if($this->readonly()) {
       $select->attr('tabindex', '-1');
     }
+
+    $select->append($this->option('', '', $this->value() == ''));
 
     foreach($this->options() as $value => $text) {
       $select->append($this->option($value, $text, $this->value() == $value));
