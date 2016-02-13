@@ -66,7 +66,7 @@ class FieldOptions {
 
     // default field parameters
     $defaults = array(
-      'page'      => $this->field->page ? $this->field->page->id() : '',
+      'page'     => $this->field->page ? ($this->field->page->isSite() ? '/' : $this->field->page->id()) : '',
       'name'      => 'tags',
       'separator' => ',',
     );
@@ -98,7 +98,7 @@ class FieldOptions {
 
     // default query parameters
     $defaults = array(
-      'page'     => $this->field->page ? $this->field->page->id() : '',
+      'page'     => $this->field->page ? ($this->field->page->isSite() ? '/' : $this->field->page->id()) : '',
       'fetch'    => 'children',
       'value'    => '{{uid}}',
       'text'     => '{{title}}',
