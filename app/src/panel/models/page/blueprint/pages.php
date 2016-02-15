@@ -62,9 +62,10 @@ class Pages extends Obj {
 
     $obj = new Obj();
 
-    $obj->mode   = 'default';
-    $obj->field  = null;
-    $obj->format = null;
+    $obj->mode    = 'default';
+    $obj->field   = null;
+    $obj->format  = null;
+    $obj->display = null;
 
     if(is_array($this->num)) {
       foreach($this->num as $k => $v) $obj->$k = $v;
