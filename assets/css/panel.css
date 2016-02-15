@@ -540,6 +540,9 @@ form.loading:after {
   margin-top: -7px;
   color: #777; }
 
+.field-icon:hover .icon {
+  color: #8dae28; }
+
 body.ltr .field-with-icon .input {
   padding-right: 3.5em; }
 
