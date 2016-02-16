@@ -415,7 +415,6 @@ class Page extends \Page {
     parent::update($data, $lang);
 
     $this->updateNum();
-    $this->updateUid();
     $this->addToHistory();
 
     kirby()->trigger('panel.page.update', $this);
