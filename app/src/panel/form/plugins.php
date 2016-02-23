@@ -2,6 +2,7 @@
 
 namespace Kirby\Panel\Form;
 
+use A;
 use Dir;
 use F;
 use Kirby\Panel\Form;
@@ -24,6 +25,12 @@ class Plugins {
 
     $root = form::$root[$type];
     $dirs = dir::read($root);
+
+    if($type == 'custom') {
+      foreach(kirby()->modules()->fields() as $source) {
+        $dirs = a::merge($dirs, dir::read($source));
+      }
+    }
 
     foreach($dirs as $dir) {
 
