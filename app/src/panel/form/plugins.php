@@ -16,21 +16,22 @@ class Plugins {
   public $js      = '';
 
   public function __construct() {
+    foreach(kirby()->modules()->fields() as $root) {
+      $this->find($root, 'custom');
+    }
+
     $this->find('custom');
     $this->find('default');
     $this->load();
   }
 
-  public function find($type) {
-
-    $root = form::$root[$type];
-    $dirs = dir::read($root);
-
-    if($type == 'custom') {
-      foreach(kirby()->modules()->fields() as $source) {
-        $dirs = a::merge($dirs, dir::read($source));
-      }
+  public function find($root, $type = null) {
+    if(!$type) {
+      $type = $root;
+      $root = form::$root[$type];
     }
+
+    $dirs = dir::read($root);
 
     foreach($dirs as $dir) {
 
