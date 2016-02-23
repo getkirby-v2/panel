@@ -37,26 +37,20 @@ class Widgets extends Collection {
   }
 
   public function defaults() {
-
     $root = panel()->roots()->widgets();
-
-    foreach(dir::read($root) as $dir) {
-
-      // add missing widgets to the order array
-      if(!array_key_exists($dir, $this->order)) {
-        $this->order[$dir] = true;
-      }
-
-      $this->load($dir, $root . DS . $dir . DS . $dir . '.php');
-
-    }
-
+    $this->find($root);
   }
 
   public function custom() {
+    foreach((array)kirby()->modules()->widgets() as $root) {
+      $this->find($root);
+    }
 
     $root = kirby()->roots()->widgets();
+    $this->find($root);
+  }
 
+  public function find($root) {
     foreach(dir::read($root) as $dir) {
 
       // add missing widgets to the order array
@@ -65,9 +59,10 @@ class Widgets extends Collection {
       }
 
       $this->load($dir, $root . DS . $dir . DS . $dir . '.php');
-    }
 
+    }
   }
+
 
   public function sort() {
 
