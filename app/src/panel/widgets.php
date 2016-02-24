@@ -42,12 +42,11 @@ class Widgets extends Collection {
   }
 
   public function custom() {
-    foreach((array)kirby()->modules()->widgets() as $root) {
+    $roots = kirby()->modules()->allRoots('widgets', kirby()->roots()->widgets());
+
+    foreach($roots as $root) {
       $this->find($root);
     }
-
-    $root = kirby()->roots()->widgets();
-    $this->find($root);
   }
 
   public function find($root) {

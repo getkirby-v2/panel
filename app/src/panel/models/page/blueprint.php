@@ -98,11 +98,7 @@ class Blueprint extends Obj {
 
   static public function all() {
 
-    $files  = dir::read(static::$root);
-    foreach((array)kirby()->modules()->blueprints() as $dir) {
-      $files = a::merge($files, dir::read($dir));
-    }
-
+    $files  = kirby()->modules()->allFiles('blueprints', static::$root);
     $result = array();
     $home   = kirby()->option('home', 'home');
     $error  = kirby()->option('error', 'error');
