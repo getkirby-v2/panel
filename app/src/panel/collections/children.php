@@ -100,7 +100,12 @@ class Children extends \Children {
           break;
       }
 
-      $children = $this->paginate($limit, array(
+      // filter out hidden pages
+      $children = $this->filter(function($child) {
+        return $child->blueprint()->hide() === false;
+      });
+
+      $children = $children->paginate($limit, array(
         'page'          => get($var, s::get($id)), 
         'omitFirstPage' => false, 
         'variable'      => $var,

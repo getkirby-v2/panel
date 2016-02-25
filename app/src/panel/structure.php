@@ -36,9 +36,22 @@ class Structure {
       throw new Exception('The field name: ' . $field . ' cannot be used as it is reserved');
     }
 
+
     $this->field  = $field;
     $this->config = $this->model->getBlueprintFields()->get($this->field);
-    $this->source = (array)yaml::decode($this->model->{$this->field}());
+
+
+    if(is_a($this->model, 'Page')) {
+      $source = $this->model->content()->get($this->field);
+    } else if(is_a($this->model, 'File')) {
+      $source = $this->model->meta()->get($this->field);
+    } else if(is_a($this->model, 'User')) {
+      $source = $this->model->{$this->field}();
+    } else {
+      throw new Exception('Invalid model for structure field: ' . $this->field);
+    }
+
+    $this->source = (array)yaml::decode($source);  
     $this->store  = new Store($this, $this->source());
 
     return $this;
