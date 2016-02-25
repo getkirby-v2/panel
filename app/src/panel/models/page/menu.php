@@ -48,7 +48,7 @@ class Menu {
   }
 
   public function previewOption() {  
-    if($preview = $this->page->url('preview')) {
+    if($preview = $this->page->url('preview') and $this->page->canShowPreview()) {
       return $this->item('play-circle-o', 'pages.show.preview', array(
         'href'          => $preview,
         'target'        => '_blank',
@@ -70,7 +70,7 @@ class Menu {
 
   public function statusOption() {
 
-    if(!$this->page->isErrorPage()) {
+    if($this->page->canChangeStatus()) {
 
       if($this->page->isInvisible()) {
         $icon  = 'toggle-off';
@@ -92,19 +92,19 @@ class Menu {
   } 
 
   public function templateOption() {  
-
-    if(!$this->page->canChangeTemplate()) return false;
-
-    return $this->item('file-code-o', l('pages.show.template') . ': ' . $this->page->blueprint()->title(), array(
-      'href'          => $this->modalUrl('template'),
-      'data-modal'    => true,
-      'data-shortcut' => 't',
-    ));
-
+    if($this->page->canChangeTemplate()) {
+      return $this->item('file-code-o', l('pages.show.template') . ': ' . $this->page->blueprint()->title(), array(
+        'href'          => $this->modalUrl('template'),
+        'data-modal'    => true,
+        'data-shortcut' => 't',
+      ));
+    } else {      
+      return false;
+    }
   }
 
   public function urlOption() {
-    if(!$this->page->isHomePage() and !$this->page->isErrorPage()) {
+    if($this->page->canChangeUrl()) {
       return $this->item('chain', 'pages.show.changeurl', array(
         'href'          => $this->modalUrl('url'),
         'title'         => 'u',

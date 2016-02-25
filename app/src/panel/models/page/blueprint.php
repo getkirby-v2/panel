@@ -12,6 +12,7 @@ use Obj;
 use Kirby\Panel\Models\Page\Blueprint\Pages;
 use Kirby\Panel\Models\Page\Blueprint\Files;
 use Kirby\Panel\Models\Page\Blueprint\Fields;
+use Kirby\Panel\Models\Page\Blueprint\Options;
 
 class Blueprint extends Obj {
 
@@ -29,6 +30,7 @@ class Blueprint extends Obj {
   public $deletable = true;
   public $icon      = 'file-o';
   public $fields    = array();
+  public $options   = null;
 
   public function __construct($name) {
 
@@ -43,6 +45,7 @@ class Blueprint extends Obj {
     $this->type      = a::get($this->yaml, 'type', 'page');
     $this->pages     = new Pages(a::get($this->yaml, 'pages', true));
     $this->files     = new Files(a::get($this->yaml, 'files', true));
+    $this->options   = new Options(a::get($this->yaml, 'options', array()));
 
   }
 

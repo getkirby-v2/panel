@@ -257,8 +257,16 @@ class Page extends \Page {
     }    
   }
 
+  public function canShowPreview() {
+    return $this->blueprint()->options()->preview();
+  }
+
+  public function canChangeStatus() {
+    return (!$this->isErrorPage() and $this->blueprint()->options()->status()) ? true : false;
+  }
+
   public function canChangeUrl() {
-    if($this->isHomePage() or $this->isErrorPage()) {
+    if($this->isHomePage() or $this->isErrorPage() or $this->blueprint()->options()->url() === false) {
       return false;
     } else {
       return true;
@@ -266,7 +274,7 @@ class Page extends \Page {
   }
 
   public function canChangeTemplate() {
-    if($this->isHomePage() or $this->isErrorPage()) {
+    if($this->isHomePage() or $this->isErrorPage() or $this->blueprint()->options()->template() === false) {
       return false;
     } else {
       return $this->parent()->blueprint()->pages()->template()->count() > 1;
@@ -364,7 +372,7 @@ class Page extends \Page {
       $error = 'pages.delete.error.error';
     } else if($this->hasChildren()) {
       $error = 'pages.delete.error.children';
-    } else if(!$this->blueprint()->deletable()) {
+    } else if(!$this->blueprint()->deletable() or !$this->blueprint()->options()->delete()) {
       $error = 'pages.delete.error.blocked';
     } else {
       return true;

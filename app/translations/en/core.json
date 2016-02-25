@@ -103,7 +103,6 @@
     "pages.url.error.exists": "A page with the same appendix already exists",
     "pages.url.error.move": "The appendix could not be changed",
     "pages.url.error.rights": "You cannot change the URL of this page",
-    "pages.url.home.error.error": "The URL for the home and error pages cannot be changed",
     "pages.template.select.label" : "Template",
     "pages.template.warning.text" : "The following fields will change, when you switch the template",
     "pages.template.warning.removed" : "Removed fields",

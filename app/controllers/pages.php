@@ -125,7 +125,7 @@ class PagesController extends Kirby\Panel\Controllers\Base {
     if(!$page->canChangeUrl()) {
       return $this->modal('error', array(
         'headline' => l('error'),
-        'text'     => l('pages.url.home.error.error'),
+        'text'     => l('pages.url.error.rights'),
       ));
     }
 
