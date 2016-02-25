@@ -213,7 +213,7 @@ class File extends \File {
 
     $this->files()->topbar($topbar);
 
-    $topbar->append($this->url(), $this->filename());
+    $topbar->append($this->url('edit'), $this->filename());
    
   }
 
