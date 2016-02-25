@@ -36,10 +36,17 @@ class Store {
     $data = array();
 
     foreach($raw as $row) {
+
+      if(is_string($row)) {
+        continue;
+      }
+
       if(!isset($row['id'])) {
         $row['id'] = str::random(32);
       }
+
       $data[$row['id']] = $row;
+
     }
 
     $this->data = $data;

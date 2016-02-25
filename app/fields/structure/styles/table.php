@@ -17,7 +17,11 @@
       <?php foreach($field->fields() as $f): ?>
       <td>
         <a data-modal href="<?php __($field->url($entry->id() . '/update')) ?>">
-          <?php echo html(@$entry->{$f['name']}, false) ?>
+          <?php if(!empty($entry->{$f['name']})): ?>
+          <?php echo html($entry->{$f['name']}, false) ?>
+          <?php else: ?>
+          &nbsp;
+          <?php endif ?>
         </a>
       </td>
       <?php endforeach ?>
