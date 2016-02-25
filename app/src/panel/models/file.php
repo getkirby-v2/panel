@@ -222,7 +222,7 @@ class File extends \File {
     // save default meta 
     $meta = array();
 
-    foreach($this->page()->blueprint()->files()->fields() as $field) {
+    foreach($this->page()->blueprint()->files()->fields($this) as $field) {
       $meta[$field->name()] = $field->default();
     }
 
