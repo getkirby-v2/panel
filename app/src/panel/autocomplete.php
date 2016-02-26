@@ -4,6 +4,7 @@ namespace Kirby\Panel;
 
 use A;
 use Exception;
+use Str;
 
 class Autocomplete {
 
@@ -48,8 +49,24 @@ class Autocomplete {
     })->toArray();
   }
 
-  public function autocompleteUris() {
-    return $this->site->index()->map(function($page) {
+  public function autocompleteUris($params = array()) {
+    $defaults = array(
+      'index'     => 'pages',
+      'uri'       => '/',
+      'template'  => false
+    );
+
+    $options = array_merge($defaults, $params);
+    $page    = $this->panel->page($options['uri']);
+    $pages   = $this->pages($page, $options['index'], $options);
+
+    if($options['template']) {
+      $pages = $pages->filter(function($page) use($options) {
+        return in_array(str::lower($page->intendedTemplate()), array_map('str::lower', (array)$options['template']));
+      });
+    }
+
+    return $pages->map(function($page) {
       return $page->id();
     })->toArray();
   }
