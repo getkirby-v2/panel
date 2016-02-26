@@ -4,6 +4,7 @@ namespace Kirby\Panel\Structure;
 
 use A;
 use Collection;
+use F;
 use S;
 use Str;
 use Yaml;
@@ -63,7 +64,7 @@ class Store {
    */
   public function sync() {
 
-    $ageModel = $this->structure->model()->modified();
+    $ageModel = f::modified($this->structure->model()->textfile());
     $ageStore = s::get($this->id() . '_age');
 
     if($ageStore < $ageModel) {
