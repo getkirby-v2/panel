@@ -10,10 +10,11 @@ use Yaml;
 
 class Store {
 
-  public $id = null;
+  public $id          = null;
   public $structure;
-  public $source = array();
-  public $data = array();
+  public $source      = array();
+  public $data        = array();
+  public $age;
 
   public function __construct($structure, $source) {
     $this->structure = $structure;  
@@ -24,6 +25,14 @@ class Store {
   } 
 
   public function init() {
+
+    $age      = s::get($this->id() . '_age');
+    $modified = $this->structure->model()->modified();
+
+    if($age < $modified) {
+      $this->reset();
+      $age = $modified;
+    }
 
     $data = s::get($this->id());
 
@@ -50,7 +59,9 @@ class Store {
     }
 
     $this->data = $data;
+    $this->age  = $age ? $age : time();
     s::set($this->id, $this->data);
+    s::set($this->id . '_age', $this->age);
 
   }
 
