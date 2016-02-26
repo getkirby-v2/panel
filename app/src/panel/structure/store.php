@@ -13,13 +13,15 @@ class Store {
   public $id = null;
   public $structure;
   public $source = array();
-  public $data = array();
+  public $data   = array();
+  public $age    = null;
 
   public function __construct($structure, $source) {
     $this->structure = $structure;  
     $this->source    = $source;
     $this->id        = $structure->id() . '_' . $structure->field();
 
+    $this->sync();
     $this->init();
   } 
 
@@ -51,6 +53,24 @@ class Store {
 
     $this->data = $data;
     s::set($this->id, $this->data);
+    s::set($this->id . '_age', $this->age);
+
+  }
+
+  /**
+   * Resets store if necessary to stay in sync with content file
+   */
+  public function sync() {
+
+    $ageModel = $this->structure->model()->modified();
+    $ageStore = s::get($this->id() . '_age');
+
+    if($ageStore < $ageModel) {
+      $this->reset();
+      $this->age = $ageModel;
+    } else {
+      $this->age = $ageStore;
+    }
 
   }
 
