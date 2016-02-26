@@ -20,6 +20,7 @@ class Store {
     $this->structure = $structure;  
     $this->source    = $source;
     $this->id        = $structure->id() . '_' . $structure->field();
+    $this->age       = time();
 
     $this->sync();
     $this->init();
