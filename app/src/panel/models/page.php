@@ -471,7 +471,13 @@ class Page extends \Page {
 
       switch($numberSettings->mode()) {
         case 'zero':
-          return str::substr($this->title(), 0, 1);
+          if($numberSettings->display()) {
+            // customer number display
+            return $this->{$numberSettings->display()}();
+          } else {
+            // alphabetic display numbers
+            return str::substr($this->title(), 0, 1);            
+          }
           break;
         case 'date':
           $handler = kirby()->option('date.handler');
