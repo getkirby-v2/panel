@@ -5870,7 +5870,7 @@ var Context = function() {
     if(!i.createTextRange) return i.selectionEnd;
     var r = document.selection.createRange().duplicate();
     r.moveEnd('character', v.length);
-    if(r.text == '') return v.length;
+    if(r.text === '') return v.length;
     return v.lastIndexOf(r.text);
   };
 
@@ -5903,6 +5903,8 @@ var Context = function() {
       element.on('keydown keypress', function(e) {
         if(keys[e.keyCode]) {
           return keys[e.keyCode](e);
+        } else if(keys[e.charCode]) {
+          return keys[e.charCode](e);
         }
       });
     };
@@ -5986,7 +5988,7 @@ var Context = function() {
       }
 
       // react on empty or duplicate tags
-      if(!tag || tag.length == 0 || $.inArray(tag, self.tags) != -1) {
+      if(!tag || tag.length === 0 || $.inArray(tag, self.tags) != -1) {
         return false;
       }
 
@@ -6144,7 +6146,7 @@ var Context = function() {
 
         // add unconfirmed tag on field unfocus
         setTimeout(function() {
-          if(self.element.has($(':focus')).length == 0) {
+          if(self.element.has($(':focus')).length === 0) {
             self.add();
           }
         }, 100);
@@ -6181,7 +6183,7 @@ var Context = function() {
         },
         // tab
         9 : function() {
-          if(self.input.val().length == 0) {
+          if(self.input.val().length === 0) {
             return true;
           } else {
             self.add();
@@ -6190,14 +6192,14 @@ var Context = function() {
         },
         // backspace
         8 : function() {
-          if(self.cursor == 0) {
+          if(self.cursor === 0) {
             self.goto('last');
             return false;
           }
         },
         // left
         37 : function() {
-          if(self.cursor == 0) {
+          if(self.cursor === 0) {
             self.goto('last');
             return false;
           }
@@ -6237,9 +6239,9 @@ var Context = function() {
         remove   : self.remove,
         focus    : self.focus,
         select   : self.select,
-        tags     : function() { return self.tags },
-        elements : function() { return self.elements },
-        input    : function() { return self.input }
+        tags     : function() { return self.tags; },
+        elements : function() { return self.elements; },
+        input    : function() { return self.input; }
       };
 
     };
