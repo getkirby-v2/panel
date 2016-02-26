@@ -469,21 +469,23 @@ class Page extends \Page {
 
       $numberSettings = $this->parent()->blueprint()->pages()->num();
 
-      if($numberSettings->display()) {
-        return $this->{$numberSettings->display()}();
-      } else {
-        switch($numberSettings->mode()) {
-          case 'zero':
-            return str::substr($this->title(), 0, 1);
-            break;
-          case 'date':
-            $handler = kirby()->option('date.handler');
-            return $handler($numberSettings->display(), strtotime($this->num()));
-            break;
-          default:
-            return intval($this->num());
-            break;
-        }
+      switch($numberSettings->mode()) {
+        case 'zero':
+          return str::substr($this->title(), 0, 1);
+          break;
+        case 'date':
+          $handler = kirby()->option('date.handler');
+          return $handler($numberSettings->display(), strtotime($this->num()));
+          break;
+        default:
+          if($numberSettings->display()) {
+            // customer number display
+            return $this->{$numberSettings->display()}();
+          } else {
+            // regular number display
+            return intval($this->num());              
+          }
+          break;
       }
 
     }
