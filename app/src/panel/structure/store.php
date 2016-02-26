@@ -64,7 +64,8 @@ class Store {
    */
   public function sync() {
 
-    $ageModel = f::modified($this->structure->model()->textfile());
+    $file     = $this->structure->model()->textfile();
+    $ageModel = f::exists($file) ? f::modified($file) : 0;
     $ageStore = s::get($this->id() . '_age');
 
     if($ageStore < $ageModel) {
