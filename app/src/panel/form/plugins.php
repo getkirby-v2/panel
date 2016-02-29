@@ -2,7 +2,6 @@
 
 namespace Kirby\Panel\Form;
 
-use A;
 use Dir;
 use F;
 use Kirby\Panel\Form;
@@ -17,7 +16,7 @@ class Plugins {
 
   public function __construct() {
     foreach(kirby()->modules()->fields() as $root) {
-      $this->find($root, 'custom');
+      $this->find('custom', $root);
     }
 
     $this->find('custom');
@@ -25,9 +24,8 @@ class Plugins {
     $this->load();
   }
 
-  public function find($root, $type = null) {
-    if(!$type) {
-      $type = $root;
+  public function find($type, $root = null) {
+    if(is_null($root)) {
       $root = form::$root[$type];
     }
 
