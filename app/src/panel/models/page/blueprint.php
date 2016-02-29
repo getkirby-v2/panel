@@ -59,7 +59,7 @@ class Blueprint extends Obj {
     }
 
     // find the matching blueprint file
-    $file = kirby()->modules()->findFile('blueprints', $name, array('yml', 'php', 'yaml'), static::$root);
+    $file = kirby()->modules()->getFile('blueprints', $name, array('yml', 'php', 'yaml'), static::$root);
 
     if($file) {
 
@@ -92,7 +92,7 @@ class Blueprint extends Obj {
   }
 
   static public function exists($name) {
-    $file = kirby()->modules()->findFile('blueprints', $name, array('yml', 'php', 'yaml'), static::$root);
+    $file = kirby()->modules()->getFile('blueprints', $name, array('yml', 'php', 'yaml'), static::$root);
     return f::exists($file);
   }
 
