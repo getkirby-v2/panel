@@ -57,19 +57,19 @@ class PagesController extends Kirby\Panel\Controllers\Base {
         return $self->alert(l('pages.show.error.form'));
       }
 
-      // filter untranslatable fields
-      $serialized = $form->serialize();
+      $data = $form->serialize();
 
-      if(panel()->site()->language() != panel()->site()->defaultLanguage()) {
+      // filter untranslatable fields
+      if(!panel()->site()->isDefaultLang()) {
         foreach($form->fields() as $field) {
           if($field->translate() == false) {
-            $serialized[$field->name()] = null;
+            $data[$field->name()] = null;
           }
         }
       }
 
       try {
-        $page->update($serialized);
+        $page->update($data);
         $self->notify(':)');
         return $self->redirect($page);
       } catch(Exception $e) {

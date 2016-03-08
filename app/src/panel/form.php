@@ -93,6 +93,9 @@ class Form extends Brick {
 
     foreach($this->fields() as $field) {
 
+      // skip if not default language and untranslatable field
+      if(!panel()->site()->isDefaultLang() and $field->translate() === false) continue;
+
       $name  = $field->name();
       $value = $this->value($name);
 
