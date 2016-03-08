@@ -124,15 +124,12 @@ class FilesController extends Kirby\Panel\Controllers\Base {
     }
 
     if(!$file->canHaveThumb()) {
-      go($file->url());
-    }
-
-    if(get('crop') == true) {
+      $thumb = $file->url();
+    } else if(get('crop') == true) {
       $thumb = $file->crop($width, $height, 80);
     } else {
       $thumb = $file->resize($width, $height, 80);
     }
-
 
     header('Pragma: public');
     header('Cache-Control: max-age=86400, public');
