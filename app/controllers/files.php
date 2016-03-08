@@ -124,7 +124,7 @@ class FilesController extends Kirby\Panel\Controllers\Base {
     }
 
     if(!$file->canHaveThumb()) {
-      $thumb = $file->url();
+      $thumb = $file;
     } else if(get('crop') == true) {
       $thumb = $file->crop($width, $height, 80);
     } else {
