@@ -42,6 +42,13 @@ if(!isset($kirby->roots->thumbs)) {
   $kirby->roots->thumbs = $index . DS . 'thumbs';
 }
 
+// force secure connections if enabled
+$site = $kirby->site();
+if($kirby->option('ssl') and !r::secure()) {
+  // rebuild the current url with https
+  go(url::build(array('scheme' => 'https')));
+}
+
 try {
 
   // create the panel object
