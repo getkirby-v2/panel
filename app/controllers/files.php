@@ -134,7 +134,7 @@ class FilesController extends Kirby\Panel\Controllers\Base {
     header('Pragma: public');
     header('Cache-Control: max-age=86400, public');
     header('Expires: '. gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s", filemtime($thumb->root())) . " \G\M\T");
+    header("Last-Modified: " . gmdate('D, d M Y H:i:s \G\M\T', filemtime($thumb->root())));
 
     return new Response(f::read($thumb->root()), $thumb->extension());
 
