@@ -219,4 +219,8 @@ class Site extends \Site {
     return $this->multilang() ? $this->language()->code() : false;
   }
 
+  public function isDefaultLang() {
+    return $this->multilang() ? $this->language() == $this->defaultLanguage() : true;
+  }
+
 }
