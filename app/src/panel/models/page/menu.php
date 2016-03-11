@@ -93,7 +93,7 @@ class Menu {
 
   public function templateOption() {  
     if($this->page->canChangeTemplate()) {
-      return $this->item('file-code-o', l('pages.show.template') . ': ' . $this->page->blueprint()->title(), array(
+      return $this->item('file-code-o', l('pages.show.template') . ': ' . i18n($this->page->blueprint()->title()), array(
         'href'          => $this->modalUrl('template'),
         'data-modal'    => true,
         'data-shortcut' => 't',
