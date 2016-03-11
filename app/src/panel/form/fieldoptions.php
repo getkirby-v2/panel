@@ -151,9 +151,12 @@ class FieldOptions {
           if($parent = $currentPage->parent()) {
             $currentPage = $parent;
           } else {
-            break;
+            $currentPage = site();
           }
           $path = str::substr($path, 3);
+        }
+        if(!empty($path)) {
+          $currentPage = $currentPage->find($path);
         }
         $page = $currentPage;
       } else {
