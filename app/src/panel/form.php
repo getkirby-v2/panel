@@ -58,6 +58,16 @@ class Form extends Brick {
 
     if(is_null($fields)) return $this->fields;
 
+    // get the site object
+    $site = panel()->site();
+
+    // check if untranslatable fields should be deactivated
+    if($site->multilang() and $site->language() != $site->defaultLanguage()) {
+      $translated = true;
+    } else {
+      $translated = false;
+    }
+
     foreach($fields as $name => $field) {
 
       $name = str_replace('-','_', str::lower($name));
@@ -68,6 +78,12 @@ class Form extends Brick {
 
       // Pass through parent field name (structureField)
       $field['parentField'] = $this->parentField;
+
+      // Check for untranslatable fields
+      if($translated and isset($field['translate']) and $field['translate'] === false) {
+        $field['readonly'] = true;
+        $field['disabled'] = true;
+      }
 
       $this->fields->append($name, static::field($field['type'], $field));
 
@@ -145,11 +161,22 @@ class Form extends Brick {
 
   public function serialize() {
 
-    $data = array();
+    $data   = array();
+    $site   = panel()->site();
+    $fields = $this->fields();
 
-    foreach($this->fields() as $field) {
+    foreach($fields as $field) {
       $result = $field->result();
       if(!is_null($result)) $data[$field->name()] = $result;
+    }
+
+    // unset untranslatable fields in all languages but the default lang
+    if($site->multilang() and $site->language() != $site->defaultLanguage()) {
+      foreach($fields as $field) {
+        if($field->translate() === false) {
+          $data[$field->name()] = null;
+        }
+      }
     }
 
     return $data;
