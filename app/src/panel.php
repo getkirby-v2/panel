@@ -121,6 +121,12 @@ class Panel {
       'custom'  => $this->kirby->roots()->fields()
     );
 
+    // force ssl if set in config 
+    if($this->kirby->option('ssl') and !r::secure()) {
+      // rebuild the current url with https
+      go(url::build(array('scheme' => 'https')));
+    }
+
     // load all available routes
     $this->routes = array_merge($this->routes, require($this->roots->config . DS . 'routes.php'));
 
