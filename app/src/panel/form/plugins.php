@@ -15,14 +15,20 @@ class Plugins {
   public $js      = '';
 
   public function __construct() {
+    foreach(kirby()->modules()->fields() as $root) {
+      $this->find('custom', $root);
+    }
+
     $this->find('custom');
     $this->find('default');
     $this->load();
   }
 
-  public function find($type) {
+  public function find($type, $root = null) {
+    if(is_null($root)) {
+      $root = form::$root[$type];
+    }
 
-    $root = form::$root[$type];
     $dirs = dir::read($root);
 
     foreach($dirs as $dir) {

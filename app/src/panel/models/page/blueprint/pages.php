@@ -22,7 +22,7 @@ class Pages extends Obj {
   public function __construct($params = array()) {
 
     if($params === true) {
-      $this->template = blueprint::all();
+      $this->template = true;
     } else if($params === false) {
       $this->limit    = 0;
       $this->max      = 0;
@@ -31,7 +31,7 @@ class Pages extends Obj {
     } else if(is_array($params)) {
       $template = a::get($params, 'template');
       if($template == false) {
-        $this->template = blueprint::all();
+        $this->template = true;
       } else if(is_array($template)) {
         $this->template = $template;
       } else {
@@ -51,6 +51,10 @@ class Pages extends Obj {
   }
 
   public function template() {
+    if($this->template === true) {
+      $this->template = blueprint::all();
+    }
+
     $result = array();
     foreach($this->template as $t) {
       $result[$t] = new Blueprint($t);
