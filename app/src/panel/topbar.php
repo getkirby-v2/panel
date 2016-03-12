@@ -4,6 +4,7 @@ namespace Kirby\Panel;
 
 use A;
 use Brick;
+use Dir;
 use Exception;
 use S;
 use Str;
@@ -49,7 +50,16 @@ class Topbar {
   }
 
   public function menu() {
-    return new Snippet('menu');
+
+    // prepare entries for custom views
+    $views = array();
+    foreach(dir::read(kirby()->roots()->site() . DS . 'views') as $view) {
+      require_once(kirby()->roots()->site() . DS . 'views' . DS . $view . DS . $view . '.php');
+      $class = $view . 'ViewController';
+      $views[$view] = $class::menu();
+    }
+
+    return new Snippet('menu', compact('views'));
   }
 
   public function breadcrumb() {
