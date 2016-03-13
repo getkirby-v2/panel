@@ -62,7 +62,7 @@ class Form extends Brick {
     $site = panel()->site();
 
     // check if untranslatable fields should be deactivated
-    $translated = $site->multilang() and !$site->language()->default();
+    $translated = $site->multilang() && !$site->language()->default();
 
     foreach($fields as $name => $field) {
 
@@ -79,6 +79,12 @@ class Form extends Brick {
       if($translated and isset($field['translate']) and $field['translate'] === false) {
         $field['readonly'] = true;
         $field['disabled'] = true;
+      }
+
+      // Check for optional translatable fields
+      if($translated and isset($field['translate']) and $field['translate'] === 'optional') {
+        // unset fallback from default language
+        $field['value'] = null;
       }
 
       $this->fields->append($name, static::field($field['type'], $field));
