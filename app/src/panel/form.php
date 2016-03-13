@@ -62,7 +62,7 @@ class Form extends Brick {
     $site = panel()->site();
 
     // check if untranslatable fields should be deactivated
-    $translated = $site->multilang() and !$site->language()->default();
+    $translated = $site->multilang() && !$site->language()->default();
 
     foreach($fields as $name => $field) {
 
