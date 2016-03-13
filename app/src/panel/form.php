@@ -70,7 +70,7 @@ class Form extends Brick {
 
       $field['name']    = $name;
       $field['default'] = a::get($field, 'default', null);
-      $field['value']   = a::get($this->values(), $name, $field['default']);
+      $field['value']   = $this->value($name, $field['default']);
 
       // Pass through parent field name (structureField)
       $field['parentField'] = $this->parentField;
@@ -83,8 +83,17 @@ class Form extends Brick {
 
       // Check for optional translatable fields
       if($translated and isset($field['translate']) and $field['translate'] === 'optional') {
-        // unset fallback from default language
-        $field['value'] = null;
+
+        $currentLang = $site->language()->code();
+        $defaultLang = $site->defaultLanguage()->code();
+
+        $currentValue = $field['page']->content($currentLang)->get($name)->value();
+        $defaultValue = $field['page']->content($defaultLang)->get($name)->value();
+
+        if($field['value'] !== $currentValue and $field['value'] === $defaultValue) {
+          $field['value'] = null;
+        }
+
       }
 
       $this->fields->append($name, static::field($field['type'], $field));
@@ -101,8 +110,8 @@ class Form extends Brick {
     return $this;
   }
 
-  public function value($name) {
-    return a::get($this->values(), $name, null);
+  public function value($name, $default = null) {
+    return a::get($this->values(), $name, $default);
   }
 
   public function validate() {
