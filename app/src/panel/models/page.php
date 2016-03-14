@@ -480,8 +480,7 @@ class Page extends \Page {
           }
           break;
         case 'date':
-          $handler = kirby()->option('date.handler');
-          return $handler($numberSettings->display(), strtotime($this->num()));
+          return $this->date($numberSettings->display(), $numberSettings->field());
           break;
         default:
           if($numberSettings->display()) {
