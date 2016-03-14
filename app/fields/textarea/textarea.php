@@ -40,7 +40,7 @@ class TextareaField extends TextField {
     $input->html($this->value() ? htmlentities($this->value(), ENT_NOQUOTES, 'UTF-8') : false);
     $input->data(array(
       'field' =>  'editor',
-      'tabs'  =>  $this->tabs() ? 'true' : 'false' 
+      'tabs'  =>  $this->tabs() ? $this->tabs() : 'false' 
     ));
 
     return $input;

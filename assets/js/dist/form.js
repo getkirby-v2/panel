@@ -193,11 +193,31 @@
       });
 
       // Catch Tab key and insert it into the textarea
-      if(textarea.data('tabs') === true) {
+      if(textarea.data('tabs') !== false) {
         textarea.bind('keydown', function(e){
           if(e.keyCode === 9) {
-            textarea.insertAtCursor('\t');
-            return false;
+            var tab = '';
+            while(tab.length < textarea.data('tabs')){
+              tab = tab + ' ';
+            }
+
+            // Shift + Tab => outdent
+            if (e.shiftKey) {
+              var pos = textarea.caret();
+              var val = textarea.val();
+              if(val.substring((pos - textarea.data('tabs')), pos) === tab) {
+                val = val.substring(0, (pos - textarea.data('tabs'))) + val.substring(pos);
+                textarea.val(val);
+              }
+              return false;
+
+            // Tab => indent
+            } else if(!e.altKey) {
+              textarea.insertAtCursor(tab);
+              return false;
+            }
+
+            return true;
           }
         });
       }
@@ -206,6 +226,37 @@
 
     });
 
+  };
+
+
+  $.fn.caret = function() {
+    var target = this[0];
+
+    if (target) {
+      if (window.getSelection) {
+        return target.selectionStart;
+      }
+
+      if (document.selection) {
+        target.focus();
+
+        var pos     = 0;
+        var range   = target.createTextRange();
+        var range2  = document.selection.createRange().duplicate();
+        var bookmark = range2.getBookmark();
+        range.moveToBookmark(bookmark);
+        while (range.moveStart('character', -1) !== 0) {
+          pos++;
+        }
+        return pos;
+      }
+
+      if (target.selectionStart) {
+        return target.selectionStart;
+      }
+    }
+    //not supported
+    return;
   };
 
 })(jQuery);
