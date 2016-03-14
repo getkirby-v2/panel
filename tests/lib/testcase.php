@@ -52,6 +52,10 @@ class PanelTestCase extends PHPUnit_Framework_TestCase {
 
     s::restart();
 
+    // clean all triggers
+    kirby::$triggered = array();
+    kirby::$hooks     = array();
+
     $this->removeContent();
     $this->removeAccounts();
     
@@ -60,6 +64,10 @@ class PanelTestCase extends PHPUnit_Framework_TestCase {
   protected function tearDown() {
     
     s::restart();
+
+    // clean all triggers
+    kirby::$triggered = array();
+    kirby::$hooks     = array();
 
     $this->removeContent();
     $this->removeAccounts();

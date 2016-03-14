@@ -51,6 +51,50 @@ class PageModelTest extends PanelTestCase {
 
   }
 
+  public function testUpdateHook() {
+
+    $page      = $this->site->children()->create('test', 'test');
+    $triggered = false;
+
+    kirby()->hook('panel.page.update', function() use(&$triggered) {
+      $triggered = true;
+    });
+
+    // check that the hook has not been triggered yet
+    $this->assertFalse($triggered);
+
+    // update the page content
+    $page->update(array('title' => 'Test Title'));
+
+    // check if the hook has been triggered
+    $this->assertTrue($triggered);
+
+  }
+
+  public function testUpdateHookWithVisiblePage() {
+
+    $page = $this->site->children()->create('test', 'test');
+
+    // make the page visible
+    $page->sort(1);
+
+    $triggered = false;
+
+    kirby()->hook('panel.page.update', function() use(&$triggered) {
+      $triggered = true;
+    });
+
+    // check that the hook has not been triggered yet
+    $this->assertFalse($triggered);
+
+    // update the page content
+    $page->update(array('title' => 'Test Title'));
+
+    // check if the hook has been triggered
+    $this->assertTrue($triggered);
+
+  }
+
   public function testParent() {
 
     $test    = $this->site->children()->create('test', 'test');

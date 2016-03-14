@@ -323,10 +323,17 @@ class Page extends \Page {
       return $this->num();
     }
 
-    $this->sorter()->to($to);
+    // store the old number
+    $oldNum = $this->num();
 
-    // hit the hook
-    kirby()->trigger('panel.page.sort', $this);
+    // run the sorter
+    $this->sorter()->to($to);    
+
+    // run the hook if the number changed
+    if($oldNum != $this->num()) {
+      // hit the hook
+      kirby()->trigger('panel.page.sort', $this);
+    }
 
     return $this->num();
 
@@ -422,10 +429,14 @@ class Page extends \Page {
     
     parent::update($data, $lang);
 
+    // update the number if the date field
+    // changed for example
     $this->updateNum();
-    $this->addToHistory();
 
     kirby()->trigger('panel.page.update', $this);
+
+    // add the page to the history
+    $this->addToHistory();
 
   }
 
