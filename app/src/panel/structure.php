@@ -43,16 +43,19 @@ class Structure {
 
     if(is_a($this->model, 'Page')) {
       $source = $this->model->content()->get($this->field);
+      $decode = true;
     } else if(is_a($this->model, 'File')) {
       $source = $this->model->meta()->get($this->field);
+      $decode = true;
     } else if(is_a($this->model, 'User')) {
       $source = $this->model->{$this->field}();
+      $decode = false;
     } else {
       throw new Exception('Invalid model for structure field: ' . $this->field);
     }
 
-    $this->source = (array)yaml::decode($source);  
-    $this->store  = new Store($this, $this->source());
+    $this->source = $decode ? (array)yaml::decode($source) : (array)$source;  
+    $this->store  = new Store($this, $this->source);
 
     return $this;
 

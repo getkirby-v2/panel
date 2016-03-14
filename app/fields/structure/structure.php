@@ -79,8 +79,18 @@ class StructureField extends BaseField {
     return $this->structure()->data();
   }
 
-  public function result() {
-    return $this->structure()->toYaml();
+  public function result() {  
+    /**
+     * Users store their data as plain yaml. 
+     * So we need this hacky solution to give data 
+     * as an array to the form serializer in case 
+     * of users, in order to not mess up their data
+     */
+    if(is_a($this->model, 'Kirby\\Panel\\Models\\User')) {
+      return $this->structure()->toArray();      
+    } else {
+      return $this->structure()->toYaml();            
+    }
   }
 
   public function entry($data) {
