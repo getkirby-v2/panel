@@ -58,6 +58,9 @@ class Uploader {
     // create the initial meta file
     $file->createMeta();
 
+    // make sure that the file is being marked as updated
+    touch($file->root());
+
     kirby()->trigger('panel.file.upload', $file);          
 
   }
@@ -75,6 +78,9 @@ class Uploader {
     ));
 
     $file = $this->move($upload);
+
+    // make sure that the file is being marked as updated
+    touch($file->root());
 
     kirby()->trigger('panel.file.replace', $file);
 

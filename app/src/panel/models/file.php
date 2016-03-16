@@ -145,7 +145,11 @@ class File extends \File {
   }
 
   public function thumb($width = 400, $height = 266, $crop = false) {
-    return $this->url('thumb') . '?width=' . $width . '&height=' . $height . '&crop=' . $crop;
+    return parent::thumb([
+      'width'  => $width, 
+      'height' => $height,
+      'crop'   => $crop
+    ])->url();
   }
 
   public function icon($position = 'left') {
