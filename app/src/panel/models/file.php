@@ -104,6 +104,9 @@ class File extends \File {
     // rename and get the new filename          
     $filename = parent::rename($name, $safeName);
 
+    // clean the thumbs folder
+    $this->page()->removeThumbs();
+
     // trigger the rename hook
     kirby()->trigger('panel.file.rename', array($this, $old));          
 
@@ -140,8 +143,14 @@ class File extends \File {
   }
 
   public function delete() {
+
     parent::delete();
+
+    // clean the thumbs folder
+    $this->page()->removeThumbs();
+
     kirby()->trigger('panel.file.delete', $this);    
+
   }
 
   public function thumb($width = 400, $height = 266, $crop = false) {

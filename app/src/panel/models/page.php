@@ -3,6 +3,7 @@
 namespace Kirby\Panel\Models;
 
 use C;
+use Dir;
 use Exception;
 use F;
 use Obj;
@@ -304,6 +305,9 @@ class Page extends \Page {
 
     $this->changes()->update($changes);
 
+    // remove all thumbs for the old id
+    $old->removeThumbs();
+
     // hit the hook
     kirby()->trigger('panel.page.move', array($this, $old));
   
@@ -454,6 +458,9 @@ class Page extends \Page {
 
     // remove unsaved changes
     $this->changes()->discard();
+
+    // delete all associated thumbs
+    $this->removeThumbs();
 
     // hit the hook
     kirby()->trigger('panel.page.delete', $this);
@@ -612,6 +619,14 @@ class Page extends \Page {
   public function updateForNewTemplate($oldTemplate, $newTemplate, $language = null) {
     $prep = $this->prepareForNewTemplate($oldTemplate, $newTemplate, $language);
     $this->update($prep['data'], $language);
+  }
+
+  /**
+   * Clean the thumbs folder for the page
+   * 
+   */
+  public function removeThumbs() {
+    return dir::remove($this->kirby()->roots()->thumbs() . DS . $this->id());
   }
 
 }
