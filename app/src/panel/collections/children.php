@@ -109,7 +109,8 @@ class Children extends \Children {
         'page'          => get($var, s::get($id)), 
         'omitFirstPage' => false, 
         'variable'      => $var,
-        'method'        => 'query'
+        'method'        => 'query',
+        'redirect'      => false
       ));
 
       // store the last page
