@@ -72,7 +72,8 @@ class Children extends \Children {
     foreach((array)$page->blueprint()->pages()->build() as $build) {
       $missing = a::missing($build, array('title', 'template', 'uid'));
       if(!empty($missing)) continue;
-      $page->children()->create($build['uid'], $build['template'], array('title' => $build['title']));
+      $subpage = $page->children()->create($build['uid'], $build['template'], array('title' => $build['title']));
+      if(isset($build['num'])) $subpage->sort($build['num']);
     }
 
     return $page;
