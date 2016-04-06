@@ -32,6 +32,11 @@ class User extends \User {
       throw new Exception(l('users.form.error.update.rights'));
     }
 
+    // users which are not an admin cannot change their role
+    if(!panel()->user()->isAdmin()) {
+      unset($data['role']);
+    }
+
     if(str::length(a::get($data, 'password')) > 0) {
       if(a::get($data, 'password') !== a::get($data, 'passwordconfirmation')) {
         throw new Exception(l('users.form.error.password.confirm'));
