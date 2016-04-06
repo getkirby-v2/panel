@@ -98,7 +98,9 @@ class Structure {
       // remove all structure fields within structures
       if($field['type'] == 'structure') {
         unset($fields[$name]);
-
+      // convert title fields to normal text fields
+      } else if($field['type'] == 'title') {
+        $fields[$name]['type'] = 'text';
       // remove invalid buttons from textareas
       } else if($field['type'] == 'textarea') {
         $buttons = a::get($fields[$name], 'buttons');
