@@ -20,10 +20,20 @@
         var url    = option.data('url');
         var thumb  = option.data('thumb');
 
+        if(option.val() == '') {
+          url = '#';
+        }
+
         preview.attr('style', 'background-image: url(' + thumb + ')');
         link.attr('href', url);
 
       }).trigger('change');
+
+      field.find('.input-preview').on('click', function() {
+        if($(this).attr('href') == '#') {
+          return false;
+        }
+      });
 
       field.find('.input').droppable({
         hoverClass: 'over',
