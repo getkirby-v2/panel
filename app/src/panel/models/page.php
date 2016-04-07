@@ -327,6 +327,11 @@ class Page extends \Page {
       return $this->num();
     }
 
+    // don't sort pages without permission to change the status
+    if($this->isInvisible() && !$this->canChangeStatus()) {
+      return false;      
+    }
+
     // store the old number
     $oldNum = $this->num();
 
@@ -348,9 +353,16 @@ class Page extends \Page {
   }
 
   public function hide() {
+
+    // don't hide pages, which are not allowed to change their status
+    if(!$this->canChangeStatus()) {
+      return false;
+    }
+
     parent::hide();
     $this->sorter()->hide();
     kirby()->trigger('panel.page.hide', $this);
+
   }
 
   public function toggle($position) {
