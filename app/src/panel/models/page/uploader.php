@@ -56,7 +56,8 @@ class Uploader {
     $file = $this->move($upload);
 
     // create the initial meta file
-    $file->createMeta();
+    // without triggering the update hook
+    $file->createMeta(false);
 
     // make sure that the file is being marked as updated
     touch($file->root());
