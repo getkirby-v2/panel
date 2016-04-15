@@ -70,6 +70,9 @@ class Uploader {
 
   public function replace() {
 
+    // keep the old state of the file object
+    $old = clone $this->file;
+
     $file   = $this->file;
     $upload = new Upload($file->root(), array(
       'overwrite' => true,
@@ -88,7 +91,7 @@ class Uploader {
     // clean the thumbs folder
     $this->page->removeThumbs();
 
-    kirby()->trigger('panel.file.replace', $file);
+    kirby()->trigger('panel.file.replace', array($file, $old));
 
   }
 
