@@ -114,9 +114,12 @@ class File extends \File {
 
   public function update($data = array(), $sort = null) {  
 
+    // keep the old state of the file object
+    $old = clone $this;
+
     if($data == 'sort') {
       parent::update(array('sort' => $sort));
-      kirby()->trigger('panel.file.sort', $this);
+      kirby()->trigger('panel.file.sort', array($this, $old));
       return true;
     }
 
@@ -134,7 +137,7 @@ class File extends \File {
       parent::update($data);          
     }
 
-    kirby()->trigger('panel.file.update', $this);
+    kirby()->trigger('panel.file.update', array($this, $old));
 
   }
 
