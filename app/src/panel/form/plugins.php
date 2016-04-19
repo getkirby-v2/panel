@@ -88,7 +88,7 @@ class Plugins {
     $output = array();
 
     foreach($files as $filename) {
-      $output[] = f::read(dirname($root) . DS . 'assets' . DS . $type . DS . $filename);
+      $output[] = f::read($root . DS . 'assets' . DS . $type . DS . $filename);
     }
 
     $this->{$type} .= implode(PHP_EOL . PHP_EOL, $output);
