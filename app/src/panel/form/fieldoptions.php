@@ -241,6 +241,16 @@ class FieldOptions {
       case 'archives':
         $items = $page->{$method}();
         break;
+      case 'siteFiles':
+      case 'siteImages':
+      case 'siteDocuments':
+      case 'siteVideos':
+      case 'siteAudio':
+      case 'siteCode':
+      case 'siteArchives':
+        $method = strtolower(substr($method, 4));
+        $items = site()->{$method}();
+        break;
       default:
         $items = new Collection();
     }
