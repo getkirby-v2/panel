@@ -84,6 +84,8 @@ class StructureField extends BaseField {
   }
 
   public function entry($data) {
+    
+    $data->_fileUrl = $this->page->contentUrl() . DS;
 
     if(is_null($this->entry) or !is_string($this->entry)) {
       $html = array();
