@@ -112,7 +112,7 @@ class File extends \File {
 
   }
 
-  public function update($data = array(), $sort = null) {  
+  public function update($data = array(), $sort = null, $trigger = true) {
 
     if($data == 'sort') {
       parent::update(array('sort' => $sort));
@@ -134,7 +134,9 @@ class File extends \File {
       parent::update($data);          
     }
 
-    kirby()->trigger('panel.file.update', $this);
+    if($trigger) {
+      kirby()->trigger('panel.file.update', $this);
+    }
 
   }
 
@@ -230,7 +232,7 @@ class File extends \File {
    
   }
 
-  public function createMeta() {
+  public function createMeta($triggerUpdateHook = true) {
 
     // save default meta 
     $meta = array();
@@ -239,7 +241,7 @@ class File extends \File {
       $meta[$field->name()] = $field->default();
     }
 
-    $this->update($meta);
+    $this->update($meta, null, $triggerUpdateHook);
 
     return $this;
 
