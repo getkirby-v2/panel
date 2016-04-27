@@ -9,12 +9,6 @@ use Kirby\Panel\Form;
 
 class Plugins {
 
-  public $default = array();
-  public $custom  = array();
-  public $classes = array();
-  public $css     = '';
-  public $js      = '';
-
   public function __construct() {
     $this->find();
     $this->load();
@@ -69,38 +63,51 @@ class Plugins {
         call(array($classname, 'setup'));
       }
 
-      if(!isset($classname::$assets)) continue;
-
-      if(isset($classname::$assets['css'])) {
-        $this->assets('css', $field->root(), $classname::$assets['css']);
-      }
-
-      if(isset($classname::$assets['js'])) {
-        $this->assets('js', $field->root(), $classname::$assets['js']);
-      }
-
     }
 
   }
 
-  public function assets($type, $root, $files) {
+  public function assets($type) {
 
-    $output = array();
+    $output      = [];
+    $defaultRoot = panel()->roots()->fields();
 
-    foreach($files as $filename) {
-      $output[] = f::read(dirname($root) . DS . 'assets' . DS . $type . DS . $filename);
+    foreach(kirby()->get('field') as $name => $field) {
+
+      $root = $field->root();
+      $base = dirname($root);
+
+      // only fetch assets for custom fields
+      if($base == $defaultRoot) {
+        continue;
+      }
+
+      $classname = $field->class();
+
+      if(!class_exists($classname)) {
+        throw new Exception('The field class is missing for: ' . $classname);
+      }
+
+      if(!isset($classname::$assets) || !isset($classname::$assets[$type])) {
+        continue;
+      }
+
+      foreach($classname::$assets[$type] as $filename) {
+        $output[] = f::read($field->root() . DS . 'assets' . DS . $type . DS . $filename);
+      }
+
     }
 
-    $this->{$type} .= implode(PHP_EOL . PHP_EOL, $output);
+    return implode(PHP_EOL . PHP_EOL, $output);
 
   }
 
   public function css() {
-    return $this->css;
+    return $this->assets('css');
   }
 
   public function js() {
-    return $this->js;
+    return $this->assets('js');
   }
 
 }
