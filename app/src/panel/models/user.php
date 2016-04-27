@@ -95,8 +95,17 @@ class User extends \User {
 
   }
 
-  public function avatar() {
-    return new Avatar($this, parent::avatar());
+  public function avatar($crop = null) {
+    if($crop === null) {
+      return new Avatar($this);      
+    } else {
+      $avatar = $this->avatar();
+      if($avatar->exists()) {
+        return $avatar->crop($crop);
+      } else {
+        return $avatar;
+      }
+    }
   }
 
   public function isCurrent() {
