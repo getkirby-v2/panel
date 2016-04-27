@@ -101,7 +101,7 @@ class Blueprint extends Obj {
   static public function all() {
 
     $files  = dir::read(static::$root);
-    $result = array();
+    $result = array_keys(kirby()->get('blueprint'));
     $home   = kirby()->option('home', 'home');
     $error  = kirby()->option('error', 'error');
 
