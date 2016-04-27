@@ -51,7 +51,7 @@ class ImageField extends SelectField {
         'value'      => $filename,
         'selected'   => $selected,
         'data-url'   => $image->url('edit'),
-        'data-thumb' => $image->thumb(75, 75, true)
+        'data-thumb' => $image->crop(75)->url()
       ));
     }
 

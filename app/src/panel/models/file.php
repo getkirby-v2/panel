@@ -155,14 +155,6 @@ class File extends \File {
 
   }
 
-  public function thumb($width = 400, $height = 266, $crop = false) {
-    return parent::thumb([
-      'width'  => $width, 
-      'height' => $height,
-      'crop'   => $crop
-    ])->url();
-  }
-
   public function icon($position = 'left') {
 
     switch($this->type()) {
