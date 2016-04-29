@@ -8,9 +8,6 @@ return function($page) {
     $options[$template->name()] = $template->title();
   }
 
-  // sort blueprints by title
-  sort($options);
-
   $form = new Kirby\Panel\Form(array(
     'title' => array(
       'label'        => 'pages.add.title.label',
