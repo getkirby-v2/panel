@@ -24,7 +24,12 @@
           url = '#';
         }
 
-        preview.attr('style', 'background-image: url(' + thumb + ')');
+        if(thumb) {
+          preview.attr('style', 'background-image: url(' + thumb + ')');          
+        } else {
+          preview.attr('style', 'background-image: none');
+        }
+
         link.attr('href', url);
 
       }).trigger('change');

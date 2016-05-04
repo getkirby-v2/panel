@@ -24,7 +24,7 @@ class ImageField extends SelectField {
     $figure = new Brick('figure');
 
     if($image = $this->image()) {
-      $figure->attr('style', 'background-image: url(' . $image->url() . ')');      
+      $figure->attr('style', 'background-image: url(' . $image->crop(75)->url() . ')');      
       $url = $image->url('edit');
     } else {
       $figure->attr('style', 'background-image: url(' . $this->value() . ')');      
