@@ -20,7 +20,7 @@
         var url    = option.data('url');
         var thumb  = option.data('thumb');
 
-        if(option.val() == '') {
+        if(option.val() === '') {
           url = '#';
         }
 
