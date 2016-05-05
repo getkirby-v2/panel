@@ -1,4 +1,4 @@
-<?php if(!empty($replacded) or !empty($added) or !empty($removed)): ?>
+<?php if(!empty($replaced) || !empty($added) || !empty($removed)): ?>
 <div class="text">
   <p><?php echo l('pages.template.warning.text') ?></p>
 
