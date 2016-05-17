@@ -474,14 +474,17 @@ class Panel {
       $key = null;
     }
 
-    $localhosts = array('::1', '127.0.0.1', '0.0.0.0');
-
     return new Obj(array(
       'key'   => $key,
-      'local' => (in_array(server::get('SERVER_ADDR'), $localhosts) or server::get('SERVER_NAME') == 'localhost'),
+      'local' => $this->isLocal(),
       'type'  => $type,
     ));
 
+  }
+
+  public function isLocal() {
+    $localhosts = array('::1', '127.0.0.1', '0.0.0.0');
+    return (in_array(server::get('SERVER_ADDR'), $localhosts) || server::get('SERVER_NAME') == 'localhost');
   }
 
   public function notify($text) {
