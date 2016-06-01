@@ -359,7 +359,7 @@ class Panel {
   }
 
   public function direction() {
-    return $this->translation->direction();
+    return $this->translation()->direction();
   }
 
   public function launch($path = null) {
