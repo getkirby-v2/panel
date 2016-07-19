@@ -111,12 +111,12 @@ class Panel {
     // load the current translation
     $this->translation()->load();
 
-    // setup the multilang site stuff
-    $this->multilang();
-
     // load all Kirby extensions (methods, tags, smartypants)
     $this->kirby->extensions();
     $this->kirby->plugins();
+
+    // setup the multilang site stuff
+    $this->multilang();
 
     // setup the form plugin
     form::$root = array(
