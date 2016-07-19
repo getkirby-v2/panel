@@ -108,6 +108,9 @@ class Panel {
     // setup the session
     $this->session();
 
+    // load the current translation
+    $this->translation()->load();
+
     // setup the multilang site stuff
     $this->multilang();
 
@@ -366,9 +369,6 @@ class Panel {
 
     // set the timezone for all date functions
     date_default_timezone_set($this->kirby->options['timezone']);
-
-    // load the current translation
-    $this->translation()->load();
 
     $this->path  = $this->kirby->path();
     $this->route = $this->router->run($this->path);
