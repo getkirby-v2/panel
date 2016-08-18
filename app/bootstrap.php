@@ -23,6 +23,7 @@ load(array(
   'kirby\\panel\\structure'                        => 'panel' . DS . 'structure.php',
   'kirby\\panel\\structure\\store'                 => 'panel' . DS . 'structure' . DS . 'store.php',
   'kirby\\panel\\upload'                           => 'panel' . DS . 'upload.php',
+  'kirby\\panel\\event'                            => 'panel' . DS . 'event.php',
   
   // controllers
   'kirby\\panel\\controllers\\base'                => 'panel' . DS . 'controllers' . DS . 'base.php',
