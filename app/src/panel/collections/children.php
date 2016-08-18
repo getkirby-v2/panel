@@ -7,6 +7,7 @@ use S;
 use Str;
 use Exception;
 
+use Kirby\Panel\Event;
 use Kirby\Panel\Models\Page;
 use Kirby\Panel\Models\Page\Blueprint;
 
@@ -59,6 +60,11 @@ class Children extends \Children {
 
     $data = array_merge($data, $content);
 
+    $event = new Event('panel.page.create', [
+      'template' => $template,
+      'parent' => $this->page
+    ]);
+
     // create the new page and convert it to a page model
     $page = new Page($this->page, parent::create($uid, $template, $data)->dirname());
 
@@ -66,7 +72,7 @@ class Children extends \Children {
       throw new Exception(l('pages.add.error.create'));
     }
 
-    kirby()->trigger('panel.page.create', $page);
+    kirby()->trigger($event, $page);
 
     // subpage builder
     foreach((array)$page->blueprint()->pages()->build() as $build) {

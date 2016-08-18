@@ -3,6 +3,7 @@
 namespace Kirby\Panel\Models;
 
 use C;
+use Kirby\Panel\Event;
 use Kirby\Panel\Structure;
 use Kirby\Panel\Models\File\Menu;
 use Kirby\Panel\Models\Page\Uploader;
@@ -98,6 +99,8 @@ class File extends \File {
 
     if($name == $this->name()) return true;
 
+    $event = new Event('panel.file.rename');
+
     // check if the name should be sanitized
     $safeName = $this->page()->blueprint()->files()->sanitize();
 
@@ -108,7 +111,7 @@ class File extends \File {
     $this->page()->removeThumbs();
 
     // trigger the rename hook
-    kirby()->trigger('panel.file.rename', array($this, $old));          
+    kirby()->trigger($event, array($this, $old));          
 
   }
 
@@ -118,10 +121,14 @@ class File extends \File {
     $old = clone $this;
 
     if($data == 'sort') {
+      $event = new Event('panel.file.sort');
+
       parent::update(array('sort' => $sort));
-      kirby()->trigger('panel.file.sort', array($this, $old));
+      kirby()->trigger($event, array($this, $old));
       return true;
     }
+
+    $event = new Event('panel.file.update');
 
     // rename the file if necessary
     if(!empty($data['_name'])) {
@@ -138,7 +145,7 @@ class File extends \File {
     }
 
     if($trigger) {
-      kirby()->trigger('panel.file.update', array($this, $old));
+      kirby()->trigger($event, array($this, $old));
     }
 
   }
@@ -149,12 +156,14 @@ class File extends \File {
 
   public function delete() {
 
+    $event = new Event('panel.file.delete');
+
     parent::delete();
 
     // clean the thumbs folder
     $this->page()->removeThumbs();
 
-    kirby()->trigger('panel.file.delete', $this);    
+    kirby()->trigger($event, $this);    
 
   }
 

@@ -6,6 +6,7 @@ use A;
 use Exception;
 use Str;
 
+use Kirby\Panel\Event;
 use Kirby\Panel\Structure;
 use Kirby\Panel\Models\User\Avatar;
 use Kirby\Panel\Models\User\Blueprint;
@@ -55,13 +56,15 @@ class User extends \User {
       throw new Exception(l('user.error.lastadmin'));
     }
 
+    $event = new Event('panel.user.update');
+
     parent::update($data);
 
     // flush the cache in case if the user data is 
     // used somewhere on the site (i.e. for profiles)
     kirby()->cache()->flush();
 
-    kirby()->trigger('panel.user.update', array($this, $old));
+    kirby()->trigger($event, array($this, $old));
 
     return $this;
 
@@ -88,13 +91,15 @@ class User extends \User {
       throw new Exception(l('users.delete.error.lastadmin'));
     }
 
+    $event = new Event('panel.user.delete');
+
     parent::delete();
 
     // flush the cache in case if the user data is 
     // used somewhere on the site (i.e. for profiles)
     kirby()->cache()->flush();
 
-    kirby()->trigger('panel.user.delete', $this);
+    kirby()->trigger($event, $this);
 
   }
 

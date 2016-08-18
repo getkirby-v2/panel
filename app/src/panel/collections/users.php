@@ -3,6 +3,7 @@
 namespace Kirby\Panel\Collections;
 
 use Exception;
+use Kirby\Panel\Event;
 use Kirby\Panel\Models\User;
 
 class Users extends \Users {
@@ -29,8 +30,10 @@ class Users extends \Users {
 
     unset($data['passwordconfirmation']);
 
+    $event = new Event('panel.user.create');
+
     $user = parent::create($data);
-    kirby()->trigger('panel.user.create', $user);
+    kirby()->trigger($event, $user);
     return new User($user->username());
 
   }
