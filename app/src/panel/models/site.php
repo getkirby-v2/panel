@@ -4,6 +4,7 @@ namespace Kirby\Panel\Models;
 
 use Exception;
 use Kirby;
+use Kirby\Panel\Event;
 use Kirby\Panel\Snippet;
 use Kirby\Panel\Structure;
 use Kirby\Panel\Topbar;
@@ -106,11 +107,15 @@ class Site extends \Site {
 
     $data = $this->filterInput($input);
 
+    $event = new Event('panel.site.update', [
+      'language' => $lang
+    ]);
+
     $this->changes()->discard();
 
     parent::update($data, $lang);
 
-    kirby()->trigger('panel.site.update', array($this, $old));
+    kirby()->trigger($event, array($this, $old));
 
   }
 

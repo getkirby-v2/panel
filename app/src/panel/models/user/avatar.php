@@ -7,6 +7,7 @@ use Exception;
 use Error;
 use Thumb;
 
+use Kirby\Panel\Event;
 use Kirby\Panel\Upload;
 use Kirby\Panel\Models\User;
 
@@ -35,6 +36,10 @@ class Avatar extends \Avatar {
 
     $root = $this->exists() ? $this->root() : $this->user->avatarRoot('{safeExtension}');
 
+    $event = new Event('panel.avatar.upload', [
+      'forUser' => $this->user
+    ]);
+
     $upload = new Upload($root, array(
       'accept' => function($upload) {
         if($upload->type() != 'image') {
@@ -51,7 +56,7 @@ class Avatar extends \Avatar {
     // used somewhere on the site (i.e. for profiles)
     kirby()->cache()->flush();
 
-    kirby()->trigger('panel.avatar.upload', $this);
+    kirby()->trigger($event, $this);
 
   }
 
@@ -63,6 +68,8 @@ class Avatar extends \Avatar {
       return true;
     }
 
+    $event = new Event('panel.avatar.delete');
+
     if(!parent::delete()) {
       throw new Exception(l('users.avatar.delete.error'));
     } 
@@ -71,7 +78,7 @@ class Avatar extends \Avatar {
     // used somewhere on the site (i.e. for profiles)
     kirby()->cache()->flush();
 
-    kirby()->trigger('panel.avatar.delete', $this);
+    kirby()->trigger($event, $this);
 
   }
 

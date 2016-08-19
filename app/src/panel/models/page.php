@@ -11,6 +11,7 @@ use S;
 use Str;
 use V;
 
+use Kirby\Panel\Event;
 use Kirby\Panel\Snippet;
 use Kirby\Panel\Topbar;
 use Kirby\Panel\Structure;
@@ -294,6 +295,8 @@ class Page extends \Page {
     $site    = panel()->site();
     $changes = $this->changes()->get();
 
+    $event = new Event('panel.page.move');
+
     $this->changes()->discard();
 
     if($site->multilang() and $site->language()->code() != $site->defaultLanguage()->code()) {
@@ -310,7 +313,7 @@ class Page extends \Page {
     $old->removeThumbs();
 
     // hit the hook
-    kirby()->trigger('panel.page.move', array($this, $old));
+    kirby()->trigger($event, array($this, $old));
   
   }
 
@@ -336,13 +339,15 @@ class Page extends \Page {
       return false;      
     }
 
+    $event = new Event('panel.page.sort');
+
     // run the sorter
     $this->sorter()->to($to);    
 
     // run the hook if the number changed
     if($old->num() != $this->num()) {
       // hit the hook
-      kirby()->trigger('panel.page.sort', array($this, $old));
+      kirby()->trigger($event, array($this, $old));
     }
 
     return $this->num();
@@ -363,9 +368,11 @@ class Page extends \Page {
       return false;
     }
 
+    $event = new Event('panel.page.hide');
+
     parent::hide();
     $this->sorter()->hide();
-    kirby()->trigger('panel.page.hide', array($this, $old));
+    kirby()->trigger($event, array($this, $old));
 
   }
 
@@ -448,6 +455,10 @@ class Page extends \Page {
     // keep the old state of the page object
     $old = clone $this;
 
+    $event = new Event('panel.page.update', [
+      'language' => $lang
+    ]);
+
     $this->changes()->discard();
     
     parent::update($data, $lang);
@@ -456,7 +467,7 @@ class Page extends \Page {
     // changed for example
     $this->updateNum();
 
-    kirby()->trigger('panel.page.update', array($this, $old));
+    kirby()->trigger($event, array($this, $old));
 
     // add the page to the history
     $this->addToHistory();
@@ -468,6 +479,8 @@ class Page extends \Page {
   }
 
   public function delete($force = false) {
+
+    $event = new Event('panel.page.delete');
 
     // delete the page
     parent::delete();
@@ -482,7 +495,7 @@ class Page extends \Page {
     $this->removeThumbs();
 
     // hit the hook
-    kirby()->trigger('panel.page.delete', $this);
+    kirby()->trigger($event, $this);
 
   }
 

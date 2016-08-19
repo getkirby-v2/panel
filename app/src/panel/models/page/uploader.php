@@ -6,6 +6,7 @@ use Error;
 use Exception;
 use F;
 use Str;
+use Kirby\Panel\Event;
 use Kirby\Panel\Upload;
 
 class Uploader {
@@ -38,6 +39,10 @@ class Uploader {
       throw new Exception(l('files.add.error.max'));
     }
 
+    $event = new Event('panel.file.upload', [
+      'page' => $this->page
+    ]);
+
     $upload = new Upload($this->page->root() . DS . $this->filename, array(
       'overwrite' => true,
       'accept'    => function($file) {
@@ -65,7 +70,7 @@ class Uploader {
     // clean the thumbs folder
     $this->page->removeThumbs();
 
-    kirby()->trigger('panel.file.upload', $file);          
+    kirby()->trigger($event, $file);          
 
   }
 
@@ -75,7 +80,9 @@ class Uploader {
     
     // keep the old state of the file object
     $old = clone $file;
-    
+
+    $event = new Event('panel.file.replace');
+
     $upload = new Upload($file->root(), array(
       'overwrite' => true,
       'accept' => function($upload) use($file) {
@@ -93,7 +100,7 @@ class Uploader {
     // clean the thumbs folder
     $this->page->removeThumbs();
 
-    kirby()->trigger('panel.file.replace', array($file, $old));
+    kirby()->trigger($event, array($file, $old));
 
   }
 
