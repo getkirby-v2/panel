@@ -556,4 +556,19 @@ class Panel {
 
   }
 
+  public function __debuginfo() {
+    return [
+      'version'      => $this->version(),
+      'license'      => $this->license(),
+      'roots'        => $this->roots(),
+      'urls'         => $this->urls(),
+      'csrf'         => $this->csrf(),
+      'translations' => $this->translations()->keys(),
+      'translation'  => $this->translation(),
+      'routes'       => $this->routes(),
+      'kirby'        => $this->kirby(),
+      'site'         => $this->site(),
+    ];
+  }
+
 }
