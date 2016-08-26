@@ -182,10 +182,6 @@ class Page extends \Page {
     return new Children($this);
   }
 
-  public function canSortFiles() {
-    return $this->blueprint()->files()->sortable();
-  }
-
   public function files() {
     return new Files($this);
   }
@@ -227,18 +223,6 @@ class Page extends \Page {
     return $this->maxSubpages() !== 0;
   }
 
-  public function canShowSubpages() {
-    return ($this->blueprint()->pages()->hide() !== true and $this->canHaveSubpages());    
-  }
-
-  public function canHaveFiles() {
-    return $this->maxFiles() !== 0;
-  }
-
-  public function canShowFiles() {
-    return ($this->blueprint()->files()->hide() !== true and $this->canHaveFiles());    
-  }
-
   public function canHaveMoreSubpages() {
     if(!$this->canHaveSubpages()) {
       return false;
@@ -249,6 +233,14 @@ class Page extends \Page {
     }
   }
 
+  public function canShowSubpages() {
+    return ($this->blueprint()->pages()->hide() !== true and $this->canHaveSubpages());    
+  }
+
+  public function canHaveFiles() {
+    return $this->maxFiles() !== 0;
+  }
+
   public function canHaveMoreFiles() {
     if(!$this->canHaveFiles()) {
       return false;
@@ -257,6 +249,14 @@ class Page extends \Page {
     } else {
       return true;
     }    
+  }
+
+  public function canShowFiles() {
+    return ($this->blueprint()->files()->hide() !== true and $this->canHaveFiles());    
+  }
+
+  public function canSortFiles() {
+    return $this->blueprint()->files()->sortable();
   }
 
   public function canShowPreview() {
@@ -659,6 +659,31 @@ class Page extends \Page {
    */
   public function removeThumbs() {
     return dir::remove($this->kirby()->roots()->thumbs() . DS . $this->id());
+  }
+
+
+  public function __debuginfo() {
+
+    return array_merge(parent::__debuginfo(), [
+      'blueprint'           => (string)$this->blueprint(),
+      'maxSubpages'         => $this->maxSubpages(),
+      'maxFiles'            => $this->maxFiles(),
+      'canHaveSubpages'     => $this->canHaveSubpages(),
+      'canHaveMoreSubpages' => $this->canHaveMoreSubpages(),
+      'canShowSubpages'     => $this->canShowSubpages(),
+      'canHaveFiles'        => $this->canHaveFiles(),
+      'canHaveMoreFiles'    => $this->canHaveMoreFiles(),
+      'canShowFiles'        => $this->canShowFiles(),
+      'canShowPreview'      => $this->canShowPreview(),
+      'canChangeStatus'     => $this->canChangeStatus(),
+      'canChangeUrl'        => $this->canChangeUrl(),
+      'canChangeTemplate'   => $this->canChangeTemplate(),
+      'hasNoTitleField'     => $this->hasNoTitleField(),
+      'isHidden'            => $this->isHidden(),
+      'isDeletable'         => $this->isDeletable(),
+      'displayNum'          => $this->displayNum(),
+    ]);
+
   }
 
 }
