@@ -202,7 +202,7 @@ class Panel {
     if(!is_null($this->csrf)) return $this->csrf;
 
     // see if there's a token in the session
-    $token = s::get('csrf');
+    $token = s::get('kirby_panel_csrf');
 
     // create a new csrf token if not available yet
     if(str::length($token) !== 32) {
@@ -210,7 +210,7 @@ class Panel {
     } 
 
     // store the new token in the session
-    s::set('csrf', $token);
+    s::set('kirby_panel_csrf', $token);
 
     // create a new csrf token
     return $this->csrf = $token;
@@ -221,7 +221,7 @@ class Panel {
 
     $csrf = get('csrf');
 
-    if(empty($csrf) or $csrf !== s::get('csrf')) {        
+    if(empty($csrf) or $csrf !== s::get('kirby_panel_csrf')) {        
   
       try {
         $this->user()->logout();
@@ -254,7 +254,7 @@ class Panel {
 
     if(!$this->site->multilang()) {
       $language = null;
-    } else if($language = get('language') or $language = s::get('lang')) {
+    } else if($language = get('language') or $language = s::get('kirby_panel_lang')) {
       // $language is already set
     } else {
       $language = null;
@@ -268,7 +268,7 @@ class Panel {
 
     // store the language code
     if($this->site->multilang()) {
-      s::set('lang', $this->site->language()->code());      
+      s::set('kirby_panel_lang', $this->site->language()->code());      
     }
 
   }
@@ -488,14 +488,14 @@ class Panel {
   }
 
   public function notify($text) {
-    s::set('message', array(
+    s::set('kirby_panel_message', array(
       'type' => 'notification', 
       'text' => $text,
     ));
   }
 
   public function alert($text) {
-    s::set('message', array(
+    s::set('kirby_panel_message', array(
       'type' => 'error', 
       'text' => $text,
     ));

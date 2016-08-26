@@ -94,15 +94,15 @@ class Children extends \Children {
 
       switch($mode) {
         case 'sidebar':
-          $id  = 'pages.' . $hash;
+          $id  = 'kirby_panel_pages_' . $hash;
           $var = 'page';
           break;
         case 'subpages/visible':
-          $id  = 'subpages.visible.' . $hash;
+          $id  = 'kirby_panel_subpages_visible_' . $hash;
           $var = 'visible';
           break;
         case 'subpages/invisible':
-          $id  = 'subpages.invisible.' . $hash;
+          $id  = 'kirby_panel_subpages_invisible_' . $hash;
           $var = 'invisible';
           break;
       }
