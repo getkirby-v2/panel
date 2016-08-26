@@ -156,4 +156,14 @@ class User extends \User {
     }
   }
 
+  public function __debuginfo() {
+
+    return array_merge(parent::__debuginfo(), [
+      'blueprint'   => (string)$this->blueprint(),
+      'isLastAdmin' => $this->isLastAdmin(),
+      'history'     => $this->history(),
+    ]);
+
+  }
+
 }

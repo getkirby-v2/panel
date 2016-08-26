@@ -661,7 +661,6 @@ class Page extends \Page {
     return dir::remove($this->kirby()->roots()->thumbs() . DS . $this->id());
   }
 
-
   public function __debuginfo() {
 
     return array_merge(parent::__debuginfo(), [

@@ -73,11 +73,6 @@ class File extends \File {
     return $this->isWebImage() or $this->extension() == 'svg';    
   }  
 
-  public function isWebImage() {
-    $images = array('image/jpeg', 'image/gif', 'image/png');
-    return in_array($this->mime(), $images);
-  }
-
   public function canHaveThumb() {
     if(!$this->isWebImage()) {
       return false;
@@ -90,6 +85,11 @@ class File extends \File {
     } else {
       return true;      
     }
+  }
+
+  public function isWebImage() {
+    $images = array('image/jpeg', 'image/gif', 'image/png');
+    return in_array($this->mime(), $images);
   }
 
   public function rename($name, $safeName = true) {
@@ -257,6 +257,17 @@ class File extends \File {
 
   public function structure() {
     return new Structure($this, 'file_' . $this->page()->id() . '_' . $this->filename() . '_' . $this->site()->lang());
+  }
+
+  public function __debuginfo() {
+
+    return array_merge(parent::__debuginfo(), [
+      'blueprint'      => (string)$this->blueprint(),
+      'canHavePreview' => $this->canHavePreview(),
+      'canHaveThumb'   => $this->canHaveThumb(),
+      'isWebImage'     => $this->isWebImage(),
+    ]);
+
   }
 
 }
