@@ -460,8 +460,16 @@ textarea.input {
   margin-bottom: .5em;
 }
 .input-list-item .input {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.input-list-item .input span {
+  position: absolute;
   white-space: nowrap;
   overflow: hidden;
+  left: 2.5rem;
+  right: 1rem;
   text-overflow: ellipsis;
 }
 
