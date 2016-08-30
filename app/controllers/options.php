@@ -9,15 +9,20 @@ class OptionsController extends Kirby\Panel\Controllers\Base {
     $sidebar = $site->sidebar();
     $form    = $site->form('edit', function($form) use($site, $self) {
       
-      // validate all fields
-      $form->validate();
-
-      // stop at invalid fields
-      if(!$form->isValid()) {
-        return $self->alert(l('pages.show.error.form'));
-      }
-
       try {
+
+        // check for permissions
+        $event = new Event('panel.site.update');
+        $event->checkPermissions([$site], true);
+
+        // validate all fields
+        $form->validate();
+
+        // stop at invalid fields
+        if(!$form->isValid()) {
+          throw new Exception(l('pages.show.error.form'));
+        }
+
         $site->update($form->serialize());
         $self->notify(':)');
         return $self->redirect('options');

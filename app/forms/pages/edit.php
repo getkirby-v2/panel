@@ -42,7 +42,7 @@ return function($page) {
   }
 
   // build the update event 
-  $event = new Event('panel.page.update');
+  $event = new Event('panel.' . r($page->isSite(), 'site', 'page') . '.update');    
 
   // check for update permissions
   if(!$event->checkPermissions($page)) {
