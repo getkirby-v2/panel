@@ -270,8 +270,7 @@ class Page extends \Page {
     } else if($this->blueprint()->options()->status() === false) {
       return false;
     } else {
-      $event = new Event('panel.page.hide');
-      return $event->checkPermissions($this);
+      return true;
     }
 
   }
@@ -378,6 +377,7 @@ class Page extends \Page {
     }
 
     $event = new Event('panel.page.hide');
+    $event->checkPermissions([$this], true);
 
     parent::hide();
     $this->sorter()->hide();
