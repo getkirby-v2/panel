@@ -1,5 +1,7 @@
 <?php
 
+use Kirby\Panel\Event;
+
 return function($user) {
 
   $mode         = $user ? 'edit' : 'add';
@@ -112,6 +114,20 @@ return function($user) {
 
   if($mode == 'add') {
     $form->buttons->submit->value = l('add');
+  }
+
+  $event = new Event('panel.user.update');
+
+  if(!$event->checkPermissions($user)) {
+
+    foreach($form->fields as $field) {
+      $field->readonly = true;
+    }
+
+    $form->centered = true;
+    $form->buttons->submit = '';
+    $form->buttons->cancel = '';
+
   }
 
   return $form;

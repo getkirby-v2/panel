@@ -63,7 +63,7 @@ class UsersController extends Kirby\Panel\Controllers\Base {
     $self = $this;
     $user = $this->user($username);
 
-    if(!panel()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!$user->canBeUpdated()) {
       $this->redirect('users');
     }
 

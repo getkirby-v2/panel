@@ -29,6 +29,10 @@ class User extends \User {
 
   public function update($data = array()) {
 
+    // check for permissions
+    $event = new Event('panel.user.update');
+    $event->checkPermissions([$this], true);
+
     // keep the old state of the user object
     $old = clone $this;
 
@@ -154,6 +158,16 @@ class User extends \User {
     } else {
       return null;
     }
+  }
+
+  public function canBeUpdated() {
+    $event = new Event('panel.user.update');
+    return $event->checkPermissions($this);
+  }
+
+  public function canBeDeleted() {
+    $event = new Event('panel.user.delete');
+    return $event->checkPermissions($this);    
   }
 
   public function __debuginfo() {

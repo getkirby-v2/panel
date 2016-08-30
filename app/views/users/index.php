@@ -33,24 +33,29 @@
           </a>
         </div>
       </div>
-      <?php if($admin or $user->isCurrent()): ?>
       <nav class="item-options">
 
         <ul class="nav nav-bar">
+          
+          <?php if($user->canBeUpdated()): ?>
           <li>
             <a class="btn btn-with-icon" href="<?php __($user->url('edit')) ?>">
               <?php i('pencil', 'left') . _l('users.index.edit') ?>
             </a>
           </li>
+          <?php endif ?>
+
+          <?php if($user->canBeDeleted()): ?>
           <li>
             <a data-modal class="btn btn-with-icon" href="<?php __($user->url('delete')) ?>">
               <?php i('trash-o', 'left') . _l('users.index.delete') ?>
             </a>
           </li>
+          <?php endif ?>
+
         </ul>
 
       </nav>
-      <?php endif ?>
     </div>
     <?php endforeach ?>
   </div>
