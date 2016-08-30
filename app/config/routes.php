@@ -259,6 +259,13 @@ return array(
     'method'  => 'POST|GET'
   ),
 
+  // Custom views
+  array(
+    'pattern' => 'view/(:any)',
+    'action'  => 'ViewsController::index',
+    'filter'  => 'auth'
+  ),
+
   // Avatars
   array(
     'pattern' => 'users/(:any)/avatar',

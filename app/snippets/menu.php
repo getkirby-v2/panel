@@ -19,6 +19,13 @@
         <?php i('user', 'left') . _l('users') ?>
       </a>
     </li>
+    <?php foreach($views as $view => $label) : ?>
+      <li>
+        <a href="<?php _u('view/' . $view) ?>">
+          <?= $label ?>
+        </a>
+      </li>
+    <?php endforeach ?>
     <li>
       <a href="<?php echo panel()->urls()->logout() ?>" target="_self">
         <?php i('power-off', 'left') . _l('logout') ?>
