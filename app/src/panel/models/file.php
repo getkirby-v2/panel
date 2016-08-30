@@ -122,7 +122,9 @@ class File extends \File {
     $old = clone $this;
 
     if($data == 'sort') {
-      $event = new Event('panel.file.sort');
+
+      $event = new Event('panel.file.sort', ['page' => $this->page()]);
+      $event->checkPermissions([$this], true);
 
       parent::update(array('sort' => $sort));
       kirby()->trigger($event, array($this, $old));
