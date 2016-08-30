@@ -24,13 +24,14 @@ class Users extends \Users {
 
   public function create($data) {
 
+    $event = new Event('panel.user.create');
+    $event->checkPermissions([], true);
+
     if($data['password'] !== $data['passwordconfirmation']) {
       throw new Exception(l('users.form.error.password.confirm'));
     }
 
     unset($data['passwordconfirmation']);
-
-    $event = new Event('panel.user.create');
 
     $user = parent::create($data);
     kirby()->trigger($event, $user);

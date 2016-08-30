@@ -160,6 +160,11 @@ class User extends \User {
     }
   }
 
+  public function canAddUsers() {
+    $event = new Event('panel.user.create');
+    return $event->checkPermissions($this);    
+  }
+
   public function canBeUpdated() {
     $event = new Event('panel.user.update');
     return $event->checkPermissions($this);

@@ -116,7 +116,7 @@ return function($user) {
     $form->buttons->submit->value = l('add');
   }
 
-  $event = new Event('panel.user.update');
+  $event = new Event('panel.user.' . r($mode === 'add', 'create', 'update'));
 
   if(!$event->checkPermissions($user)) {
 

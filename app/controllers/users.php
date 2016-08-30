@@ -24,7 +24,7 @@ class UsersController extends Kirby\Panel\Controllers\Base {
 
   public function add() {
 
-    if(!panel()->user()->isAdmin()) {
+    if(!panel()->user()->canAddUsers()) {
       $this->redirect('users');
     }
 
