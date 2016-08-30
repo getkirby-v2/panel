@@ -237,7 +237,7 @@ class Page extends \Page {
     return ($this->blueprint()->pages()->hide() !== true and $this->canHaveSubpages());    
   }
 
-  public function canHaveFiles() {
+  public function canHaveFiles() {  
     return $this->maxFiles() !== 0;
   }
 
@@ -247,7 +247,8 @@ class Page extends \Page {
     } else if($this->files()->count() >= $this->maxFiles()) {
       return false;
     } else {
-      return true;
+      $event = new Event('panel.file.upload', ['page' => $this]);
+      return $event->checkPermissions($this);
     }    
   }
 
