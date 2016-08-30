@@ -61,8 +61,11 @@ class Children extends \Children {
     $data = array_merge($data, $content);
 
     $event = new Event('panel.page.create', [
-      'template' => $template,
-      'parent' => $this->page
+      'parent'    => $this->page,
+      'template'  => $template,
+      'blueprint' => $blueprint,
+      'uid'       => $uid,
+      'data'      => $data
     ]);
 
     // create the new page and convert it to a page model
