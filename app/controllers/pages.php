@@ -53,10 +53,6 @@ class PagesController extends Kirby\Panel\Controllers\Base {
       
       try {
 
-        // check for permissions
-        $event = new Event('panel.page.update');
-        $event->checkPermissions([$page], true);
-
         // validate all fields
         $form->validate();
 

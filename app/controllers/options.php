@@ -11,10 +11,6 @@ class OptionsController extends Kirby\Panel\Controllers\Base {
       
       try {
 
-        // check for permissions
-        $event = new Event('panel.site.update');
-        $event->checkPermissions([$site], true);
-
         // validate all fields
         $form->validate();
 

@@ -102,6 +102,10 @@ class Site extends \Site {
 
   public function update($input = array(), $lang = null) {
 
+    // check for permissions
+    $event = new Event('panel.site.update');
+    $event->checkPermissions([$this], true);
+
     // keep the old state of the site object
     $old = clone $this;
 

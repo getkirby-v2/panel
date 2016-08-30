@@ -494,12 +494,12 @@ class Page extends \Page {
 
   public function update($data = array(), $lang = null) {
 
+    // check for permissions
+    $event = new Event('panel.page.update');
+    $event->checkPermissions([$this], true);
+
     // keep the old state of the page object
     $old = clone $this;
-
-    $event = new Event('panel.page.update', [
-      'language' => $lang
-    ]);
 
     $this->changes()->discard();
     
