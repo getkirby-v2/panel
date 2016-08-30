@@ -271,20 +271,27 @@ class Page extends \Page {
       return false;
     } else if($this->isInvisible()) {
       $event = new Event('panel.page.sort');
-      return $event->checkPermissions([$this]);
+      return $event->checkPermissions($this);
     } else {
       $event = new Event('panel.page.hide');
-      return $event->checkPermissions([$this]);
+      return $event->checkPermissions($this);
     }
 
   }
 
   public function canChangeUrl() {
-    if($this->isHomePage() or $this->isErrorPage() or $this->blueprint()->options()->url() === false) {
+
+    if($this->isHomePage()) {
+      return false;
+    } else if($this->isErrorPage()) {
+      return false;
+    } else if($this->blueprint()->options()->url() === false) {
       return false;
     } else {
-      return true;
+      $event = new Event('panel.page.move');
+      return $event->checkPermissions($this);
     }
+
   }
 
   public function canChangeTemplate() {
