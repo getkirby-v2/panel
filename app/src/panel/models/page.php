@@ -409,7 +409,15 @@ class Page extends \Page {
     } else if(!$this->blueprint()->deletable() or !$this->blueprint()->options()->delete()) {
       $error = 'pages.delete.error.blocked';
     } else {
-      return true;
+
+      try {
+        $event = new Event('panel.page.delete');
+        $event->checkPermissions([$this], true);        
+        return true;
+      } catch(Exception $e) {
+        $error = $e->getMessage();
+      }
+
     }
 
     if($exception) {
