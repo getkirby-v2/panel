@@ -264,7 +264,16 @@ class Page extends \Page {
   }
 
   public function canChangeStatus() {
-    return (!$this->isErrorPage() and $this->blueprint()->options()->status()) ? true : false;
+
+    if($this->isErrorPage()) {
+      return false;
+    } else if($this->blueprint()->options()->status() === false) {
+      return false;
+    } else {
+      $event = new Event('panel.page.hide');
+      return $event->checkPermissions($this);
+    }
+
   }
 
   public function canChangeUrl() {
