@@ -269,8 +269,12 @@ class Page extends \Page {
       return false;
     } else if($this->blueprint()->options()->status() === false) {
       return false;
+    } else if($this->isInvisible()) {
+      $event = new Event('panel.page.sort');
+      return $event->checkPermissions([$this]);
     } else {
-      return true;
+      $event = new Event('panel.page.hide');
+      return $event->checkPermissions([$this]);
     }
 
   }
@@ -348,6 +352,7 @@ class Page extends \Page {
     }
 
     $event = new Event('panel.page.sort');
+    $event->checkPermissions([$this], true);
 
     // run the sorter
     $this->sorter()->to($to);    
@@ -390,10 +395,22 @@ class Page extends \Page {
     $mode     = $this->parent()->blueprint()->pages()->num()->mode();
     $position = intval($position);
 
-    if(($mode == 'default' && $position > 0) || !$this->isVisible()) {
-      $this->sort($position);          
+    if($mode === 'default') {
+
+      if($position > 0) {
+        $this->sort($position);                  
+      } else {
+        $this->hide();
+      }
+
     } else {
-      $this->hide();
+
+      if(!$this->isVisible()) {
+        $this->sort($position);
+      } else {
+        $this->hide();
+      }
+
     }
   
   }
