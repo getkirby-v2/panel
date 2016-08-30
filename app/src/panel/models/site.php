@@ -208,7 +208,8 @@ class Site extends \Site {
     } else if($this->children()->count() >= $this->maxSubpages()) {
       return false;
     } else {
-      return true;
+      $event = new Event('panel.page.create');
+      return $event->checkPermissions($this);
     }
   }
 

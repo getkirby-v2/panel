@@ -68,6 +68,8 @@ class Children extends \Children {
       'data'      => $data
     ]);
 
+    $event->checkPermissions([$this->page], true);
+
     // create the new page and convert it to a page model
     $page = new Page($this->page, parent::create($uid, $template, $data)->dirname());
 

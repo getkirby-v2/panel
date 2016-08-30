@@ -8,7 +8,19 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
     $self   = $this;
     $parent = $this->page($id);
-    $form   = $parent->form('add', function($form) use($parent, $self) {
+    $event  = new Event('panel.page.create');
+    
+    try {
+      $event->checkPermissions($this, true);
+    } catch(Exception $e) {
+      return $this->modal('error', array(
+        'headline' => l('error'),
+        'text'     => $e->getMessage(),
+        'back'     => $parent->url('edit')
+      ));            
+    }
+
+    $form = $parent->form('add', function($form) use($parent, $self) {
     
       $form->validate();
 
