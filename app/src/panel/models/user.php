@@ -86,16 +86,14 @@ class User extends \User {
 
   public function delete() {
 
-    if(!panel()->user()->isAdmin() and !$this->isCurrent()) {
-      throw new Exception(l('users.delete.error.permission'));
-    }
+    // check for permissions
+    $event = new Event('panel.user.delete');
+    $event->checkPermissions([$this], true);
 
     if($this->isLastAdmin()) {
       // check the number of left admins to not delete the last one
       throw new Exception(l('users.delete.error.lastadmin'));
     }
-
-    $event = new Event('panel.user.delete');
 
     parent::delete();
 
