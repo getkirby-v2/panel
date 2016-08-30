@@ -99,7 +99,8 @@ class File extends \File {
 
     if($name == $this->name()) return true;
 
-    $event = new Event('panel.file.rename');
+    $event = new Event('panel.file.rename', ['page' => $this->page()]);
+    $event->checkPermissions([$this], true);
 
     // check if the name should be sanitized
     $safeName = $this->page()->blueprint()->files()->sanitize();
@@ -128,7 +129,8 @@ class File extends \File {
       return true;
     }
 
-    $event = new Event('panel.file.update');
+    $event = new Event('panel.file.update', ['page' => $this->page()]);
+    $event->checkPermissions([$this], true);
 
     // rename the file if necessary
     if(!empty($data['_name'])) {

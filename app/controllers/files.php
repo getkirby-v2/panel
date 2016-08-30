@@ -42,13 +42,14 @@ class FilesController extends Kirby\Panel\Controllers\Base {
     // setup the form and form action
     $form = $file->form('edit', function($form) use($file, $page, $self) {
 
-      $form->validate();
-
-      if(!$form->isValid()) {
-        return $self->alert(l('files.show.error.form'));
-      }
-
       try {
+
+        $form->validate();
+
+        if(!$form->isValid()) {
+          throw new Exception(l('files.show.error.form'));
+        }
+
         $file->update($form->serialize());
         $self->notify(':)');
         $self->redirect($file);
