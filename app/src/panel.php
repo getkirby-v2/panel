@@ -378,23 +378,15 @@ class Panel {
 
     ob_start();
 
-    try {
+    // react on invalid routes
+    if(!$this->route) {
+      throw new Exception(l('routes.error.invalid'));
+    }
 
-      // react on invalid routes
-      if(!$this->route) {
-        throw new Exception(l('routes.error.invalid'));
-      }
-
-      if(is_callable($this->route->action())) {
-        $response = call($this->route->action(), $this->route->arguments());
-      } else {
-        $response = $this->response();
-      }
-
-    } catch(Exception $e) {
-      require_once($this->roots->controllers . DS . 'error.php');
-      $controller = new ErrorController();
-      $response   = $controller->index($e->getMessage(), $e);
+    if(is_callable($this->route->action())) {
+      $response = call($this->route->action(), $this->route->arguments());
+    } else {
+      $response = $this->response();
     }
 
     // check for a valid response object
