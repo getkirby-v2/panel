@@ -105,10 +105,10 @@ class UsersController extends Kirby\Panel\Controllers\Base {
     $user = $this->user($username);
     $self = $this;
 
-    if(!panel()->user()->isAdmin() and !$user->isCurrent()) {
+    if(!$user->canBeDeleted()) {
       return $this->modal('error', array(
         'headline' => l('error'),
-        'text'     => l('users.delete.error.rights'),
+        'text'     => l('users.delete.error.permission.single'),
         'back'     => purl('users')
       ));
     } else {
