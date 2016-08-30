@@ -21,11 +21,13 @@
         </li>
         <?php endif ?>
 
+        <?php if($user->canBeDeleted()): ?>
         <li>
           <a data-modal title="#" data-shortcut="#" href="<?php __($user->url('delete')) ?>">
             <?php i('trash-o', 'left') . _l('users.form.options.delete') ?>
           </a>
         </li>
+        <?php endif ?>
 
       </ul>
 
