@@ -93,6 +93,7 @@ class FilesController extends Kirby\Panel\Controllers\Base {
     $file = $this->file($page, $filename);
 
     try {
+      $file->isReplaceable(true);
       $file->replace();        
       $this->notify(':)');
     } catch(Exception $e) {
@@ -142,6 +143,15 @@ class FilesController extends Kirby\Panel\Controllers\Base {
     $self = $this;
     $page = $this->page($id);
     $file = $this->file($page, $filename);
+
+    if(!$file->isDeletable()) {
+      return $this->modal('error', array(
+        'headline' => l('files.delete.error.headline'),
+        'text'     => l('files.delete.error.text'),
+        'back'     => $file->url('edit')
+      ));            
+    }
+
     $form = $this->form('files/delete', $file, function($form) use($file, $page, $self) {
 
       try {

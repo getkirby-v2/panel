@@ -49,19 +49,24 @@
             </a>
           </li>
 
+          <?php if($file->isReplaceable()): ?>
           <li>
             <a data-upload title="r" data-shortcut="r" href="#replay" class="btn btn-with-icon">
               <?php i('cloud-upload', 'left') ?>
               <?php _l('files.show.replace') ?>
             </a>
           </li>
+          <?php endif ?>
 
+          <?php if($file->isDeletable()): ?>
           <li>
             <a data-modal title="#" data-shortcut="#" href="<?php __($file->url('delete') . '?_redirect=' . $returnTo) ?>" class="btn btn-with-icon">
               <?php i('trash-o', 'left') ?>
               <?php _l('files.show.delete') ?>
             </a>
           </li>
+          <?php endif ?>
+
         </ul>
       </nav>
     </div>

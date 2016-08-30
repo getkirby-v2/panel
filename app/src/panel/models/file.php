@@ -259,6 +259,16 @@ class File extends \File {
     return new Structure($this, 'file_' . $this->page()->id() . '_' . $this->filename() . '_' . $this->site()->lang());
   }
 
+  public function isReplaceable($exception = false) {    
+    $event = new Event('panel.file.replace', ['page' => $this->page()]);    
+    return $event->checkPermissions([$this], $exception);
+  }
+
+  public function isDeletable() {    
+    $event = new Event('panel.file.delete', ['page' => $this->page()]);    
+    return $event->checkPermissions($this);
+  }
+
   public function __debuginfo() {
 
     return array_merge(parent::__debuginfo(), [
