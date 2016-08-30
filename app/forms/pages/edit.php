@@ -1,6 +1,7 @@
 <?php 
 
 use Kirby\Panel\Form;
+use Kirby\Panel\Event;
 
 return function($page) {
 
@@ -38,6 +39,22 @@ return function($page) {
   } else {
     // remove the cancel button
     $form->buttons->cancel = '';    
+  }
+
+  // build the update event 
+  $event = new Event('panel.page.update');
+
+  // check for update permissions
+  if(!$event->checkPermissions($page)) {
+
+    // disable all form fields
+    foreach($form->fields as $field) {
+      $field->readonly = true;
+    }  
+
+    // hide the save button 
+    $form->buttons->submit = '';
+
   }
 
   return $form;

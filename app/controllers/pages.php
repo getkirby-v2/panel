@@ -1,5 +1,7 @@
 <?php
 
+use Kirby\Panel\Event;
+
 class PagesController extends Kirby\Panel\Controllers\Base {
 
   public function add($id) {
@@ -49,17 +51,23 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
     $form = $page->form('edit', function($form) use($page, $self) {
       
-      // validate all fields
-      $form->validate();
-
-      // stop at invalid fields
-      if(!$form->isValid()) {
-        return $self->alert(l('pages.show.error.form'));
-      }
-
       try {
+
+        // check for permissions
+        $event = new Event('panel.page.update');
+        $event->checkPermissions([$page], true);
+
+        // validate all fields
+        $form->validate();
+
+        // stop at invalid fields
+        if(!$form->isValid()) {
+          throw new Exception(l('pages.show.error.form'));
+        }
+
         $page->update($form->serialize());
         $self->notify(':)');
+
         return $self->redirect($page);
       } catch(Exception $e) {
         return $self->alert($e->getMessage());
