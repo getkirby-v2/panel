@@ -229,8 +229,7 @@ class Page extends \Page {
     } else if($this->children()->count() >= $this->maxSubpages()) {
       return false;
     } else {
-      $event = new Event('panel.page.create');
-      return $event->checkPermissions($this);
+      return $this->event('create')->isAllowed();
     }
   }
 
@@ -248,8 +247,7 @@ class Page extends \Page {
     } else if($this->files()->count() >= $this->maxFiles()) {
       return false;
     } else {
-      $event = new Event('panel.file.upload', ['page' => $this]);
-      return $event->checkPermissions($this);
+      return $this->event('upload')->isAllowed();
     }    
   }
 
@@ -272,11 +270,9 @@ class Page extends \Page {
     } else if($this->blueprint()->options()->status() === false) {
       return false;
     } else if($this->isInvisible()) {
-      $event = new Event('panel.page.sort');
-      return $event->checkPermissions($this);
+      return $this->event('sort')->isAllowed();
     } else {
-      $event = new Event('panel.page.hide');
-      return $event->checkPermissions($this);
+      return $this->event('hide')->isAllowed();
     }
 
   }
@@ -290,8 +286,7 @@ class Page extends \Page {
     } else if($this->blueprint()->options()->url() === false) {
       return false;
     } else {
-      $event = new Event('panel.page.move');
-      return $event->checkPermissions($this);
+      return $this->event('move')->isAllowed();
     }
 
   }
@@ -315,8 +310,7 @@ class Page extends \Page {
 
     $site    = panel()->site();
     $changes = $this->changes()->get();
-
-    $event = new Event('panel.page.move');
+    $event   = $this->event('move');
 
     $this->changes()->discard();
 
@@ -334,7 +328,7 @@ class Page extends \Page {
     $old->removeThumbs();
 
     // hit the hook
-    kirby()->trigger($event, array($this, $old));
+    kirby()->trigger($event, [$this, $old]);
   
   }
 
@@ -346,10 +340,26 @@ class Page extends \Page {
     }
   }
 
+  public function event($type, $args = []) {
+    
+    if($type === 'create') {
+      return new Event('panel.page.create', array_merge(['parent' => $this], $args));    
+    } else if($type === 'upload') {
+      // rewrite the upload event
+      $type = 'panel.file.upload';
+    } else {
+      $type = 'panel.page.' . $type;
+    }
+
+    return new Event($type, array_merge(['page' => $this], $args));
+
+  }
+
   public function sort($to = null) {
 
     // keep the old state of the page object
-    $old = clone $this;
+    $old   = clone $this;
+    $event = $this->event('sort');
 
     if($this->isErrorPage()) {
       return $this->num();
@@ -360,8 +370,8 @@ class Page extends \Page {
       return false;      
     }
 
-    $event = new Event('panel.page.sort');
-    $event->checkPermissions([$this], true);
+    // check for permissions
+    $event->check();
 
     // run the sorter
     $this->sorter()->to($to);    
@@ -383,19 +393,20 @@ class Page extends \Page {
   public function hide() {
 
     // keep the old state of the page object
-    $old = clone $this;
+    $old   = clone $this;
+    $event = $this->event('hide');
 
     // don't hide pages, which are not allowed to change their status
     if(!$this->canChangeStatus()) {
       return false;
     }
 
-    $event = new Event('panel.page.hide');
-    $event->checkPermissions([$this], true);
+    // check for permissions
+    $event->check();
 
     parent::hide();
     $this->sorter()->hide();
-    kirby()->trigger($event, array($this, $old));
+    kirby()->trigger($event, [$this, $old]);
 
   }
 
@@ -444,15 +455,11 @@ class Page extends \Page {
     } else if(!$this->blueprint()->deletable() or !$this->blueprint()->options()->delete()) {
       $error = 'pages.delete.error.blocked';
     } else {
-
       try {
-        $event = new Event('panel.page.delete');
-        $event->checkPermissions([$this], true);        
-        return true;
+        $this->event('delete')->check();
       } catch(Exception $e) {
         $error = $e->getMessage();
       }
-
     }
 
     if($exception) {
@@ -495,13 +502,16 @@ class Page extends \Page {
 
   public function update($data = array(), $lang = null) {
 
-    // check for permissions
-    $event = new Event('panel.page.update');
-    $event->checkPermissions([$this], true);
+    // create the update event
+    $event = $this->event('update');
+
+    // check for update permissions
+    $event->check();
 
     // keep the old state of the page object
     $old = clone $this;
 
+    // flush all changes 
     $this->changes()->discard();
     
     parent::update($data, $lang);
@@ -523,7 +533,11 @@ class Page extends \Page {
 
   public function delete($force = false) {
 
-    $event = new Event('panel.page.delete');
+    // create the delete event
+    $event = $this->event('delete');
+
+    // check for permissions
+    $event->check();
 
     // delete the page
     parent::delete();

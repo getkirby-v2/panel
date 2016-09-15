@@ -29,9 +29,11 @@ class User extends \User {
 
   public function update($data = array()) {
 
-    // check for permissions
-    $event = new Event('panel.user.update');
-    $event->checkPermissions([$this], true);
+    // create the user update event
+    $event = $this->event('update');
+
+    // check for update permissions
+    $event->check();
 
     // keep the old state of the user object
     $old = clone $this;
@@ -86,15 +88,18 @@ class User extends \User {
 
   public function delete() {
 
+    // create the delete event
+    $event = $this->event('delete');
+    
     // check for permissions
-    $event = new Event('panel.user.delete');
-    $event->checkPermissions([$this], true);
+    $event->check();
 
     if($this->isLastAdmin()) {
       // check the number of left admins to not delete the last one
       throw new Exception(l('users.delete.error.lastadmin'));
     }
 
+    // delete the user
     parent::delete();
 
     // flush the cache in case if the user data is 
@@ -159,18 +164,21 @@ class User extends \User {
   }
 
   public function canAddUsers() {
-    $event = new Event('panel.user.create');
-    return $event->checkPermissions($this);    
+    return $this->event('create')->isAllowed();
   }
 
   public function canBeUpdated() {
-    $event = new Event('panel.user.update');
-    return $event->checkPermissions($this);
+    return $this->event('update')->isAllowed();
   }
 
   public function canBeDeleted() {
-    $event = new Event('panel.user.delete');
-    return $event->checkPermissions($this);    
+    return $this->event('delete')->isAllowed();
+  }
+
+  public function event($type, $args = []) {  
+    return new Event('panel.user.' . $type, array_merge([
+      'user' => $this
+    ], $args));
   }
 
   public function __debuginfo() {

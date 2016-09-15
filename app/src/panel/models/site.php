@@ -102,18 +102,16 @@ class Site extends \Site {
 
   public function update($input = array(), $lang = null) {
 
+    // create the update event
+    $event = $this->event('update');
+
     // check for permissions
-    $event = new Event('panel.site.update');
-    $event->checkPermissions([$this], true);
+    $event->check();
 
     // keep the old state of the site object
     $old = clone $this;
 
     $data = $this->filterInput($input);
-
-    $event = new Event('panel.site.update', [
-      'language' => $lang
-    ]);
 
     $this->changes()->discard();
 
@@ -208,8 +206,7 @@ class Site extends \Site {
     } else if($this->children()->count() >= $this->maxSubpages()) {
       return false;
     } else {
-      $event = new Event('panel.page.create');
-      return $event->checkPermissions($this);
+      return $this->event('create')->isAllowed();
     }
   }
 
@@ -223,6 +220,20 @@ class Site extends \Site {
     }    
   }
 
+  public function event($type, $args = []) {
+    
+    if($type === 'create') {
+      return new Event('panel.page.create', array_merge(['parent' => $this], $args));    
+    } else if($type === 'upload') {
+      // rewrite the upload event
+      $type = 'panel.file.upload';
+    } else {
+      $type = 'panel.site.' . $type;
+    }
+
+    return new Event($type, array_merge(['site' => $this, 'page' => $this], $args));
+
+  }
 
   public function structure() {
     return new Structure($this, 'site_' . $this->lang());

@@ -116,18 +116,13 @@ return function($user) {
     $form->buttons->submit->value = l('add');
   }
 
-  $event = new Event('panel.user.' . r($mode === 'add', 'create', 'update'));
+  $event = $user->event(r($mode === 'add', 'create', 'update'));
 
-  if(!$event->checkPermissions($user)) {
-
-    foreach($form->fields as $field) {
-      $field->readonly = true;
-    }
-
+  if($event->isDenied()) {
+    $form->disable();
     $form->centered = true;
     $form->buttons->submit = '';
     $form->buttons->cancel = '';
-
   }
 
   return $form;

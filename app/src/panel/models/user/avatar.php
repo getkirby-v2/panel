@@ -34,11 +34,13 @@ class Avatar extends \Avatar {
       throw new Exception(l('users.avatar.error.permission'));
     }
 
-    $root = $this->exists() ? $this->root() : $this->user->avatarRoot('{safeExtension}');
+    $root = $this->exists() ? $this->root() : $this->user->avatarRoot('{safeExtension}');    
 
-    $event = new Event('panel.avatar.upload', [
-      'forUser' => $this->user
-    ]);
+    // create the upload event
+    $event = $this->event('upload');
+
+    // check for permissions
+    $event->check();
 
     $upload = new Upload($root, array(
       'accept' => function($upload) {
@@ -62,14 +64,17 @@ class Avatar extends \Avatar {
 
   public function delete() {
 
-    if(!panel()->user()->isAdmin() and !$this->user->isCurrent()) {
-      throw new Exception(l('users.avatar.delete.error.permission'));
-    } else if(!$this->exists()) {
+    if(!$this->exists()) {
       return true;
     }
 
-    $event = new Event('panel.avatar.delete');
+    // create the delete event
+    $event = $this->event('delete');
 
+    // check for permissions
+    $event->check();
+
+    // delete the avatar file
     if(!parent::delete()) {
       throw new Exception(l('users.avatar.delete.error'));
     } 
@@ -80,6 +85,13 @@ class Avatar extends \Avatar {
 
     kirby()->trigger($event, $this);
 
+  }
+
+  public function event($type, $args = []) {  
+    return new Event('panel.avatar.' . $type, array_merge([
+      'user'   => $this->user,
+      'avatar' => $this
+    ], $args));
   }
 
 }

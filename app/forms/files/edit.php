@@ -14,8 +14,8 @@ return function($file) {
     $info[] = $file->dimensions();      
   }
 
-  $renameEvent = new Event('panel.file.rename', ['page' => $file->page()]);
-  $updateEvent = new Event('panel.file.update', ['page' => $file->page()]);
+  $renameEvent = $file->event('rename');
+  $updateEvent = $file->event('update');
 
   // setup the default fields
   $fields = array(
@@ -25,7 +25,7 @@ return function($file) {
       'extension' => $file->extension(), 
       'required'  => true,
       'default'   => $file->name(),
-      'readonly'  => !$renameEvent->checkPermissions($file)
+      'readonly'  => $renameEvent->isDenied()
     ),
     '_info' => array(
       'label'    => 'files.show.info.label',
@@ -48,16 +48,8 @@ return function($file) {
   $form->centered = true;
   $form->buttons->cancel = '';
 
-  if(!$updateEvent->checkPermissions($file)) {
-
-    // switch all fields to readonly
-    foreach($form->fields as $field) {
-      $field->readonly = true;
-    }
-
-    // disable the save button
-    $form->buttons->submit = '';
-
+  if($updateEvent->isDenied()) {
+    $form->disable();
   }
 
   return $form;

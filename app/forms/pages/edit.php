@@ -41,20 +41,9 @@ return function($page) {
     $form->buttons->cancel = '';    
   }
 
-  // build the update event 
-  $event = new Event('panel.' . r($page->isSite(), 'site', 'page') . '.update');    
-
   // check for update permissions
-  if(!$event->checkPermissions($page)) {
-
-    // disable all form fields
-    foreach($form->fields as $field) {
-      $field->readonly = true;
-    }  
-
-    // hide the save button 
-    $form->buttons->submit = '';
-
+  if($page->event('update')->isDenied()) {
+    $form->disable();
   }
 
   return $form;

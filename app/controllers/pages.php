@@ -8,10 +8,10 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
     $self   = $this;
     $parent = $this->page($id);
-    $event  = new Event('panel.page.create');
+    $event  = $parent->event('create');
     
     try {
-      $event->checkPermissions($this, true);
+      $event->check();
     } catch(Exception $e) {
       return $this->modal('error', array(
         'headline' => l('error'),
@@ -98,11 +98,11 @@ class PagesController extends Kirby\Panel\Controllers\Base {
     $page = $this->page($id);
 
     try {
-      $page->isDeletable(true);
+      $page->isDeletable(true);      
     } catch(Exception $e) {
       return $this->modal('error', array(
         'headline' => l($e->getMessage() . '.headline'),
-        'text'     => l($e->getMessage() . '.text'),
+        'text'     => l($e->getMessage() . '.text', $e->getMessage()),
         'back'     => $page->url()
       ));      
     }

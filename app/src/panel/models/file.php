@@ -95,12 +95,13 @@ class File extends \File {
   public function rename($name, $safeName = true) {
 
     // keep the old state of the file object
-    $old = clone $this;
+    $old   = clone $this;
+    $event = $this->event('rename');
 
     if($name == $this->name()) return true;
 
-    $event = new Event('panel.file.rename', ['page' => $this->page()]);
-    $event->checkPermissions([$this], true);
+    // check for permissions
+    $event->check();
 
     // check if the name should be sanitized
     $safeName = $this->page()->blueprint()->files()->sanitize();
@@ -123,16 +124,24 @@ class File extends \File {
 
     if($data == 'sort') {
 
-      $event = new Event('panel.file.sort', ['page' => $this->page()]);
-      $event->checkPermissions([$this], true);
+      // create the sorting event
+      $event = $this->event('sort');
+
+      // check for permissions
+      $event->check();
 
       parent::update(array('sort' => $sort));
-      kirby()->trigger($event, array($this, $old));
+
+      kirby()->trigger($event, [$this, $old]);
       return true;
+
     }
 
-    $event = new Event('panel.file.update', ['page' => $this->page()]);
-    $event->checkPermissions([$this], true);
+    // create the update event
+    $event = $this->event('update');
+    
+    // check for update permissions
+    $event->check();
 
     // rename the file if necessary
     if(!empty($data['_name'])) {
@@ -160,8 +169,13 @@ class File extends \File {
 
   public function delete() {
 
-    $event = new Event('panel.file.delete');
+    // create the delete event
+    $event = $this->event('delete');
 
+    // check for permissions
+    $event->check();
+
+    // delete the file
     parent::delete();
 
     // clean the thumbs folder
@@ -264,13 +278,22 @@ class File extends \File {
   }
 
   public function isReplaceable($exception = false) {    
-    $event = new Event('panel.file.replace', ['page' => $this->page()]);    
-    return $event->checkPermissions([$this], $exception);
+    if($exception) {
+      return $this->event('replace')->check();
+    } else {
+      return $this->event('replace')->isAllowed();
+    }
   }
 
   public function isDeletable() {    
-    $event = new Event('panel.file.delete', ['page' => $this->page()]);    
-    return $event->checkPermissions($this);
+    return $this->event('delete')->isAllowed();
+  }
+
+  public function event($type, $args = []) {  
+    return new Event('panel.file.' . $type, array_merge([
+      'page' => $this->page(),
+      'file' => $this
+    ], $args));
   }
 
   public function __debuginfo() {

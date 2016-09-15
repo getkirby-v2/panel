@@ -39,10 +39,6 @@ class Uploader {
       throw new Exception(l('files.add.error.max'));
     }
 
-    $event = new Event('panel.file.upload', [
-      'page' => $this->page
-    ]);
-
     $upload = new Upload($this->page->root() . DS . $this->filename, array(
       'overwrite' => true,
       'accept'    => function($file) {
@@ -79,9 +75,8 @@ class Uploader {
     $file = $this->file;
     
     // keep the old state of the file object
-    $old = clone $file;
-
-    $event = new Event('panel.file.replace');
+    $old   = clone $file;
+    $event = $file->event('replace');
 
     $upload = new Upload($file->root(), array(
       'overwrite' => true,
@@ -127,8 +122,6 @@ class Uploader {
     }
 
     try {
-      // security checks
-      $this->checkUpload($file);
       return $file;
     } catch(Exception $e) {
       $file->delete();
