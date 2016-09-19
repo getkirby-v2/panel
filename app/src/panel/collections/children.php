@@ -58,17 +58,16 @@ class Children extends \Children {
       $data[$key] = $field->default();
     }
 
-    $data = array_merge($data, $content);
-
-    $event = new Event('panel.page.create', [
+    $data  = array_merge($data, $content);
+    $event = $this->page->event('create', [
       'parent'    => $this->page,
       'template'  => $template,
       'blueprint' => $blueprint,
       'uid'       => $uid,
-      'data'      => $data
+      'data'      => $data      
     ]);
 
-    $event->checkPermissions([$this->page], true);
+    $event->check();
 
     // create the new page and convert it to a page model
     $page = new Page($this->page, parent::create($uid, $template, $data)->dirname());

@@ -18,8 +18,16 @@ class UI {
     return $this->page->event('update:ui')->isAllowed();    
   }
 
+  public function move() {
+    return $this->page->canChangeURL();    
+  }
+
+  public function template() {
+    return $this->page->canChangeTemplate();    
+  }
+
   public function upload() {
-    return $this->page->event('upload:ui')->isAllowed();
+    return $this->page->canHaveMoreFiles();
   }
 
   public function delete() {

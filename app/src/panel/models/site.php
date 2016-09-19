@@ -16,6 +16,7 @@ use Kirby\Panel\Models\Page\Blueprint;
 use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Sidebar;
 use Kirby\Panel\Models\Page\Uploader;
+use Kirby\Panel\Models\Site\UI;
 
 class Site extends \Site {
 
@@ -103,7 +104,7 @@ class Site extends \Site {
   public function update($input = array(), $lang = null) {
 
     // create the update event
-    $event = $this->event('update');
+    $event = $this->event('update:action', ['data' => $data]);
 
     // check for permissions
     $event->check();
@@ -117,7 +118,7 @@ class Site extends \Site {
 
     parent::update($data, $lang);
 
-    kirby()->trigger($event, array($this, $old));
+    kirby()->trigger($event, [$this, $old]);
 
   }
 
@@ -127,6 +128,10 @@ class Site extends \Site {
 
   public function upload() {
     return new Uploader($this);        
+  }
+
+  public function ui() {
+    return new UI($this);
   }
 
   public function addButton() {
@@ -206,7 +211,7 @@ class Site extends \Site {
     } else if($this->children()->count() >= $this->maxSubpages()) {
       return false;
     } else {
-      return $this->event('create')->isAllowed();
+      return $this->event('create:ui')->isAllowed();
     }
   }
 
@@ -216,17 +221,18 @@ class Site extends \Site {
     } else if($this->files()->count() >= $this->maxFiles()) {
       return false;
     } else {
-      return true;
+      return $this->event('upload:ui')->isAllowed();
     }    
   }
 
   public function event($type, $args = []) {
-    
-    if($type === 'create') {
-      return new Event('panel.page.create', array_merge(['parent' => $this], $args));    
-    } else if($type === 'upload') {
+
+    if(in_array($type, ['create', 'create:ui', 'create:action'])) {
+      // rewrite the page create event
+      $type = 'panel.page.' . $type;    
+    } else if(in_array($type, ['upload', 'upload:ui', 'upload:action'])) {
       // rewrite the upload event
-      $type = 'panel.file.upload';
+      $type = 'panel.file.' . $type;
     } else {
       $type = 'panel.site.' . $type;
     }

@@ -8,10 +8,9 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
     $self   = $this;
     $parent = $this->page($id);
-    $event  = $parent->event('create');
     
     try {
-      $event->check();
+      $parent->event('create:ui')->check();
     } catch(Exception $e) {
       return $this->modal('error', array(
         'headline' => l('error'),
@@ -150,7 +149,7 @@ class PagesController extends Kirby\Panel\Controllers\Base {
     $self = $this;
     $page = $this->page($id);
 
-    if(!$page->canChangeUrl()) {
+    if(!$page->ui()->move()) {
       return $this->modal('error', array(
         'headline' => l('error'),
         'text'     => l('pages.url.error.rights'),

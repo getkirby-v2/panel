@@ -315,7 +315,12 @@ class Page extends \Page {
 
     $site    = panel()->site();
     $changes = $this->changes()->get();
-    $event   = $this->event('move:action');
+    $event   = $this->event('move:action', [
+      'uid' => $uid
+    ]);
+
+    // check for permissions
+    $event->check();
 
     $this->changes()->discard();
 
@@ -347,11 +352,9 @@ class Page extends \Page {
 
   public function event($type, $args = []) {
     
-    if($type === 'create') {
-      return new Event('panel.page.create', array_merge(['parent' => $this], $args));    
-    } else if(in_array($type, ['upload', 'upload:ui', 'upload:action'])) {
+    if(in_array($type, ['upload', 'upload:ui', 'upload:action'])) {
       // rewrite the upload event
-      $type = 'panel.file.upload';
+      $type = 'panel.file.' . $type;
     } else {
       $type = 'panel.page.' . $type;
     }
@@ -460,11 +463,15 @@ class Page extends \Page {
     } else if(!$this->blueprint()->deletable() or !$this->blueprint()->options()->delete()) {
       $error = 'pages.delete.error.blocked';
     } else {
-      try {
+      try {      
         $this->event('delete:ui')->check();
       } catch(Exception $e) {
         $error = $e->getMessage();
       }
+    }
+
+    if(empty($error)) {
+      return true;
     }
 
     if($exception) {
@@ -508,7 +515,9 @@ class Page extends \Page {
   public function update($data = array(), $lang = null) {
 
     // create the update event
-    $event = $this->event('update:action');
+    $event = $this->event('update:action', [
+      'data' => $data
+    ]);
 
     // check for update permissions
     $event->check();

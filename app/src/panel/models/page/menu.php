@@ -98,7 +98,7 @@ class Menu {
   } 
 
   public function templateOption() {  
-    if($this->page->canChangeTemplate()) {
+    if($this->page->ui()->template()) {
       $this->isEmpty = false;
 
       return $this->item('file-code-o', l('pages.show.template') . ': ' . i18n($this->page->blueprint()->title()), array(
@@ -112,7 +112,7 @@ class Menu {
   }
 
   public function urlOption() {
-    if($this->page->canChangeUrl()) {
+    if($this->page->ui()->move()) {
       $this->isEmpty = false;
 
       return $this->item('chain', 'pages.show.changeurl', array(
@@ -129,7 +129,6 @@ class Menu {
   public function deleteOption() {
     if($this->page->ui()->delete()) {
       $this->isEmpty = false;
-
       return $this->item('trash-o', 'pages.show.delete', array(
         'href'          => $this->modalUrl('delete'),
         'title'         => '#',
