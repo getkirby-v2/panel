@@ -61,6 +61,18 @@ class PagesController extends Kirby\Panel\Controllers\Base {
       }
     }
 
+    // permissions to read the page
+    try {
+      $page->event('read')->check();
+    } catch(Exception $e) {
+      $this->alert($e->getMessage());
+      if($page->parent()->isSite()) {
+        $this->redirect();
+      } else {
+        $this->redirect($page->parent());
+      }
+    }
+
     $form = $page->form('edit', function($form) use($page, $self) {
       
       try {

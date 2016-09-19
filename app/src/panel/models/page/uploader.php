@@ -54,11 +54,17 @@ class Uploader {
       }
     ));
 
-    $file = $this->move($upload);
+    $event = $this->page->event('upload:action');
+    $file  = $this->move($upload, $event);
 
     // create the initial meta file
     // without triggering the update hook
-    $file->createMeta(false);
+    try {
+      $file->createMeta(false);      
+    } catch(Exception $e) {
+      // don't react on meta errors
+      // the meta file can still be generated later
+    }
 
     // make sure that the file is being marked as updated
     touch($file->root());
@@ -72,12 +78,7 @@ class Uploader {
 
   public function replace() {
 
-    $file = $this->file;
-    
-    // keep the old state of the file object
-    $old   = clone $file;
-    $event = $file->event('replace');
-
+    $file   = $this->file;    
     $upload = new Upload($file->root(), array(
       'overwrite' => true,
       'accept' => function($upload) use($file) {
@@ -87,7 +88,10 @@ class Uploader {
       }
     ));
 
-    $file = $this->move($upload);
+    // keep the old state of the file object
+    $old   = clone $file;
+    $event = $file->event('replace:action');
+    $file  = $this->move($upload, $event);
 
     // make sure that the file is being marked as updated
     touch($file->root());
@@ -95,11 +99,11 @@ class Uploader {
     // clean the thumbs folder
     $this->page->removeThumbs();
 
-    kirby()->trigger($event, array($file, $old));
+    kirby()->trigger($event, [$file, $old]);
 
   }
 
-  public function move($upload) {
+  public function move($upload, $event) {
 
     // flush all cached files
     $this->page->reset();
@@ -122,6 +126,12 @@ class Uploader {
     }
 
     try {
+      // add the uploaded file to the event target
+      $event->target->upload = $file;
+      // and check for permissions
+      $event->check();
+      // run additional file checks
+      $this->checkUpload($file);
       return $file;
     } catch(Exception $e) {
       $file->delete();

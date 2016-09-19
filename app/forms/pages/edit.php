@@ -42,7 +42,7 @@ return function($page) {
   }
 
   // check for update permissions
-  if($page->event('update')->isDenied()) {
+  if(!$page->ui()->update()) {
     $form->disable();
   }
 

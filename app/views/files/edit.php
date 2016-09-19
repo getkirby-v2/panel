@@ -37,7 +37,6 @@
 
     <div class="section">
 
-
       <?php echo $form ?>
 
       <nav class="fileview-options">
@@ -49,23 +48,33 @@
             </a>
           </li>
 
-          <?php if($file->isReplaceable()): ?>
           <li>
-            <a data-upload title="r" data-shortcut="r" href="#replay" class="btn btn-with-icon">
+            <?php if($file->ui()->replace()): ?>
+            <a data-upload title="r" data-shortcut="r" href="#replace" class="btn btn-with-icon">
               <?php i('cloud-upload', 'left') ?>
               <?php _l('files.show.replace') ?>
             </a>
+            <?php else: ?>
+            <span class="btn btn-with-icon btn-disabled">
+              <?php i('cloud-upload', 'left') ?>
+              <?php _l('files.show.replace') ?>
+            </span>
+            <?php endif ?>
           </li>
-          <?php endif ?>
 
-          <?php if($file->isDeletable()): ?>
           <li>
+            <?php if($file->ui()->delete()): ?>
             <a data-modal title="#" data-shortcut="#" href="<?php __($file->url('delete') . '?_redirect=' . $returnTo) ?>" class="btn btn-with-icon">
               <?php i('trash-o', 'left') ?>
               <?php _l('files.show.delete') ?>
             </a>
+            <?php else: ?>
+            <span class="btn btn-with-icon btn-disabled">
+              <?php i('trash-o', 'left') ?>
+              <?php _l('files.show.delete') ?>
+            </span>
+            <?php endif ?>
           </li>
-          <?php endif ?>
 
         </ul>
       </nav>

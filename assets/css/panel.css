@@ -411,6 +411,10 @@ body.rtl .nav-icon-right {
 .btn-wide {
   min-width: 10em; }
 
+.btn-disabled {
+  opacity: .25;
+  pointer-events: none; }
+
 /* Reset */
 fieldset {
   border: 0; }

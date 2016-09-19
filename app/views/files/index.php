@@ -15,7 +15,7 @@
         <?php i('arrow-circle-left', 'left') . _l('files.index.back') ?>
       </a>
 
-      <?php if($page->hasFiles() and $page->canHaveMoreFiles()): ?>
+      <?php if($page->hasFiles() && $page->ui()->upload()): ?>
       <a data-upload class="hgroup-option-right" href="#upload">
         <?php i('plus-circle', 'left') . _l('files.index.upload') ?>
       </a>
@@ -52,9 +52,15 @@
               <?php i('pencil', 'left') ?><span><?php _l('files.index.edit') ?></span>
             </a>
 
+            <?php if($file->ui()->delete()): ?>
             <a data-modal class="btn btn-with-icon" href="<?php __($file->url('delete') . '?_redirect=' . $page->uri('files')) ?>">
               <?php i('trash-o', 'left') ?><span><?php _l('files.index.delete') ?></span>
             </a>
+            <?php else: ?>
+            <span class="btn btn-with-icon btn-disabled">
+              <?php i('trash-o', 'left') ?><span><?php _l('files.index.delete') ?></span>
+            </span>
+            <?php endif ?>
 
           </nav>
         </figure>

@@ -13,21 +13,25 @@
 
       <ul class="nav nav-list sidebar-list">
 
-        <?php if(!$user->isCurrent()): ?>
         <li>
+          <?php if($user->isCurrent()): ?>
+          <a href="mailto:<?php echo $user->email() ?>">
+            <?php i('power-off', 'left') . _l('logout') ?>
+          </a>
+          <?php else: ?>
           <a href="mailto:<?php echo $user->email() ?>">
             <?php i('envelope-square', 'left') . _l('users.form.options.message') ?>
           </a>
+          <?php endif ?>
         </li>
-        <?php endif ?>
 
-        <?php if($user->canBeDeleted()): ?>
         <li>
+          <?php if($user->ui()->delete()): ?>
           <a data-modal title="#" data-shortcut="#" href="<?php __($user->url('delete')) ?>">
             <?php i('trash-o', 'left') . _l('users.form.options.delete') ?>
           </a>
+          <?php endif ?>
         </li>
-        <?php endif ?>
 
       </ul>
 

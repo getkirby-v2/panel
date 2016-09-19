@@ -12,7 +12,7 @@ class AddButton extends Obj {
     $this->modal = true;
     $this->url   = $this->page->url('add');
 
-    if(!$this->page->canHaveMoreSubpages()) {
+    if(!$this->page->ui()->create()) {
       throw new Exception(l('subpages.add.error.more'));
     }
 

@@ -116,7 +116,11 @@ return function($user) {
     $form->buttons->submit->value = l('add');
   }
 
-  $event = $user->event(r($mode === 'add', 'create', 'update'));
+  if($user) {
+    $event = $user->event('update:ui');
+  } else {
+    $event = panel()->user()->event('create:ui');
+  }
 
   if($event->isDenied()) {
     $form->disable();

@@ -14,8 +14,8 @@ return function($file) {
     $info[] = $file->dimensions();      
   }
 
-  $renameEvent = $file->event('rename');
-  $updateEvent = $file->event('update');
+  $renameEvent = $file->event('rename:ui');
+  $updateEvent = $file->event('update:ui');
 
   // setup the default fields
   $fields = array(
@@ -48,7 +48,15 @@ return function($file) {
   $form->centered = true;
   $form->buttons->cancel = '';
 
+  // disable custom fields
   if($updateEvent->isDenied()) {
+    foreach($file->getFormFields() as $key => $field) {
+      $form->fields->$key->readonly = true;
+    }
+  }
+
+  // if there are readonly fields only, disable the entire form
+  if($form->fields()->count() === $form->fields->filterBy('readonly', true)->count()) {
     $form->disable();
   }
 

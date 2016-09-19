@@ -127,7 +127,7 @@ class Menu {
   }
 
   public function deleteOption() {
-    if($this->page->isDeletable()) {
+    if($this->page->ui()->delete()) {
       $this->isEmpty = false;
 
       return $this->item('trash-o', 'pages.show.delete', array(

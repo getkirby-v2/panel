@@ -5,7 +5,7 @@
       <?php _l('users.index.headline') ?> 
       <span class="counter">( <?php echo $users->pagination()->items() ?> )</span>
     </span>
-    <?php if(panel()->user()->canAddUsers()): ?>
+    <?php if(panel()->user()->ui()->create()): ?>
     <span class="hgroup-options shiv shiv-dark shiv-left">
       <a title="+" data-shortcut="+" class="hgroup-option-right" href="<?php _u('users/add') ?>">
         <?php i('plus-circle', 'left') . _l('users.index.add') ?>
@@ -37,21 +37,29 @@
 
         <ul class="nav nav-bar">
           
-          <?php if($user->canBeUpdated()): ?>
           <li>
+            <?php if($user->ui()->update()): ?>
             <a class="btn btn-with-icon" href="<?php __($user->url('edit')) ?>">
               <?php i('pencil', 'left') . _l('users.index.edit') ?>
             </a>
+            <?php else: ?>
+            <span class="btn btn-with-icon btn-disabled">
+              <?php i('pencil', 'left') . _l('users.index.edit') ?>
+            </span>
+            <?php endif ?>
           </li>
-          <?php endif ?>
 
-          <?php if($user->canBeDeleted()): ?>
           <li>
+            <?php if($user->ui()->delete()): ?>
             <a data-modal class="btn btn-with-icon" href="<?php __($user->url('delete')) ?>">
               <?php i('trash-o', 'left') . _l('users.index.delete') ?>
             </a>
+            <?php else: ?>
+            <span class="btn btn-with-icon btn-disabled">
+              <?php i('trash-o', 'left') . _l('users.index.delete') ?>
+            </span>
+            <?php endif ?>
           </li>
-          <?php endif ?>
 
         </ul>
 

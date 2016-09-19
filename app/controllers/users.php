@@ -24,7 +24,7 @@ class UsersController extends Kirby\Panel\Controllers\Base {
 
   public function add() {
 
-    if(!panel()->user()->canAddUsers()) {
+    if(!panel()->user()->ui()->create()) {
       $this->redirect('users');
     }
 
@@ -62,11 +62,6 @@ class UsersController extends Kirby\Panel\Controllers\Base {
 
     $self = $this;
     $user = $this->user($username);
-
-    if(!$user->canBeUpdated()) {
-      $this->redirect('users');
-    }
-
     $form = $user->form('user', function($form) use($user, $self) {
       
       $form->validate();
@@ -105,7 +100,7 @@ class UsersController extends Kirby\Panel\Controllers\Base {
     $user = $this->user($username);
     $self = $this;
 
-    if(!$user->canBeDeleted()) {
+    if(!$user->ui()->delete()) {
       return $this->modal('error', array(
         'headline' => l('error'),
         'text'     => l('users.delete.error.permission.single'),

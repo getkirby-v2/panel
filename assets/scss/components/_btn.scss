@@ -60,11 +60,13 @@
 .btn-with-icon .icon {
   color: #000;
 }
-
 .btn-addit i {
   line-height: 0;
 }
-
 .btn-wide {
   min-width: 10em;
+}
+.btn-disabled {
+  opacity: .25;
+  pointer-events: none;
 }

@@ -20,6 +20,7 @@ use Kirby\Panel\Collections\Files;
 use Kirby\Panel\Models\Page\AddButton;
 use Kirby\Panel\Models\Page\Blueprint;
 use Kirby\Panel\Models\Page\Menu;
+use Kirby\Panel\Models\Page\UI;
 use Kirby\Panel\Models\Page\Sorter;
 use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Editor;
@@ -198,6 +199,10 @@ class Page extends \Page {
     return new Menu($this, $position);
   }
 
+  public function ui() {
+    return new UI($this);
+  }
+
   public function filterInput($input) {
     return $input;
   }
@@ -229,7 +234,7 @@ class Page extends \Page {
     } else if($this->children()->count() >= $this->maxSubpages()) {
       return false;
     } else {
-      return $this->event('create')->isAllowed();
+      return $this->event('create:ui')->isAllowed();
     }
   }
 
@@ -247,7 +252,7 @@ class Page extends \Page {
     } else if($this->files()->count() >= $this->maxFiles()) {
       return false;
     } else {
-      return $this->event('upload')->isAllowed();
+      return $this->event('upload:ui')->isAllowed();
     }    
   }
 
@@ -270,9 +275,9 @@ class Page extends \Page {
     } else if($this->blueprint()->options()->status() === false) {
       return false;
     } else if($this->isInvisible()) {
-      return $this->event('sort')->isAllowed();
+      return $this->event('sort:ui')->isAllowed();
     } else {
-      return $this->event('hide')->isAllowed();
+      return $this->event('hide:ui')->isAllowed();
     }
 
   }
@@ -286,7 +291,7 @@ class Page extends \Page {
     } else if($this->blueprint()->options()->url() === false) {
       return false;
     } else {
-      return $this->event('move')->isAllowed();
+      return $this->event('move:ui')->isAllowed();
     }
 
   }
@@ -310,7 +315,7 @@ class Page extends \Page {
 
     $site    = panel()->site();
     $changes = $this->changes()->get();
-    $event   = $this->event('move');
+    $event   = $this->event('move:action');
 
     $this->changes()->discard();
 
@@ -344,7 +349,7 @@ class Page extends \Page {
     
     if($type === 'create') {
       return new Event('panel.page.create', array_merge(['parent' => $this], $args));    
-    } else if($type === 'upload') {
+    } else if(in_array($type, ['upload', 'upload:ui', 'upload:action'])) {
       // rewrite the upload event
       $type = 'panel.file.upload';
     } else {
@@ -359,7 +364,7 @@ class Page extends \Page {
 
     // keep the old state of the page object
     $old   = clone $this;
-    $event = $this->event('sort');
+    $event = $this->event('sort:action');
 
     if($this->isErrorPage()) {
       return $this->num();
@@ -394,7 +399,7 @@ class Page extends \Page {
 
     // keep the old state of the page object
     $old   = clone $this;
-    $event = $this->event('hide');
+    $event = $this->event('hide:action');
 
     // don't hide pages, which are not allowed to change their status
     if(!$this->canChangeStatus()) {
@@ -456,7 +461,7 @@ class Page extends \Page {
       $error = 'pages.delete.error.blocked';
     } else {
       try {
-        $this->event('delete')->check();
+        $this->event('delete:ui')->check();
       } catch(Exception $e) {
         $error = $e->getMessage();
       }
@@ -503,7 +508,7 @@ class Page extends \Page {
   public function update($data = array(), $lang = null) {
 
     // create the update event
-    $event = $this->event('update');
+    $event = $this->event('update:action');
 
     // check for update permissions
     $event->check();
@@ -534,7 +539,7 @@ class Page extends \Page {
   public function delete($force = false) {
 
     // create the delete event
-    $event = $this->event('delete');
+    $event = $this->event('delete:action');
 
     // check for permissions
     $event->check();

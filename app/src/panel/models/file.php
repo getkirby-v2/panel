@@ -6,6 +6,7 @@ use C;
 use Kirby\Panel\Event;
 use Kirby\Panel\Structure;
 use Kirby\Panel\Models\File\Menu;
+use Kirby\Panel\Models\File\UI;
 use Kirby\Panel\Models\Page\Uploader;
 
 class File extends \File {
@@ -47,6 +48,10 @@ class File extends \File {
 
   public function menu() {
     return new Menu($this);    
+  }
+
+  public function ui() {
+    return new UI($this);
   }
 
   public function form($action, $callback) {    
@@ -96,8 +101,12 @@ class File extends \File {
 
     // keep the old state of the file object
     $old   = clone $this;
-    $event = $this->event('rename');
+    $event = $this->event('rename:action', [
+      'name'     => $name,
+      'safeName' => $safeName
+    ]);
 
+    // don't do anything if it's the same name
     if($name == $this->name()) return true;
 
     // check for permissions
@@ -125,23 +134,18 @@ class File extends \File {
     if($data == 'sort') {
 
       // create the sorting event
-      $event = $this->event('sort');
+      $event = $this->event('sort:action', ['sort' => $sort]);
 
       // check for permissions
       $event->check();
 
-      parent::update(array('sort' => $sort));
+      parent::update(['sort' => $sort]);
 
       kirby()->trigger($event, [$this, $old]);
+
       return true;
 
     }
-
-    // create the update event
-    $event = $this->event('update');
-    
-    // check for update permissions
-    $event->check();
 
     // rename the file if necessary
     if(!empty($data['_name'])) {
@@ -153,12 +157,24 @@ class File extends \File {
     unset($data['_info']);
     unset($data['_link']);
 
-    if(!empty($data)) {
-      parent::update($data);          
+    // don't do anything on missing data
+    if(empty($data)) return true;
+
+    // check if the form has been allowed to be submitted
+    if($this->event('update:ui')->isDenied()) {
+      return true;
     }
 
+    // create the update event
+    $event = $this->event('update:action', ['data' => $data]);
+    
+    // check for update permissions
+    $event->check();
+
+    parent::update($data);          
+
     if($trigger) {
-      kirby()->trigger($event, array($this, $old));
+      kirby()->trigger($event, [$this, $old]);
     }
 
   }
@@ -170,7 +186,7 @@ class File extends \File {
   public function delete() {
 
     // create the delete event
-    $event = $this->event('delete');
+    $event = $this->event('delete:action');
 
     // check for permissions
     $event->check();

@@ -5,15 +5,52 @@ namespace Kirby\Panel;
 use ReflectionClass;
 use Error;
 use Exception;
+use Str;
 use Kirby\Event as KirbyEvent;
 
 class Event extends KirbyEvent {
 
-  public function __construct($type, $data = []) {
-    $this->panel    = panel();
-    $this->site     = $this->panel->site();
-    $this->language = $this->site->language();
-    parent::__construct($type, $data);
+  public $panel;
+  public $language;
+  public $state;
+
+  public function __construct($type, $target = [], $state = null) {
+
+    // if the event type contains a state
+    if(str::contains($type, ':')) {
+      list($type, $state) = str::split($type, ':');
+    }
+
+    parent::__construct($type, $target);
+
+    $this->panel       = panel();
+    $this->site        = $this->panel->site();
+    $this->user        = $this->site->user();
+    $this->language    = $this->site->language();
+    $this->translation = $this->panel->translation();
+    $this->state       = $state;
+
+  }
+
+  public function panel() {
+    return $this->panel;
+  }
+
+  public function language() {
+    return $this->language;
+  }
+
+  public function translation() {
+    return $this->translation;
+  }
+
+  public function state($state = null) {
+    if($state !== null) {
+      $this->state = $state;
+      return $this;
+    } else {
+      return $this->state;      
+    }
   }
 
   /**
@@ -65,13 +102,6 @@ class Event extends KirbyEvent {
    */
   public function isDenied() {
     return !$this->isAllowed();
-  }
-
-  /**
-   * Helper methods
-   */
-  public function panel() {
-    return panel();
   }
 
 }
