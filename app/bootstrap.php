@@ -36,6 +36,8 @@ load(array(
 
   // models
   'kirby\\panel\\models\\site'                     => 'panel' . DS . 'models' . DS . 'site.php',
+  'kirby\\panel\\models\\site\\ui'                 => 'panel' . DS . 'models' . DS . 'site' . DS . 'ui.php',
+  'kirby\\panel\\models\\site\\options'            => 'panel' . DS . 'models' . DS . 'site' . DS . 'options.php',
   'kirby\\panel\\models\\page'                     => 'panel' . DS . 'models' . DS . 'page.php',
   'kirby\\panel\\models\\page\\addbutton'          => 'panel' . DS . 'models' . DS . 'page' . DS . 'addbutton.php',
   'kirby\\panel\\models\\page\\menu'               => 'panel' . DS . 'models' . DS . 'page' . DS . 'menu.php',
@@ -55,7 +57,6 @@ load(array(
   'kirby\\panel\\models\\file\\ui'                 => 'panel' . DS . 'models' . DS . 'file' . DS . 'ui.php',
   'kirby\\panel\\models\\file\\options'            => 'panel' . DS . 'models' . DS . 'file' . DS . 'options.php',
   'kirby\\panel\\models\\file\\menu'               => 'panel' . DS . 'models' . DS . 'file' . DS . 'menu.php',
-  'kirby\\panel\\models\\site\\ui'                 => 'panel' . DS . 'models' . DS . 'site' . DS . 'ui.php',
   'kirby\\panel\\models\\user'                     => 'panel' . DS . 'models' . DS . 'user.php',
   'kirby\\panel\\models\\user\\ui'                 => 'panel' . DS . 'models' . DS . 'user' . DS . 'ui.php',
   'kirby\\panel\\models\\user\\blueprint'          => 'panel' . DS . 'models' . DS . 'user' . DS . 'blueprint.php',

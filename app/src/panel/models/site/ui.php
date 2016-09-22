@@ -11,15 +11,31 @@ class UI {
   }
 
   public function create() {
-    return $this->site->canHaveMoreSubpages();            
+    if($this->site->options()->create() === false) {
+      return false;
+    } else {
+      return $this->site->event('create:ui')->isAllowed();      
+    }
   }
 
   public function update() {
-    return $this->site->event('update:ui')->isAllowed();    
+    if($this->site->options()->update() === false) {
+      return false;
+    } else {
+      return $this->site->event('update:ui')->isAllowed();      
+    }
   }
 
   public function upload() {
-    return $this->site->canHaveMoreFiles();
+    if($this->site->options()->upload() === false) {
+      return false;
+    } else {
+      return $this->site->event('upload:ui')->isAllowed();      
+    }
+  }
+
+  public function files() {
+    return $this->site->options()->files();
   }
 
 }

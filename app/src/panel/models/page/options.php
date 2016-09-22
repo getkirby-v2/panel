@@ -98,7 +98,13 @@ class Options {
     } else if($this->page->blueprint()->options()->template() === false) {
       return false;
     } else {
-      return true;
+      return $this
+        ->page
+        ->parent()
+        ->blueprint()
+        ->pages()
+        ->template()
+        ->count() > 1;
     }
 
   }

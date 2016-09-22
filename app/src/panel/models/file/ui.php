@@ -11,19 +11,19 @@ class UI {
   }
 
   public function update() {
-    return $this->file->event('update:ui')->isAllowed();    
+    return $this->file->event('update:ui')->isAllowed();
   }
 
   public function rename() {
-    return $this->file->event('rename:ui')->isAllowed();    
+    return $this->file->event('rename:ui')->isAllowed();   
   }
 
   public function replace() {
-    return $this->file->event('replace:ui')->isAllowed();    
+    return $this->file->event('replace:ui')->isAllowed();
   }
 
   public function delete() {
-    return $this->file->event('delete:ui')->isAllowed();    
+    return $this->file->event('delete:ui')->isAllowed();
   }
 
 }

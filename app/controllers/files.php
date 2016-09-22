@@ -1,6 +1,7 @@
 <?php
 
 use Kirby\Panel\Models\File;
+use Kirby\Panel\Exceptions\PermissionsException;
 
 class FilesController extends Kirby\Panel\Controllers\Base {
 
@@ -11,7 +12,7 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
     // don't create the view if the page is not allowed to have files
     if($page->ui()->files() === false) {
-      throw new Exception(l('files.index.error.disabled'));
+      throw new PermissionsException();
     }
 
     // sort action
@@ -77,6 +78,11 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
     $page = $this->page($id);
 
+    // check if files can be uploaded for the page
+    if($page->ui()->upload() === false) {
+      throw new PermissionsException();
+    }
+
     try {
       $page->upload();        
       $this->notify(':)');
@@ -92,6 +98,11 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
     $page = $this->page($id);
     $file = $this->file($page, $filename);
+
+    // check if files can be replaced
+    if($file->ui()->replace() === false) {
+      throw new PermissionsException();
+    }
 
     try {
       $file->replace();        
@@ -113,43 +124,14 @@ class FilesController extends Kirby\Panel\Controllers\Base {
 
   }
 
-  public function thumb($id, $filename) {
-
-    $page   = $this->page($id);
-    $file   = $this->file($page, $filename);
-    $width  = intval(get('width'));
-    $height = intval(get('height'));
-
-    if(!$file->canHavePreview()) {
-      return response::error('No preview available', 404);
-    }
-
-    if(!$file->canHaveThumb()) {
-      go($file->url());
-    }
-
-    if(get('crop') == true) {
-      $thumb = $file->crop($width, $height, 80);
-    } else {
-      $thumb = $file->resize($width, $height, 80);
-    }
-
-    go($thumb->url());
-
-  }
-
   public function delete($id, $filename) {
 
     $self = $this;
     $page = $this->page($id);
     $file = $this->file($page, $filename);
 
-    if(!$file->ui()->delete()) {
-      return $this->modal('error', array(
-        'headline' => l('files.delete.error.headline'),
-        'text'     => l('files.delete.error.text'),
-        'back'     => $file->url('edit')
-      ));            
+    if($file->ui()->delete() === false) {
+      throw new PermissionsException();
     }
 
     $form = $this->form('files/delete', $file, function($form) use($file, $page, $self) {

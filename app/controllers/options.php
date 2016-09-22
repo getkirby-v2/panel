@@ -4,8 +4,9 @@ class OptionsController extends Kirby\Panel\Controllers\Base {
 
   public function index() {
 
-    $self    = $this;
-    $site    = panel()->site();
+    $self = $this;
+    $site = panel()->site();
+
     $sidebar = $site->sidebar();
     $form    = $site->form('edit', function($form) use($site, $self) {
       

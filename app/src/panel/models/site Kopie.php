@@ -17,7 +17,6 @@ use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Sidebar;
 use Kirby\Panel\Models\Page\Uploader;
 use Kirby\Panel\Models\Site\UI;
-use Kirby\Panel\Models\Site\Options;
 
 class Site extends \Site {
 
@@ -82,6 +81,10 @@ class Site extends \Site {
     return $this->getBlueprintFields()->toArray();
   }
 
+  public function canSortFiles() {
+    return $this->blueprint()->files()->sortable();
+  }
+
   public function files() {
     return new Files($this);    
   }
@@ -129,10 +132,6 @@ class Site extends \Site {
 
   public function ui() {
     return new UI($this);
-  }
-
-  public function options() {
-    return new Options($this);
   }
 
   public function addButton() {
@@ -188,6 +187,42 @@ class Site extends \Site {
     $max = $this->blueprint()->files()->max();
     // see: maxSubpages
     return is_null($max) ? 2147483647 : $max;    
+  }
+
+  public function canHaveSubpages() {
+    return $this->maxSubpages() !== 0;
+  }
+
+  public function canShowSubpages() {
+    return ($this->blueprint()->pages()->hide() !== true and $this->canHaveSubpages());    
+  }
+
+  public function canHaveFiles() {
+    return $this->maxFiles() !== 0;
+  }
+
+  public function canShowFiles() {
+    return ($this->blueprint()->files()->hide() !== true and $this->canHaveFiles());    
+  }
+
+  public function canHaveMoreSubpages() {
+    if(!$this->canHaveSubpages()) {
+      return false;
+    } else if($this->children()->count() >= $this->maxSubpages()) {
+      return false;
+    } else {
+      return $this->event('create:ui')->isAllowed();
+    }
+  }
+
+  public function canHaveMoreFiles() {
+    if(!$this->canHaveFiles()) {
+      return false;
+    } else if($this->files()->count() >= $this->maxFiles()) {
+      return false;
+    } else {
+      return $this->event('upload:ui')->isAllowed();
+    }    
   }
 
   public function event($type, $args = []) {
