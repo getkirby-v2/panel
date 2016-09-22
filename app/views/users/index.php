@@ -16,22 +16,23 @@
 
   <div class="items users">
     <?php foreach($users as $user): ?>
+    <?php $read = $user->ui()->read() ?>
     <div class="item item-with-image">
       <div class="item-content">
-        <figure class="item-image">
-          <a class="item-image-container" href="<?php __($user->url('edit')) ?>">
+        <a class="item-image-container" <?= $read ? ' href="' . $user->url('edit') . '"' : '' ?>>
+          <figure class="item-image">
             <img src="<?php __($user->avatar(50)->url()) ?>" alt="<?php __($user->username()) ?>">
-          </a>
-        </figure>
-        <div class="item-info">
-          <a href="<?php __($user->url('edit')) ?>">
+          </figure>
+          <div class="item-info">
             <strong class="item-title"><?php __($user->username()) ?></strong>
+            <?php if($read): ?>
             <small class="item-meta marginalia">
               <?php __($user->email()) ?>
               <span style="padding-left: 1em; font-style: italic; font-size: .9em; color: #aaa"><?php __($user->role()->name()) ?></span>
             </small>
-          </a>
-        </div>
+            <?php endif ?>
+          </div>
+        </a>
       </div>
       <nav class="item-options">
 

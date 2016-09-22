@@ -59,7 +59,7 @@ class Children extends \Children {
     }
 
     $data  = array_merge($data, $content);
-    $event = $this->page->event('create', [
+    $event = $this->page->event('create:action', [
       'parent'    => $this->page,
       'template'  => $template,
       'blueprint' => $blueprint,
@@ -113,7 +113,7 @@ class Children extends \Children {
 
       // filter out hidden pages
       $children = $this->filter(function($child) {
-        return $child->blueprint()->hide() === false;
+        return $child->ui()->read();
       });
 
       $children = $children->paginate($limit, array(

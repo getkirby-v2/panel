@@ -61,6 +61,7 @@ load(array(
   'kirby\\panel\\models\\user\\ui'                 => 'panel' . DS . 'models' . DS . 'user' . DS . 'ui.php',
   'kirby\\panel\\models\\user\\blueprint'          => 'panel' . DS . 'models' . DS . 'user' . DS . 'blueprint.php',
   'kirby\\panel\\models\\user\\avatar'             => 'panel' . DS . 'models' . DS . 'user' . DS . 'avatar.php',
+  'kirby\\panel\\models\\user\\avatar\\ui'         => 'panel' . DS . 'models' . DS . 'user' . DS . 'avatar' . DS . 'ui.php',
   'kirby\\panel\\models\\user\\history'            => 'panel' . DS . 'models' . DS . 'user' . DS . 'history.php',
 
   // collections

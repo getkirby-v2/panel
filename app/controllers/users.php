@@ -1,6 +1,7 @@
 <?php
 
 use Kirby\Panel\Models\User;
+use Kirby\Panel\Exceptions\PermissionsException;
 
 class UsersController extends Kirby\Panel\Controllers\Base {
 
@@ -24,8 +25,8 @@ class UsersController extends Kirby\Panel\Controllers\Base {
 
   public function add() {
 
-    if(!panel()->user()->ui()->create()) {
-      $this->redirect('users');
+    if(panel()->user()->ui()->create() === false) {
+      throw new PermissionsException();
     }
 
     $self = $this;
@@ -62,6 +63,11 @@ class UsersController extends Kirby\Panel\Controllers\Base {
 
     $self = $this;
     $user = $this->user($username);
+
+    if($user->ui()->read() === false) {
+      throw new PermissionsException();
+    }
+
     $form = $user->form('user', function($form) use($user, $self) {
       
       $form->validate();
@@ -100,29 +106,23 @@ class UsersController extends Kirby\Panel\Controllers\Base {
     $user = $this->user($username);
     $self = $this;
 
-    if(!$user->ui()->delete()) {
-      return $this->modal('error', array(
-        'headline' => l('error'),
-        'text'     => l('users.delete.error.permission.single'),
-        'back'     => purl('users')
-      ));
-    } else {
-
-      $form = $user->form('delete', function($form) use($user, $self) {
-
-        try {
-          $user->delete();
-          $self->notify(':)');
-          $self->redirect('users');
-        } catch(Exception $e) {
-          $form->alert($e->getMessage());
-        }
-
-      });
-
-      return $this->modal('users/delete', compact('form'));
-
+    if($user->ui()->delete() === false) {
+      throw new PermissionsException();
     }
+
+    $form = $user->form('delete', function($form) use($user, $self) {
+
+      try {
+        $user->delete();
+        $self->notify(':)');
+        $self->redirect('users');
+      } catch(Exception $e) {
+        $form->alert($e->getMessage());
+      }
+
+    });
+
+    return $this->modal('users/delete', compact('form'));
 
   }
 

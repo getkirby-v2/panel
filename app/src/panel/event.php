@@ -10,8 +10,11 @@ use Kirby\Event as KirbyEvent;
 
 class Event extends KirbyEvent {
 
-  public $panel;
-  public $language;
+  public $panel       = null;
+  public $site        = null;
+  public $user        = null;
+  public $language    = null;
+  public $translation = null;
   public $state;
 
   public function __construct($type, $target = [], $state = null) {
@@ -23,25 +26,40 @@ class Event extends KirbyEvent {
 
     parent::__construct($type, $target);
 
-    $this->panel       = panel();
-    $this->site        = $this->panel->site();
-    $this->user        = $this->site->user();
-    $this->language    = $this->site->language();
-    $this->translation = $this->panel->translation();
-    $this->state       = $state;
+    $this->state = $state;
 
   }
 
   public function panel() {
-    return $this->panel;
+    if($this->panel !== null) {
+      return $this->panel;
+    } else {
+      return $this->panel = panel();
+    }
   }
 
-  public function language() {
-    return $this->language;
+  public function site() {
+    if($this->site !== null) {
+      return $this->site;
+    } else {
+      return $this->site = $this->panel()->site();
+    }
+  }
+
+  public function user() {
+    if($this->user !== null) {
+      return $this->user;
+    } else {
+      return $this->user = $this->site()->user();
+    }
   }
 
   public function translation() {
-    return $this->translation;
+    if($this->translation !== null) {
+      return $this->translation;
+    } else {
+      return $this->panel()->translation();
+    }
   }
 
   public function state($state = null) {

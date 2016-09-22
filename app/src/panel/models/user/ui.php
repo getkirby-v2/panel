@@ -10,6 +10,10 @@ class UI {
     $this->user = $user;
   }
 
+  public function read() {
+    return $this->user->event('read:ui')->isAllowed();
+  }
+
   public function create() {
     return $this->user->event('create:ui')->isAllowed();
   }

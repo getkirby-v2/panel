@@ -58,4 +58,11 @@ class Options {
     return $this->site->maxFiles() !== 0;
   }
 
+  /**
+   * Option to have pages
+   */
+  public function pages() {
+    return true;
+  }
+
 }
