@@ -1,6 +1,7 @@
 <?php
 
 use Kirby\Panel\Event;
+use Kirby\Panel\Exceptions\PermissionsException;
 
 class PagesController extends Kirby\Panel\Controllers\Base {
 
@@ -8,26 +9,20 @@ class PagesController extends Kirby\Panel\Controllers\Base {
 
     $self   = $this;
     $parent = $this->page($id);
-    
-    try {
-      $parent->event('create:ui')->check();
-    } catch(Exception $e) {
-      return $this->modal('error', array(
-        'headline' => l('error'),
-        'text'     => $e->getMessage(),
-        'back'     => $parent->url('edit')
-      ));            
+
+    if($parent->ui()->create() === false) {
+      throw new PermissionsException();
     }
 
     $form = $parent->form('add', function($form) use($parent, $self) {
     
-      $form->validate();
-
-      if(!$form->isValid()) {
-        return $form->alert(l('pages.add.error.template'));
-      } 
-
       try {        
+
+        $form->validate();
+
+        if(!$form->isValid()) {
+          throw new Exception(l('pages.add.error.template'));
+        } 
 
         $data = $form->serialize();
         $page = $parent->children()->create($data['uid'], $data['template'], array(
@@ -60,16 +55,8 @@ class PagesController extends Kirby\Panel\Controllers\Base {
       }
     }
 
-    // permissions to read the page
-    try {
-      $page->event('read')->check();
-    } catch(Exception $e) {
-      $this->alert($e->getMessage());
-      if($page->parent()->isSite()) {
-        $this->redirect();
-      } else {
-        $this->redirect($page->parent());
-      }
+    if($page->ui()->read() === false) {
+      throw new PermissionsException();
     }
 
     $form = $page->form('edit', function($form) use($page, $self) {
@@ -108,14 +95,8 @@ class PagesController extends Kirby\Panel\Controllers\Base {
     $self = $this;
     $page = $this->page($id);
 
-    try {
-      $page->isDeletable(true);      
-    } catch(Exception $e) {
-      return $this->modal('error', array(
-        'headline' => l($e->getMessage() . '.headline'),
-        'text'     => l($e->getMessage() . '.text', $e->getMessage()),
-        'back'     => $page->url()
-      ));      
+    if($page->ui()->delete() === false) {
+      throw new PermissionsException();
     }
 
     $form = $page->form('delete', function($form) use($page, $self) {
@@ -149,11 +130,8 @@ class PagesController extends Kirby\Panel\Controllers\Base {
     $self = $this;
     $page = $this->page($id);
 
-    if(!$page->ui()->move()) {
-      return $this->modal('error', array(
-        'headline' => l('error'),
-        'text'     => l('pages.url.error.rights'),
-      ));
+    if($page->ui()->url() === false) {
+      throw new PermissionsException();
     }
 
     $form = $page->form('url', function($form) use($page, $self) {
@@ -178,11 +156,8 @@ class PagesController extends Kirby\Panel\Controllers\Base {
     $self = $this;
     $page = $this->page($id);
 
-    if(!$page->canChangeTemplate()) {
-      return $this->modal('error', array(
-        'headline' => l('error'),
-        'text'     => l('pages.template.error'),
-      ));
+    if($page->ui()->template() === false) {
+      throw new PermissionsException();
     }
 
     if($info = get('info')) {
@@ -215,11 +190,8 @@ class PagesController extends Kirby\Panel\Controllers\Base {
     $self = $this;
     $page = $this->page($id);
 
-    if($page->isErrorPage()) {
-      return $this->modal('error', array(
-        'headline' => l('error'),
-        'text'     => l('pages.toggle.error.error'),
-      ));
+    if($page->ui()->visibility() === false) {
+      throw new PermissionsException();
     }
 
     $form = $page->form('toggle', function($form) use($page, $self) {

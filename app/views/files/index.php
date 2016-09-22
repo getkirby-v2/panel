@@ -76,7 +76,7 @@
   <div class="instruction">
     <div class="instruction-content">
       <p class="instruction-text"><?php _l('files.index.upload.first.text') ?></p>
-      <?php if($page->canHaveMoreFiles()) : ?>
+      <?php if($page->ui()->upload()) : ?>
       <a data-upload data-shortcut="+" class="btn btn-rounded" href="#upload">
         <?php _l('files.index.upload.first.button') ?>
       </a>

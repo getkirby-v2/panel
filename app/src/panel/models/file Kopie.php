@@ -74,6 +74,24 @@ class File extends \File {
     return $this->meta()->toArray();    
   }
 
+  public function canHavePreview() {
+    return $this->isWebImage() or $this->extension() == 'svg';    
+  }  
+
+  public function canHaveThumb() {
+    if(!$this->isWebImage()) {
+      return false;
+    } else if(kirby()->option('thumbs.driver') == 'gd') {
+      if($this->width() > 2048 or $this->height() > 2048) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;      
+    }
+  }
+
   public function isWebImage() {
     $images = array('image/jpeg', 'image/gif', 'image/png');
     return in_array($this->mime(), $images);
@@ -273,6 +291,18 @@ class File extends \File {
 
   public function structure() {
     return new Structure($this, 'file_' . $this->page()->id() . '_' . $this->filename() . '_' . $this->site()->lang());
+  }
+
+  public function isReplaceable($exception = false) {    
+    if($exception) {
+      return $this->event('replace')->check();
+    } else {
+      return $this->event('replace')->isAllowed();
+    }
+  }
+
+  public function isDeletable() {    
+    return $this->event('delete')->isAllowed();
   }
 
   public function event($type, $args = []) {  

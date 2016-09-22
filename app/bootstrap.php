@@ -40,6 +40,7 @@ load(array(
   'kirby\\panel\\models\\page\\addbutton'          => 'panel' . DS . 'models' . DS . 'page' . DS . 'addbutton.php',
   'kirby\\panel\\models\\page\\menu'               => 'panel' . DS . 'models' . DS . 'page' . DS . 'menu.php',
   'kirby\\panel\\models\\page\\ui'                 => 'panel' . DS . 'models' . DS . 'page' . DS . 'ui.php',
+  'kirby\\panel\\models\\page\\options'            => 'panel' . DS . 'models' . DS . 'page' . DS . 'options.php',
   'kirby\\panel\\models\\page\\sidebar'            => 'panel' . DS . 'models' . DS . 'page' . DS . 'sidebar.php',
   'kirby\\panel\\models\\page\\changes'            => 'panel' . DS . 'models' . DS . 'page' . DS . 'changes.php',
   'kirby\\panel\\models\\page\\uploader'           => 'panel' . DS . 'models' . DS . 'page' . DS . 'uploader.php',
@@ -52,6 +53,7 @@ load(array(
   'kirby\\panel\\models\\page\\blueprint\\options' => 'panel' . DS . 'models' . DS . 'page' . DS . 'blueprint' . DS . 'options.php',
   'kirby\\panel\\models\\file'                     => 'panel' . DS . 'models' . DS . 'file.php',
   'kirby\\panel\\models\\file\\ui'                 => 'panel' . DS . 'models' . DS . 'file' . DS . 'ui.php',
+  'kirby\\panel\\models\\file\\options'            => 'panel' . DS . 'models' . DS . 'file' . DS . 'options.php',
   'kirby\\panel\\models\\file\\menu'               => 'panel' . DS . 'models' . DS . 'file' . DS . 'menu.php',
   'kirby\\panel\\models\\site\\ui'                 => 'panel' . DS . 'models' . DS . 'site' . DS . 'ui.php',
   'kirby\\panel\\models\\user'                     => 'panel' . DS . 'models' . DS . 'user.php',
@@ -65,6 +67,9 @@ load(array(
   'kirby\\panel\\collections\\files'               => 'panel' . DS . 'collections' . DS . 'files.php',
   'kirby\\panel\\collections\\children'            => 'panel' . DS . 'collections' . DS . 'children.php',
   
+  // exceptions
+  'kirby\\panel\\exceptions\\permissionsexception' => 'panel' . DS . 'exceptions' . DS . 'permissions.php',
+
 ), __DIR__ . DS . 'src');
 
 
