@@ -110,7 +110,9 @@ class Event extends KirbyEvent {
       return true;
     } catch(Exception $e) {
       return false;
-    }
+    } catch(Error $e) {
+      return false;
+    } 
   }
 
   /**
