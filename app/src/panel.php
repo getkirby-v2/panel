@@ -24,6 +24,7 @@ use Toolkit;
 use Tpl;
 use Url;
 
+use Kirby\Panel\Event;
 use Kirby\Panel\Installer;
 use Kirby\Panel\Form;
 use Kirby\Panel\Models\Site;
@@ -137,12 +138,21 @@ class Panel {
     $this->router = new Router($this->routes);
 
     // register router filters
-    $this->router->filter('auth', function() use($kirby) {      
+    $this->router->filter('auth', function($route) use($kirby) {      
+
+      $panel = panel();
+
       try {
         $user = panel()->user();
       } catch(Exception $e) {
         panel()->redirect('login');
       }
+
+      // check for area access
+      if($area = $route->area()) {
+        $panel->access($area)->check();
+      }
+
     });
 
     // check for a completed installation
@@ -378,23 +388,15 @@ class Panel {
 
     ob_start();
 
-    try {
+    // react on invalid routes
+    if(!$this->route) {
+      throw new Exception(l('routes.error.invalid'));
+    }
 
-      // react on invalid routes
-      if(!$this->route) {
-        throw new Exception(l('routes.error.invalid'));
-      }
-
-      if(is_callable($this->route->action())) {
-        $response = call($this->route->action(), $this->route->arguments());
-      } else {
-        $response = $this->response();
-      }
-
-    } catch(Exception $e) {
-      require_once($this->roots->controllers . DS . 'error.php');
-      $controller = new ErrorController();
-      $response   = $controller->index($e->getMessage(), $e);
+    if(is_callable($this->route->action())) {
+      $response = call($this->route->action(), $this->route->arguments());
+    } else {
+      $response = $this->response();
     }
 
     // check for a valid response object
@@ -554,6 +556,10 @@ class Panel {
       'content' => $message . $where
     ]);
 
+  }
+
+  public function access($area) {
+    return new Event('panel.access.' . $area);
   }
 
   public function __debuginfo() {

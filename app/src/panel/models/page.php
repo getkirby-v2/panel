@@ -17,9 +17,12 @@ use Kirby\Panel\Topbar;
 use Kirby\Panel\Structure;
 use Kirby\Panel\Collections\Children;
 use Kirby\Panel\Collections\Files;
+use Kirby\Panel\Exceptions\PermissionsException;
 use Kirby\Panel\Models\Page\AddButton;
 use Kirby\Panel\Models\Page\Blueprint;
 use Kirby\Panel\Models\Page\Menu;
+use Kirby\Panel\Models\Page\UI;
+use Kirby\Panel\Models\Page\Options;
 use Kirby\Panel\Models\Page\Sorter;
 use Kirby\Panel\Models\Page\Changes;
 use Kirby\Panel\Models\Page\Editor;
@@ -107,7 +110,8 @@ class Page extends \Page {
     if(empty($action)) {
       return parent::url();
     } else if($action == 'preview') {
-      if($previewSetting = $this->blueprint()->preview()) {
+
+      if($previewSetting = $this->blueprint()->preview() && $this->options()->preview()) {
         switch($previewSetting) {
           case 'parent':
             return $this->parent() ? $this->parent()->url() : $this->url();
@@ -125,6 +129,7 @@ class Page extends \Page {
       } else {
         return false;
       }
+
     } else if($this->site->multilang() and $lang = $this->site->language($action)) {
       return parent::url($lang->code());
     } else {
@@ -198,6 +203,14 @@ class Page extends \Page {
     return new Menu($this, $position);
   }
 
+  public function ui() {
+    return new UI($this);
+  }
+
+  public function options() {
+    return new Options($this);
+  }
+
   public function filterInput($input) {
     return $input;
   }
@@ -219,83 +232,21 @@ class Page extends \Page {
     return is_null($max) ? 2147483647 : $max;    
   }
 
-  public function canHaveSubpages() {
-    return $this->maxSubpages() !== 0;
-  }
-
-  public function canHaveMoreSubpages() {
-    if(!$this->canHaveSubpages()) {
-      return false;
-    } else if($this->children()->count() >= $this->maxSubpages()) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  public function canShowSubpages() {
-    return ($this->blueprint()->pages()->hide() !== true and $this->canHaveSubpages());    
-  }
-
-  public function canHaveFiles() {
-    return $this->maxFiles() !== 0;
-  }
-
-  public function canHaveMoreFiles() {
-    if(!$this->canHaveFiles()) {
-      return false;
-    } else if($this->files()->count() >= $this->maxFiles()) {
-      return false;
-    } else {
-      return true;
-    }    
-  }
-
-  public function canShowFiles() {
-    return ($this->blueprint()->files()->hide() !== true and $this->canHaveFiles());    
-  }
-
-  public function canSortFiles() {
-    return $this->blueprint()->files()->sortable();
-  }
-
-  public function canShowPreview() {
-    return $this->blueprint()->options()->preview();
-  }
-
-  public function canChangeStatus() {
-    return (!$this->isErrorPage() and $this->blueprint()->options()->status()) ? true : false;
-  }
-
-  public function canChangeUrl() {
-    if($this->isHomePage() or $this->isErrorPage() or $this->blueprint()->options()->url() === false) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  public function canChangeTemplate() {
-    if($this->isHomePage() or $this->isErrorPage() or $this->blueprint()->options()->template() === false) {
-      return false;
-    } else {
-      return $this->parent()->blueprint()->pages()->template()->count() > 1;
-    }
-  }
-
   public function move($uid) {
 
-    // keep the old state of the page object
-    $old = clone $this;
-
-    if(!$this->canChangeUrl()) {
-      throw new Exception(l('pages.url.error.rights'));
+    // check if the url option is available for this page
+    if($this->options()->url() === false) {
+      throw new PermissionsException();
     }
 
+    // keep the old state of the page object
+    $old     = clone $this;
     $site    = panel()->site();
     $changes = $this->changes()->get();
+    $event   = $this->event('url:action', ['uid' => $uid]);
 
-    $event = new Event('panel.page.move');
+    // check for permissions
+    $event->check();
 
     $this->changes()->discard();
 
@@ -313,7 +264,7 @@ class Page extends \Page {
     $old->removeThumbs();
 
     // hit the hook
-    kirby()->trigger($event, array($this, $old));
+    kirby()->trigger($event, [$this, $old]);
   
   }
 
@@ -325,21 +276,34 @@ class Page extends \Page {
     }
   }
 
+  public function event($type, $args = []) {
+    
+    if(in_array($type, ['upload', 'upload:ui', 'upload:action'])) {
+      // rewrite the upload event
+      $type = 'panel.file.' . $type;
+    } else {
+      $type = 'panel.page.' . $type;
+    }
+
+    return new Event($type, array_merge(['page' => $this], $args));
+
+  }
+
   public function sort($to = null) {
 
+    // check if sorting is available at all
+    if($this->options()->visibility() === false) {
+      throw new PermissionsException();
+    }
+
     // keep the old state of the page object
-    $old = clone $this;
+    $old   = clone $this;
+    $event = $this->event('visibility:action', [
+      'visibility' => 'visible'
+    ]);
 
-    if($this->isErrorPage()) {
-      return $this->num();
-    }
-
-    // don't sort pages without permission to change the status
-    if($this->isInvisible() && !$this->canChangeStatus()) {
-      return false;      
-    }
-
-    $event = new Event('panel.page.sort');
+    // check for permissions
+    $event->check();
 
     // run the sorter
     $this->sorter()->to($to);    
@@ -360,19 +324,23 @@ class Page extends \Page {
 
   public function hide() {
 
-    // keep the old state of the page object
-    $old = clone $this;
-
-    // don't hide pages, which are not allowed to change their status
-    if(!$this->canChangeStatus()) {
-      return false;
+    // check if sorting is available at all
+    if($this->options()->visibility() === false) {
+      throw new PermissionsException();
     }
 
-    $event = new Event('panel.page.hide');
+    // keep the old state of the page object
+    $old   = clone $this;
+    $event = $this->event('visibility:action', [
+      'visibility' => 'invisible'
+    ]);
+
+    // check for permissions
+    $event->check();
 
     parent::hide();
     $this->sorter()->hide();
-    kirby()->trigger($event, array($this, $old));
+    kirby()->trigger($event, [$this, $old]);
 
   }
 
@@ -381,10 +349,22 @@ class Page extends \Page {
     $mode     = $this->parent()->blueprint()->pages()->num()->mode();
     $position = intval($position);
 
-    if(($mode == 'default' && $position > 0) || !$this->isVisible()) {
-      $this->sort($position);          
+    if($mode === 'default') {
+
+      if($position > 0) {
+        $this->sort($position);                  
+      } else {
+        $this->hide();
+      }
+
     } else {
-      $this->hide();
+
+      if(!$this->isVisible()) {
+        $this->sort($position);
+      } else {
+        $this->hide();
+      }
+
     }
   
   }
@@ -392,32 +372,6 @@ class Page extends \Page {
   public function hasNoTitleField() {
     $fields = $this->getFormFields();
     return empty($fields['title']);
-  }
-
-  public function isHidden() {
-    return $this->blueprint()->hide() === true;
-  }
-
-  public function isDeletable($exception = false) {
-
-    if($this->isHomePage()) {
-      $error = 'pages.delete.error.home';
-    } else if($this->isErrorPage()) {
-      $error = 'pages.delete.error.error';
-    } else if($this->hasChildren()) {
-      $error = 'pages.delete.error.children';
-    } else if(!$this->blueprint()->deletable() or !$this->blueprint()->options()->delete()) {
-      $error = 'pages.delete.error.blocked';
-    } else {
-      return true;
-    }
-
-    if($exception) {
-      throw new Exception($error);      
-    } else {
-      return false;
-    }
-
   }
 
   public function sidebar() {
@@ -452,13 +406,18 @@ class Page extends \Page {
 
   public function update($data = array(), $lang = null) {
 
+    // create the update event
+    $event = $this->event('update:action', [
+      'data' => $data
+    ]);
+
+    // check for update permissions
+    $event->check();
+
     // keep the old state of the page object
     $old = clone $this;
 
-    $event = new Event('panel.page.update', [
-      'language' => $lang
-    ]);
-
+    // flush all changes 
     $this->changes()->discard();
     
     parent::update($data, $lang);
@@ -480,7 +439,16 @@ class Page extends \Page {
 
   public function delete($force = false) {
 
-    $event = new Event('panel.page.delete');
+    // check if the delete option is available
+    if($this->options()->delete() === false) {
+      throw new PermissionsException();
+    }
+
+    // create the delete event
+    $event = $this->event('delete:action');
+
+    // check for permissions
+    $event->check();
 
     // delete the page
     parent::delete();
@@ -568,6 +536,11 @@ class Page extends \Page {
 
   public function changeTemplate($newTemplate) {
 
+    // check if the template can be switched
+    if($this->options()->template() === false) {
+      throw new PermissionsException();
+    }
+
     $oldTemplate = $this->intendedTemplate();
 
     if($newTemplate == $oldTemplate) return true;
@@ -600,14 +573,14 @@ class Page extends \Page {
     $incompatible = array();
     $content      = $this->content($language);
     $oldBlueprint = new Blueprint($oldTemplate);
-    $oldFields    = $oldBlueprint->fields($this);
     $newBlueprint = new Blueprint($newTemplate);
+    $oldFields    = $oldBlueprint->fields($this);
     $newFields    = $newBlueprint->fields($this);
 
     // log
-    $removed  = array();
-    $replaced = array();
-    $added    = array();
+    $removed  = [];
+    $replaced = [];
+    $added    = [];
 
     // first overwrite everything
     foreach($oldFields as $oldField) {

@@ -58,12 +58,16 @@ class Children extends \Children {
       $data[$key] = $field->default();
     }
 
-    $data = array_merge($data, $content);
-
-    $event = new Event('panel.page.create', [
-      'template' => $template,
-      'parent' => $this->page
+    $data  = array_merge($data, $content);
+    $event = $this->page->event('create:action', [
+      'parent'    => $this->page,
+      'template'  => $template,
+      'blueprint' => $blueprint,
+      'uid'       => $uid,
+      'data'      => $data      
     ]);
+
+    $event->check();
 
     // create the new page and convert it to a page model
     $page = new Page($this->page, parent::create($uid, $template, $data)->dirname());
@@ -109,7 +113,7 @@ class Children extends \Children {
 
       // filter out hidden pages
       $children = $this->filter(function($child) {
-        return $child->blueprint()->hide() === false;
+        return $child->ui()->read();
       });
 
       $children = $children->paginate($limit, array(

@@ -24,19 +24,29 @@ class Users extends \Users {
 
   public function create($data) {
 
+    $event = panel()->user()->event('create:action');
+
     if($data['password'] !== $data['passwordconfirmation']) {
       throw new Exception(l('users.form.error.password.confirm'));
     }
 
     unset($data['passwordconfirmation']);
 
-    $event = new Event('panel.user.create');
+    // set the event data
+    $event->target->data = $data;
 
+    // check for permissions
+    $event->check();
+
+    // create the user
     $user = parent::create($data);
+    
+    // trigger the create hook
     kirby()->trigger($event, $user);
+
+    // return the new user object
     return new User($user->username());
 
   }
-
 
 }

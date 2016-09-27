@@ -11,8 +11,13 @@ use Kirby\Panel\Structure;
 use Kirby\Panel\Models\User\Avatar;
 use Kirby\Panel\Models\User\Blueprint;
 use Kirby\Panel\Models\User\History;
+use Kirby\Panel\Models\User\UI;
 
 class User extends \User {
+
+  public function ui() {
+    return new UI($this);
+  }
 
   public function uri($action = 'edit') {
     return 'users/' . $this->username() . '/' . $action;
@@ -28,6 +33,12 @@ class User extends \User {
   }
 
   public function update($data = array()) {
+
+    // create the user update event
+    $event = $this->event('update:action');
+
+    // check for update permissions
+    $event->check();
 
     // keep the old state of the user object
     $old = clone $this;
@@ -56,15 +67,13 @@ class User extends \User {
       throw new Exception(l('user.error.lastadmin'));
     }
 
-    $event = new Event('panel.user.update');
-
     parent::update($data);
 
     // flush the cache in case if the user data is 
     // used somewhere on the site (i.e. for profiles)
     kirby()->cache()->flush();
 
-    kirby()->trigger($event, array($this, $old));
+    kirby()->trigger($event, [$this, $old]);
 
     return $this;
 
@@ -82,17 +91,18 @@ class User extends \User {
 
   public function delete() {
 
-    if(!panel()->user()->isAdmin() and !$this->isCurrent()) {
-      throw new Exception(l('users.delete.error.permission'));
-    }
+    // create the delete event
+    $event = $this->event('delete:action');
+    
+    // check for permissions
+    $event->check();
 
     if($this->isLastAdmin()) {
       // check the number of left admins to not delete the last one
       throw new Exception(l('users.delete.error.lastadmin'));
     }
 
-    $event = new Event('panel.user.delete');
-
+    // delete the user
     parent::delete();
 
     // flush the cache in case if the user data is 
@@ -154,6 +164,12 @@ class User extends \User {
     } else {
       return null;
     }
+  }
+
+  public function event($type, $args = []) {  
+    return new Event('panel.user.' . $type, array_merge([
+      'user' => $this
+    ], $args));
   }
 
   public function __debuginfo() {
