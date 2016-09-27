@@ -634,28 +634,4 @@ class Page extends \Page {
     return dir::remove($this->kirby()->roots()->thumbs() . DS . $this->id());
   }
 
-  public function __debuginfo() {
-
-    return array_merge(parent::__debuginfo(), [
-      'blueprint'           => (string)$this->blueprint(),
-      'maxSubpages'         => $this->maxSubpages(),
-      'maxFiles'            => $this->maxFiles(),
-      'canHaveSubpages'     => $this->canHaveSubpages(),
-      'canHaveMoreSubpages' => $this->canHaveMoreSubpages(),
-      'canShowSubpages'     => $this->canShowSubpages(),
-      'canHaveFiles'        => $this->canHaveFiles(),
-      'canHaveMoreFiles'    => $this->canHaveMoreFiles(),
-      'canShowFiles'        => $this->canShowFiles(),
-      'canShowPreview'      => $this->canShowPreview(),
-      'canChangeStatus'     => $this->canChangeStatus(),
-      'canChangeUrl'        => $this->canChangeUrl(),
-      'canChangeTemplate'   => $this->canChangeTemplate(),
-      'hasNoTitleField'     => $this->hasNoTitleField(),
-      'isHidden'            => $this->isHidden(),
-      'isDeletable'         => $this->isDeletable(),
-      'displayNum'          => $this->displayNum(),
-    ]);
-
-  }
-
 }

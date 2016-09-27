@@ -282,15 +282,4 @@ class File extends \File {
     ], $args));
   }
 
-  public function __debuginfo() {
-
-    return array_merge(parent::__debuginfo(), [
-      'blueprint'      => (string)$this->blueprint(),
-      'canHavePreview' => $this->canHavePreview(),
-      'canHaveThumb'   => $this->canHaveThumb(),
-      'isWebImage'     => $this->isWebImage(),
-    ]);
-
-  }
-
 }
