@@ -90,26 +90,18 @@ class Site extends \Site {
     return new Children($this);
   }
 
-  public function filterInput($input) {
-    $data = array();
-    foreach($this->content()->toArray() as $key => $value) {
-      $data[$key] = null;  
-    }
-    return array_merge($data, $input);
-  }
-
-  public function update($input = array(), $lang = null) {
+  public function update($data = array(), $lang = null) {
 
     // create the update event
-    $event = $this->event('update:action', ['data' => $data]);
+    $event = $this->event('update:action', [
+      'data' => $data
+    ]);
 
     // check for permissions
     $event->check();
 
     // keep the old state of the site object
     $old = clone $this;
-
-    $data = $this->filterInput($input);
 
     $this->changes()->discard();
 

@@ -426,7 +426,7 @@ class Page extends \Page {
     // changed for example
     $this->updateNum();
 
-    kirby()->trigger($event, array($this, $old));
+    kirby()->trigger($event, [$this, $old]);
 
     // add the page to the history
     $this->addToHistory();
