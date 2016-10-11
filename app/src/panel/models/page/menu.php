@@ -50,7 +50,9 @@ class Menu {
 
   public function previewOption() {  
 
-    if($preview = $this->page->url('preview') && $this->page->option()->preview()) {
+    $preview = $this->page->url('preview');
+
+    if($preview && $this->page->option()->preview()) {
 
       $this->isEmpty = false;
 

@@ -111,8 +111,11 @@ class Page extends \Page {
       return parent::url();
     } else if($action == 'preview') {
 
-      if($previewSetting = $this->blueprint()->preview() && $this->options()->preview()) {
-        switch($previewSetting) {
+      $preview = $this->blueprint()->preview();
+
+      if($preview && $this->options()->preview()) {
+
+        switch($preview) {
           case 'parent':
             return $this->parent() ? $this->parent()->url() : $this->url();
             break;
@@ -126,6 +129,7 @@ class Page extends \Page {
             return $this->url();
             break;
         }
+
       } else {
         return false;
       }
