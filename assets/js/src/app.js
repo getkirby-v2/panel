@@ -37,7 +37,9 @@ var app = {
     $(document).on('click', 'a', function(e) {      
 
       var link = $(this);
-      var href = link.attr('href') || "";
+      var href = link.attr('href');
+
+      if(!href) return false;
 
       if(link.is('[data-dropdown]') || href.match(/^#/)) {
         return true;

@@ -39,7 +39,7 @@
         <ul class="nav nav-bar">
           
           <li>
-            <?php if($user->ui()->update()): ?>
+            <?php if($read && $user->ui()->update()): ?>
             <a class="btn btn-with-icon" href="<?php __($user->url('edit')) ?>">
               <?php i('pencil', 'left') . _l('users.index.edit') ?>
             </a>
