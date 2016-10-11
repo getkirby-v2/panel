@@ -603,9 +603,9 @@ class Page extends \Page {
         $data[$newField->name()] = $newField->default();
 
         if($oldField) {
-          $replaced[$newField->name()] = $newField->label();          
+          $replaced[$newField->name()] = i18n($newField->label());          
         } else {
-          $added[$newField->name()] = $newField->label();          
+          $added[$newField->name()] = i18n($newField->label());          
         }
 
       }
@@ -613,7 +613,7 @@ class Page extends \Page {
     }
 
     foreach($data as $name => $content) {
-      if(is_null($content)) $removed[$name] = $oldFields->{$name}->label();
+      if(is_null($content)) $removed[$name] = i18n($oldFields->{$name}->label());
     }
 
     return array(
