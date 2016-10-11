@@ -1407,7 +1407,7 @@ body.rtl .tag button.tag-label {
 
 .dashboard-item-icon i {
   position: static;
-  padding-top: .8em; }
+  padding-top: .9em; }
 
 .dashboard-item-text {
   display: inline-block;
@@ -1499,6 +1499,12 @@ body.rtl .dropdown-right:after {
 
 .dropdown-dark .dropdown-list li:last-child a {
   border-bottom: 0; }
+
+.fa.icon {
+  font-size: 14px; }
+
+.fa.fa-lg.icon {
+  font-size: 20px; }
 
 .icon {
   font-size: 14px;
@@ -2299,7 +2305,7 @@ body.rtl .sidebar-list > li > a {
 
 .sidebar-list > li > .option {
   position: absolute;
-  top: -1px;
+  top: 1px;
   background: red;
   z-index: 1;
   text-align: right;
@@ -2320,7 +2326,7 @@ body.rtl .sidebar-list > li > a {
 
 .sidebar-list .icon {
   position: absolute;
-  top: .4em; }
+  top: .45rem; }
   body.ltr .sidebar-list .icon {
     left: 0; }
   body.rtl .sidebar-list .icon {

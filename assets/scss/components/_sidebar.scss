@@ -130,7 +130,7 @@
 }
 .sidebar-list > li > .option {
   position: absolute;
-  top: -1px;
+  top: 1px;
   background: red;
   z-index: 1;
   text-align: right;
@@ -154,7 +154,7 @@
 
 .sidebar-list .icon {
   position: absolute;
-  top: .4em;
+  top: .45rem;
   body.ltr & {
     left: 0;
   }
