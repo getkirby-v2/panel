@@ -912,6 +912,7 @@ body.rtl .buttons .btn-submit {
     background: -ms-linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
     background: linear-gradient(bottom, #efefef, rgba(239, 239, 239, 0.9) 75%, rgba(239, 239, 239, 0));
     margin: 0;
+    z-index: 1000;
     padding: 1.5em 3em 1.5em; }
   .ltr .mainbar .form .buttons {
     left: 33.33%;
