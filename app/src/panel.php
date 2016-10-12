@@ -92,7 +92,11 @@ class Panel {
     // store the instance as a singleton
     static::$instance = $this;
 
+    // init the core
     $this->kirby = $kirby;
+    $this->site  = $this->site();
+
+    // store the roots and urls for the panel
     $this->roots = new \Kirby\Panel\Roots($this, $root);
     $this->urls  = new \Kirby\Panel\Urls($this, $root);
 
@@ -102,9 +106,6 @@ class Panel {
     // setup the blueprints roots
     UserBlueprint::$root = $this->kirby->roots()->blueprints() . DS . 'users';
     PageBlueprint::$root = $this->kirby->roots()->blueprints();
-
-    // load the site object
-    $this->site = $this->site();
 
     // setup the session
     $this->session();
