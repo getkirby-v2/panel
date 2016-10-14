@@ -169,14 +169,13 @@ class FilesController extends Kirby\Panel\Controllers\Base {
     $filenames = get('filenames');
     $counter   = 0;
 
-    foreach($filenames as $filename) {
-      if($file = $page->file($filename)) {
-        $counter++;
-        try {
-          $file->update('sort', $counter);
-        } catch(Exception $e) {
+    $files = $page->files()->find($filenames);
 
-        }
+    foreach ($files as $file) {
+      $counter++;
+      try {
+        $file->update('sort', $counter);
+      } catch(Exception $e) {
       }
     }
 
