@@ -11,8 +11,12 @@
   <?php if($stylesheet = kirby()->option('panel.stylesheet')): ?>
   <?php echo css($stylesheet) ?>
   <?php endif ?>
-  
+
   <?php echo $js ?>
+
+  <?php if($javascript = kirby()->option('panel.javascript')): ?>
+  <?php echo js($javascript) ?>
+  <?php endif ?>
 
 </head>
 <body class="app <?php __($direction) ?> <?php __($bodyclass) ?>">

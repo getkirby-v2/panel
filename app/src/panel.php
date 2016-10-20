@@ -68,6 +68,7 @@ class Panel {
     return array(
       'panel.language'         => 'en',
       'panel.stylesheet'       => null,
+      'panel.javascript'       => null,
       'panel.kirbytext'        => true,
       'panel.session.timeout'  => 1440,
       'panel.session.lifetime' => 0,
@@ -85,7 +86,7 @@ class Panel {
 
   public function __construct($kirby, $root) {
 
-    // check requirements  
+    // check requirements
     $this->requirements();
 
     // store the instance as a singleton
@@ -124,7 +125,7 @@ class Panel {
       'custom'  => $this->kirby->roots()->fields()
     );
 
-    // force ssl if set in config 
+    // force ssl if set in config
     if($this->kirby->option('ssl') and !r::secure()) {
       // rebuild the current url with https
       go(url::build(array('scheme' => 'https')));
@@ -137,7 +138,7 @@ class Panel {
     $this->router = new Router($this->routes);
 
     // register router filters
-    $this->router->filter('auth', function() use($kirby) {      
+    $this->router->filter('auth', function() use($kirby) {
       try {
         $user = panel()->user();
       } catch(Exception $e) {
@@ -173,7 +174,7 @@ class Panel {
     s::$cookie['lifetime'] = $this->kirby->option('panel.session.lifetime', 0);
 
     // start the session
-    s::start();    
+    s::start();
 
   }
 
@@ -184,7 +185,7 @@ class Panel {
     }
 
     if(!detect::mbstring()) {
-      throw new Exception('The mbstring extension must be installed');  
+      throw new Exception('The mbstring extension must be installed');
     }
 
     if(!version_compare(toolkit::version(), static::$requires['toolkit'], '>=')) {
@@ -207,7 +208,7 @@ class Panel {
     // create a new csrf token if not available yet
     if(str::length($token) !== 32) {
       $token = str::random(32);
-    } 
+    }
 
     // store the new token in the session
     s::set('csrf', $token);
@@ -221,8 +222,8 @@ class Panel {
 
     $csrf = get('csrf');
 
-    if(empty($csrf) or $csrf !== s::get('csrf')) {        
-  
+    if(empty($csrf) or $csrf !== s::get('csrf')) {
+
       try {
         $this->user()->logout();
       } catch(Exception $e) {}
@@ -268,7 +269,7 @@ class Panel {
 
     // store the language code
     if($this->site->multilang()) {
-      s::set('lang', $this->site->language()->code());      
+      s::set('lang', $this->site->language()->code());
     }
 
   }
@@ -299,7 +300,7 @@ class Panel {
     if(file_exists($id)) {
       $file = $id;
     } else {
-      $file = $this->roots->forms . DS . $id . '.php';      
+      $file = $this->roots->forms . DS . $id . '.php';
     }
 
     if(!file_exists($file)) {
@@ -331,7 +332,7 @@ class Panel {
     foreach(dir::read($this->roots()->translations()) as $dir) {
       // filter out everything but directories
       if(!is_dir($this->roots()->translations() . DS . $dir)) continue;
-      
+
       // create the translation object
       $translation = new Translation($this, $dir);
       $this->translations->append($translation->code(), $translation);
@@ -372,7 +373,7 @@ class Panel {
 
     $this->path  = $this->kirby->path();
     $this->route = $this->router->run($this->path);
-    
+
     // set the current url
     $this->urls->current = rtrim($this->urls->index() . '/' . $this->path, '/');
 
@@ -444,20 +445,20 @@ class Panel {
     $type = 'trial';
 
     /**
-     * Hey stranger, 
-     * 
-     * So this is the mysterious place where the panel checks for 
+     * Hey stranger,
+     *
+     * So this is the mysterious place where the panel checks for
      * valid licenses. As you can see, this is not reporting
-     * back to any server and the license keys are rather simple to 
+     * back to any server and the license keys are rather simple to
      * hack. If you really feel like removing the warning in the panel
-     * or tricking Kirby into believing you bought a valid license even 
-     * if you didn't, go for it! But remember that literally thousands of 
-     * hours of work have gone into Kirby in order to make your 
-     * life as a developer, designer, publisher, etc. easier. If this 
-     * doesn't mean anything to you, you are probably a lost case anyway. 
-     * 
-     * Have a great day! 
-     * 
+     * or tricking Kirby into believing you bought a valid license even
+     * if you didn't, go for it! But remember that literally thousands of
+     * hours of work have gone into Kirby in order to make your
+     * life as a developer, designer, publisher, etc. easier. If this
+     * doesn't mean anything to you, you are probably a lost case anyway.
+     *
+     * Have a great day!
+     *
      * Bastian
      */
     if(str::startsWith($key, 'K2-PRO') and str::length($key) == 39) {
@@ -489,19 +490,19 @@ class Panel {
 
   public function notify($text) {
     s::set('message', array(
-      'type' => 'notification', 
+      'type' => 'notification',
       'text' => $text,
     ));
   }
 
   public function alert($text) {
     s::set('message', array(
-      'type' => 'error', 
+      'type' => 'error',
       'text' => $text,
     ));
   }
 
-  public function redirect($obj = '/', $action = false, $force = false) {    
+  public function redirect($obj = '/', $action = false, $force = false) {
 
     if($force === false and $redirect = get('_redirect')) {
       $url = purl($redirect);
@@ -520,7 +521,7 @@ class Panel {
       )));
 
     } else {
-      go($url);            
+      go($url);
     }
 
   }
