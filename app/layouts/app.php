@@ -15,6 +15,11 @@
   <?php endif ?>
 
   <?php echo $js ?>
+
+  <?php if($javascript = kirby()->option('panel.javascript')): ?>
+  <?php echo js($javascript) ?>
+  <?php endif ?>
+
   <?php echo $appjs ?>
   <?php echo $formjs ?>
   <?php echo $pluginsjs ?>
