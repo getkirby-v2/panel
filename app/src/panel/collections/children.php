@@ -113,7 +113,7 @@ class Children extends \Children {
 
       // filter out hidden pages
       $children = $this->filter(function($child) {
-        return $child->ui()->list();
+        return $child->ui()->show();
       });
 
       $children = $children->paginate($limit, array(

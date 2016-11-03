@@ -10,8 +10,8 @@ class UI {
     $this->page = $page;
   }
 
-  public function list() {
-    return $this->page->options()->list();
+  public function show() {
+    return $this->page->options()->show();
   }
 
   public function read() {

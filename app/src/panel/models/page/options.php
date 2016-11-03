@@ -18,7 +18,7 @@ class Options {
   /**
    * Option to list the current page
    */
-  public function list() {
+  public function show() {
     return $this->page->blueprint()->hide() !== true;
   }
 
