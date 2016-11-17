@@ -350,7 +350,7 @@ class Page extends \Page {
 
     if($mode === 'default') {
 
-      if($position > 0) {
+      if($position > 0 || $this->isInvisible()) {
         $this->sort($position);                  
       } else {
         $this->hide();
