@@ -310,7 +310,7 @@ class Page extends \Page {
     // run the hook if the number changed
     if($old->num() != $this->num()) {
       // hit the hook
-      kirby()->trigger($event, array($this, $old));
+      kirby()->trigger('panel.page.sort', [$this, $old]);
     }
 
     return $this->num();
@@ -339,7 +339,8 @@ class Page extends \Page {
 
     parent::hide();
     $this->sorter()->hide();
-    kirby()->trigger($event, [$this, $old]);
+
+    kirby()->trigger('panel.page.hide', [$this, $old]);
 
   }
 
