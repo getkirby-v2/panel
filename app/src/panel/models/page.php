@@ -268,7 +268,7 @@ class Page extends \Page {
     $old->removeThumbs();
 
     // hit the hook
-    kirby()->trigger($event, [$this, $old]);
+    kirby()->trigger('panel.page.move', [$this, $old]);
   
   }
 
