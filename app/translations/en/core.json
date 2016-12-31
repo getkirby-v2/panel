@@ -309,6 +309,7 @@
     "editor.image.empty": "This page has no images",
     "autocomplete.method.error": "Invalid autocomplete method",
     "blueprints.error.default.missing": "Missing default blueprint",
+    "blueprints.error.missing.logic.array": "Since Kirby 2.5, PHP blueprints (with the .php extension) are expected to return an array. PHP files that output YAML are no longer supported.",
     "permissions.error": "You are not allowed to do this",
     "error": "Error",
     "error.headline": "Error"
