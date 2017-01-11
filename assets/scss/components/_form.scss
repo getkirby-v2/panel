@@ -1,7 +1,13 @@
 /* Reset */
 fieldset {
   border: 0;
+  min-width: 0;
+
+  @-moz-document url-prefix() {
+    display: table-cell;
+  }
 }
+
 
 /* Loading blocker */
 form.loading:after {
@@ -556,11 +562,11 @@ textarea.input {
   }
   .ltr .mainbar .form .buttons {
     left: 33.33%;
-    right: 0;    
+    right: 0;
   }
   .rtl .mainbar .form .buttons {
     right: 33.33%;
-    left: 0;    
+    left: 0;
   }
   .mainbar .form .buttons .text span {
     position: relative;

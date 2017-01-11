@@ -417,7 +417,12 @@ body.rtl .nav-icon-right {
 
 /* Reset */
 fieldset {
-  border: 0; }
+  border: 0;
+  min-width: 0; }
+
+@-moz-document url-prefix() {
+  fieldset {
+    display: table-cell; } }
 
 /* Loading blocker */
 form.loading:after {
@@ -2974,7 +2979,7 @@ body.over:after {
 
 .fa {
   display: inline-block;
-  font: normal normal normal 14px / 1 FontAwesome;
+  font: normal normal normal 14px/1 FontAwesome;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
