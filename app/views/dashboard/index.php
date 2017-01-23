@@ -6,7 +6,7 @@
     <?php if(!$widget) continue; ?>
     <div class="section white dashboard-section" id="<?php echo $id ?>-widget">
 
-      <h2 class="hgroup<?php e(@$widget['title']['compressed'] == true, ' hgroup-compressed') ?> hgroup-single-line cf">
+      <h2 class="hgroup<?php e(@$widget['title']['compressed'] === true, ' hgroup-compressed') ?> hgroup-single-line cf">
         <?php if(is_array($widget['title']) and $title = $widget['title']): ?>
         <span class="hgroup-title">
           <?php if(!empty($title['link'])): ?>
