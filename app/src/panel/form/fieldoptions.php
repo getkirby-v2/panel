@@ -144,7 +144,17 @@ class FieldOptions {
 
   public function page($uri) {
 
-    if(str::startsWith($uri, '../')) {
+    if(str::startsWith($uri, './')) {
+      if($currentPage = $this->field->page) {
+        $path = str::substr($uri, 2);
+        if(!empty($path)) {
+          $currentPage = $currentPage->find($path);
+        }
+        $page = $currentPage;
+      } else {
+        $page = null;
+      }
+    } else if(str::startsWith($uri, '../')) {
       if($currentPage = $this->field->page) {
         $path = $uri;
         while(str::startsWith($path, '../')) {
