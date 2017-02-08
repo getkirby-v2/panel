@@ -455,7 +455,7 @@ class Page extends \Page {
     $event->check();
 
     // delete the page
-    parent::delete();
+    parent::delete(true);
 
     // resort the siblings
     $this->sorter()->delete();
