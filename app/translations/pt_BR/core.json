@@ -19,7 +19,7 @@
     "installation.check.text": "Kirby encontrou os seguintes problemas durante a instalação…",
     "installation.check.retry": "Tentar novamente",
     "installation.check.error": "Temos problemas!",
-    "installation.check.error.allowed": "You are only allowed to run the panel installer from the same computer that is the server or by setting the option panel.install to true in your /site/config/config.php",
+    "installation.check.error.allowed": "O instalador do painel somente pode ser executado no mesmo computador que é o servidor ou configurando a opção panel.install como true em seu /site/config/config.php",
     "installation.check.error.accounts": "/site/accounts não tem permissão de escrita",
     "installation.check.error.avatars": "/assets/avatars não tem permissão de escrita",
     "installation.check.error.blueprints": "Por favor, adicione uma pasta /site/blueprints",
@@ -272,7 +272,7 @@
     "fields.structure.add.first": "Adicionar primeira entrada",
     "fields.structure.empty": "Sem entradas ainda.",
     "fields.structure.entry.error": "Item não encontrado ",
-    "fields.structure.max.error": "No new items allowed or field is readonly",
+    "fields.structure.max.error": "Novos itens não permitidos ou o campo é apenas para leitura",
     "fields.structure.cancel": "Cancelar",
     "fields.structure.save": "Salvar",
     "fields.structure.edit": "Editar",
@@ -307,7 +307,7 @@
     "editor.image.empty": "Esta página não tem imagens",
     "autocomplete.method.error": "Método de auto-completar inválido",
     "blueprints.error.default.missing": "Blueprint \"default\" não encontrada ",
-    "permissions.error": "You are not allowed to do this",
+    "permissions.error": "Você não tem permissão para fazer isso",
     "error": "Erro",
     "error.headline": "Erro"
 }
