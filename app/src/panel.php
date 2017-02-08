@@ -75,6 +75,7 @@ class Panel {
       'panel.session.lifetime' => 0,
       'panel.info.license'     => true,
       'panel.info.versions'    => true,
+      'panel.favicon'          => false,
       'panel.widgets'          => array(
         'pages'   => true,
         'site'    => true,
