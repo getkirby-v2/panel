@@ -7,7 +7,7 @@ use Str;
 
 class Fields extends Collection {
 
-  public function __construct($fields = array(), $model) {
+  public function __construct($fields = array(), $model, $formtype = 'default') {
 
     if(empty($fields) or !is_array($fields)) $fields = array();
 
@@ -28,7 +28,7 @@ class Fields extends Collection {
       $field['name'] = $name;
           
       // create the field object
-      $field = new Field($field, $model);
+      $field = new Field($field, $model, $formtype);
 
       // append it to the collection
       $this->append($name, $field);

@@ -406,6 +406,10 @@ class Page extends \Page {
 
   public function update($data = array(), $lang = null) {
 
+    if($this->options()->update() === false) {
+      throw new PermissionsException();
+    }
+
     // create the update event
     $event = $this->event('update:action', [
       'data' => $data
@@ -451,7 +455,7 @@ class Page extends \Page {
     $event->check();
 
     // delete the page
-    parent::delete();
+    parent::delete(true);
 
     // resort the siblings
     $this->sorter()->delete();

@@ -88,7 +88,7 @@ class Structure {
   public function fields() {
 
     $fields = $this->config->fields();
-    $fields = new Fields($fields, $this->model);
+    $fields = new Fields($fields, $this->model, 'structure');
     $fields = $fields->toArray();
 
     // make sure that no unwanted options or fields 
