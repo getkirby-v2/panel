@@ -63,7 +63,7 @@ class Field extends Obj {
     $file = kirby()->get('blueprint', 'fields/' . $extends);
 
     if(empty($file) || !is_file($file)) {
-      throw new Exception(l('fields.error.extended'));
+      throw new Exception(l('fields.error.extended') . ' "' . $extends . '"');
     }
 
     $yaml   = data::read($file, 'yaml');
