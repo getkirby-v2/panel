@@ -57,7 +57,7 @@ class FieldOptions {
   }
 
   public function optionsFromApi($url) {
-    $response = remote::get($url);
+    $response = remote::get(url($url));
     $options  = @json_decode($response->content(), true);
     return is_array($options) ? $options : array();
   }
