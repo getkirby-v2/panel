@@ -10,6 +10,14 @@ class InputListField extends InputField {
     return $input;
   }
 
+  public function label() {
+    $label = parent::label();
+
+    // use a legend to avoid having a label
+    // that is just connected to the first input
+    return $label->tag('legend')->attr('for', false);
+  }
+
   public function options() {
     return fieldoptions::build($this);
   }
