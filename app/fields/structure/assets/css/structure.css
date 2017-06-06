@@ -26,6 +26,9 @@
   float: left;
   border-right: 1px solid #efefef;
 }
+.structure-entry-options .btn:last-child {
+  border-right: none;
+}
 .structure-empty {
   padding: 1.5em;
   background: #ddd;
@@ -53,12 +56,13 @@
 
 
 /* Table */
+.structure[data-style=table] .structure-entries {
+  border: 2px solid #ddd;
+}
 .structure-table {
   width: 100%;
   border-spacing: 0;
-  border: 2px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  margin-bottom: -1px;
   table-layout: fixed;
 }
 .structure-table td, .structure-table th {
@@ -67,6 +71,9 @@
   border-right: 1px solid #ddd;
   text-align: left;
   vertical-align: top;
+}
+.structure-table td:last-child, .structure-table th:last-child {
+  border-right: none;
 }
 .structure-table th {
   padding: .5em;
@@ -90,8 +97,12 @@
   text-align: center;
   cursor: pointer;
 }
-
-.structure-sortable-helper {
+.structure-table .structure-sortable-helper {
+  border: 1px solid #ddd;
+}
+.structure-table .structure-sortable-helper > * {
+  width: calc(100% + 2px);
+}
+.structure-table .ui-sortable-placeholder + .ui-sortable-handle td {
   border-top: 1px solid #ddd;
-  border-left: 1px solid #ddd;
 }
