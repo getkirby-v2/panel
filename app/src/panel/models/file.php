@@ -101,7 +101,9 @@ class File extends \File {
     // rename and get the new filename          
     $filename = parent::rename($name, $safeName);
 
-    // clean the thumbs folder
+    // clean the thumbs
+    // we don't rename them as there may be totally different thumb sizes
+    // for this new filename; re-generating for this single image isn't much work
     $old->removeThumbs();
 
     // trigger the rename hook

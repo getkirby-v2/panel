@@ -264,8 +264,8 @@ class Page extends \Page {
 
     $this->changes()->update($changes);
 
-    // remove all thumbs for the old id
-    $old->removeThumbs();
+    // move the thumbs folder to the new id
+    $this->moveThumbs($old);
 
     // hit the hook
     kirby()->trigger('panel.page.move', [$this, $old]);
@@ -631,8 +631,20 @@ class Page extends \Page {
   }
 
   /**
+   * Moves the thumbs of an old page object
+   * to the ones for the current page
+   *
+   * @param Page $old
+   */
+  public function moveThumbs($old) {
+    $oldPath = $this->kirby()->roots()->thumbs() . DS . $old->id();
+    $newPath = $this->kirby()->roots()->thumbs() . DS . $this->id();
+
+    return dir::move($oldPath, $newPath);
+  }
+
+  /**
    * Clean the thumbs folder for the page
-   * 
    */
   public function removeThumbs() {
     return dir::remove($this->kirby()->roots()->thumbs() . DS . $this->id());
