@@ -80,7 +80,7 @@ class DatetimeField extends BaseField {
     $options = $this->dateOptions();
     $value   = $this->dateValue($timestamp, $options['default']);
 
-    return form::field('date', array(
+    return form::field('date', array_merge($options, [
       'name'     => $this->name() . '[date]',
       'id'       => 'form-field-' . $this->name() . '-date',
       'value'    => $value,
@@ -88,7 +88,7 @@ class DatetimeField extends BaseField {
       'required' => $options['required'],
       'readonly' => $this->readonly(),
       'disabled' => $this->disabled()
-    ));
+    ]));
 
   }
 
@@ -132,7 +132,7 @@ class DatetimeField extends BaseField {
     $options = $this->timeOptions();
     $value   = $this->timeValue($value, $timestamp, $options['default']);
 
-    return form::field('time', array(
+    return form::field('time', array_merge($options, [
       'name'     => $this->name() . '[time]',
       'id'       => 'form-field-' . $this->name() . '-time',
       'value'    => $value,
@@ -141,7 +141,7 @@ class DatetimeField extends BaseField {
       'required' => $options['required'],
       'readonly' => $this->readonly(),
       'disabled' => $this->disabled()
-    ));
+    ]));
 
   }
 
