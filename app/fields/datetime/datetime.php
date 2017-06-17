@@ -60,10 +60,11 @@ class DatetimeField extends BaseField {
     $options = array_merge([
       'format'   => 'YYYY-MM-DD',
       'required' => $this->required(),
-      'default'  => false,
+      'override' => $this->override(),
+      'default'  => a::get($this->default(), 'date', false),
     ], (array)$this->date);
 
-    if($options['required'] && !$options['default']) {
+    if(($options['required'] || $options['override']) && !$options['default']) {
       $options['default'] = 'now';
     }
 
@@ -84,8 +85,6 @@ class DatetimeField extends BaseField {
       'name'     => $this->name() . '[date]',
       'id'       => 'form-field-' . $this->name() . '-date',
       'value'    => $value,
-      'format'   => $options['format'],      
-      'required' => $options['required'],
       'readonly' => $this->readonly(),
       'disabled' => $this->disabled()
     ]));
@@ -98,14 +97,15 @@ class DatetimeField extends BaseField {
       'interval' => 60,
       'format'   => 24,
       'required' => null,
-      'default'  => false,
+      'override' => $this->override(),
+      'default'  => a::get($this->default(), 'time', false),
     ], (array)$this->time);
 
     if($this->required() && $options['required'] !== false) {
       $options['required'] = true;
     }
 
-    if($options['required'] && !$options['default']) {
+    if(($options['required'] || $options['override']) && !$options['default']) {
       $options['default'] = date('H:i');
     }
 
@@ -136,9 +136,6 @@ class DatetimeField extends BaseField {
       'name'     => $this->name() . '[time]',
       'id'       => 'form-field-' . $this->name() . '-time',
       'value'    => $value,
-      'format'   => $options['format'],
-      'interval' => $options['interval'],
-      'required' => $options['required'],
       'readonly' => $this->readonly(),
       'disabled' => $this->disabled()
     ]));
