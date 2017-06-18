@@ -28,10 +28,11 @@
             <?php if($read): ?>
             <small class="item-meta marginalia">
               <?php if($user->email()): ?>
-                <?php __($user->email()) ?>
-                <span style="padding-left: 1em; font-style: italic; font-size: .9em; color: #aaa"><?php __($user->role()->name()) ?></span>
-              <?php else: ?>
-                <span style="font-style: italic; font-size: .9em; color: #aaa"><?php __($user->role()->name()) ?></span>
+                <span style="padding-right: 1em"><?php __($user->email()) ?></span>
+              <?php endif ?>
+              <span style="padding-right: 1em; font-style: italic; font-size: .9em; color: #aaa"><?php __($user->role()->name()) ?></span>
+              <?php if(!$user->password()): ?>
+                <span style="font-style: italic; font-size: .9em; color: #aaa"><?php _l('users.index.passwordless') ?></span>
               <?php endif ?>
             </small>
             <?php endif ?>
