@@ -51,7 +51,6 @@ return function($user) {
     'email' => array(
       'label'        => 'users.form.email.label',
       'type'         => 'email',
-      'required'     => true,
       'autocomplete' => false
     ),
     
