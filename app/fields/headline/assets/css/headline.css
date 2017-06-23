@@ -1,16 +1,17 @@
-.field-with-headline {
-  counter-increment: count;
-}
 .field-with-headline:first-child {
   padding-top: 0;
 }
 .field-with-headline {
   padding-top: 3em;
 }
-.field-with-headline .hgroup span {
+
+.field-with-headline-numbered {
+  counter-increment: count;
+}
+.field-with-headline-numbered .hgroup span {
   padding-left: 1.5em;
 }
-.field-with-headline .hgroup:before {
+.field-with-headline-numbered .hgroup::before {
   position: absolute;
   content: counter(count, decimal-leading-zero);
   left: 0;
