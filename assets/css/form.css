@@ -4,6 +4,9 @@
 .field-with-headline {
   padding-top: 3em;
 }
+.field-with-headline .hgroup span:empty::before {
+  content: '\a0';
+}
 
 .field-with-headline-numbered {
   counter-increment: count;
