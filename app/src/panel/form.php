@@ -96,6 +96,21 @@ class Form extends Brick {
         }
       }
 
+      // Check for optional translatable fields
+      if($translated and isset($field['translate']) and $field['translate'] === 'optional') {
+
+        $currentLang = $site->language()->code();
+        $defaultLang = $site->defaultLanguage()->code();
+
+        $currentValue = $field['page']->content($currentLang)->get($name)->value();
+        $defaultValue = $field['page']->content($defaultLang)->get($name)->value();
+
+        if($field['value'] !== $currentValue and $field['value'] === $defaultValue) {
+          $field['value'] = null;
+        }
+
+      }
+
       $this->fields->append($name, static::field($field['type'], $field));
 
     }
