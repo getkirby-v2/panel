@@ -76,7 +76,7 @@ class Form extends Brick {
       $field['parentField'] = $this->parentField;
 
       // Check for untranslatable fields
-      if($translated and isset($field['translate']) and $field['translate'] === false) {
+      if($translated && isset($field['translate']) && $field['translate'] === false) {
         $field['readonly'] = true;
         $field['disabled'] = true;
       }
@@ -108,14 +108,14 @@ class Form extends Brick {
     foreach($this->fields() as $field) {
 
       // don't validate fields, which are not translatable
-      if($translated and $field->translate() === false) continue;
+      if($translated && $field->translate() === false) continue;
 
       $name  = $field->name();
       $value = $this->value($name);
 
-      if($field->required() and $value == '') {
+      if($field->required() && $value == '') {
         $field->error = true;
-      } else if($value !== '' and $field->validate() == false) {
+      } else if($value !== '' && $field->validate() == false) {
         $field->error = true;
       }
 
@@ -172,7 +172,7 @@ class Form extends Brick {
     }
 
     // unset untranslatable fields in all languages but the default lang
-    if($site->multilang() and $site->language() != $site->defaultLanguage()) {
+    if($site->multilang() && $site->language() != $site->defaultLanguage()) {
       foreach($fields as $field) {
         if($field->translate() === false) {
           $data[$field->name()] = null;
