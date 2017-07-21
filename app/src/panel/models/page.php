@@ -191,6 +191,10 @@ class Page extends \Page {
     return new Children($this);
   }
 
+  public function canSortFiles() {
+    return $this->blueprint()->files()->sortable();
+  }
+
   public function files() {
     return new Files($this);
   }
