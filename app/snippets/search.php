@@ -4,7 +4,7 @@
 
 <div class="search dropdown dropdown-right" id="search">
   <form action="<?php _u('search') ?>">
-    <input type="text" class="search-input" placeholder="Search…">
+    <input type="text" class="search-input" placeholder="<?php echo l::get('search.placeholder', 'Search…') ?>">
     <div class="search-results"></div>
   </form>
 </div>

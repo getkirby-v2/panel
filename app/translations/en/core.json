@@ -8,6 +8,7 @@
     "delete": "Delete",
     "insert": "Insert",
     "ok": "Ok",
+    "search.placeholder": "Search…",
     "routes.error.invalid": "Invalid Panel URL",
     "controller.error.invalid": "Invalid controller",
     "controller.error.action": "Invalid action",
