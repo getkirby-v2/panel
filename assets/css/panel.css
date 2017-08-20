@@ -753,7 +753,7 @@ body.ltr .input-with-checkbox .checkbox {
 
 body.rtl .input-with-checkbox .checkbox {
   float: right;
-  margin: .3em .25em .3em 1; }
+  margin: .3em .25em .3em 1em; }
 
 .selectbox {
   width: 100%; }
