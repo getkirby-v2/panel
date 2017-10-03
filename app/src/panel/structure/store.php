@@ -66,7 +66,7 @@ class Store {
 
     // get the file in the current language as well as in the default language
     $file         = $this->structure->model()->textfile();
-    $fileDefL     = $this->structure->model()->textfile(null, $this->structure->model()->site()->languages()->findDefault()->code());
+    $fileDefL     = $this->structure->model()->textfile(null, site()->languages()->findDefault()->code());
     $ageModel     = f::exists($file) ? f::modified($file) : 0;
     $ageModelDefL = f::exists($fileDefL) ? f::modified($fileDefL) : 0;
 
