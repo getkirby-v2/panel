@@ -494,7 +494,12 @@ class Panel {
 
   public function isLocal() {
     $localhosts = array('::1', '127.0.0.1', '0.0.0.0');
-    return (in_array(server::get('SERVER_ADDR'), $localhosts) || server::get('SERVER_NAME') == 'localhost');
+    return (
+      in_array(server::get('SERVER_ADDR'), $localhosts) ||
+      server::get('SERVER_NAME') == 'localhost' ||
+      str::endsWith(server::get('SERVER_NAME'), '.localhost') ||
+      str::endsWith(server::get('SERVER_NAME'), '.test')
+    );
   }
 
   public function notify($text) {
