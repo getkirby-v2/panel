@@ -7252,9 +7252,9 @@ var Search = function() {
     });
 
     $('[data-upload]').on('click', function() {
-      form.find('input[type=file]').trigger('click').on('change', function() {
+      form.find('input[type=file]').on('change', function() {
         upload(this.files);
-      });
+      }).trigger('click');
       return false;
     });
 
