@@ -19,9 +19,7 @@
     </nav>
 
     <a title="<?php _l('files.show.open') ?> (o)" data-shortcut="o" target="_blank" class="fileview-image-link fileview-preview-link" href="<?php __($file->url('preview')) ?>">
-      <?php if($file->extension() == 'svg'): ?>
-      <object data="<?php __($file->url('preview')) ?>"></object>
-      <?php elseif($file->canHavePreview()): ?>
+      <?php if($file->canHavePreview()): ?>
       <img src="<?php __($file->url('preview')) ?>" alt="<?php __($file->filename()) ?>">
       <?php else: ?>
       <span>
