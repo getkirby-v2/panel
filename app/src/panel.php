@@ -269,7 +269,7 @@ class Panel {
 
     if(!$this->site->multilang()) {
       $language = null;
-    } else if($language = get('language') or $language = s::get('kirby_panel_lang')) {
+    } else if($language = get('_language') or $language = s::get('kirby_panel_lang')) {
       // $language is already set
     } else {
       $language = null;
