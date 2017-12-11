@@ -54,12 +54,21 @@ var Modal = function(app) {
     Form(form, {
       focus: true,
       redirect: function(response) {
+
+        $('.modal').remove();
+
         if($.type(response) == 'object') {
           if(response.url) {
-            app.content.open(response.url);
+            $('body').addClass('loading');
+            app.content.open(response.url, function () {
+              $('body').removeClass('loading');
+            });
             return;
           } else if(response.content) {
-            replace(response.content);
+            $('body').addClass('loading');
+            replace(response.content, function () {
+              $('body').removeClass('loading');
+            });
             return;
           }
         }
