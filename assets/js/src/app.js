@@ -42,7 +42,7 @@ var app = {
     $(document).on('click', 'a', function(e) {
       // don’t break browser special behavior on links (like page in new window)
       if (e.which > 1 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
-        return
+        return null;
       }
 
       var link = $(this);
