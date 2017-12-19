@@ -55,20 +55,16 @@ var Modal = function(app) {
       focus: true,
       redirect: function(response) {
 
-        $('.modal').remove();
-
         if($.type(response) == 'object') {
           if(response.url) {
+            $('.modal').remove();
             $('body').addClass('loading');
             app.content.open(response.url, function () {
               $('body').removeClass('loading');
             });
             return;
           } else if(response.content) {
-            $('body').addClass('loading');
-            replace(response.content, function () {
-              $('body').removeClass('loading');
-            });
+            replace(response.content);
             return;
           }
         }
