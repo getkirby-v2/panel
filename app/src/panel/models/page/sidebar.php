@@ -56,7 +56,7 @@ class Sidebar {
 
   public function files() {
 
-    if($this->page->ui()->files() === false) {
+    if($this->blueprint->files()->hide() === true) {
       return null;
     }
 
